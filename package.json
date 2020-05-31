@@ -20,14 +20,14 @@
     "url": "https://github.com/hebcal/hebcal-icalendar/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^1.0.0",
+    "@hebcal/core": "^1.0.1",
+    "@hebcal/leyning": "^1.0.0",
     "core-js": "^2.6.11",
-    "md5": "^2.2.1"
+    "md5": "^2.2.1",
+    "ttag": "^1.7.22"
   },
   "scripts": {
-    "build:rollup": "rollup -c",
-    "build:cp-json": "mkdir -p ./dist && cp ./src/*.json ./dist",
-    "build": "npm run build:cp-json && npm run build:rollup",
+    "build": "rollup -c",
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "readme": "npx jsdoc2md dist/index.js",

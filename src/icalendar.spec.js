@@ -1,12 +1,11 @@
 /* eslint-disable max-len */
 import test from 'ava';
 import icalendar from './icalendar';
-import hebcal from './hebcal';
-import {Location} from './location';
+import {Location,hebrewCalendar} from '@hebcal/core';
 
 test('ical-sedra', (t) => {
   const options = {year: 1993, month: 4, sedrot: true, noHolidays: true};
-  const events = hebcal.hebcalEvents(options);
+  const events = hebrewCalendar(options);
   const tzav = icalendar.eventToIcal(events[0], options);
   let lines = tzav.split('\r\n');
   t.is(lines.length, 13);
@@ -17,7 +16,7 @@ test('ical-sedra', (t) => {
   t.is(lines[12], 'END:VEVENT');
 
   const options2 = {year: 1993, month: 6, sedrot: true, noHolidays: true};
-  const events2 = hebcal.hebcalEvents(options2);
+  const events2 = hebrewCalendar(options2);
   const korach = icalendar.eventToIcal(events2[2], options);
   lines = korach.split('\r\n');
   t.is(lines.length, 13);
@@ -36,7 +35,7 @@ test('ical-transp-opaque', (t) => {
     noRoshChodesh: true,
     noSpecialShabbat: true,
   };
-  const events = hebcal.hebcalEvents(options);
+  const events = hebrewCalendar(options);
   let lines = icalendar.eventToIcal(events[0], options).split('\r\n');
   t.is(lines.length, 13);
   t.is(lines[4], 'SUMMARY:Erev Pesach');
@@ -71,7 +70,7 @@ test('ical-candles', (t) => {
     candlelighting: true,
     noHolidays: true,
   };
-  const events = hebcal.hebcalEvents(options);
+  const events = hebrewCalendar(options);
   const ical = icalendar.eventToIcal(events[0], options);
   let lines = ical.split('\r\n');
   t.is(lines.length, 18);
@@ -104,7 +103,8 @@ test('ical-dafyomi', (t) => {
     dafyomi: true,
     locale: 'he',
   };
-  const ev = hebcal.hebcalEvents(options)[0];
+  const ev = hebrewCalendar(options)[0];
+  t.is(ev.render(), 'דף יומי: נדרים 14');
   const ical = icalendar.eventToIcal(ev, options);
   const lines = ical.split('\r\n');
   t.is(lines.length, 12);
@@ -114,7 +114,7 @@ test('ical-dafyomi', (t) => {
 
 test('ical-omer', (t) => {
   const options = {year: 1993, noHolidays: true, omer: true};
-  const ev = hebcal.hebcalEvents(options)[0];
+  const ev = hebrewCalendar(options)[0];
   const ical = icalendar.eventToIcal(ev, options);
   const lines = ical.split('\r\n');
   t.is(lines.length, 16);
@@ -132,7 +132,7 @@ test('eventToCsv', (t) => {
     candlelighting: true,
     location: new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398),
   };
-  const events = hebcal.hebcalEvents(options).slice(0, 5);
+  const events = hebrewCalendar(options).slice(0, 5);
   const csv = events.map((e) => icalendar.eventToCsv(e, options));
   t.is(csv[0], `"Candle lighting",4/2/1993,"6:00 PM",4/2/1993,"6:00 PM","false","",4,"Chicago"`);
   t.is(csv[1], `"Havdalah",4/3/1993,"7:01 PM",4/3/1993,"7:01 PM","false","",4,"Chicago"`);

@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 // import stream from 'stream';
-import {flags} from './event';
+import {flags} from '@hebcal/core';
 import md5 from 'md5';
-import leyning from './leyning';
+import leyning from '@hebcal/leyning';
 import {gettext} from 'ttag';
 
 const VTIMEZONE = {

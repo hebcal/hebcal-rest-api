@@ -3,7 +3,6 @@
 import {flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
-import {gettext} from 'ttag';
 
 const VTIMEZONE = {
   'US/Eastern': 'BEGIN:VTIMEZONE\r\nTZID:US/Eastern\r\nBEGIN:STANDARD\r\nDTSTART:19701101T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\r\nTZOFFSETTO:-0500\r\nTZOFFSETFROM:-0400\r\nTZNAME:EST\r\nEND:STANDARD\r\nBEGIN:DAYLIGHT\r\nDTSTART:19700308T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\r\nTZOFFSETTO:-0400\r\nTZOFFSETFROM:-0500\r\nTZNAME:EDT\r\nEND:DAYLIGHT\r\nEND:VTIMEZONE',
@@ -162,8 +161,11 @@ export function eventToIcal(e, options) {
   const timed = Boolean(attrs && attrs.eventTime);
   let location = timed ? options.location.name : undefined;
   if (mask & flags.DAF_YOMI) {
-    subj = gettext(desc);
-    location = gettext('Daf Yomi');
+    const colon = subj.indexOf(': ');
+    if (colon != -1) {
+      location = subj.substring(0, colon);
+      subj = subj.substring(colon + 2);
+    }
   }
 
   // create memo (holiday descr, Torah, etc)
@@ -203,7 +205,11 @@ export function eventToIcal(e, options) {
     startDate += 'T' + formatTime(hour, minute, 0);
     endDate = startDate;
     dtargs = `;TZID=${options.location.tzid}`;
-    subj = gettext(desc); // replace "Candle lighting: 15:34" with shorter title
+    // replace "Candle lighting: 15:34" with shorter title
+    const colon = subj.indexOf(': ');
+    if (colon != -1) {
+      subj = subj.substring(0, colon);
+    }
   } else {
     endDate = formatYYYYMMDD(e.getDate().next().greg());
     // for all-day untimed, use DTEND;VALUE=DATE intsead of DURATION:P1D.
@@ -394,7 +400,11 @@ export function eventToCsv(e, options) {
     endTime = startTime = `"${hour}:${minute} PM"`;
     endDate = date;
     allDay = '"false"';
-    subj = gettext(e.getDesc()); // replace "Candle lighting: 15:34" with shorter title
+    // replace "Candle lighting: 15:34" with shorter title
+    const colon = subj.indexOf(': ');
+    if (colon != -1) {
+      subj = subj.substring(0, colon);
+    }
   }
 
   let loc = 'Jewish Holidays';
@@ -402,8 +412,11 @@ export function eventToCsv(e, options) {
   if (timed && options.location && options.location.name) {
     loc = options.location.name;
   } else if (mask & flags.DAF_YOMI) {
-    subj = gettext(e.getDesc());
-    loc = gettext('Daf Yomi');
+    const colon = subj.indexOf(': ');
+    if (colon != -1) {
+      loc = subj.substring(0, colon);
+      subj = subj.substring(colon + 2);
+    }
   }
 
   subj = subj.replace(/,/g, '').replace(/"/g, '\'\'');

@@ -15,7 +15,7 @@ export default [
       {
         file: 'dist/bundle.min.js',
         format: 'umd',
-        name: 'hebcal-leyning',
+        name: 'hebcal-icalendar',
         plugins: [terser()],
       },
     ],
@@ -27,5 +27,6 @@ export default [
       resolve(),
       commonjs(),
     ],
+    external: ['@hebcal/core', '@hebcal/leyning'],
   },
 ];

@@ -10,8 +10,6 @@
   ],
   "description": "Jewish holidays and Hebrew calendar as iCalendar RFC 2445",
   "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
-  "browser": "./dist/index.umd.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/hebcal/hebcal-icalendar.git"
@@ -20,8 +18,8 @@
     "url": "https://github.com/hebcal/hebcal-icalendar/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^1.0.4",
-    "@hebcal/leyning": "^1.0.3",
+    "@hebcal/core": "^1.0.8",
+    "@hebcal/leyning": "^1.0.5",
     "core-js": "^2.6.11",
     "md5": "^2.2.1"
   },

@@ -5,17 +5,26 @@ import pkg from './package.json';
 import {terser} from 'rollup-plugin-terser';
 
 export default [
-  // browser-friendly UMD build
   {
     input: 'src/index.js',
     output: [
-      {file: pkg.browser, format: 'umd', name: 'hebcal-icalendar'},
-      {file: pkg.main, format: 'cjs'},
-      {file: pkg.module, format: 'es'},
+      {
+        file: pkg.main,
+        format: 'cjs',
+        name: 'hebcalICalendar',
+        globals: {
+          '@hebcal/core': 'hebcalCore',
+          '@hebcal/leyning': 'hebcalLeyning',
+        },
+      },
       {
         file: 'dist/bundle.min.js',
         format: 'umd',
-        name: 'hebcal-icalendar',
+        name: 'hebcalICalendar',
+        globals: {
+          '@hebcal/core': 'hebcalCore',
+          '@hebcal/leyning': 'hebcalLeyning',
+        },
         plugins: [terser()],
       },
     ],

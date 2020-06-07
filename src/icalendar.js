@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 // import stream from 'stream';
-import {flags} from '@hebcal/core';
+import {hebcal, Event, flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
 
@@ -14,68 +14,6 @@ const VTIMEZONE = {
   'US/Aleutian': 'BEGIN:VTIMEZONE\r\nTZID:US/Aleutian\r\nBEGIN:STANDARD\r\nDTSTART:19701101T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\r\nTZOFFSETTO:-1000\r\nTZOFFSETFROM:-0900\r\nTZNAME:HAST\r\nEND:STANDARD\r\nBEGIN:DAYLIGHT\r\nDTSTART:19700308T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\r\nTZOFFSETTO:-0900\r\nTZOFFSETFROM:-1000\r\nTZNAME:HADT\r\nEND:DAYLIGHT\r\nEND:VTIMEZONE',
   'America/Phoenix': 'BEGIN:VTIMEZONE\r\nTZID:America/Phoenix\r\nBEGIN:STANDARD\r\nDTSTART:19700101T000000\r\nTZOFFSETTO:-0700\r\nTZOFFSETFROM:-0700\r\nEND:STANDARD\r\nEND:VTIMEZONE',
 };
-
-/**
- * @param {string} s
- * @return {string}
- */
-function makeAnchor(s) {
-  return s.toLowerCase()
-      .replace(/'/g, '')
-      .replace(/[^\w]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-/g, '')
-      .replace(/-$/g, '');
-}
-
-/**
- * @param {string} desc
- * @return {string}
- */
-function getHolidayBasename(desc) {
-  if (desc.startsWith('Parashat ')) {
-    return desc.substring(9);
-  }
-
-  let s = desc
-      .replace(/ \d{4}$/, '')
-      .replace(/ \(CH''M\)$/, '')
-      .replace(/ \(Hoshana Raba\)$/, '');
-
-  if (s != 'Rosh Chodesh Adar II') {
-    s = s.replace(/ [IV]+$/, '');
-  }
-
-  return s
-      .replace(/: \d Candles?$/, '')
-      .replace(/: 8th Day$/, '')
-      .replace(/^Erev /, '');
-}
-
-const NO_URL_FLAGS = flags.USER_EVENT |
-    flags.OMER_COUNT |
-    flags.SHABBAT_MEVARCHIM |
-    flags.DAF_YOMI |
-    flags.MOLAD;
-
-/**
- *
- * @param {Event} e
- * @return {string}
- */
-function getShortUrl(e) {
-  const mask = e.getFlags();
-  if (mask & NO_URL_FLAGS) {
-    return undefined;
-  }
-  const desc = e.getDesc();
-  if (desc.startsWith('Havdalah') || desc.startsWith('Candle lighting')) {
-    return undefined;
-  }
-  const name = makeAnchor(getHolidayBasename(desc));
-  const dir = (mask & flags.PARSHA_HASHAVUA) ? 's' : 'h';
-  return `https://hebcal.com/${dir}/${name}`;
-}
 
 /**
  * @param {stream.Writable} res
@@ -127,7 +65,7 @@ function makeDtstamp(dt) {
  * @param {stream.Writable} res
  * @param {Event} e
  * @param {string} dtstamp
- * @param {HebcalOptions} options
+ * @param {hebcal.HebcalOptions} options
  */
 function icalWriteEvent(res, e, dtstamp, options) {
   options.dtstamp = dtstamp;
@@ -149,7 +87,7 @@ function addOptional(arr, key, val) {
 /**
  *
  * @param {Event} e
- * @param {HebcalOptions} options
+ * @param {hebcal.HebcalOptions} options
  * @return {string} multi-line result, delimited by \r\n
  */
 export function eventToIcal(e, options) {
@@ -169,7 +107,7 @@ export function eventToIcal(e, options) {
   }
 
   // create memo (holiday descr, Torah, etc)
-  const url = getShortUrl(e);
+  const url = hebcal.getShortUrl(e);
   let memo = '';
   if (mask & flags.PARSHA_HASHAVUA) {
     const parshaLeyning = leyning.getLeyningForParshaHaShavua(e, options.il);
@@ -228,7 +166,7 @@ export function eventToIcal(e, options) {
     if (options.location.geoid) {
       uid += `-${options.location.geoid}`;
     } else if (options.location.name) {
-      uid += '-' + makeAnchor(options.location.name);
+      uid += '-' + hebcal.makeAnchor(options.location.name);
     }
   }
 
@@ -296,7 +234,7 @@ function exportHttpHeader(res, mimeType, fileName) {
  * @param {stream.Writable} res
  * @param {Event[]} events
  * @param {string} title
- * @param {HebcalOptions} options
+ * @param {hebcal.HebcalOptions} options
  */
 export function icalWriteContents(res, events, title, options) {
   const mimeType = 'text/calendar; charset=UTF-8';
@@ -353,7 +291,7 @@ export function icalWriteContents(res, events, title, options) {
 }
 
 /**
- * @param {HebcalOptions} options
+ * @param {hebcal.HebcalOptions} options
  * @return {string}
  */
 function getDownloadFilename(options) {
@@ -373,7 +311,7 @@ function getDownloadFilename(options) {
 /**
  * Renders an Event as a string
  * @param {Event} e
- * @param {HebcalOptions} options
+ * @param {hebcal.HebcalOptions} options
  * @return {string}
  */
 export function eventToCsv(e, options) {
@@ -392,12 +330,8 @@ export function eventToCsv(e, options) {
   const attrs = e.getAttrs();
   const timed = Boolean(attrs && attrs.eventTime);
   if (timed) {
-    let [hour, minute] = attrs.eventTimeStr.split(':');
-    hour = Number(hour);
-    if (hour > 12) {
-      hour = hour % 12;
-    }
-    endTime = startTime = `"${hour}:${minute} PM"`;
+    const timeStr = hebcal.reformatTimeStr(attrs.eventTimeStr, ' PM', options);
+    endTime = startTime = `"${timeStr}"`;
     endDate = date;
     allDay = '"false"';
     // replace "Candle lighting: 15:34" with shorter title
@@ -430,7 +364,7 @@ export function eventToCsv(e, options) {
 /**
  * @param {stream.Writable} res
  * @param {Event[]} events
- * @param {HebcalOptions} options
+ * @param {hebcal.HebcalOptions} options
  */
 export function csvWriteContents(res, events, options) {
   const fileName = getDownloadFilename(options) + '.csv';

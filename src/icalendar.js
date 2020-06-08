@@ -108,7 +108,7 @@ export function eventToIcal(e, options) {
 
   // create memo (holiday descr, Torah, etc)
   const url = hebcal.getShortUrl(e);
-  let memo = '';
+  let memo;
   if (mask & flags.PARSHA_HASHAVUA) {
     const parshaLeyning = leyning.getLeyningForParshaHaShavua(e, options.il);
     memo = `Torah: ${parshaLeyning.summary}`;
@@ -126,9 +126,22 @@ export function eventToIcal(e, options) {
     if (parshaLeyning.haftara) {
       memo += '\\nHaftarah: ' + parshaLeyning.haftara;
     }
+    if (parshaLeyning.sephardic) {
+      memo += '\\nHaftarah for Sephardim: ' + parshaLeyning.sephardic;
+    }
     memo += '\\n\\n' + url;
-  } else if (url) {
-    memo = url;
+  } else {
+    memo = attrs.memo || '';
+    const holidayLeyning = leyning.getLeyningForHoliday(e, options.il);
+    if (holidayLeyning) {
+      memo += `\\nTorah: ${holidayLeyning.summary}`;
+      if (holidayLeyning.haftara) {
+        memo += '\\nHaftarah: ' + holidayLeyning.haftara;
+      }
+    }
+    if (url) {
+      memo += '\\n\\n' + url;
+    }
   }
 
   const date = formatYYYYMMDD(e.getDate().greg());

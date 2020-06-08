@@ -36,6 +36,8 @@ test('ical-transp-opaque', (t) => {
     noSpecialShabbat: true,
   };
   const events = hebcal.hebrewCalendar(options);
+  const memo = 'Passover, the Feast of Unleavened Bread';
+  events[0].getAttrs().memo = memo;
   let lines = icalendar.eventToIcal(events[0], options).split('\r\n');
   t.is(lines.length, 13);
   t.is(lines[4], 'SUMMARY:Erev Pesach');
@@ -47,19 +49,25 @@ test('ical-transp-opaque', (t) => {
   const dtend = lines[6];
   t.is(dtend.startsWith('DTEND'), true);
   t.is(dtend.substring(dtend.indexOf(':') + 1), '19930406');
-  t.is(lines[10], 'DESCRIPTION:https://hebcal.com/h/pesach');
+  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\n\\nhttps://hebcal.com/h/pesach`);
 
+  events[1].getAttrs().memo = memo;
   lines = icalendar.eventToIcal(events[1], options).split('\r\n');
   t.is(lines[4], 'SUMMARY:Pesach I');
   t.is(lines[7], 'TRANSP:OPAQUE');
+  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\nTorah: Exodus 12:21-12:51\\nHaftarah: Joshua 5:2 - 6:1\\n\\nhttps://hebcal.com/h/pesach`);
 
+  events[2].getAttrs().memo = memo;
   lines = icalendar.eventToIcal(events[2], options).split('\r\n');
   t.is(lines[4], 'SUMMARY:Pesach II');
   t.is(lines[7], 'TRANSP:OPAQUE');
+  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\nTorah: Leviticus 22:26-23:44\\nHaftarah: II Kings 23:1 - 23:9\\; 23:21 - 23:25\\n\\nhttps://hebcal.com/h/pesach`);
 
+  events[3].getAttrs().memo = memo;
   lines = icalendar.eventToIcal(events[3], options).split('\r\n');
   t.is(lines[4], 'SUMMARY:Pesach III (CH\'\'M)');
   t.is(lines[7], 'TRANSP:TRANSPARENT');
+  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\nTorah: Exodus 13:1-28:25\\n\\nhttps://hebcal.com/h/pesach`);
 });
 
 test('ical-candles', (t) => {

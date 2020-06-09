@@ -132,7 +132,7 @@ test('ical-omer', (t) => {
 
 test('eventToCsv', (t) => {
   const options = {
-    year: 1993,
+    year: 1990,
     month: 4,
     noMinorFast: true,
     noRoshChodesh: true,
@@ -141,10 +141,12 @@ test('eventToCsv', (t) => {
     location: new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398),
   };
   const events = hebcal.hebrewCalendar(options).slice(0, 5);
+  const memo = 'Passover, the Feast of Unleavened Bread';
+  events[4].getAttrs().memo = memo;
   const csv = events.map((e) => icalendar.eventToCsv(e, options));
-  t.is(csv[0], `"Candle lighting",4/2/1993,"6:00 PM",4/2/1993,"6:00 PM","false","",4,"Chicago"`);
-  t.is(csv[1], `"Havdalah",4/3/1993,"7:01 PM",4/3/1993,"7:01 PM","false","",4,"Chicago"`);
-  t.is(csv[2], `"Erev Pesach",4/5/1993,,,,"true","",3,"Jewish Holidays"`);
-  t.is(csv[3], `"Candle lighting",4/5/1993,"7:03 PM",4/5/1993,"7:03 PM","false","",4,"Chicago"`);
-  t.is(csv[4], `"Pesach I",4/6/1993,,,,"true","",4,"Jewish Holidays"`);
+  t.is(csv[0], `"Candle lighting",4/6/1990,"7:04 PM",4/6/1990,"7:04 PM","false","",4,"Chicago"`);
+  t.is(csv[1], `"Havdalah",4/7/1990,"8:06 PM",4/7/1990,"8:06 PM","false","",4,"Chicago"`);
+  t.is(csv[2], `"Erev Pesach",4/9/1990,,,,"true","",3,"Jewish Holidays"`);
+  t.is(csv[3], `"Candle lighting",4/9/1990,"7:07 PM",4/9/1990,"7:07 PM","false","",4,"Chicago"`);
+  t.is(csv[4], `"Pesach I",4/10/1990,,,,"true","Passover; the Feast of Unleavened Bread",4,"Jewish Holidays"`);
 });

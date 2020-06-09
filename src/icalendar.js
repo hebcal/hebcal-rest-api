@@ -96,7 +96,7 @@ export function eventToIcal(e, options) {
   const desc = e.getDesc(); // original untranslated
   const attrs = e.getAttrs();
   const mask = e.getFlags();
-  const timed = Boolean(attrs && attrs.eventTime);
+  const timed = Boolean(attrs.eventTime);
   let location = timed ? options.location.name : undefined;
   if (mask & flags.DAF_YOMI) {
     const colon = subj.indexOf(': ');
@@ -341,7 +341,7 @@ export function eventToCsv(e, options) {
   let allDay = '"true"';
 
   const attrs = e.getAttrs();
-  const timed = Boolean(attrs && attrs.eventTime);
+  const timed = Boolean(attrs.eventTime);
   if (timed) {
     const timeStr = hebcal.reformatTimeStr(attrs.eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;
@@ -367,8 +367,7 @@ export function eventToCsv(e, options) {
   }
 
   subj = subj.replace(/,/g, '').replace(/"/g, '\'\'');
-  const memo = ''; // update this eventually
-  //    memo = memo.replace(/,/g, ';').replace(/"/g, "''");
+  const memo = (attrs.memo || '').replace(/,/g, ';').replace(/"/g, '\'\'');
 
   const showTimeAs = (timed || (mask & flags.CHAG)) ? 4 : 3;
   return `"${subj}",${date},${startTime},${endDate},${endTime},${allDay},"${memo}",${showTimeAs},"${loc}"`;

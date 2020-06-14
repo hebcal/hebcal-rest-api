@@ -32,15 +32,3 @@ export function eventToFullCalendar(ev, tzid) {
   if (attrs.memo) result.description = attrs.memo;
   return result;
 }
-
-
-/**
- * Converts a Hebcal event to a FullCalendar.io object
- * @param {Event[]} events
- * @param {hebcal.HebcalOptions} options
- * @return {Object[]}
- */
-export function eventsToFullCalendar(events, options) {
-  const tzid = options && options.location && options.location.tzid;
-  return events.map((ev) => eventToFullCalendar(ev, tzid));
-}

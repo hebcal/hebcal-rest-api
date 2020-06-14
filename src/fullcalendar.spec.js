@@ -1,6 +1,6 @@
 import test from 'ava';
 import {hebcal, Location} from '@hebcal/core';
-import {eventsToFullCalendar} from './fullcalendar';
+import {eventToFullCalendar} from './fullcalendar';
 
 test('eventToFullCalendar', (t) => {
   const options = {
@@ -16,7 +16,8 @@ test('eventToFullCalendar', (t) => {
   const events = hebcal.hebrewCalendar(options).slice(0, 10);
   const memo = 'Passover, the Feast of Unleavened Bread';
   events[4].getAttrs().memo = memo;
-  const fc = eventsToFullCalendar(events, options);
+  const tzid = options && options.location && options.location.tzid;
+  const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
   console.log(fc);
   t.pass('message');
 });

@@ -3,6 +3,7 @@
 import {hebcal, Event, flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
+import {pad2} from './common';
 
 const VTIMEZONE = {
   'US/Eastern': 'BEGIN:VTIMEZONE\r\nTZID:US/Eastern\r\nBEGIN:STANDARD\r\nDTSTART:19701101T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\r\nTZOFFSETTO:-0500\r\nTZOFFSETFROM:-0400\r\nTZNAME:EST\r\nEND:STANDARD\r\nBEGIN:DAYLIGHT\r\nDTSTART:19700308T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\r\nTZOFFSETTO:-0400\r\nTZOFFSETFROM:-0500\r\nTZNAME:EDT\r\nEND:DAYLIGHT\r\nEND:VTIMEZONE',
@@ -33,8 +34,7 @@ function icalWriteLine(res, ...str) {
  */
 function formatYYYYMMDD(d) {
   return String(d.getFullYear()).padStart(4, '0') +
-        String(d.getMonth() + 1).padStart(2, '0') +
-        String(d.getDate()).padStart(2, '0');
+        pad2(d.getMonth() + 1) + pad2(d.getDate());
 }
 
 /**
@@ -44,9 +44,7 @@ function formatYYYYMMDD(d) {
  * @return {string}
  */
 function formatTime(hour, min, sec) {
-  return String(hour).padStart(2, '0') +
-        String(min).padStart(2, '0') +
-        String(sec).padStart(2, '0');
+  return pad2(hour) + pad2(min) + pad2(sec);
 }
 
 /**

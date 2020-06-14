@@ -6,11 +6,13 @@ import {
   toISOString,
   toISOStringWithTimezone,
 } from './common';
+import {eventToFullCalendar} from './fullcalendar';
 
 /** Main interface to hebcal/icalendar */
 const icalendar = {
   csvWriteContents,
   icalWriteContents,
+  eventToFullCalendar,
   getEventCategories,
   pad2,
   timeZoneOffsetStr,

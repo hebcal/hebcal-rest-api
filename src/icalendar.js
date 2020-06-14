@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 // import stream from 'stream';
+// eslint-disable-next-line no-unused-vars
 import {hebcal, Event, flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';

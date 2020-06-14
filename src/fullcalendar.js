@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import {hebcal, Event, flags} from '@hebcal/core';
 import {toISOStringWithTimezone, getEventCategories} from './common';
 

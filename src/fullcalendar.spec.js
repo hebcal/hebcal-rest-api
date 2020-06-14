@@ -10,6 +10,7 @@ test('eventToFullCalendar', (t) => {
     noRoshChodesh: true,
     noSpecialShabbat: true,
     candlelighting: true,
+    havdalahMins: 50,
     location: new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398),
   };
   const events = hebcal.hebrewCalendar(options).slice(0, 10);

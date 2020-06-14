@@ -1,5 +1,5 @@
 import {hebcal, Event, flags} from '@hebcal/core';
-import {toISOStringWithTimezone} from './common';
+import {toISOStringWithTimezone, getEventCategories} from './common';
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object
@@ -9,8 +9,8 @@ import {toISOStringWithTimezone} from './common';
  */
 export function eventToFullCalendar(ev, tzid) {
   const attrs = ev.getAttrs();
-  const classes = ['holiday'];
-  if (ev.getFlags() & flags.CHAG) {
+  const classes = getEventCategories(ev);
+  if (classes[0] == 'holiday' && ev.getFlags() & flags.CHAG) {
     classes.push('yomtov');
   }
   let title = ev.render();

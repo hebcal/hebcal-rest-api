@@ -1,4 +1,5 @@
 import getTimezoneOffset from 'get-timezone-offset';
+import {Event, flags} from '@hebcal/core';
 
 /**
  * @param {number} number
@@ -46,4 +47,44 @@ export function toISOStringWithTimezone(date, timeStr, tzid) {
   const str = toISOString(date);
   if (!timeStr) return str;
   return str + 'T' + timeStr + ':00' + timeZoneOffsetStr(tzid, date);
+}
+
+/**
+ * Returns a category and subcategory name
+ * @param {Event} ev
+ * @return {string[]}
+ */
+export function getEventCategories(ev) {
+  switch (ev.getFlags()) {
+    case flags.OMER_COUNT: return ['omer'];
+    case flags.HEBREW_DATE: return ['hebdate'];
+    case flags.PARSHA_HASHAVUA: return ['parashat']; // backwards-compat
+    case flags.DAF_YOMI: return ['dafyomi'];
+    case flags.ROSH_CHODESH: return ['roshchodesh'];
+    case flags.SPECIAL_SHABBAT: return ['holiday', 'shabbat'];
+    case flags.MINOR_FAST: return ['holiday', 'fast'];
+    case flags.MODERN_HOLIDAY: return ['holiday', 'modern'];
+    case flags.SHABBAT_MEVARCHIM: return ['mevarchim'];
+    default:
+      break; // fall through to string-based category
+  }
+  if (ev.getAttrs().cholHaMoedDay) {
+    return ['holiday', 'major', 'cholhamoed'];
+  }
+  switch (ev.getDesc()) {
+    case 'Havdalah':
+      return ['havdalah'];
+    case 'Candle lighting':
+      return ['candles'];
+    case 'Lag BaOmer':
+    case 'Leil Selichot':
+    case 'Pesach Sheni':
+    case 'Purim Katan':
+    case 'Shushan Purim':
+    case 'Tu B\'Av':
+    case 'Tu BiShvat':
+      return ['holiday', 'minor'];
+    default:
+      return ['holiday', 'major'];
+  }
 }

@@ -115,9 +115,9 @@ test('ical-dafyomi', (t) => {
   t.is(ev.render(), 'דף יומי: נדרים 14');
   const ical = icalendar.eventToIcal(ev, options);
   const lines = ical.split('\r\n');
-  t.is(lines.length, 12);
+  t.is(lines.length, 14);
   t.is(lines[4], 'SUMMARY:נדרים 14');
-  t.is(lines[10], 'LOCATION:דף יומי');
+  t.is(lines[11], 'LOCATION:דף יומי');
 });
 
 test('ical-omer', (t) => {

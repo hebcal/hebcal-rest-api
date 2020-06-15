@@ -21,6 +21,11 @@ export function eventToFullCalendar(ev, tzid) {
     if (colon != -1) {
       title = title.substring(0, colon);
     }
+  } else if (ev.getFlags() & flags.DAF_YOMI) {
+    const colon = title.indexOf(':');
+    if (colon != -1) {
+      title = title.substring(colon + 1);
+    }
   }
   const result = {
     title: title,

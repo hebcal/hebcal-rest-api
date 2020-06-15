@@ -8,22 +8,14 @@ export default [
   {
     input: 'src/index.js',
     output: [
-      {
-        file: pkg.main,
-        format: 'cjs',
-        name: 'hebcalICalendar',
-        globals: {
-          '@hebcal/core': 'hebcalCore',
-          '@hebcal/leyning': 'hebcalLeyning',
-        },
-      },
+      {file: pkg.main, format: 'cjs', name: pkg.name},
       {
         file: 'dist/bundle.min.js',
         format: 'umd',
-        name: 'hebcalICalendar',
+        name: 'hebcal__icalendar',
         globals: {
-          '@hebcal/core': 'hebcalCore',
-          '@hebcal/leyning': 'hebcalLeyning',
+          '@hebcal/core': 'hebcal__core',
+          '@hebcal/leyning': 'hebcal__leyning',
         },
         plugins: [terser()],
       },

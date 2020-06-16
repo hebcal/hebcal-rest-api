@@ -1,6 +1,38 @@
 import {hebcal, Event, flags} from '@hebcal/core';
-import leyning, { Triennial } from '@hebcal/leyning';
-import {getEventCategories, toISOStringWithTimezone, toISOString} from './common';
+import leyning from '@hebcal/leyning';
+import {
+  getCalendarTitle,
+  getEventCategories,
+  toISOStringWithTimezone,
+  toISOString,
+} from './common';
+
+/**
+ * Formats a list events for the classic Hebcal.com JSON API response
+ * @param {Event[]} events
+ * @param {string} title
+ * @param {hebcal.HebcalOptions} options
+ * @return {Object}
+ */
+export function eventsToClassicApi(events, title, options) {
+  const result = {
+    date: new Date().toISOString(),
+    title: getCalendarTitle(events, options),
+  };
+  const location = options.location;
+  const tzid = location && location.getTzid();
+  if (location && location.name) {
+    result.location = {
+      city: location.getName(),
+      tzid: tzid,
+      latitude: location.getLatitude(),
+      longitude: location.getLongitude(),
+      cc: location.getCountryCode(),
+    };
+  }
+  result.items = events.map((ev) => eventToClassicApiObject(ev, tzid, options.il));
+  return result;
+}
 
 /**
  * Converts a Hebcal event to a classic Hebcal.com JSON API object

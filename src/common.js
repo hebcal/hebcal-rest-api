@@ -89,3 +89,39 @@ export function getEventCategories(ev) {
       return ['holiday', 'major'];
   }
 }
+
+/**
+ * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
+ * @param {Event[]} events
+ * @param {hebcal.HebcalOptions} options
+ * @return {string}
+ */
+export function getCalendarTitle(events, options) {
+  let title = 'Hebcal';
+  const location = options.location;
+  if (options.yahrzeit) {
+    title += ' Yahrzeits and Anniversaries';
+  } else if (location && location.name) {
+    title += ' ' + location.name;
+  } else if (options.il) {
+    title += ' Israel';
+  } else {
+    title += ' Diaspora';
+  }
+  if (options.isHebrewYear) {
+    title += ' ' + options.year;
+  } else {
+    const start = events[0].getDate().greg();
+    const end = events[events.length - 1].getDate().greg();
+    if (start.getFullYear() != end.getFullYear()) {
+      title += ' ' + start.getFullYear() + '-' + end.getFullYear();
+    } else if (start.getMonth() == end.getMonth()) {
+      const monthFormat = new Intl.DateTimeFormat('en-US', {month: 'long'});
+      const startMonth = monthFormat.format(start);
+      title += ' ' + startMonth + ' ' + start.getFullYear();
+    } else {
+      title += ' ' + start.getFullYear();
+    }
+  }
+  return title;
+}

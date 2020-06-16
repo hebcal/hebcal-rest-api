@@ -18,8 +18,8 @@
     "url": "https://github.com/hebcal/hebcal-icalendar/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^1.1.1",
-    "@hebcal/leyning": "^1.0.10"
+    "@hebcal/core": "^1.1.2",
+    "@hebcal/leyning": "^1.1.1"
   },
   "scripts": {
     "build": "rollup -c",

@@ -1,44 +1,47 @@
-var locale = 'en-US';
-var us_re = /(\d+).(\d+).(\d+),?\s+(\d+).(\d+)(.(\d+))?/;
+const _formatters = new Map();
 
-var format_options = {
-	timeZone: "UTC",
-	hour12: false,
-	year: 'numeric',
-	month: 'numeric',
-	day: 'numeric',
-	hour: 'numeric',
-	minute: 'numeric'
-};
-
-var utc_f = new Intl.DateTimeFormat(locale, format_options );
-
-function parseDate( date_str ) {
-	date_str = date_str.replace(/[\u200E\u200F]/g, '');
-	var date_a = us_re.exec( date_str );
-	return [].slice.call(us_re.exec( date_str ), 1)
-		.map( Math.floor );
+/**
+ * @param {string} tzid
+ * @return {Intl.DateTimeFormat}
+ */
+function getFormatter(tzid) {
+  const fmt = _formatters.get(tzid);
+  if (fmt) return fmt;
+  const f = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+    timeZone: tzid,
+  });
+  _formatters.set(tzid, f);
+  return f;
 }
 
-function diffMinutes( d1, d2 ) {
-	var day = d1[1] - d2[1];
-	var hour = d1[3] - d2[3];
-	var min = d1[4] - d2[4];
+const dateFormatRegex = /^(\d+).(\d+).(\d+),?\s+(\d+).(\d+).(\d+)/;
 
-	if( day > 15 ) day = -1;
-	if( day < -15 ) day = 1;
-
-	return 60 * ( 24 * day + hour ) + min;
+/**
+ * @param {string} tzid
+ * @param {Date} date
+ * @return {string}
+ */
+function getPseudoISO(tzid, date) {
+  const str = getFormatter(tzid).format(date);
+  const [, mm, dd, yyyy, hour, min, sec] = dateFormatRegex.exec(str);
+  return `${yyyy}-${mm}-${dd}T${hour}:${min}:${sec}Z`;
 }
 
-module.exports = function getTimezoneOffset( tz_str, date ) {
-
-	format_options.timeZone = tz_str;
-
-	var loc_f = new Intl.DateTimeFormat(locale, format_options );
-
-	return diffMinutes(
-		parseDate( utc_f.format( date )),
-		parseDate( loc_f.format( date ))
-	);
+/**
+ * @param {string} tzid
+ * @param {Date} date
+ * @return {number}
+ */
+export function getTimezoneOffset(tzid, date) {
+  const utcStr = getPseudoISO('UTC', date);
+  const localStr = getPseudoISO(tzid, date);
+  const diffMs = new Date(utcStr).getTime() - new Date(localStr).getTime();
+  return Math.ceil(diffMs / 1000 / 60);
 }

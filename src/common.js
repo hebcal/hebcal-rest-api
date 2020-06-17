@@ -1,5 +1,4 @@
-const getTimezoneOffset = require('./getTimezoneOffset');
-// import getTimezoneOffset from 'get-timezone-offset';
+import {getTimezoneOffset} from './getTimezoneOffset';
 // eslint-disable-next-line no-unused-vars
 import {Event, flags} from '@hebcal/core';
 
@@ -15,18 +14,13 @@ export function pad2(number) {
 }
 
 /**
-   * Get offset string (like "+05:00" or "-08:00") from tzid (like "Europe/Moscow")
-   * @param {string} tzid
-   * @param {Date} date
-   * @return {string}
-   */
+ * Get offset string (like "+05:00" or "-08:00") from tzid (like "Europe/Moscow")
+ * @param {string} tzid
+ * @param {Date} date
+ * @return {string}
+ */
 export function timeZoneOffsetStr(tzid, date) {
-  let offset = getTimezoneOffset(tzid, date) % 1440;
-  if (offset < -720) {
-    offset += 1440;
-  } else if (offset > 720) {
-    offset -= 1440;
-  }
+  const offset = getTimezoneOffset(tzid, date);
   const offsetAbs = Math.abs(offset);
   const dir = Boolean(offset < 0);
   const hours = Math.floor(offsetAbs / 60);

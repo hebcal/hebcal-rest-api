@@ -30,7 +30,8 @@ const dateFormatRegex = /^(\d+).(\d+).(\d+),?\s+(\d+).(\d+).(\d+)/;
  */
 function getPseudoISO(tzid, date) {
   const str = getFormatter(tzid).format(date);
-  const [, mm, dd, yyyy, hour, min, sec] = dateFormatRegex.exec(str);
+  let [, mm, dd, yyyy, hour, min, sec] = dateFormatRegex.exec(str);
+  if (hour == '24') hour = '00';
   return `${yyyy}-${mm}-${dd}T${hour}:${min}:${sec}Z`;
 }
 

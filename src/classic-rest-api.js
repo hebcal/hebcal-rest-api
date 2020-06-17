@@ -10,11 +10,10 @@ import {
 /**
  * Formats a list events for the classic Hebcal.com JSON API response
  * @param {Event[]} events
- * @param {string} title
  * @param {hebcal.HebcalOptions} options
  * @return {Object}
  */
-export function eventsToClassicApi(events, title, options) {
+export function eventsToClassicApi(events, options) {
   const result = {
     date: new Date().toISOString(),
     title: getCalendarTitle(events, options),

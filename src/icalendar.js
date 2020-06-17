@@ -245,10 +245,9 @@ function exportHttpHeader(res, mimeType, fileName) {
  *
  * @param {stream.Writable} res
  * @param {Event[]} events
- * @param {string} title
  * @param {hebcal.HebcalOptions} options
  */
-export function icalWriteContents(res, events, title, options) {
+export function icalWriteContents(res, events, options) {
   const mimeType = 'text/calendar; charset=UTF-8';
   if (options.subscribe) {
     res.setHeader('Content-Type', mimeType);
@@ -258,16 +257,6 @@ export function icalWriteContents(res, events, title, options) {
   }
 
   icalWriteLine(res, 'BEGIN:VCALENDAR');
-  const location = options.location;
-  if (location && location.name) {
-    title = location.name + ' ' + title;
-  } else if (!options.yahrzeit) {
-    title = (options.il ? 'Israel' : 'Diaspora') + ' ' + title;
-  }
-  title = title
-      .replace(/,/g, '\\,')
-      .replace(/\s+/g, ' ')
-      .trim();
 
   icalWriteLine(res, 'VERSION:2.0');
   const uclang = (options.locale || 'en').toUpperCase();
@@ -277,16 +266,14 @@ export function icalWriteContents(res, events, title, options) {
       'METHOD:PUBLISH',
       'X-LOTUS-CHARSET:UTF-8',
       'X-PUBLISHED-TTL:PT7D');
-  if (title) {
-    icalWriteLine(res, `X-WR-CALNAME:Hebcal ${title}`);
-  } else {
-    icalWriteLine(res, 'X-WR-CALNAME:Hebcal');
-  }
+  const title = getCalendarTitle(events, options);
+  icalWriteLine(res, `X-WR-CALNAME:Hebcal ${title}`);
 
   // include an iCal description
   const caldesc = options.yahrzeit ? 'Yahrzeits + Anniversaries from www.hebcal.com' : 'Jewish Holidays from www.hebcal.com';
   icalWriteLine(res, `X-WR-CALDESC:${caldesc}`);
 
+  const location = options.location;
   if (location && location.tzid) {
     icalWriteLine(res, `X-WR-TIMEZONE;VALUE=TEXT:${tzid}`);
     if (VTIMEZONE[tzid]) {

@@ -21,7 +21,10 @@ export function pad2(number) {
    * @return {string}
    */
 export function timeZoneOffsetStr(tzid, date) {
-  const offset = getTimezoneOffset(tzid, date) % 1440;
+  let offset = getTimezoneOffset(tzid, date) % 1440;
+  if (offset < -720) {
+    offset = (-1 * offset) - 720;
+  }
   const offsetAbs = Math.abs(offset);
   const dir = Boolean(offset < 0);
   const hours = Math.floor(offsetAbs / 60);

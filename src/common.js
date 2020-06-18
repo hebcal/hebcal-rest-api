@@ -3,6 +3,24 @@ import {getTimezoneOffset} from './getTimezoneOffset';
 import {Event, flags} from '@hebcal/core';
 
 /**
+ * @param {hebcal.HebcalOptions} options
+ * @return {string}
+ */
+export function getDownloadFilename(options) {
+  let fileName = 'hebcal_' + options.year;
+  if (options.isHebrewYear) {
+    fileName += 'H';
+  }
+  if (options.month) {
+    fileName += '_' + options.month;
+  }
+  if (options.location && options.location.name) {
+    fileName += '_' + makeAnchor(options.location.name);
+  }
+  return fileName;
+}
+
+/**
  * @param {number} number
  * @return {string}
  */

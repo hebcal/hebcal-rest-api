@@ -18,7 +18,7 @@
     }
 
     #calendar {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 40px auto;
     }
 
@@ -88,12 +88,12 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    var calendar = window['hebcalFullCalendar'] = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'dayGrid' ],
       defaultView: 'dayGridMonth',
       header: {
-        left: 'prev,next today',
-        center: 'title',
+        left: 'title',
+        right: 'prev,next today',
       },
       timeZone: 'Europe/Paris',
       events: function(info, successCallback, failureCallback) {
@@ -114,6 +114,15 @@
     });
     calendar.render();
   });
+
+  document.addEventListener('keydown', function(e) {
+        if (e.keyCode == 37) {
+          window['hebcalFullCalendar'].prev();
+        } else if (e.keyCode == 39) {
+          window['hebcalFullCalendar'].next();
+        }
+    });
+
 
 </script>
 

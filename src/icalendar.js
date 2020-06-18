@@ -4,7 +4,7 @@
 import {hebcal, Event, flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
-import {pad2} from './common';
+import {pad2, getDownloadFilename, getCalendarTitle} from './common';
 
 const VTIMEZONE = {
   'US/Eastern': 'BEGIN:VTIMEZONE\r\nTZID:US/Eastern\r\nBEGIN:STANDARD\r\nDTSTART:19701101T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\r\nTZOFFSETTO:-0500\r\nTZOFFSETFROM:-0400\r\nTZNAME:EST\r\nEND:STANDARD\r\nBEGIN:DAYLIGHT\r\nDTSTART:19700308T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\r\nTZOFFSETTO:-0400\r\nTZOFFSETFROM:-0500\r\nTZNAME:EDT\r\nEND:DAYLIGHT\r\nEND:VTIMEZONE',
@@ -21,7 +21,7 @@ const VTIMEZONE = {
  * @param {stream.Writable} res
  * @param {...string} str
  */
-function icalWriteLine(res, ...str) {
+export function icalWriteLine(res, ...str) {
   for (const s of str) {
     res.write(s);
     res.write('\r\n');
@@ -255,128 +255,48 @@ export function icalWriteContents(res, events, options) {
     const fileName = getDownloadFilename(options) + '.ics';
     exportHttpHeader(res, mimeType, fileName);
   }
+}
 
-  icalWriteLine(res, 'BEGIN:VCALENDAR');
+/**
+ * Renders an array of events as a full RFC 2445 iCalendar string
+ * @param {Event[]} events
+ * @param {hebcal.HebcalOptions} options
+ * @return {string} multi-line result, delimited by \r\n
+ */
+export function eventsToIcalendar(events, options) {
+  let res = [];
 
-  icalWriteLine(res, 'VERSION:2.0');
+  res.push('BEGIN:VCALENDAR');
+
+  res.push('VERSION:2.0');
   const uclang = (options.locale || 'en').toUpperCase();
-  icalWriteLine(res,
+  res.push(
       `PRODID:-//hebcal.com/NONSGML Hebcal Calendar v7.0//${uclang}`,
       'CALSCALE:GREGORIAN',
       'METHOD:PUBLISH',
       'X-LOTUS-CHARSET:UTF-8',
       'X-PUBLISHED-TTL:PT7D');
   const title = getCalendarTitle(events, options);
-  icalWriteLine(res, `X-WR-CALNAME:Hebcal ${title}`);
+  res.push(`X-WR-CALNAME:${title}`);
 
   // include an iCal description
   const caldesc = options.yahrzeit ? 'Yahrzeits + Anniversaries from www.hebcal.com' : 'Jewish Holidays from www.hebcal.com';
-  icalWriteLine(res, `X-WR-CALDESC:${caldesc}`);
+  res.push(`X-WR-CALDESC:${caldesc}`);
 
   const location = options.location;
   if (location && location.tzid) {
-    icalWriteLine(res, `X-WR-TIMEZONE;VALUE=TEXT:${tzid}`);
+    const tzid = location.tzid;
+    res.push(`X-WR-TIMEZONE;VALUE=TEXT:${tzid}`);
     if (VTIMEZONE[tzid]) {
-      icalWriteLine(res, VTIMEZONE[tzid]);
+      res.push(VTIMEZONE[tzid]);
     } else {
       // const vtimezoneIcs = `/foo/zoneinfo/${tzid}.ics`;
       // read it from disk
     }
   }
 
-  const dtstamp = makeDtstamp(new Date());
-  events.forEach((e) => icalWriteEvent(res, e, dtstamp, options));
-  icalWriteLine(res, 'END:VCALENDAR');
+  options.dtstamp = makeDtstamp(new Date());
+  res = res.concat(events.map((e) => eventToIcal(e, options)));
+  res.push('END:VCALENDAR');
+  return res.join('\r\n');
 }
-
-/**
- * @param {hebcal.HebcalOptions} options
- * @return {string}
- */
-function getDownloadFilename(options) {
-  let fileName = 'hebcal_' + options.year;
-  if (options.isHebrewYear) {
-    fileName += 'H';
-  }
-  if (options.month) {
-    fileName += '_' + options.month;
-  }
-  if (options.location && options.location.name) {
-    fileName += '_' + makeAnchor(options.location.name);
-  }
-  return fileName;
-}
-
-/**
- * Renders an Event as a string
- * @param {Event} e
- * @param {hebcal.HebcalOptions} options
- * @return {string}
- */
-export function eventToCsv(e, options) {
-  const d = e.getDate().greg();
-  const mday = d.getDate();
-  const mon = d.getMonth() + 1;
-  const year = String(d.getFullYear()).padStart(4, '0');
-  const date = options.euro ? `${mday}/${mon}/${year}` : `${mon}/${mday}/${year}`;
-
-  let subj = e.render();
-  let startTime = '';
-  let endTime = '';
-  let endDate = '';
-  let allDay = '"true"';
-
-  const attrs = e.getAttrs();
-  const timed = Boolean(attrs.eventTime);
-  if (timed) {
-    const timeStr = hebcal.reformatTimeStr(attrs.eventTimeStr, ' PM', options);
-    endTime = startTime = `"${timeStr}"`;
-    endDate = date;
-    allDay = '"false"';
-    // replace "Candle lighting: 15:34" with shorter title
-    const colon = subj.indexOf(': ');
-    if (colon != -1) {
-      subj = subj.substring(0, colon);
-    }
-  }
-
-  let loc = 'Jewish Holidays';
-  const mask = e.getFlags();
-  if (timed && options.location && options.location.name) {
-    loc = options.location.name;
-  } else if (mask & flags.DAF_YOMI) {
-    const colon = subj.indexOf(': ');
-    if (colon != -1) {
-      loc = subj.substring(0, colon);
-      subj = subj.substring(colon + 2);
-    }
-  }
-
-  subj = subj.replace(/,/g, '').replace(/"/g, '\'\'');
-  const memo = (attrs.memo || '').replace(/,/g, ';').replace(/"/g, '\'\'');
-
-  const showTimeAs = (timed || (mask & flags.CHAG)) ? 4 : 3;
-  return `"${subj}",${date},${startTime},${endDate},${endTime},${allDay},"${memo}",${showTimeAs},"${loc}"`;
-}
-
-/**
- * @param {stream.Writable} res
- * @param {Event[]} events
- * @param {hebcal.HebcalOptions} options
- */
-export function csvWriteContents(res, events, options) {
-  const fileName = getDownloadFilename(options) + '.csv';
-  exportHttpHeader(res, 'text/x-csv', fileName);
-  res.write('"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"\r\n');
-  events.forEach((e) => {
-    res.write(eventToCsv(e, options));
-    res.write('\r\n');
-  });
-}
-
-export default {
-  eventToCsv,
-  csvWriteContents,
-  eventToIcal,
-  icalWriteContents,
-};

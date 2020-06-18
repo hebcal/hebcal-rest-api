@@ -1,4 +1,5 @@
-import {csvWriteContents, icalWriteContents} from './icalendar';
+import {eventToIcal, eventsToIcalendar} from './icalendar';
+import {eventToCsv, eventsToCsv} from './csv';
 import {
   getEventCategories,
   pad2,
@@ -12,8 +13,10 @@ import countryNames from './countryNames.json';
 /** Main interface to hebcal/icalendar */
 const icalendar = {
   countryNames,
-  csvWriteContents,
-  icalWriteContents,
+  eventToCsv,
+  eventsToCsv,
+  eventToIcal,
+  eventsToIcalendar,
   eventToFullCalendar,
   getEventCategories,
   pad2,

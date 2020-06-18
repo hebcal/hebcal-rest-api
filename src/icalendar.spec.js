@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import test from 'ava';
 import {hebcal, Location} from '@hebcal/core';
-import icalendar from './icalendar';
+import * as icalendar from './icalendar';
 
 test('ical-sedra', (t) => {
   const options = {year: 1993, month: 4, sedrot: true, noHolidays: true};
@@ -129,24 +129,16 @@ test('ical-omer', (t) => {
   t.is(lines[4], 'SUMMARY:1st day of the Omer');
 });
 
-
-test('eventToCsv', (t) => {
+test('eventsToIcalendar', (t) => {
   const options = {
-    year: 1990,
-    month: 4,
-    noMinorFast: true,
-    noRoshChodesh: true,
-    noSpecialShabbat: true,
+    year: 2020,
+    month: 2,
+    sedrot: true,
     candlelighting: true,
-    location: new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398),
+    location: Location.lookup('Hawaii'),
   };
-  const events = hebcal.hebrewCalendar(options).slice(0, 5);
-  const memo = 'Passover, the Feast of Unleavened Bread';
-  events[4].getAttrs().memo = memo;
-  const csv = events.map((e) => icalendar.eventToCsv(e, options));
-  t.is(csv[0], `"Candle lighting",4/6/1990,"7:04 PM",4/6/1990,"7:04 PM","false","",4,"Chicago"`);
-  t.is(csv[1], `"Havdalah",4/7/1990,"8:06 PM",4/7/1990,"8:06 PM","false","",4,"Chicago"`);
-  t.is(csv[2], `"Erev Pesach",4/9/1990,,,,"true","",3,"Jewish Holidays"`);
-  t.is(csv[3], `"Candle lighting",4/9/1990,"7:07 PM",4/9/1990,"7:07 PM","false","",4,"Chicago"`);
-  t.is(csv[4], `"Pesach I",4/10/1990,,,,"true","Passover; the Feast of Unleavened Bread",4,"Jewish Holidays"`);
+  const events = hebcal.hebrewCalendar(options);
+  const ical = icalendar.eventsToIcalendar(events, options);
+  console.log(ical);
+  t.pass('message');
 });

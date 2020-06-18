@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/icalendar",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "ical",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@hebcal/core": "^1.1.4",
-    "@hebcal/leyning": "^1.1.1"
+    "@hebcal/leyning": "^1.1.2"
   },
   "scripts": {
     "build": "rollup -c",

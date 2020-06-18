@@ -33,8 +33,12 @@ export function eventToFullCalendar(ev, tzid) {
     allDay: !Boolean(attrs.eventTime),
     className: classes.join(' '),
   };
-  const hebrew = hebcal.getHebrewForEvent(ev);
+  let hebrew = hebcal.getHebrewForEvent(ev);
   if (hebrew) {
+    const colon = hebrew.indexOf(':');
+    if (colon != -1 && ev.getFlags() & flags.DAF_YOMI) {
+      hebrew = hebrew.substring(colon + 1);
+    }
     result.hebrew = hebcal.hebrewStripNikkud(hebrew);
   }
   const url = hebcal.getEventUrl(ev);

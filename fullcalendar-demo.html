@@ -88,6 +88,7 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
+    var location = hebcal__core.Location.lookup('Helsinki');
     var calendar = window['hebcalFullCalendar'] = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'dayGrid' ],
       defaultView: 'dayGridMonth',
@@ -95,19 +96,20 @@
         left: 'title',
         right: 'prev,next today',
       },
-      timeZone: 'Europe/Paris',
+      timeZone: location.getTzid(),
       events: function(info, successCallback, failureCallback) {
         const options = {
           start: info.start,
           end: info.end,
           isHebrewYear: false,
           candlelighting: true,
-          location: hebcal__core.Location.lookup('Paris'),
+          location: location,
           il: false,
           sedrot: true,
           dafyomi: true,
           omer: true,
           locale: 'ashkenazi',
+          addHebrewDates: true,
         };
         const events = hebcal__core.hebcal.hebrewCalendar(options);
         const fcEvents = events.map((ev) => hebcal__icalendar.eventToFullCalendar(ev, location.tzid));

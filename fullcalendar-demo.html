@@ -107,9 +107,16 @@
           sedrot: true,
           dafyomi: true,
           omer: true,
+          locale: 'ashkenazi',
         };
         const events = hebcal__core.hebcal.hebrewCalendar(options);
-        successCallback(events.map((ev) => hebcal__icalendar.eventToFullCalendar(ev, location.tzid)));
+        const fcEvents = events.map((ev) => hebcal__icalendar.eventToFullCalendar(ev, location.tzid));
+        for (let i = 0; i < fcEvents.length; i++) {
+          if (fcEvents[i].hebrew) {
+            fcEvents[i].title += '\n' + fcEvents[i].hebrew;
+          }
+        }
+        successCallback(fcEvents);
       },
     });
     calendar.render();

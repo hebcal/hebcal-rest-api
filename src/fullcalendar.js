@@ -33,6 +33,10 @@ export function eventToFullCalendar(ev, tzid) {
     allDay: !Boolean(attrs.eventTime),
     className: classes.join(' '),
   };
+  const hebrew = hebcal.getHebrewForEvent(ev);
+  if (hebrew) {
+    result.hebrew = hebcal.hebrewStripNikkud(hebrew);
+  }
   const url = hebcal.getEventUrl(ev);
   if (url) result.url = url;
   if (attrs.memo) result.description = attrs.memo;

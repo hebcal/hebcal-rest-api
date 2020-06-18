@@ -20,6 +20,7 @@ test('eventToClassicApiObject', (t) => {
     title: 'Candle lighting: 21:17',
     date: '2020-05-22T21:17:00+02:00',
     category: 'candles',
+    hebrew: 'הדלקת נרות',
     title_orig: 'Candle lighting',
   };
   t.deepEqual(candlesActual, candlesExpected);
@@ -28,6 +29,7 @@ test('eventToClassicApiObject', (t) => {
     title: 'Parashat Bamidbar',
     date: '2020-05-23',
     category: 'parashat',
+    hebrew: 'פרשת במדבר',
     leyning: {
       '1': 'Numbers 1:1 - 1:19',
       '2': 'Numbers 1:20 - 1:54',
@@ -60,6 +62,7 @@ test('eventToClassicApiObject', (t) => {
     category: 'holiday',
     subcat: 'major',
     yomtov: true,
+    hebrew: 'שבועות יום א׳',
     leyning: {
       '1': 'Exodus 19:1 - 19:6',
       '2': 'Exodus 19:7 - 19:13',
@@ -76,7 +79,7 @@ test('eventToClassicApiObject', (t) => {
 });
 
 test('eventsToClassicApi', (t) => {
-  const location = Location.lookup('Providence');
+  const location = Location.lookup('Vancouver');
   const options = {
     year: 2022,
     month: 5,
@@ -87,17 +90,33 @@ test('eventsToClassicApi', (t) => {
   };
   const events = hebcal.hebrewCalendar(options);
   const apiResult = eventsToClassicApi(events, options);
-  t.is(apiResult.title, 'Hebcal Providence May 2022');
-  t.is(apiResult.location.city, 'Providence');
+  t.is(apiResult.title, 'Hebcal Vancouver May 2022');
+  const locationExpected = {
+    cc: 'CA',
+    city: 'Vancouver',
+    country: 'Canada',
+    latitude: 49.24966,
+    longitude: -123.11934,
+    tzid: 'America/Vancouver',
+  };
+  t.deepEqual(apiResult.location, locationExpected);
   t.is(Array.isArray(apiResult.items), true);
-  const item = apiResult.items[0];
-  t.is(item.title, 'Rosh Chodesh Iyyar');
-  t.is(item.date, '2022-05-01');
-  t.is(item.category, 'roshchodesh');
-  t.is(item.link, 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar');
+  const roshChodesh = apiResult.items[0];
+  const roshChodeshExpected = {
+    category: 'roshchodesh',
+    date: '2022-05-01',
+    hebrew: 'ראש חודש אייר',
+    link: 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar',
+    title: 'Rosh Chodesh Iyyar',
+  };
+  t.deepEqual(roshChodesh, roshChodeshExpected);
   const candleLighting = apiResult.items[4];
-  t.is(candleLighting.title, 'Candle lighting: 19:32');
-  t.is(candleLighting.date, '2022-05-06T19:32:00-04:00');
-  t.is(candleLighting.category, 'candles');
-  t.is(candleLighting.title_orig, 'Candle lighting');
+  const candleLightingExpected = {
+    category: 'candles',
+    date: '2022-05-06T20:19:00-07:00',
+    hebrew: 'הדלקת נרות',
+    title: 'Candle lighting: 20:19',
+    title_orig: 'Candle lighting',
+  };
+  t.deepEqual(candleLighting, candleLightingExpected);
 });

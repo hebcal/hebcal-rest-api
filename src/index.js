@@ -7,9 +7,11 @@ import {
   toISOStringWithTimezone,
 } from './common';
 import {eventToFullCalendar} from './fullcalendar';
+import countryNames from './countryNames.json';
 
 /** Main interface to hebcal/icalendar */
 const icalendar = {
+  countryNames,
   csvWriteContents,
   icalWriteContents,
   eventToFullCalendar,

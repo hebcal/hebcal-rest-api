@@ -6,6 +6,7 @@ import {
   toISOStringWithTimezone,
   toISOString,
 } from './common';
+import countryNames from './countryNames.json';
 
 /**
  * Formats a list events for the classic Hebcal.com JSON API response
@@ -27,6 +28,7 @@ export function eventsToClassicApi(events, options) {
       latitude: location.getLatitude(),
       longitude: location.getLongitude(),
       cc: location.getCountryCode(),
+      country: countryNames[location.getCountryCode()],
     };
   }
   result.items = events.map((ev) => eventToClassicApiObject(ev, tzid, options.il));
@@ -63,6 +65,10 @@ export function eventToClassicApiObject(ev, tzid, il) {
   const desc = ev.getDesc();
   if (title != desc) {
     result.title_orig = desc;
+  }
+  const hebrew = hebcal.getHebrewForEvent(ev);
+  if (hebrew) {
+    result.hebrew = hebcal.hebrewStripNikkud(hebrew);
   }
   if (!timed) {
     const isParsha = ev.getFlags() == flags.PARSHA_HASHAVUA;

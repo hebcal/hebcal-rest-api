@@ -11,8 +11,9 @@ test('ical-sedra', (t) => {
   t.is(lines.length, 13);
   t.is(lines[0], 'BEGIN:VEVENT');
   t.is(lines[7], 'TRANSP:TRANSPARENT');
-  t.is(lines[10], 'DESCRIPTION:Torah: Leviticus 6:1-8:36\\nHaftarah: Malachi 3:4 - 3:24\\n\\nhttps://hebcal.com/s/tzav');
-  t.is(lines[11], 'URL:https://hebcal.com/s/tzav');
+  let expectedUrl = 'https://www.hebcal.com/sedrot/tzav?utm_source=js&utm_medium=icalendar';
+  t.is(lines[10], `DESCRIPTION:Torah: Leviticus 6:1-8:36\\nHaftarah: Malachi 3:4 - 3:24\\n\\n${expectedUrl}`);
+  t.is(lines[11], `URL:${expectedUrl}`);
   t.is(lines[12], 'END:VEVENT');
 
   const options2 = {year: 1993, month: 6, sedrot: true, noHolidays: true};
@@ -22,8 +23,9 @@ test('ical-sedra', (t) => {
   t.is(lines.length, 13);
   t.is(lines[0], 'BEGIN:VEVENT');
   t.is(lines[7], 'TRANSP:TRANSPARENT');
-  t.is(lines[10], 'DESCRIPTION:Torah: Numbers 16:1-18:32\\nMaftir: Numbers 28:9 - 28:15 | Shabbat Rosh Chodesh\\nHaftarah: Isaiah 66:1 - 66:24\\n\\nhttps://hebcal.com/s/korach');
-  t.is(lines[11], 'URL:https://hebcal.com/s/korach');
+  expectedUrl = 'https://www.hebcal.com/sedrot/korach?utm_source=js&utm_medium=icalendar';
+  t.is(lines[10], `DESCRIPTION:Torah: Numbers 16:1-18:32\\nMaftir: Numbers 28:9 - 28:15 | Shabbat Rosh Chodesh\\nHaftarah: Isaiah 66:1 - 66:24\\n\\n${expectedUrl}`);
+  t.is(lines[11], `URL:${expectedUrl}`);
   t.is(lines[12], 'END:VEVENT');
 });
 
@@ -49,25 +51,26 @@ test('ical-transp-opaque', (t) => {
   const dtend = lines[6];
   t.is(dtend.startsWith('DTEND'), true);
   t.is(dtend.substring(dtend.indexOf(':') + 1), '19930406');
-  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\n\\nhttps://hebcal.com/h/pesach`);
+  const expectedUrl = 'https://www.hebcal.com/holidays/pesach?utm_source=js&utm_medium=icalendar'
+  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\n\\n${expectedUrl}`);
 
   events[1].getAttrs().memo = memo;
   lines = icalendar.eventToIcal(events[1], options).split('\r\n');
   t.is(lines[4], 'SUMMARY:Pesach I');
   t.is(lines[7], 'TRANSP:OPAQUE');
-  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\nTorah: Exodus 12:21-12:51\\nHaftarah: Joshua 5:2 - 6:1\\n\\nhttps://hebcal.com/h/pesach`);
+  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\nTorah: Exodus 12:21-12:51\\nHaftarah: Joshua 5:2 - 6:1\\n\\n${expectedUrl}`);
 
   events[2].getAttrs().memo = memo;
   lines = icalendar.eventToIcal(events[2], options).split('\r\n');
   t.is(lines[4], 'SUMMARY:Pesach II');
   t.is(lines[7], 'TRANSP:OPAQUE');
-  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\nTorah: Leviticus 22:26-23:44\\nHaftarah: II Kings 23:1 - 23:9\\; 23:21 - 23:25\\n\\nhttps://hebcal.com/h/pesach`);
+  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\nTorah: Leviticus 22:26-23:44\\nHaftarah: II Kings 23:1 - 23:9\\; 23:21 - 23:25\\n\\n${expectedUrl}`);
 
   events[3].getAttrs().memo = memo;
   lines = icalendar.eventToIcal(events[3], options).split('\r\n');
   t.is(lines[4], 'SUMMARY:Pesach III (CH\'\'M)');
   t.is(lines[7], 'TRANSP:TRANSPARENT');
-  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\nTorah: Exodus 13:1-28:25\\n\\nhttps://hebcal.com/h/pesach`);
+  t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\nTorah: Exodus 13:1-28:25\\n\\n${expectedUrl}`);
 });
 
 test('ical-candles', (t) => {

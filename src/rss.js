@@ -14,7 +14,7 @@ function getLinkAndGuid(ev) {
   const dt = attrs.eventTime || ev.getDate().greg();
   const dtStr0 = dt.toISOString();
   const dtStr = encodeURIComponent(dtStr0.substring(0, attrs.eventTime ? 19 : 10));
-  const url = hebcal.getEventUrl(ev);
+  const url = ev.url();
   if (url) {
     const question = url.indexOf('?');
     if (question == -1) {

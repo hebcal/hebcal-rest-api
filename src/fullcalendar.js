@@ -33,7 +33,7 @@ export function eventToFullCalendar(ev, tzid) {
     allDay: !Boolean(attrs.eventTime),
     className: classes.join(' '),
   };
-  let hebrew = hebcal.getHebrewForEvent(ev);
+  let hebrew = ev.renderBrief('he');
   if (hebrew) {
     const colon = hebrew.indexOf(':');
     if (colon != -1 && ev.getFlags() & flags.DAF_YOMI) {
@@ -41,8 +41,15 @@ export function eventToFullCalendar(ev, tzid) {
     }
     result.hebrew = hebcal.hebrewStripNikkud(hebrew);
   }
-  const url = hebcal.getEventUrl(ev);
-  if (url) result.url = url;
+  const url = ev.url();
+  if (url) {
+    if (url.startsWith('https://www.hebcal.com')) {
+      result.url = url + '?utm_source=js&utm_medium=fc';
+    } else {
+      const sep = url.indexOf('?') == -1 ? '?' : '&';
+      result.url = url + sep + 'utm_source=hebcal.com&utm_medium=fc';
+    }
+  }
   if (attrs.memo) result.description = attrs.memo;
   return result;
 }

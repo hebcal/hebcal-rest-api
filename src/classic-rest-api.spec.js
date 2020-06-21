@@ -52,7 +52,7 @@ test('eventToClassicApiObject', (t) => {
         'maftir': 'Numbers 1:52 - 1:54',
       },
     },
-    link: 'https://www.hebcal.com/sedrot/bamidbar',
+    link: 'https://www.hebcal.com/sedrot/bamidbar?utm_source=js&utm_medium=api',
   };
   t.deepEqual(bamidbarActual, bamidbarExpected);
   const shavuotActual = apiObjs[7];
@@ -73,7 +73,7 @@ test('eventToClassicApiObject', (t) => {
       'haftarah': 'Ezekiel 1:1-28; 3:12',
       'maftir': 'Numbers 28:26 - 28:31',
     },
-    link: 'https://www.hebcal.com/holidays/shavuot',
+    link: 'https://www.hebcal.com/holidays/shavuot?utm_source=js&utm_medium=api',
   };
   t.deepEqual(shavuotActual, shavuotExpected);
 });
@@ -106,7 +106,7 @@ test('eventsToClassicApi', (t) => {
     category: 'roshchodesh',
     date: '2022-05-01',
     hebrew: 'ראש חודש אייר',
-    link: 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar',
+    link: 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar?utm_source=js&utm_medium=api',
     title: 'Rosh Chodesh Iyyar',
   };
   t.deepEqual(roshChodesh, roshChodeshExpected);

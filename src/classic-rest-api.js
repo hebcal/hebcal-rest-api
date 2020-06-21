@@ -66,7 +66,7 @@ export function eventToClassicApiObject(ev, tzid, il) {
   if (title != desc) {
     result.title_orig = desc;
   }
-  const hebrew = hebcal.getHebrewForEvent(ev);
+  const hebrew = ev.renderBrief('he');
   if (hebrew) {
     result.hebrew = hebcal.hebrewStripNikkud(hebrew);
   }
@@ -82,8 +82,15 @@ export function eventToClassicApiObject(ev, tzid, il) {
         result.leyning.triennial = formatAliyot({}, triReading);
       }
     }
-    const url = hebcal.getEventUrl(ev);
-    if (url) result.link = url;
+    const url = ev.url();
+    if (url) {
+      if (url.startsWith('https://www.hebcal.com')) {
+        result.link = url + '?utm_source=js&utm_medium=api';
+      } else {
+        const sep = url.indexOf('?') == -1 ? '?' : '&';
+        result.link = url + sep + 'utm_source=hebcal.com&utm_medium=api';
+      }
+    }
   }
   if (attrs.memo) result.memo = attrs.memo;
   return result;

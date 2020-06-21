@@ -84,6 +84,21 @@ function addOptional(arr, key, val) {
 }
 
 /**
+ * @param {string} url
+ * @return {string}
+ */
+function appendTrackingToUrl(url) {
+  if (!url) {
+    return url;
+  } else if (url.startsWith('https://www.hebcal.com')) {
+    return url + '?utm_source=js&utm_medium=icalendar';
+  } else {
+    const sep = url.indexOf('?') == -1 ? '?' : '&';
+    return url + sep + 'utm_source=hebcal.com&utm_medium=icalendar';
+  }
+}
+
+/**
  *
  * @param {Event} e
  * @param {hebcal.HebcalOptions} options
@@ -106,7 +121,7 @@ export function eventToIcal(e, options) {
   }
 
   // create memo (holiday descr, Torah, etc)
-  const url = hebcal.getShortUrl(e);
+  const url = appendTrackingToUrl(e.url());
   let memo;
   if (mask & flags.PARSHA_HASHAVUA) {
     const parshaLeyning = leyning.getLeyningForParshaHaShavua(e, options.il);
@@ -139,7 +154,8 @@ export function eventToIcal(e, options) {
       }
     }
     if (url) {
-      memo += '\\n\\n' + url;
+      if (memo.length) memo += '\\n\\n';
+      memo += url;
     }
   }
 

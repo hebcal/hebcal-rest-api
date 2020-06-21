@@ -18,6 +18,7 @@ test('eventToFullCalendar', (t) => {
   events[4].getAttrs().memo = memo;
   const tzid = options && options.location && options.location.tzid;
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
+  const expectedUrl = 'https://www.hebcal.com/holidays/pesach?utm_source=js&utm_medium=fc';
   const expected = [
     {
       title: 'Candle lighting',
@@ -39,7 +40,7 @@ test('eventToFullCalendar', (t) => {
       allDay: true,
       hebrew: 'ערב פסח',
       className: 'holiday major',
-      url: 'https://www.hebcal.com/holidays/pesach',
+      url: expectedUrl,
     },
     {
       title: 'Candle lighting',
@@ -54,7 +55,7 @@ test('eventToFullCalendar', (t) => {
       allDay: true,
       hebrew: 'פסח יום א׳',
       className: 'holiday major yomtov',
-      url: 'https://www.hebcal.com/holidays/pesach',
+      url: expectedUrl,
       description: 'Passover, the Feast of Unleavened Bread',
     },
     {
@@ -70,7 +71,7 @@ test('eventToFullCalendar', (t) => {
       allDay: true,
       hebrew: 'פסח יום ב׳',
       className: 'holiday major yomtov',
-      url: 'https://www.hebcal.com/holidays/pesach',
+      url: expectedUrl,
     },
     {
       title: 'Havdalah (50 min)',
@@ -85,7 +86,7 @@ test('eventToFullCalendar', (t) => {
       allDay: true,
       hebrew: 'פסח יום ג׳ (חול המועד)',
       className: 'holiday major cholhamoed',
-      url: 'https://www.hebcal.com/holidays/pesach',
+      url: expectedUrl,
     },
     {
       title: 'Pesach IV (CH\'\'M)',
@@ -93,7 +94,7 @@ test('eventToFullCalendar', (t) => {
       allDay: true,
       hebrew: 'פסח יום ד׳ (חול המועד)',
       className: 'holiday major cholhamoed',
-      url: 'https://www.hebcal.com/holidays/pesach',
+      url: expectedUrl,
     },
   ];
   for (let i = 0; i < fc.length; i++) {

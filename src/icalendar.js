@@ -5,6 +5,7 @@ import {hebcal, Event, flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
 import {pad2, getDownloadFilename, getCalendarTitle} from './common';
+import holidayDescription from './holidays.json';
 
 const VTIMEZONE = {
   'US/Eastern': 'BEGIN:VTIMEZONE\r\nTZID:US/Eastern\r\nBEGIN:STANDARD\r\nDTSTART:19701101T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\r\nTZOFFSETTO:-0500\r\nTZOFFSETFROM:-0400\r\nTZNAME:EST\r\nEND:STANDARD\r\nBEGIN:DAYLIGHT\r\nDTSTART:19700308T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\r\nTZOFFSETTO:-0400\r\nTZOFFSETFROM:-0500\r\nTZNAME:EDT\r\nEND:DAYLIGHT\r\nEND:VTIMEZONE',
@@ -145,7 +146,7 @@ export function eventToIcal(e, options) {
     }
     memo += '\\n\\n' + url;
   } else {
-    memo = attrs.memo || '';
+    memo = attrs.memo || holidayDescription[e.basename()] || '';
     const holidayLeyning = leyning.getLeyningForHoliday(e, options.il);
     if (holidayLeyning) {
       memo += `\\nTorah: ${holidayLeyning.summary}`;

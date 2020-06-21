@@ -7,6 +7,7 @@ import {
   toISOString,
 } from './common';
 import countryNames from './countryNames.json';
+import holidayDescription from './holidays.json';
 
 /**
  * Formats a list events for the classic Hebcal.com JSON API response
@@ -92,7 +93,8 @@ export function eventToClassicApiObject(ev, tzid, il) {
       }
     }
   }
-  if (attrs.memo) result.memo = attrs.memo;
+  const memo = attrs.memo || holidayDescription[ev.basename()];
+  if (memo) result.memo = memo;
   return result;
 }
 

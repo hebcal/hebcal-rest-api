@@ -14,10 +14,9 @@ test('eventToFullCalendar', (t) => {
     location: new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398),
   };
   const events = hebcal.hebrewCalendar(options).slice(0, 10);
-  const memo = 'Passover, the Feast of Unleavened Bread';
-  events[4].getAttrs().memo = memo;
   const tzid = options && options.location && options.location.tzid;
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
+  const pesachMemo = 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah), it commemorates the Exodus and freedom of the Israelites from ancient Egypt';
   const expectedUrl = 'https://www.hebcal.com/holidays/pesach?utm_source=js&utm_medium=fc';
   const expected = [
     {
@@ -40,6 +39,7 @@ test('eventToFullCalendar', (t) => {
       allDay: true,
       hebrew: 'ערב פסח',
       className: 'holiday major',
+      description: pesachMemo,
       url: expectedUrl,
     },
     {
@@ -56,7 +56,7 @@ test('eventToFullCalendar', (t) => {
       hebrew: 'פסח יום א׳',
       className: 'holiday major yomtov',
       url: expectedUrl,
-      description: 'Passover, the Feast of Unleavened Bread',
+      description: pesachMemo,
     },
     {
       title: 'Candle lighting',
@@ -72,6 +72,7 @@ test('eventToFullCalendar', (t) => {
       hebrew: 'פסח יום ב׳',
       className: 'holiday major yomtov',
       url: expectedUrl,
+      description: pesachMemo,
     },
     {
       title: 'Havdalah (50 min)',
@@ -87,6 +88,7 @@ test('eventToFullCalendar', (t) => {
       hebrew: 'פסח יום ג׳ (חול המועד)',
       className: 'holiday major cholhamoed',
       url: expectedUrl,
+      description: pesachMemo,
     },
     {
       title: 'Pesach IV (CH\'\'M)',
@@ -95,6 +97,7 @@ test('eventToFullCalendar', (t) => {
       hebrew: 'פסח יום ד׳ (חול המועד)',
       className: 'holiday major cholhamoed',
       url: expectedUrl,
+      description: pesachMemo,
     },
   ];
   for (let i = 0; i < fc.length; i++) {

@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import {hebcal, Event, flags} from '@hebcal/core';
 import {toISOStringWithTimezone, getEventCategories} from './common';
+import holidayDescription from './holidays.json';
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object
@@ -50,6 +51,7 @@ export function eventToFullCalendar(ev, tzid) {
       result.url = url + sep + 'utm_source=hebcal.com&utm_medium=fc';
     }
   }
-  if (attrs.memo) result.description = attrs.memo;
+  const memo = attrs.memo || holidayDescription[ev.basename()];
+  if (memo) result.description = memo;
   return result;
 }

@@ -61,6 +61,7 @@ test('eventToClassicApiObject', (t) => {
     date: '2020-05-29',
     category: 'holiday',
     subcat: 'major',
+    memo: 'Festival of Weeks, commemorates the giving of the Torah at Mount Sinai',
     yomtov: true,
     hebrew: 'שבועות יום א׳',
     leyning: {
@@ -108,6 +109,7 @@ test('eventsToClassicApi', (t) => {
     hebrew: 'ראש חודש אייר',
     link: 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar?utm_source=js&utm_medium=api',
     title: 'Rosh Chodesh Iyyar',
+    memo: 'Beginning of new Hebrew month of Iyyar. Iyyar (somtimes transliterated Iyar) is the 2nd month of the Hebrew year. Corresponds to April or May on the Gregorian calendar',
   };
   t.deepEqual(roshChodesh, roshChodeshExpected);
   const candleLighting = apiResult.items[4];

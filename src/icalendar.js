@@ -125,24 +125,27 @@ export function eventToIcal(e, options) {
   const url = appendTrackingToUrl(e.url());
   let memo;
   if (mask & flags.PARSHA_HASHAVUA) {
-    const parshaLeyning = leyning.getLeyningForParshaHaShavua(e, options.il);
-    memo = `Torah: ${parshaLeyning.summary}`;
-    if (parshaLeyning.reason) {
+    const reading = leyning.getLeyningForParshaHaShavua(e, options.il);
+    memo = `Torah: ${reading.summary}`;
+    if (reading.reason) {
       for (const num of ['7', '8', 'M']) {
-        if (parshaLeyning.reason[num]) {
+        if (reading.reason[num]) {
           const aname = Number(num) ? `${num}th aliyah` : 'Maftir';
           memo += `\\n${aname}: ` +
-                        leyning.formatAliyahWithBook(parshaLeyning.fullkriyah[num]) +
+                        leyning.formatAliyahWithBook(reading.fullkriyah[num]) +
                         ' | ' +
-                        parshaLeyning.reason[num];
+                        reading.reason[num];
         }
       }
     }
-    if (parshaLeyning.haftara) {
-      memo += '\\nHaftarah: ' + parshaLeyning.haftara;
+    if (reading.haftara) {
+      memo += '\\nHaftarah: ' + reading.haftara;
+      if (reading.reason && reading.reason.haftara) {
+        memo += ' | ' + reading.reason.haftara;
+      }
     }
-    if (parshaLeyning.sephardic) {
-      memo += '\\nHaftarah for Sephardim: ' + parshaLeyning.sephardic;
+    if (reading.sephardic) {
+      memo += '\\nHaftarah for Sephardim: ' + reading.sephardic;
     }
     memo += '\\n\\n' + url;
   } else {

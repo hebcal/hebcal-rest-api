@@ -80,9 +80,13 @@
 <script src='https://unpkg.com/@fullcalendar/core@4.4.2/main.min.js'></script>
 <script src='https://unpkg.com/@fullcalendar/daygrid@4.4.2/main.min.js'></script>
 
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
+
 <!-- hebcal-->
 <script src='./node-process-browser.js'></script>
 <script src='./node_modules/@hebcal/core/dist/bundle.js'></script>
+<script src='./node_modules/@hebcal/leyning/dist/bundle.min.js'></script>
 <script src='./dist/bundle.min.js'></script>
 <script>
 
@@ -119,6 +123,14 @@
           }
         }
         successCallback(fcEvents);
+      },
+      eventRender: function(info) {
+        if (info.event.extendedProps.description) {
+          tippy(info.el, {
+            content: info.event.extendedProps.description,
+            allowHTML: true,
+          });
+        }
       },
     });
     calendar.render();

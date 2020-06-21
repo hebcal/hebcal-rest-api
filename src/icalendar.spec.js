@@ -12,7 +12,7 @@ test('ical-sedra', (t) => {
   t.is(lines[0], 'BEGIN:VEVENT');
   t.is(lines[7], 'TRANSP:TRANSPARENT');
   let expectedUrl = 'https://www.hebcal.com/sedrot/tzav?utm_source=js&utm_medium=icalendar';
-  t.is(lines[10], `DESCRIPTION:Torah: Leviticus 6:1-8:36\\nHaftarah: Malachi 3:4 - 3:24\\n\\n${expectedUrl}`);
+  t.is(lines[10], `DESCRIPTION:Torah: Leviticus 6:1-8:36\\nHaftarah: Malachi 3:4 - 3:24 | Shabbat HaGadol\\n\\n${expectedUrl}`);
   t.is(lines[11], `URL:${expectedUrl}`);
   t.is(lines[12], 'END:VEVENT');
 
@@ -24,7 +24,7 @@ test('ical-sedra', (t) => {
   t.is(lines[0], 'BEGIN:VEVENT');
   t.is(lines[7], 'TRANSP:TRANSPARENT');
   expectedUrl = 'https://www.hebcal.com/sedrot/korach?utm_source=js&utm_medium=icalendar';
-  t.is(lines[10], `DESCRIPTION:Torah: Numbers 16:1-18:32\\nMaftir: Numbers 28:9 - 28:15 | Shabbat Rosh Chodesh\\nHaftarah: Isaiah 66:1 - 66:24\\n\\n${expectedUrl}`);
+  t.is(lines[10], `DESCRIPTION:Torah: Numbers 16:1-18:32\\nMaftir: Numbers 28:9 - 28:15 | Shabbat Rosh Chodesh\\nHaftarah: Isaiah 66:1 - 66:24 | Shabbat Rosh Chodesh\\n\\n${expectedUrl}`);
   t.is(lines[11], `URL:${expectedUrl}`);
   t.is(lines[12], 'END:VEVENT');
 });

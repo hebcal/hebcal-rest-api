@@ -2,14 +2,16 @@
 import {hebcal, Event, flags} from '@hebcal/core';
 import {toISOStringWithTimezone, getEventCategories} from './common';
 import holidayDescription from './holidays.json';
+import leyning from '@hebcal/leyning';
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object
  * @param {Event} ev
  * @param {string} tzid timeZone identifier
+ * @param {boolean} il true if Israel
  * @return {Object}
  */
-export function eventToFullCalendar(ev, tzid) {
+export function eventToFullCalendar(ev, tzid, il) {
   const attrs = ev.getAttrs();
   const classes = getEventCategories(ev);
   if (classes[0] == 'holiday' && ev.getFlags() & flags.CHAG) {
@@ -51,7 +53,35 @@ export function eventToFullCalendar(ev, tzid) {
       result.url = url + sep + 'utm_source=hebcal.com&utm_medium=fc';
     }
   }
-  const memo = attrs.memo || holidayDescription[ev.basename()];
-  if (memo) result.description = memo;
+  if (ev.getFlags() & flags.PARSHA_HASHAVUA) {
+    const reading = leyning.getLeyningForParshaHaShavua(ev, il);
+    if (reading) {
+      let memo = `Torah: ${reading.summary}`;
+      if (reading.reason) {
+        for (const num of ['7', '8', 'M']) {
+          if (reading.reason[num]) {
+            const aname = Number(num) ? `${num}th aliyah` : 'Maftir';
+            memo += `\n<br>${aname}: ` +
+                          leyning.formatAliyahWithBook(reading.fullkriyah[num]) +
+                          ' | ' +
+                          reading.reason[num];
+          }
+        }
+      }
+      if (reading.haftara) {
+        memo += '\n<br>Haftarah: ' + reading.haftara;
+        if (reading.reason && reading.reason.haftara) {
+          memo += ' | ' + reading.reason.haftara;
+        }
+      }
+      if (reading.sephardic) {
+        memo += '\n<br>Haftarah for Sephardim: ' + reading.sephardic;
+      }
+      result.description = memo;
+    }
+  } else {
+    const memo = attrs.memo || holidayDescription[ev.basename()];
+    if (memo) result.description = memo;
+  }
   return result;
 }

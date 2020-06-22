@@ -17,6 +17,7 @@ export default [
         globals: {
           '@hebcal/core': 'hebcal__core',
           '@hebcal/leyning': 'hebcal__leyning',
+          'fs': 'fs',
         },
         plugins: [terser()],
       },
@@ -30,6 +31,6 @@ export default [
       resolve(),
       commonjs(),
     ],
-    external: ['@hebcal/core', '@hebcal/leyning'],
+    external: ['@hebcal/core', '@hebcal/leyning', 'fs'],
   },
 ];

@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 // import stream from 'stream';
-// eslint-disable-next-line no-unused-vars
-import {hebcal, Event, flags} from '@hebcal/core';
+import {hebcal, flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
 import {pad2, getDownloadFilename, getCalendarTitle} from './common';
 import holidayDescription from './holidays.json';
+import fs from 'fs';
 
 const VTIMEZONE = {
   'US/Eastern': 'BEGIN:VTIMEZONE\r\nTZID:US/Eastern\r\nBEGIN:STANDARD\r\nDTSTART:19701101T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\r\nTZOFFSETTO:-0500\r\nTZOFFSETFROM:-0400\r\nTZNAME:EST\r\nEND:STANDARD\r\nBEGIN:DAYLIGHT\r\nDTSTART:19700308T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\r\nTZOFFSETTO:-0400\r\nTZOFFSETFROM:-0500\r\nTZNAME:EDT\r\nEND:DAYLIGHT\r\nEND:VTIMEZONE',
@@ -310,8 +310,16 @@ export function eventsToIcalendar(events, options) {
     if (VTIMEZONE[tzid]) {
       res.push(VTIMEZONE[tzid]);
     } else {
-      // const vtimezoneIcs = `/foo/zoneinfo/${tzid}.ics`;
-      // read it from disk
+      try {
+        const vtimezoneIcs = `./zoneinfo/${tzid}.ics`;
+        const lines = fs.readFileSync(vtimezoneIcs, 'utf-8').split('\r\n');
+        // ignore first 3 and last 1 lines
+        const str = lines.slice(3, lines.length - 2).join('\r\n');
+        res.push(str);
+        VTIMEZONE[tzid] = str; // cache for later
+      } catch (error) {
+        // ignore failure when no timezone definition to read
+      }
     }
   }
 

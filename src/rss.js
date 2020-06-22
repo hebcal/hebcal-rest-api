@@ -1,4 +1,4 @@
-import {hebcal, Location, Event} from '@hebcal/core';
+import {hebcal} from '@hebcal/core';
 import {getEventCategories} from './common';
 
 const utmParam = 'utm_source=shabbat1c&amp;utm_medium=rss';
@@ -49,8 +49,7 @@ export function eventsToRss(events, location, lang='en-US', evPubDate=true) {
     month: 'long',
     year: 'numeric',
   });
-  let str = `
-<?xml version="1.0" encoding="UTF-8"?>
+  let str = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <title>${title}</title>
@@ -59,27 +58,41 @@ export function eventsToRss(events, location, lang='en-US', evPubDate=true) {
 <description>Weekly Shabbat candle lighting times for ${cityDescr}</description>
 <language>${lang}</language>
 <copyright>Copyright (c) ${thisYear} Michael J. Radwin. All rights reserved.</copyright>
-<lastBuildDate>${lastBuildDate}</lastBuildDate>`;
+<lastBuildDate>${lastBuildDate}</lastBuildDate>
+`;
   for (const ev of events) {
-    const subj = ev.render();
-    const evDate = ev.getDate().greg();
-    const pubDate = evPubDate ? evDate.toUTCString() : lastBuildDate;
-    const [link, guid] = getLinkAndGuid(ev);
-    const description = dayFormat.format(evDate);
-    const categories = getEventCategories(ev);
-    str += `<item>
+    str += eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location);
+  }
+  str += '</channel>\n</rss>\n';
+  return str;
+}
+
+/**
+ * @param {Event} ev
+ * @param {boolean} evPubDate
+ * @param {string} lastBuildDate
+ * @param {Intl.DateTimeFormat} dayFormat
+ * @param {Location} location
+ * @return {string}
+ */
+export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location) {
+  const subj = ev.render();
+  const evDate = ev.getDate().greg();
+  const pubDate = evPubDate ? evDate.toUTCString() : lastBuildDate;
+  const [link, guid] = getLinkAndGuid(ev);
+  const description = dayFormat.format(evDate);
+  const categories = getEventCategories(ev);
+  const cat0 = categories[0];
+  const geoTags = (cat0 == 'candles') ?
+    `<geo:lat>${location.getLatitude()}</geo:lat>\n<geo:long>${location.getLongitude()}</geo:long>\n` :
+    '';
+  return `<item>
 <title>${subj}</title>
 <link>${link}</link>
 <guid isPermaLink="false">${guid}</guid>
 <description>${description}</description>
-<category>${categories[0]}</category>
+<category>${cat0}</category>
 <pubDate>${pubDate}</pubDate>
+${geoTags}</item>
 `;
-    if (categories[0] == 'candles') {
-      str += `<geo:lat>${location.getLatitude()}</geo:lat>\n<geo:long>${location.getLongitude()}</geo:long>\n`;
-    }
-    str += '</item>\n';
-  }
-  str += '</channel>\n</rss>\n';
-  return str;
 }

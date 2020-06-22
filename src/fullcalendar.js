@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import {hebcal, Event, flags} from '@hebcal/core';
+import {hebcal, flags} from '@hebcal/core';
 import {toISOStringWithTimezone, getEventCategories} from './common';
 import holidayDescription from './holidays.json';
 import leyning from '@hebcal/leyning';

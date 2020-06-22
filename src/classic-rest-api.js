@@ -1,4 +1,4 @@
-import {hebcal, Event, flags} from '@hebcal/core';
+import {hebcal, flags} from '@hebcal/core';
 import leyning from '@hebcal/leyning';
 import {
   getCalendarTitle,

@@ -16,7 +16,8 @@ test('eventToFullCalendar', (t) => {
   const events = hebcal.hebrewCalendar(options).slice(0, 10);
   const tzid = options && options.location && options.location.tzid;
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
-  const pesachMemo = 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah), it commemorates the Exodus and freedom of the Israelites from ancient Egypt';
+  const pesachMemo = 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah),' +
+    ' it commemorates the Exodus and freedom of the Israelites from ancient Egypt';
   const expectedUrl = 'https://www.hebcal.com/holidays/pesach?utm_source=js&utm_medium=fc';
   const expected = [
     {

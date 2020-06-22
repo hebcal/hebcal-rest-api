@@ -1,6 +1,6 @@
-// eslint-disable-next-line no-unused-vars
-import {hebcal, Event, flags} from '@hebcal/core';
+import {hebcal, flags} from '@hebcal/core';
 
+// eslint-disable-next-line max-len
 const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
 
 /**

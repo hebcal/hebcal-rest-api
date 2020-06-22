@@ -1,6 +1,5 @@
 import {getTimezoneOffset} from './getTimezoneOffset';
-// eslint-disable-next-line no-unused-vars
-import {Event, flags} from '@hebcal/core';
+import {flags} from '@hebcal/core';
 
 /**
  * @param {hebcal.HebcalOptions} options

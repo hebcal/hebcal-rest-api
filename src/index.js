@@ -1,6 +1,8 @@
 import {eventToIcal, eventsToIcalendar} from './icalendar';
 import {eventToCsv, eventsToCsv} from './csv';
 import {
+  getCalendarTitle,
+  getDownloadFilename,
   getEventCategories,
   pad2,
   timeZoneOffsetStr,
@@ -18,6 +20,8 @@ const icalendar = {
   eventToIcal,
   eventsToIcalendar,
   eventToFullCalendar,
+  getCalendarTitle,
+  getDownloadFilename,
   getEventCategories,
   pad2,
   timeZoneOffsetStr,

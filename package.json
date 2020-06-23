@@ -9,7 +9,12 @@
     "hebcal"
   ],
   "description": "Jewish holidays and Hebrew calendar as iCalendar RFC 2445",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
+  "typings": "icalendar.d.ts",
+  "files": [
+    "dist",
+    "icalendar.d.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/hebcal/hebcal-icalendar.git"

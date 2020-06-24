@@ -88,7 +88,11 @@ export function eventToIcal(e, options) {
   const attrs = e.getAttrs();
   const mask = e.getFlags();
   const timed = Boolean(attrs.eventTime);
-  let location = timed ? options.location.name : undefined;
+  let location;
+  if (timed && options.location.name) {
+    const comma = options.location.name.indexOf(',');
+    location = (comma == -1) ? options.location.name : options.location.name.substring(0, comma);
+  }
   if (mask & flags.DAF_YOMI) {
     const colon = subj.indexOf(': ');
     if (colon != -1) {

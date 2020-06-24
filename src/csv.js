@@ -39,7 +39,8 @@ export function eventToCsv(e, options) {
   let loc = 'Jewish Holidays';
   const mask = e.getFlags();
   if (timed && options.location && options.location.name) {
-    loc = options.location.name;
+    const comma = options.location.name.indexOf(',');
+    loc = (comma == -1) ? options.location.name : options.location.name.substring(0, comma);
   } else if (mask & flags.DAF_YOMI) {
     const colon = subj.indexOf(': ');
     if (colon != -1) {

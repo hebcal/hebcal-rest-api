@@ -119,7 +119,9 @@ export function getCalendarTitle(events, options) {
   if (options.yahrzeit) {
     title += ' Yahrzeits and Anniversaries';
   } else if (location && location.name) {
-    title += ' ' + location.name;
+    const comma = location.name.indexOf(',');
+    const name = (comma == -1) ? location.name : location.name.substring(0, comma);
+    title += ' ' + name;
   } else if (options.il) {
     title += ' Israel';
   } else {

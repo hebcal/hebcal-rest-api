@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-// import stream from 'stream';
 import {hebcal, flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
@@ -17,17 +16,6 @@ const VTIMEZONE = {
   'US/Aleutian': 'BEGIN:VTIMEZONE\r\nTZID:US/Aleutian\r\nBEGIN:STANDARD\r\nDTSTART:19701101T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\r\nTZOFFSETTO:-1000\r\nTZOFFSETFROM:-0900\r\nTZNAME:HAST\r\nEND:STANDARD\r\nBEGIN:DAYLIGHT\r\nDTSTART:19700308T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\r\nTZOFFSETTO:-0900\r\nTZOFFSETFROM:-1000\r\nTZNAME:HADT\r\nEND:DAYLIGHT\r\nEND:VTIMEZONE',
   'America/Phoenix': 'BEGIN:VTIMEZONE\r\nTZID:America/Phoenix\r\nBEGIN:STANDARD\r\nDTSTART:19700101T000000\r\nTZOFFSETTO:-0700\r\nTZOFFSETFROM:-0700\r\nEND:STANDARD\r\nEND:VTIMEZONE',
 };
-
-/**
- * @param {stream.Writable} res
- * @param {...string} str
- */
-export function icalWriteLine(res, ...str) {
-  for (const s of str) {
-    res.write(s);
-    res.write('\r\n');
-  }
-}
 
 /**
  *
@@ -58,18 +46,6 @@ function makeDtstamp(dt) {
   const s = dt.toISOString();
   return s.slice(0, 4) + s.slice(5, 7) + s.slice(8, 13) +
             s.slice(14, 16) + s.slice(17, 19) + 'Z';
-}
-
-/**
- *
- * @param {stream.Writable} res
- * @param {Event} e
- * @param {string} dtstamp
- * @param {hebcal.HebcalOptions} options
- */
-function icalWriteEvent(res, e, dtstamp, options) {
-  options.dtstamp = dtstamp;
-  res.write(eventToIcal(e, options));
 }
 
 /**
@@ -220,7 +196,7 @@ export function eventToIcal(e, options) {
 
   addOptional(arr, 'DESCRIPTION', memo);
   addOptional(arr, 'LOCATION', location);
-  if (options.location) {
+  if (timed && options.location) {
     arr.push('GEO:' + options.location.latitude + ';' + options.location.longitude);
   }
   if (url) {
@@ -267,7 +243,7 @@ function exportHttpHeader(res, mimeType, fileName) {
  * @param {Event[]} events
  * @param {hebcal.HebcalOptions} options
  */
-export function icalWriteContents(res, events, options) {
+function icalWriteContents(res, events, options) {
   const mimeType = 'text/calendar; charset=UTF-8';
   if (options.subscribe) {
     res.setHeader('Content-Type', mimeType);

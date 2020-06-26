@@ -185,10 +185,11 @@ export function eventToIcal(e, options) {
   // make subject safe for iCalendar
   subj = subj.replace(/,/g, '\\,');
 
+  const category = mask & flags.USER_EVENT ? 'Personal' : 'Holiday';
   const arr = [
     'BEGIN:VEVENT',
     `DTSTAMP:${dtstamp}`,
-    'CATEGORIES:Holiday',
+    `CATEGORIES:${category}`,
     'CLASS:PUBLIC',
     `SUMMARY:${subj}`,
     `DTSTART${dtargs}:${startDate}`,

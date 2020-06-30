@@ -1,5 +1,4 @@
-import {hebcal} from '@hebcal/core';
-import {getEventCategories} from './common';
+import {getEventCategories, makeAnchor} from './common';
 
 const utmParam = 'utm_source=shabbat1c&amp;utm_medium=rss';
 
@@ -24,7 +23,7 @@ function getLinkAndGuid(ev) {
     }
     guid = link + '&amp;dt=' + dtStr;
   } else {
-    const anchor = hebcal.makeAnchor(ev.getDesc());
+    const anchor = makeAnchor(ev.getDesc());
     guid = link = 'https://www.hebcal.com/shabbat/?' + utmParam + '&amp;dt=' + dtStr + '#' + anchor;
   }
   return [link, guid];

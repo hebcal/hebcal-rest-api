@@ -23,7 +23,7 @@
     "url": "https://github.com/hebcal/hebcal-icalendar/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^1.2.2",
+    "@hebcal/core": "^1.3.0",
     "@hebcal/leyning": "^1.1.2"
   },
   "scripts": {

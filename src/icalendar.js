@@ -2,7 +2,7 @@
 import {hebcal, flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
-import {pad2, getDownloadFilename, getCalendarTitle} from './common';
+import {pad2, getDownloadFilename, getCalendarTitle, makeAnchor} from './common';
 import holidayDescription from './holidays.json';
 import fs from 'fs';
 
@@ -178,7 +178,7 @@ export function eventToIcal(e, options) {
     if (options.location.geoid) {
       uid += `-${options.location.geoid}`;
     } else if (options.location.name) {
-      uid += '-' + hebcal.makeAnchor(options.location.name);
+      uid += '-' + makeAnchor(options.location.name);
     }
   }
 

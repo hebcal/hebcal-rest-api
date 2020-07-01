@@ -1,4 +1,4 @@
-import {hebcal, flags} from '@hebcal/core';
+import {Locale, flags} from '@hebcal/core';
 import leyning from '@hebcal/leyning';
 import {
   getCalendarTitle,
@@ -12,7 +12,7 @@ import holidayDescription from './holidays.json';
 /**
  * Formats a list events for the classic Hebcal.com JSON API response
  * @param {Event[]} events
- * @param {hebcal.HebcalOptions} options
+ * @param {HebcalOptions} options
  * @return {Object}
  */
 export function eventsToClassicApi(events, options) {
@@ -69,7 +69,7 @@ export function eventToClassicApiObject(ev, tzid, il) {
   }
   const hebrew = ev.renderBrief('he');
   if (hebrew) {
-    result.hebrew = hebcal.hebrewStripNikkud(hebrew);
+    result.hebrew = Locale.hebrewStripNikkud(hebrew);
   }
   if (!timed) {
     const isParsha = ev.getFlags() == flags.PARSHA_HASHAVUA;

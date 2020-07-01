@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 import test from 'ava';
-import {hebcal, Location} from '@hebcal/core';
+import {HebrewCalendar, Location} from '@hebcal/core';
 import * as icalendar from './icalendar';
 
 test('ical-sedra', (t) => {
   const options = {year: 1993, month: 4, sedrot: true, noHolidays: true};
-  const events = hebcal.hebrewCalendar(options);
+  const events = new HebrewCalendar(options).events();
   const tzav = icalendar.eventToIcal(events[0], options);
   let lines = tzav.split('\r\n');
   t.is(lines.length, 13);
@@ -17,7 +17,7 @@ test('ical-sedra', (t) => {
   t.is(lines[12], 'END:VEVENT');
 
   const options2 = {year: 1993, month: 6, sedrot: true, noHolidays: true};
-  const events2 = hebcal.hebrewCalendar(options2);
+  const events2 = new HebrewCalendar(options2).events();
   const korach = icalendar.eventToIcal(events2[2], options);
   lines = korach.split('\r\n');
   t.is(lines.length, 13);
@@ -37,7 +37,7 @@ test('ical-transp-opaque', (t) => {
     noRoshChodesh: true,
     noSpecialShabbat: true,
   };
-  const events = hebcal.hebrewCalendar(options);
+  const events = new HebrewCalendar(options).events();
   const memo = 'Passover, the Feast of Unleavened Bread';
   events[0].getAttrs().memo = memo;
   let lines = icalendar.eventToIcal(events[0], options).split('\r\n');
@@ -81,7 +81,7 @@ test('ical-candles', (t) => {
     candlelighting: true,
     noHolidays: true,
   };
-  const events = hebcal.hebrewCalendar(options);
+  const events = new HebrewCalendar(options).events();
   const ical = icalendar.eventToIcal(events[0], options);
   let lines = ical.split('\r\n');
   t.is(lines.length, 18);
@@ -114,7 +114,7 @@ test('ical-dafyomi', (t) => {
     dafyomi: true,
     locale: 'he',
   };
-  const ev = hebcal.hebrewCalendar(options)[0];
+  const ev = new HebrewCalendar(options).events()[0];
   t.is(ev.render(), 'דף יומי: נדרים 14');
   const ical = icalendar.eventToIcal(ev, options);
   const lines = ical.split('\r\n');
@@ -125,7 +125,7 @@ test('ical-dafyomi', (t) => {
 
 test('ical-omer', (t) => {
   const options = {year: 1993, noHolidays: true, omer: true};
-  const ev = hebcal.hebrewCalendar(options)[0];
+  const ev = new HebrewCalendar(options).events()[0];
   const ical = icalendar.eventToIcal(ev, options);
   const lines = ical.split('\r\n');
   t.is(lines.length, 16);
@@ -140,7 +140,7 @@ test('eventsToIcalendar', (t) => {
     candlelighting: true,
     location: Location.lookup('Hawaii'),
   };
-  const events = hebcal.hebrewCalendar(options);
+  const events = new HebrewCalendar(options).events();
   const ical = icalendar.eventsToIcalendar(events, options);
   console.log(ical);
   t.pass('message');

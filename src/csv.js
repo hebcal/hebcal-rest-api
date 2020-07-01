@@ -1,4 +1,4 @@
-import {hebcal, flags} from '@hebcal/core';
+import {HebrewCalendar, flags} from '@hebcal/core';
 
 // eslint-disable-next-line max-len
 const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
@@ -6,7 +6,7 @@ const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","Al
 /**
  * Renders an Event as a string
  * @param {Event} e
- * @param {hebcal.HebcalOptions} options
+ * @param {HebcalOptions} options
  * @return {string}
  */
 export function eventToCsv(e, options) {
@@ -25,7 +25,7 @@ export function eventToCsv(e, options) {
   const attrs = e.getAttrs();
   const timed = Boolean(attrs.eventTime);
   if (timed) {
-    const timeStr = hebcal.reformatTimeStr(attrs.eventTimeStr, ' PM', options);
+    const timeStr = HebrewCalendar.reformatTimeStr(attrs.eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;
     endDate = date;
     allDay = '"false"';
@@ -59,7 +59,7 @@ export function eventToCsv(e, options) {
 /**
  * @param {stream.Writable} res
  * @param {Event[]} events
- * @param {hebcal.HebcalOptions} options
+ * @param {HebcalOptions} options
  */
 export function csvWriteContents(res, events, options) {
   const fileName = getDownloadFilename(options) + '.csv';
@@ -74,7 +74,7 @@ export function csvWriteContents(res, events, options) {
 
 /**
  * @param {Event[]} events
- * @param {hebcal.HebcalOptions} options
+ * @param {HebcalOptions} options
  * @return {string}
  */
 export function eventsToCsv(events, options) {

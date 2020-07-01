@@ -1,4 +1,4 @@
-import {hebcal, flags} from '@hebcal/core';
+import {Locale, flags} from '@hebcal/core';
 import {toISOStringWithTimezone, getEventCategories} from './common';
 import holidayDescription from './holidays.json';
 import leyning from '@hebcal/leyning';
@@ -41,7 +41,7 @@ export function eventToFullCalendar(ev, tzid, il) {
     if (colon != -1 && ev.getFlags() & flags.DAF_YOMI) {
       hebrew = hebrew.substring(colon + 1);
     }
-    result.hebrew = hebcal.hebrewStripNikkud(hebrew);
+    result.hebrew = Locale.hebrewStripNikkud(hebrew);
   }
   const url = ev.url();
   if (url) {

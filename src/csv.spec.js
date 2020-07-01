@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import test from 'ava';
-import {hebcal, Location} from '@hebcal/core';
+import {HebrewCalendar, Location} from '@hebcal/core';
 import {eventToCsv} from './csv';
 
 test('eventToCsv', (t) => {
@@ -13,7 +13,7 @@ test('eventToCsv', (t) => {
     candlelighting: true,
     location: Location.lookup('Chicago'),
   };
-  const events = hebcal.hebrewCalendar(options).slice(0, 5);
+  const events = new HebrewCalendar(options).events().slice(0, 5);
   const memo = 'Passover, the Feast of Unleavened Bread';
   events[4].getAttrs().memo = memo;
   const csv = events.map((e) => eventToCsv(e, options));

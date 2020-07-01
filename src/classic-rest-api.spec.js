@@ -1,5 +1,5 @@
 import test from 'ava';
-import {hebcal, Location} from '@hebcal/core';
+import {HebrewCalendar, Location} from '@hebcal/core';
 import {eventsToClassicApi, eventToClassicApiObject} from './classic-rest-api';
 
 test('eventToClassicApiObject', (t) => {
@@ -13,7 +13,7 @@ test('eventToClassicApiObject', (t) => {
     location: location,
     il: false,
   };
-  const events = hebcal.hebrewCalendar(options);
+  const events = new HebrewCalendar(options).events();
   const apiObjs = events.map((ev) => eventToClassicApiObject(ev, location.getTzid(), options.il));
   const candlesActual = apiObjs[1];
   const candlesExpected = {
@@ -89,7 +89,7 @@ test('eventsToClassicApi', (t) => {
     havdalahMins: 42,
     location: location,
   };
-  const events = hebcal.hebrewCalendar(options);
+  const events = new HebrewCalendar(options).events();
   const apiResult = eventsToClassicApi(events, options);
   t.is(apiResult.title, 'Hebcal Vancouver May 2022');
   const locationExpected = {

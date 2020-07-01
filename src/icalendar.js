@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import {hebcal, flags} from '@hebcal/core';
+import {flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
 import {pad2, getDownloadFilename, getCalendarTitle, makeAnchor} from './common';
@@ -78,7 +78,7 @@ function appendTrackingToUrl(url) {
 /**
  *
  * @param {Event} e
- * @param {hebcal.HebcalOptions} options
+ * @param {HebcalOptions} options
  * @return {string} multi-line result, delimited by \r\n
  */
 export function eventToIcal(e, options) {
@@ -246,7 +246,7 @@ function exportHttpHeader(res, mimeType, fileName) {
  *
  * @param {stream.Writable} res
  * @param {Event[]} events
- * @param {hebcal.HebcalOptions} options
+ * @param {HebcalOptions} options
  */
 function icalWriteContents(res, events, options) {
   const mimeType = 'text/calendar; charset=UTF-8';
@@ -261,7 +261,7 @@ function icalWriteContents(res, events, options) {
 /**
  * Renders an array of events as a full RFC 2445 iCalendar string
  * @param {Event[]} events
- * @param {hebcal.HebcalOptions} options
+ * @param {HebcalOptions} options
  * @return {string} multi-line result, delimited by \r\n
  */
 export function eventsToIcalendar(events, options) {

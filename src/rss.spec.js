@@ -15,7 +15,7 @@ test('eventsToRss', (t) => {
     havdalahMins: 50,
     location: location,
   };
-  const events = new HebrewCalendar(options).events().slice(0, 10);
+  const events = HebrewCalendar.calendar(options).slice(0, 10);
   const rss = eventsToRss(events, location).split('\n');
   t.is(rss[2], '<channel>');
   t.is(rss[3], '<title>Shabbat Times for Chicago</title>');
@@ -38,7 +38,7 @@ test('eventToRssItem', (t) => {
     havdalahMins: 50,
     location: location,
   };
-  const events = new HebrewCalendar(options).events().slice(0, 3);
+  const events = HebrewCalendar.calendar(options).slice(0, 3);
   const dayFormat = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: '2-digit',

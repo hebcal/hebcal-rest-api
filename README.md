@@ -8,7 +8,7 @@ $ npm install @hebcal/icalendar
 
 ## Synopsis
 ```javascript
-import {hebcal, Location} from '@hebcal/core';
+import {HebrewCalendar, Location} from '@hebcal/core';
 import icalendar from '@hebcal/icalendar';
 
 const options = {
@@ -18,7 +18,7 @@ const options = {
   candlelighting: true,
   location: Location.lookup('Hawaii'),
 };
-const events = hebcal.hebrewCalendar(options);
+const events = HebrewCalendar.calendar(options);
 console.log(icalendar.eventsToIcalendar(ev, options));
 ```
 

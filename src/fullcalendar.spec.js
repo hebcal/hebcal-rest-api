@@ -13,7 +13,7 @@ test('eventToFullCalendar', (t) => {
     havdalahMins: 50,
     location: new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398),
   };
-  const events = new HebrewCalendar(options).events().slice(0, 10);
+  const events = HebrewCalendar.calendar(options).slice(0, 10);
   const tzid = options && options.location && options.location.tzid;
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
   const pesachMemo = 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah),' +

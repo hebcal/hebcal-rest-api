@@ -13,7 +13,7 @@ test('eventToCsv', (t) => {
     candlelighting: true,
     location: Location.lookup('Chicago'),
   };
-  const events = new HebrewCalendar(options).events().slice(0, 5);
+  const events = HebrewCalendar.calendar(options).slice(0, 5);
   const memo = 'Passover, the Feast of Unleavened Bread';
   events[4].getAttrs().memo = memo;
   const csv = events.map((e) => eventToCsv(e, options));

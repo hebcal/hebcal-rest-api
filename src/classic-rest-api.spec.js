@@ -13,7 +13,7 @@ test('eventToClassicApiObject', (t) => {
     location: location,
     il: false,
   };
-  const events = new HebrewCalendar(options).events();
+  const events = HebrewCalendar.calendar(options);
   const apiObjs = events.map((ev) => eventToClassicApiObject(ev, location.getTzid(), options.il));
   const candlesActual = apiObjs[1];
   const candlesExpected = {
@@ -89,7 +89,7 @@ test('eventsToClassicApi', (t) => {
     havdalahMins: 42,
     location: location,
   };
-  const events = new HebrewCalendar(options).events();
+  const events = HebrewCalendar.calendar(options);
   const apiResult = eventsToClassicApi(events, options);
   t.is(apiResult.title, 'Hebcal Vancouver May 2022');
   const locationExpected = {

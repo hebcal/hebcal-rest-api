@@ -1,5 +1,6 @@
 import {getTimezoneOffset} from './getTimezoneOffset';
 import {flags} from '@hebcal/core';
+import holidayDescription from './holidays.json';
 
 /**
  * Helper function to transform a string to make it more usable in a URL or filename.
@@ -160,4 +161,21 @@ export function getCalendarTitle(events, options) {
     }
   }
   return title;
+}
+
+/**
+ * Returns an English language description of the holiday
+ * @param {Event} ev
+ * @param {boolean} [firstSentence=false]
+ * @return {string}
+ */
+export function getHolidayDescription(ev, firstSentence=false) {
+  const str = holidayDescription[ev.getDesc()] || holidayDescription[ev.basename()] || '';
+  if (firstSentence && str) {
+    const dot = str.indexOf('.');
+    if (dot != -1) {
+      return str.substring(0, dot);
+    }
+  }
+  return str;
 }

@@ -115,7 +115,7 @@
           locale: 'ashkenazi',
           addHebrewDates: true,
         };
-        const events = hebcal__core.hebcal.hebrewCalendar(options);
+        const events = hebcal__core.HebrewCalendar.calendar(options);
         const fcEvents = events.map((ev) => hebcal__icalendar.eventToFullCalendar(ev, location.tzid));
         for (let i = 0; i < fcEvents.length; i++) {
           if (fcEvents[i].hebrew) {

@@ -2,8 +2,7 @@
 import {flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
-import {pad2, getDownloadFilename, getCalendarTitle, makeAnchor} from './common';
-import holidayDescription from './holidays.json';
+import {pad2, getDownloadFilename, getCalendarTitle, makeAnchor, getHolidayDescription} from './common';
 import fs from 'fs';
 
 const VTIMEZONE = {
@@ -129,13 +128,13 @@ export function eventToIcal(e, options) {
     }
     memo += '\\n\\n' + url;
   } else {
-    memo = attrs.memo || holidayDescription[e.basename()] || '';
+    memo = attrs.memo || getHolidayDescription(e);
     const holidayLeyning = leyning.getLeyningForHoliday(e, options.il);
-    if (holidayLeyning) {
+    if (holidayLeyning && holidayLeyning.summary) {
       memo += `\\nTorah: ${holidayLeyning.summary}`;
-      if (holidayLeyning.haftara) {
-        memo += '\\nHaftarah: ' + holidayLeyning.haftara;
-      }
+    }
+    if (holidayLeyning && holidayLeyning.haftara) {
+      memo += '\\nHaftarah: ' + holidayLeyning.haftara;
     }
     if (url) {
       if (memo.length) memo += '\\n\\n';
@@ -306,6 +305,6 @@ export function eventsToIcalendar(events, options) {
 
   options.dtstamp = makeDtstamp(new Date());
   res = res.concat(events.map((e) => eventToIcal(e, options)));
-  res.push('END:VCALENDAR');
+  res.push('END:VCALENDAR\r\n');
   return res.join('\r\n');
 }

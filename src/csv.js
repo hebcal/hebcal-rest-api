@@ -1,4 +1,5 @@
 import {HebrewCalendar, flags} from '@hebcal/core';
+import {getHolidayDescription} from './common';
 
 // eslint-disable-next-line max-len
 const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
@@ -14,7 +15,7 @@ export function eventToCsv(e, options) {
   const mday = d.getDate();
   const mon = d.getMonth() + 1;
   const year = String(d.getFullYear()).padStart(4, '0');
-  const date = options.euro ? `${mday}/${mon}/${year}` : `${mon}/${mday}/${year}`;
+  const date = options.euro ? `"${mday}/${mon}/${year}"` : `"${mon}/${mday}/${year}"`;
 
   let subj = e.render();
   let startTime = '';
@@ -50,10 +51,11 @@ export function eventToCsv(e, options) {
   }
 
   subj = subj.replace(/,/g, '').replace(/"/g, '\'\'');
-  const memo = (attrs.memo || '').replace(/,/g, ';').replace(/"/g, '\'\'');
+  const memo0 = attrs.memo || getHolidayDescription(e, true);
+  const memo = memo0.replace(/,/g, ';').replace(/"/g, '\'\'');
 
   const showTimeAs = (timed || (mask & flags.CHAG)) ? 4 : 3;
-  return `"${subj}",${date},${startTime},${endDate},${endTime},${allDay},"${memo}",${showTimeAs},"${loc}"`;
+  return `"${subj}",${date},${startTime},${endDate},${endTime},${allDay},"${memo}","${showTimeAs}","${loc}"`;
 }
 
 /**
@@ -78,5 +80,5 @@ export function csvWriteContents(res, events, options) {
  * @return {string}
  */
 export function eventsToCsv(events, options) {
-  return [csvHeader].concat(events.map((e) => eventToCsv(e, options))).join('\r\n');
+  return [csvHeader].concat(events.map((e) => eventToCsv(e, options))).join('\r\n') + '\r\n';
 }

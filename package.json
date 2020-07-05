@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/icalendar",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "ical",
@@ -23,7 +23,7 @@
     "url": "https://github.com/hebcal/hebcal-icalendar/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^2.0.0",
+    "@hebcal/core": "^2.0.1",
     "@hebcal/leyning": "^2.0.0"
   },
   "scripts": {

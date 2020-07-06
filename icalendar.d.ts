@@ -10,6 +10,7 @@ export function eventToIcal(e: Event, options: hebcal.HebcalOptions): string;
  * @returns multi-line result, delimited by \r\n
  */
 export function eventsToIcalendar(events: Event[], options: hebcal.HebcalOptions): string;
+export function eventsToIcalendarStream(events: Event[], options: hebcal.HebcalOptions): string;
 /**
  * Renders an Event as a string
  */

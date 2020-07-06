@@ -51,7 +51,7 @@ test('ical-transp-opaque', (t) => {
   const dtend = lines[6];
   t.is(dtend.startsWith('DTEND'), true);
   t.is(dtend.substring(dtend.indexOf(':') + 1), '19930406');
-  const expectedUrl = 'https://www.hebcal.com/holidays/pesach?utm_source=js&utm_medium=icalendar'
+  const expectedUrl = 'https://www.hebcal.com/holidays/pesach?utm_source=js&utm_medium=icalendar';
   t.is(lines[10], `DESCRIPTION:Passover\\, the Feast of Unleavened Bread\\n\\n${expectedUrl}`);
 
   events[1].getAttrs().memo = memo;
@@ -132,7 +132,7 @@ test('ical-omer', (t) => {
   t.is(lines[4], 'SUMMARY:1st day of the Omer');
 });
 
-test('eventsToIcalendar', (t) => {
+test('eventsToIcalendar', async (t) => {
   const options = {
     year: 2020,
     month: 2,
@@ -141,7 +141,6 @@ test('eventsToIcalendar', (t) => {
     location: Location.lookup('Hawaii'),
   };
   const events = HebrewCalendar.calendar(options);
-  const ical = icalendar.eventsToIcalendar(events, options);
-  console.log(ical);
-  t.pass('message');
+  const ical = await icalendar.eventsToIcalendar(events, options);
+  t.is(ical.startsWith('BEGIN:VCALENDAR\r\nVERSION:2.0\r\n'), true);
 });

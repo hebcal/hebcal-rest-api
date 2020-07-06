@@ -1,4 +1,4 @@
-import {eventToIcal, eventsToIcalendar} from './icalendar';
+import {eventToIcal, eventsToIcalendar, eventsToIcalendarStream} from './icalendar';
 import {eventToCsv, eventsToCsv} from './csv';
 import {
   getCalendarTitle,
@@ -20,6 +20,7 @@ const icalendar = {
   eventsToCsv,
   eventToIcal,
   eventsToIcalendar,
+  eventsToIcalendarStream,
   eventToFullCalendar,
   getCalendarTitle,
   getDownloadFilename,

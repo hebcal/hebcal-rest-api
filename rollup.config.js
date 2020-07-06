@@ -18,6 +18,7 @@ export default [
           '@hebcal/core': 'hebcal__core',
           '@hebcal/leyning': 'hebcal__leyning',
           'fs': 'fs',
+          'stream': 'stream',
         },
         plugins: [terser()],
       },
@@ -31,6 +32,6 @@ export default [
       resolve(),
       commonjs(),
     ],
-    external: ['@hebcal/core', '@hebcal/leyning', 'fs'],
+    external: ['@hebcal/core', '@hebcal/leyning', 'fs', 'stream'],
   },
 ];

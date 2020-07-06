@@ -2,8 +2,9 @@
 import {flags} from '@hebcal/core';
 import md5 from 'md5';
 import leyning from '@hebcal/leyning';
-import {pad2, getDownloadFilename, getCalendarTitle, makeAnchor, getHolidayDescription} from './common';
+import {pad2, getCalendarTitle, makeAnchor, getHolidayDescription} from './common';
 import fs from 'fs';
+import {Readable} from 'stream';
 
 const VTIMEZONE = {
   'US/Eastern': 'BEGIN:VTIMEZONE\r\nTZID:US/Eastern\r\nBEGIN:STANDARD\r\nDTSTART:19701101T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\r\nTZOFFSETTO:-0500\r\nTZOFFSETFROM:-0400\r\nTZNAME:EST\r\nEND:STANDARD\r\nBEGIN:DAYLIGHT\r\nDTSTART:19700308T020000\r\nRRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\r\nTZOFFSETTO:-0400\r\nTZOFFSETFROM:-0500\r\nTZNAME:EDT\r\nEND:DAYLIGHT\r\nEND:VTIMEZONE',
@@ -231,71 +232,49 @@ export function eventToIcal(e, options) {
 }
 
 /**
- * @param {stream.Writable} res
- * @param {string} mimeType
- * @param {string} fileName
- */
-function exportHttpHeader(res, mimeType, fileName) {
-  res.setHeader('Content-Type', `${mimeType}; filename=\"${fileName}\"`);
-  res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
-  res.setHeader('Last-Modified', new Date().toUTCString());
-}
-
-/**
- *
- * @param {stream.Writable} res
+ * Generates an RFC 2445 iCalendar stream from an array of events
+ * @param {stream.Readable} readable
  * @param {Event[]} events
  * @param {HebcalOptions} options
+ * @return {stream.Readable}
  */
-function icalWriteContents(res, events, options) {
-  const mimeType = 'text/calendar; charset=UTF-8';
-  if (options.subscribe) {
-    res.setHeader('Content-Type', mimeType);
-  } else {
-    const fileName = getDownloadFilename(options) + '.ics';
-    exportHttpHeader(res, mimeType, fileName);
-  }
-}
-
-/**
- * Renders an array of events as a full RFC 2445 iCalendar string
- * @param {Event[]} events
- * @param {HebcalOptions} options
- * @return {string} multi-line result, delimited by \r\n
- */
-export function eventsToIcalendar(events, options) {
-  let res = [];
-
-  res.push('BEGIN:VCALENDAR');
-
-  res.push('VERSION:2.0');
+export function eventsToIcalendarStream(readable, events, options) {
+  if (!events.length) throw new RangeError('Events can not be empty');
+  if (!options) throw new TypeError('Invalid options object');
   const uclang = (options.locale || 'en').toUpperCase();
-  res.push(
-      `PRODID:-//hebcal.com/NONSGML Hebcal Calendar v7.0//${uclang}`,
-      'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH',
-      'X-LOTUS-CHARSET:UTF-8',
-      'X-PUBLISHED-TTL:PT7D');
   const title = getCalendarTitle(events, options);
-  res.push(`X-WR-CALNAME:${title}`);
-
-  // include an iCal description
-  const caldesc = options.yahrzeit ? 'Yahrzeits + Anniversaries from www.hebcal.com' : 'Jewish Holidays from www.hebcal.com';
-  res.push(`X-WR-CALDESC:${caldesc}`);
-
+  const caldesc = options.yahrzeit ?
+    'Yahrzeits + Anniversaries from www.hebcal.com' :
+    'Jewish Holidays from www.hebcal.com';
+  [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    `PRODID:-//hebcal.com/NONSGML Hebcal Calendar v7.0//${uclang}`,
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'X-LOTUS-CHARSET:UTF-8',
+    'X-PUBLISHED-TTL:PT7D',
+    `X-WR-CALNAME:${title}`,
+    `X-WR-CALDESC:${caldesc}`,
+  ].forEach((line) => {
+    readable.push(line);
+    readable.push('\r\n');
+  });
   const location = options.location;
   if (location && location.tzid) {
     const tzid = location.tzid;
-    res.push(`X-WR-TIMEZONE;VALUE=TEXT:${tzid}`);
+    readable.push(`X-WR-TIMEZONE;VALUE=TEXT:${tzid}\r\n`);
     if (VTIMEZONE[tzid]) {
-      res.push(VTIMEZONE[tzid]);
+      readable.push(VTIMEZONE[tzid]);
+      readable.push('\r\n');
     } else {
       try {
         const vtimezoneIcs = `./zoneinfo/${tzid}.ics`;
         const lines = fs.readFileSync(vtimezoneIcs, 'utf-8').split('\r\n');
         // ignore first 3 and last 1 lines
         const str = lines.slice(3, lines.length - 2).join('\r\n');
-        res.push(str);
+        readable.push(str);
+        readable.push('\r\n');
         VTIMEZONE[tzid] = str; // cache for later
       } catch (error) {
         // ignore failure when no timezone definition to read
@@ -304,7 +283,39 @@ export function eventsToIcalendar(events, options) {
   }
 
   options.dtstamp = makeDtstamp(new Date());
-  res = res.concat(events.map((e) => eventToIcal(e, options)));
-  res.push('END:VCALENDAR\r\n');
-  return res.join('\r\n');
+  events.forEach((e) => {
+    readable.push(eventToIcal(e, options));
+    readable.push('\r\n');
+  });
+  readable.push('END:VCALENDAR\r\n');
+  readable.push(null); // indicates end of the stream
+  return readable;
+}
+
+/**
+ * @param {stream.Readable} readable
+ * @return {string}
+ */
+async function readableToString(readable) {
+  let result = '';
+  for await (const chunk of readable) {
+    result += chunk;
+  }
+  return result;
+}
+
+/**
+ * Renders an array of events as a full RFC 2445 iCalendar string
+ * @param {Event[]} events
+ * @param {HebcalOptions} options
+ * @return {string} multi-line result, delimited by \r\n
+ */
+export async function eventsToIcalendar(events, options) {
+  const readStream = new Readable();
+  eventsToIcalendarStream(readStream, events, options);
+  readStream.on('error', (err) => {
+    throw err;
+  });
+  const str = await readableToString(readStream);
+  return str;
 }

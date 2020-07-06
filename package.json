@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/icalendar",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "ical",
@@ -23,6 +23,7 @@
     "url": "https://github.com/hebcal/hebcal-icalendar/issues"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.10.4",
     "@hebcal/core": "^2.0.1",
     "@hebcal/leyning": "^2.0.0"
   },
@@ -39,7 +40,8 @@
       "src/**/*.spec.js"
     ],
     "require": [
-      "@babel/register"
+      "@babel/register",
+      "@babel/polyfill"
     ],
     "babel": {
       "testOptions": {

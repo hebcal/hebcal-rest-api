@@ -67,6 +67,22 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 </dd>
 <dt><a href="#eventsToCsv">eventsToCsv(events, options)</a> ⇒ <code>string</code></dt>
 <dd></dd>
+<dt><a href="#eventsToClassicApi">eventsToClassicApi(events, options)</a> ⇒ <code>Object</code></dt>
+<dd><p>Formats a list events for the classic Hebcal.com JSON API response</p>
+</dd>
+<dt><a href="#eventToClassicApiObject">eventToClassicApiObject(ev, tzid, il)</a> ⇒ <code>Object</code></dt>
+<dd><p>Converts a Hebcal event to a classic Hebcal.com JSON API object</p>
+</dd>
+<dt><a href="#formatAliyot">formatAliyot(result, aliyot)</a> ⇒ <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#formatLeyningResult">formatLeyningResult(reading)</a> ⇒ <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#getLinkAndGuid">getLinkAndGuid(ev)</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
+<dd></dd>
+<dt><a href="#eventsToRss">eventsToRss(events, location, [lang], [evPubDate])</a> ⇒ <code>string</code></dt>
+<dd></dd>
+<dt><a href="#eventToRssItem">eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location)</a> ⇒ <code>string</code></dt>
+<dd></dd>
 <dt><a href="#eventToFullCalendar">eventToFullCalendar(ev, tzid, il)</a> ⇒ <code>Object</code></dt>
 <dd><p>Converts a Hebcal event to a FullCalendar.io object</p>
 </dd>
@@ -124,7 +140,7 @@ makeAnchor('Rosh Chodesh Adar II') // 'rosh-chodesh-adar-ii'
 
 | Param | Type |
 | --- | --- |
-| options | <code>hebcal.HebcalOptions</code> | 
+| options | <code>HebrewCalendar.Options</code> | 
 
 <a name="pad2"></a>
 
@@ -192,7 +208,7 @@ Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
 | Param | Type |
 | --- | --- |
 | events | <code>Array.&lt;Event&gt;</code> | 
-| options | <code>hebcal.HebcalOptions</code> | 
+| options | <code>HebrewCalendar.Options</code> | 
 
 <a name="getHolidayDescription"></a>
 
@@ -227,6 +243,84 @@ Renders an Event as a string
 | --- | --- |
 | events | <code>Array.&lt;Event&gt;</code> | 
 | options | <code>HebcalOptions</code> | 
+
+<a name="eventsToClassicApi"></a>
+
+## eventsToClassicApi(events, options) ⇒ <code>Object</code>
+Formats a list events for the classic Hebcal.com JSON API response
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| events | <code>Array.&lt;Event&gt;</code> | 
+| options | <code>HebcalOptions</code> | 
+
+<a name="eventToClassicApiObject"></a>
+
+## eventToClassicApiObject(ev, tzid, il) ⇒ <code>Object</code>
+Converts a Hebcal event to a classic Hebcal.com JSON API object
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ev | <code>Event</code> |  |
+| tzid | <code>string</code> | timeZone identifier |
+| il | <code>boolean</code> | true if Israel |
+
+<a name="formatAliyot"></a>
+
+## formatAliyot(result, aliyot) ⇒ <code>Object</code>
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| result | <code>Object</code> | 
+| aliyot | <code>Object</code> | 
+
+<a name="formatLeyningResult"></a>
+
+## formatLeyningResult(reading) ⇒ <code>Object</code>
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| reading | <code>leyning.Leyning</code> | 
+
+<a name="getLinkAndGuid"></a>
+
+## getLinkAndGuid(ev) ⇒ <code>Array.&lt;string&gt;</code>
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| ev | <code>Event</code> | 
+
+<a name="eventsToRss"></a>
+
+## eventsToRss(events, location, [lang], [evPubDate]) ⇒ <code>string</code>
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| events | <code>Array.&lt;Event&gt;</code> |  |
+| location | <code>Location</code> |  |
+| [lang] | <code>string</code> | language such as 'he' (default 'en-US') |
+| [evPubDate] | <code>boolean</code> | if true, use event time as pubDate (false uses lastBuildDate) |
+
+<a name="eventToRssItem"></a>
+
+## eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location) ⇒ <code>string</code>
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| ev | <code>Event</code> | 
+| evPubDate | <code>boolean</code> | 
+| lastBuildDate | <code>string</code> | 
+| dayFormat | <code>Intl.DateTimeFormat</code> | 
+| location | <code>Location</code> | 
 
 <a name="eventToFullCalendar"></a>
 

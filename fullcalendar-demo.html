@@ -86,7 +86,6 @@
 <!-- hebcal-->
 <script src='./node-process-browser.js'></script>
 <script src='./node_modules/@hebcal/core/dist/bundle.js'></script>
-<script src='./node_modules/@hebcal/leyning/dist/bundle.min.js'></script>
 <script src='./dist/bundle.min.js'></script>
 <script>
 
@@ -116,7 +115,7 @@
           addHebrewDates: true,
         };
         const events = hebcal__core.HebrewCalendar.calendar(options);
-        const fcEvents = events.map((ev) => hebcal__icalendar.eventToFullCalendar(ev, location.tzid));
+        const fcEvents = events.map((ev) => hebcal__rest_api.eventToFullCalendar(ev, location.tzid));
         for (let i = 0; i < fcEvents.length; i++) {
           if (fcEvents[i].hebrew) {
             fcEvents[i].title += '\n' + fcEvents[i].hebrew;

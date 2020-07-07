@@ -1,5 +1,5 @@
 # hebcal-rest-api
-Jewish holidays and Hebrew calendar as plain JSON objects and CSV export
+Jewish holidays and Hebrew calendar as plain JSON objects, RSS, and CSV export
 
 ## Installation
 ```bash

@@ -122,3 +122,51 @@ test('eventsToClassicApi', (t) => {
   };
   t.deepEqual(candleLighting, candleLightingExpected);
 });
+
+test('classic-api-no-sedra', (t) => {
+  const options = {start: new Date(2022, 4, 15), end: new Date(2022, 5, 1), il: true};
+  const events = HebrewCalendar.calendar(options);
+  const apiResult = eventsToClassicApi(events, options);
+  delete apiResult.date;
+  const expected = {
+    title: 'Hebcal Israel May 2022',
+    items: [
+      {
+        title: 'Pesach Sheni',
+        date: '2022-05-15',
+        category: 'holiday',
+        subcat: 'minor',
+        hebrew: 'פסח שני',
+        link: 'https://www.hebcal.com/holidays/pesach-sheni?utm_source=js&utm_medium=api',
+        memo: 'Second Passover, one month after Passover',
+      },
+      {
+        title: 'Lag BaOmer',
+        date: '2022-05-19',
+        category: 'holiday',
+        subcat: 'minor',
+        hebrew: 'ל״ג בעומר',
+        link: 'https://www.hebcal.com/holidays/lag-baomer?utm_source=js&utm_medium=api',
+        memo: '33rd day of counting the Omer',
+      },
+      {
+        title: 'Yom Yerushalayim',
+        date: '2022-05-29',
+        category: 'holiday',
+        subcat: 'modern',
+        hebrew: 'יום ירושלים',
+        link: 'https://www.hebcal.com/holidays/yom-yerushalayim?utm_source=js&utm_medium=api',
+        memo: 'Jerusalem Day. Commemorates the re-unification of Jerusalem in 1967',
+      },
+      {
+        title: 'Rosh Chodesh Sivan',
+        date: '2022-05-31',
+        category: 'roshchodesh',
+        hebrew: 'ראש חודש סיון',
+        link: 'https://www.hebcal.com/holidays/rosh-chodesh-sivan?utm_source=js&utm_medium=api',
+        memo: 'Beginning of new Hebrew month of Sivan. Sivan is the 3rd month of the Hebrew year. Corresponds to May or June on the Gregorian calendar',
+      },
+    ],
+  };
+  t.deepEqual(apiResult, expected);
+});

@@ -59,22 +59,6 @@ export function eventToCsv(e, options) {
 }
 
 /**
- * @param {stream.Writable} res
- * @param {Event[]} events
- * @param {HebcalOptions} options
- */
-export function csvWriteContents(res, events, options) {
-  const fileName = getDownloadFilename(options) + '.csv';
-  exportHttpHeader(res, 'text/x-csv', fileName);
-  res.write(csvHeader);
-  res.write('\r\n');
-  events.forEach((e) => {
-    res.write(eventToCsv(e, options));
-    res.write('\r\n');
-  });
-}
-
-/**
  * @param {Event[]} events
  * @param {HebcalOptions} options
  * @return {string}

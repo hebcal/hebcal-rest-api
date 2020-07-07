@@ -1,5 +1,6 @@
 import test from 'ava';
-import {timeZoneOffsetStr} from './common';
+import {timeZoneOffsetStr, getDownloadFilename, getCalendarTitle} from './common';
+import {HebrewCalendar, Location} from '@hebcal/core';
 
 test('timeZoneOffsetStr', (t) => {
   const winter = new Date(Date.UTC(2020, 1, 22, 0, 0, 0, 0));
@@ -56,4 +57,52 @@ test.skip('timeZoneOffsetStr-pacific', (t) => {
     t.is(timeZoneOffsetStr(tzid, winter), wtz, `${tzid} winter`);
     t.is(timeZoneOffsetStr(tzid, summer), stz, `${tzid} summer`);
   }
+});
+
+test('getDownloadFilename', (t) => {
+  const location = new Location(38.672294, -90.533239, false, 'America/Chicago',
+      'Chesterfield, MO 63017', 'US', '63017');
+  const options = {
+    year: 2018,
+    sedrot: true,
+    candlelighting: true,
+    location: location,
+  };
+  t.is(getDownloadFilename(options), 'hebcal_2018_chesterfield');
+  options.year = 5749;
+  options.isHebrewYear = true;
+  t.is(getDownloadFilename(options), 'hebcal_5749H_chesterfield');
+  t.is(getDownloadFilename({year: 2017}), 'hebcal_2017');
+  t.is(getDownloadFilename({year: 2017, il: true}), 'hebcal_2017');
+  t.is(getDownloadFilename({year: 5780, isHebrewYear: true}), 'hebcal_5780H');
+});
+
+test('getCalendarTitle', (t) => {
+  const location = new Location(38.672294, -90.533239, false, 'America/Chicago',
+      'Chesterfield, MO 63017', 'US', '63017');
+  let options = {
+    year: 2018,
+    sedrot: true,
+    candlelighting: true,
+    location: location,
+  };
+  let events = HebrewCalendar.calendar(options);
+  t.is(getCalendarTitle(events, options), 'Hebcal Chesterfield 2018');
+
+  options.year = 5749;
+  options.isHebrewYear = true;
+  events = HebrewCalendar.calendar(options);
+  t.is(getCalendarTitle(events, options), 'Hebcal Chesterfield 5749');
+
+  options = {year: 2017};
+  events = HebrewCalendar.calendar(options);
+  t.is(getCalendarTitle(events, options), 'Hebcal Diaspora 2017');
+
+  options = {year: 2017, il: true};
+  events = HebrewCalendar.calendar(options);
+  t.is(getCalendarTitle(events, options), 'Hebcal Israel 2017');
+
+  options = {year: 5780, isHebrewYear: true};
+  events = HebrewCalendar.calendar(options);
+  t.is(getCalendarTitle(events, options), 'Hebcal Diaspora 5780');
 });

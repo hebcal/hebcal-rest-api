@@ -31,8 +31,9 @@ export function getDownloadFilename(options) {
   if (options.month) {
     fileName += '_' + options.month;
   }
-  if (options.location && options.location.name) {
-    fileName += '_' + makeAnchor(options.location.name);
+  if (options.location) {
+    const name = options.location.getShortName();
+    fileName += '_' + makeAnchor(name);
   }
   return fileName;
 }

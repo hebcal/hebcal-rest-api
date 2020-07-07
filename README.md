@@ -1,15 +1,15 @@
-# hebcal-icalendar
-Jewish holidays and Hebrew calendar as iCalendar RFC 2445
+# hebcal-rest-api
+Jewish holidays and Hebrew calendar as plain JSON objects and CSV export
 
 ## Installation
 ```bash
-$ npm install @hebcal/icalendar
+$ npm install @hebcal/rest-api
 ```
 
 ## Synopsis
 ```javascript
 import {HebrewCalendar, Location} from '@hebcal/core';
-import icalendar from '@hebcal/icalendar';
+import {eventsToClassicApi, eventsToCsv} from '@hebcal/rest-api';
 
 const options = {
   year: 2020,
@@ -19,16 +19,13 @@ const options = {
   location: Location.lookup('Hawaii'),
 };
 const events = HebrewCalendar.calendar(options);
-console.log(icalendar.eventsToIcalendar(ev, options));
+const apiResult = eventsToClassicApi(events, options);
+
+console.log(JSON.stringify(apiResult));
+
+const csv = eventsToCsv(events, options);
+console.log(JSON.stringify(csv));
 ```
-
-## Constants
-
-<dl>
-<dt><a href="#icalendar">icalendar</a></dt>
-<dd><p>Main interface to hebcal/icalendar</p>
-</dd>
-</dl>
 
 ## Functions
 
@@ -38,6 +35,12 @@ console.log(icalendar.eventsToIcalendar(ev, options));
 <dt><a href="#getPseudoISO">getPseudoISO(tzid, date)</a> ⇒ <code>string</code></dt>
 <dd></dd>
 <dt><a href="#getTimezoneOffset">getTimezoneOffset(tzid, date)</a> ⇒ <code>number</code></dt>
+<dd></dd>
+<dt><a href="#makeAnchor">makeAnchor(s)</a> ⇒ <code>string</code></dt>
+<dd><p>Helper function to transform a string to make it more usable in a URL or filename.
+Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;).</p>
+</dd>
+<dt><a href="#getDownloadFilename">getDownloadFilename(options)</a> ⇒ <code>string</code></dt>
 <dd></dd>
 <dt><a href="#pad2">pad2(number)</a> ⇒ <code>string</code></dt>
 <dd></dd>
@@ -53,43 +56,22 @@ console.log(icalendar.eventsToIcalendar(ev, options));
 <dt><a href="#getEventCategories">getEventCategories(ev)</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
 <dd><p>Returns a category and subcategory name</p>
 </dd>
-<dt><a href="#icalWriteLine">icalWriteLine(res, ...str)</a></dt>
-<dd></dd>
-<dt><a href="#formatYYYYMMDD">formatYYYYMMDD(d)</a> ⇒ <code>string</code></dt>
-<dd></dd>
-<dt><a href="#formatTime">formatTime(hour, min, sec)</a> ⇒ <code>string</code></dt>
-<dd></dd>
-<dt><a href="#makeDtstamp">makeDtstamp(dt)</a> ⇒ <code>string</code></dt>
-<dd><p>Returns UTC string for iCalendar</p>
+<dt><a href="#getCalendarTitle">getCalendarTitle(events, options)</a> ⇒ <code>string</code></dt>
+<dd><p>Generates a title like &quot;Hebcal 2020 Israel&quot; or &quot;Hebcal May 1993 Providence&quot;</p>
 </dd>
-<dt><a href="#icalWriteEvent">icalWriteEvent(res, e, dtstamp, options)</a></dt>
-<dd></dd>
-<dt><a href="#addOptional">addOptional(arr, key, val)</a></dt>
-<dd></dd>
-<dt><a href="#eventToIcal">eventToIcal(e, options)</a> ⇒ <code>string</code></dt>
-<dd></dd>
-<dt><a href="#exportHttpHeader">exportHttpHeader(res, mimeType, fileName)</a></dt>
-<dd></dd>
-<dt><a href="#icalWriteContents">icalWriteContents(res, events, options)</a></dt>
-<dd></dd>
-<dt><a href="#getDownloadFilename">getDownloadFilename(options)</a> ⇒ <code>string</code></dt>
-<dd></dd>
+<dt><a href="#getHolidayDescription">getHolidayDescription(ev, [firstSentence])</a> ⇒ <code>string</code></dt>
+<dd><p>Returns an English language description of the holiday</p>
+</dd>
 <dt><a href="#eventToCsv">eventToCsv(e, options)</a> ⇒ <code>string</code></dt>
 <dd><p>Renders an Event as a string</p>
 </dd>
-<dt><a href="#csvWriteContents">csvWriteContents(res, events, options)</a></dt>
+<dt><a href="#eventsToCsv">eventsToCsv(events, options)</a> ⇒ <code>string</code></dt>
 <dd></dd>
-<dt><a href="#eventToFullCalendar">eventToFullCalendar(ev, tzid)</a> ⇒ <code>Object</code></dt>
+<dt><a href="#eventToFullCalendar">eventToFullCalendar(ev, tzid, il)</a> ⇒ <code>Object</code></dt>
 <dd><p>Converts a Hebcal event to a FullCalendar.io object</p>
 </dd>
 </dl>
 
-<a name="icalendar"></a>
-
-## icalendar
-Main interface to hebcal/icalendar
-
-**Kind**: global constant  
 <a name="getFormatter"></a>
 
 ## getFormatter(tzid) ⇒ <code>Intl.DateTimeFormat</code>
@@ -118,6 +100,31 @@ Main interface to hebcal/icalendar
 | --- | --- |
 | tzid | <code>string</code> | 
 | date | <code>Date</code> | 
+
+<a name="makeAnchor"></a>
+
+## makeAnchor(s) ⇒ <code>string</code>
+Helper function to transform a string to make it more usable in a URL or filename.
+Converts to lowercase and replaces non-word characters with hyphen ('-').
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| s | <code>string</code> | 
+
+**Example**  
+```js
+makeAnchor('Rosh Chodesh Adar II') // 'rosh-chodesh-adar-ii'
+```
+<a name="getDownloadFilename"></a>
+
+## getDownloadFilename(options) ⇒ <code>string</code>
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| options | <code>hebcal.HebcalOptions</code> | 
 
 <a name="pad2"></a>
 
@@ -175,111 +182,29 @@ Returns a category and subcategory name
 | --- | --- |
 | ev | <code>Event</code> | 
 
-<a name="icalWriteLine"></a>
+<a name="getCalendarTitle"></a>
 
-## icalWriteLine(res, ...str)
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| res | <code>stream.Writable</code> | 
-| ...str | <code>string</code> | 
-
-<a name="formatYYYYMMDD"></a>
-
-## formatYYYYMMDD(d) ⇒ <code>string</code>
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| d | <code>Date</code> | 
-
-<a name="formatTime"></a>
-
-## formatTime(hour, min, sec) ⇒ <code>string</code>
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| hour | <code>number</code> \| <code>string</code> | 
-| min | <code>number</code> \| <code>string</code> | 
-| sec | <code>number</code> \| <code>string</code> | 
-
-<a name="makeDtstamp"></a>
-
-## makeDtstamp(dt) ⇒ <code>string</code>
-Returns UTC string for iCalendar
+## getCalendarTitle(events, options) ⇒ <code>string</code>
+Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
 
 **Kind**: global function  
 
 | Param | Type |
 | --- | --- |
-| dt | <code>Date</code> | 
-
-<a name="icalWriteEvent"></a>
-
-## icalWriteEvent(res, e, dtstamp, options)
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| res | <code>stream.Writable</code> | 
-| e | <code>Event</code> | 
-| dtstamp | <code>string</code> | 
-| options | <code>hebcal.HebcalOptions</code> | 
-
-<a name="addOptional"></a>
-
-## addOptional(arr, key, val)
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| arr | <code>Array.&lt;string&gt;</code> | 
-| key | <code>string</code> | 
-| val | <code>string</code> | 
-
-<a name="eventToIcal"></a>
-
-## eventToIcal(e, options) ⇒ <code>string</code>
-**Kind**: global function  
-**Returns**: <code>string</code> - multi-line result, delimited by \r\n  
-
-| Param | Type |
-| --- | --- |
-| e | <code>Event</code> | 
-| options | <code>hebcal.HebcalOptions</code> | 
-
-<a name="exportHttpHeader"></a>
-
-## exportHttpHeader(res, mimeType, fileName)
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| res | <code>stream.Writable</code> | 
-| mimeType | <code>string</code> | 
-| fileName | <code>string</code> | 
-
-<a name="icalWriteContents"></a>
-
-## icalWriteContents(res, events, options)
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| res | <code>stream.Writable</code> | 
 | events | <code>Array.&lt;Event&gt;</code> | 
 | options | <code>hebcal.HebcalOptions</code> | 
 
-<a name="getDownloadFilename"></a>
+<a name="getHolidayDescription"></a>
 
-## getDownloadFilename(options) ⇒ <code>string</code>
+## getHolidayDescription(ev, [firstSentence]) ⇒ <code>string</code>
+Returns an English language description of the holiday
+
 **Kind**: global function  
 
-| Param | Type |
-| --- | --- |
-| options | <code>hebcal.HebcalOptions</code> | 
+| Param | Type | Default |
+| --- | --- | --- |
+| ev | <code>Event</code> |  | 
+| [firstSentence] | <code>boolean</code> | <code>false</code> | 
 
 <a name="eventToCsv"></a>
 
@@ -291,22 +216,21 @@ Renders an Event as a string
 | Param | Type |
 | --- | --- |
 | e | <code>Event</code> | 
-| options | <code>hebcal.HebcalOptions</code> | 
+| options | <code>HebcalOptions</code> | 
 
-<a name="csvWriteContents"></a>
+<a name="eventsToCsv"></a>
 
-## csvWriteContents(res, events, options)
+## eventsToCsv(events, options) ⇒ <code>string</code>
 **Kind**: global function  
 
 | Param | Type |
 | --- | --- |
-| res | <code>stream.Writable</code> | 
 | events | <code>Array.&lt;Event&gt;</code> | 
-| options | <code>hebcal.HebcalOptions</code> | 
+| options | <code>HebcalOptions</code> | 
 
 <a name="eventToFullCalendar"></a>
 
-## eventToFullCalendar(ev, tzid) ⇒ <code>Object</code>
+## eventToFullCalendar(ev, tzid, il) ⇒ <code>Object</code>
 Converts a Hebcal event to a FullCalendar.io object
 
 **Kind**: global function  
@@ -315,4 +239,4 @@ Converts a Hebcal event to a FullCalendar.io object
 | --- | --- | --- |
 | ev | <code>Event</code> |  |
 | tzid | <code>string</code> | timeZone identifier |
-
+| il | <code>boolean</code> | true if Israel |

@@ -13,12 +13,10 @@ export default [
       {
         file: 'dist/bundle.min.js',
         format: 'umd',
-        name: 'hebcal__icalendar',
+        name: 'hebcal__rest_api',
         globals: {
           '@hebcal/core': 'hebcal__core',
           '@hebcal/leyning': 'hebcal__leyning',
-          'fs': 'fs',
-          'stream': 'stream',
         },
         plugins: [terser()],
       },
@@ -32,6 +30,6 @@ export default [
       resolve(),
       commonjs(),
     ],
-    external: ['@hebcal/core', '@hebcal/leyning', 'fs', 'stream'],
+    external: ['@hebcal/core', '@hebcal/leyning'],
   },
 ];

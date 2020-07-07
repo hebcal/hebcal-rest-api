@@ -1,25 +1,15 @@
 /// <reference types="node"/>
-import {hebcal, Event} from '@hebcal/core';
-declare module '@hebcal/icalendar' {
-/**
- * @returns multi-line result, delimited by \r\n
- */
-export function eventToIcal(e: Event, options: hebcal.HebcalOptions): string;
-/**
- * Renders an array of events as a full RFC 2445 iCalendar string
- * @returns multi-line result, delimited by \r\n
- */
-export function eventsToIcalendar(events: Event[], options: hebcal.HebcalOptions): string;
-export function eventsToIcalendarStream(events: Event[], options: hebcal.HebcalOptions): string;
+import {HebrewCalendar, Event} from '@hebcal/core';
+declare module '@hebcal/rest-api' {
 /**
  * Renders an Event as a string
  */
-export function eventToCsv(e: Event, options: hebcal.HebcalOptions): string;
-export function eventsToCsv(events: Event[], options: hebcal.HebcalOptions): string;
+export function eventToCsv(e: Event, options: HebrewCalendar.Options): string;
+export function eventsToCsv(events: Event[], options: HebrewCalendar.Options): string;
 /**
  * Formats a list events for the classic Hebcal.com JSON API response
  */
-export function eventsToClassicApi(events: Event[], options: hebcal.HebcalOptions): any;
+export function eventsToClassicApi(events: Event[], options: HebrewCalendar.Options): any;
 /**
  * Converts a Hebcal event to a classic Hebcal.com JSON API object
  * @param tzid - timeZone identifier
@@ -38,7 +28,7 @@ export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any;
  */
 export function eventsToRss(events: Event[], location: Location, lang?: string, evPubDate?: boolean): string;
 export function eventToRssItem(ev: Event, evPubDate: boolean, lastBuildDate: string, dayFormat: Intl.DateTimeFormat, location: Location): string;
-export function getDownloadFilename(options: hebcal.HebcalOptions): string;
+export function getDownloadFilename(options: HebrewCalendar.Options): string;
 export function pad2(number: number): string;
 /**
  * Get offset string (like "+05:00" or "-08:00") from tzid (like "Europe/Moscow")
@@ -61,5 +51,5 @@ export function getEventCategories(ev: Event): string[];
 /**
  * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
  */
-export function getCalendarTitle(events: Event[], options: hebcal.HebcalOptions): string;
+export function getCalendarTitle(events: Event[], options: HebrewCalendar.Options): string;
 }

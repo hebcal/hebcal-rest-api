@@ -1,29 +1,25 @@
 {
-  "name": "@hebcal/icalendar",
-  "version": "2.0.2",
+  "name": "@hebcal/rest-api",
+  "version": "2.0.3",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
-    "ical",
-    "icalendar",
-    "jewish",
     "hebcal"
   ],
-  "description": "Jewish holidays and Hebrew calendar as iCalendar RFC 2445",
+  "description": "Jewish holidays and Hebrew calendar as plain JSON objects and CSV export",
   "main": "dist/index.js",
-  "typings": "icalendar.d.ts",
+  "typings": "rest-api.d.ts",
   "files": [
     "dist",
-    "icalendar.d.ts"
+    "rest-api.d.ts"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hebcal/hebcal-icalendar.git"
+    "url": "https://github.com/hebcal/hebcal-rest-api.git"
   },
   "bugs": {
-    "url": "https://github.com/hebcal/hebcal-icalendar/issues"
+    "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.10.4",
     "@hebcal/core": "^2.0.1",
     "@hebcal/leyning": "^2.0.0"
   },
@@ -40,8 +36,7 @@
       "src/**/*.spec.js"
     ],
     "require": [
-      "@babel/register",
-      "@babel/polyfill"
+      "@babel/register"
     ],
     "babel": {
       "testOptions": {
@@ -68,7 +63,6 @@
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^3.6.4",
     "jsdoc-to-markdown": "^5.0.3",
-    "md5": "^2.2.1",
     "rollup": "^1.29.0",
     "rollup-plugin-terser": "^6.1.0"
   }

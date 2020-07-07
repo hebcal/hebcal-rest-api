@@ -20,7 +20,7 @@ export function makeAnchor(s) {
 }
 
 /**
- * @param {hebcal.HebcalOptions} options
+ * @param {HebrewCalendar.Options} options
  * @return {string}
  */
 export function getDownloadFilename(options) {
@@ -128,7 +128,7 @@ export function getEventCategories(ev) {
 /**
  * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
  * @param {Event[]} events
- * @param {hebcal.HebcalOptions} options
+ * @param {HebrewCalendar.Options} options
  * @return {string}
  */
 export function getCalendarTitle(events, options) {

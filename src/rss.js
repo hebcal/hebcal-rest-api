@@ -59,9 +59,9 @@ export function eventsToRss(events, location, lang='en-US', evPubDate=true) {
 <copyright>Copyright (c) ${thisYear} Michael J. Radwin. All rights reserved.</copyright>
 <lastBuildDate>${lastBuildDate}</lastBuildDate>
 `;
-  for (const ev of events) {
+  events.forEach((ev) => {
     str += eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location);
-  }
+  });
   str += '</channel>\n</rss>\n';
   return str;
 }
@@ -78,7 +78,9 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
   const subj = ev.render();
   const evDate = ev.getDate().greg();
   const pubDate = evPubDate ? evDate.toUTCString() : lastBuildDate;
-  const [link, guid] = getLinkAndGuid(ev);
+  const linkGuid = getLinkAndGuid(ev);
+  const link = linkGuid[0];
+  const guid = linkGuid[1];
   const description = dayFormat.format(evDate);
   const categories = getEventCategories(ev);
   const cat0 = categories[0];

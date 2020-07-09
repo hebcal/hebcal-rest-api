@@ -85,7 +85,7 @@ export function eventToClassicApiObject(ev, tzid, il) {
     }
     const url = ev.url();
     if (url) {
-      if (url.startsWith('https://www.hebcal.com')) {
+      if (url.substring(0, 22) == 'https://www.hebcal.com') {
         result.link = url + '?utm_source=js&utm_medium=api';
       } else {
         const sep = url.indexOf('?') == -1 ? '?' : '&';
@@ -104,10 +104,11 @@ export function eventToClassicApiObject(ev, tzid, il) {
  * @return {Object}
  */
 function formatAliyot(result, aliyot) {
-  for (const [num, aliyah] of Object.entries(aliyot)) {
+  Object.keys(aliyot).forEach((num) => {
+    const aliyah = aliyot[num];
     const k = num == 'M' ? 'maftir' : num;
     result[k] = leyning.formatAliyahWithBook(aliyah);
-  }
+  });
   return result;
 }
 
@@ -126,12 +127,12 @@ function formatLeyningResult(reading) {
   }
   formatAliyot(result, reading.fullkriyah);
   if (reading.reason) {
-    for (const num of ['7', '8', 'M']) {
+    ['7', '8', 'M'].forEach((num) => {
       if (reading.reason[num]) {
         const k = num == 'M' ? 'maftir' : num;
         result[k] += ' | ' + reading.reason[num];
       }
-    }
+    });
     if (reading.reason.haftara) {
       result.haftarah += ' | ' + reading.reason.haftara;
     }

@@ -1,11 +1,11 @@
-const _formatters = new Map();
+const _formatters = {};
 
 /**
  * @param {string} tzid
  * @return {Intl.DateTimeFormat}
  */
 function getFormatter(tzid) {
-  const fmt = _formatters.get(tzid);
+  const fmt = _formatters[tzid];
   if (fmt) return fmt;
   const f = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
@@ -17,7 +17,7 @@ function getFormatter(tzid) {
     hour12: false,
     timeZone: tzid,
   });
-  _formatters.set(tzid, f);
+  _formatters[tzid] = f;
   return f;
 }
 
@@ -30,9 +30,10 @@ const dateFormatRegex = /^(\d+).(\d+).(\d+),?\s+(\d+).(\d+).(\d+)/;
  */
 function getPseudoISO(tzid, date) {
   const str = getFormatter(tzid).format(date);
-  let [, mm, dd, yyyy, hour, min, sec] = dateFormatRegex.exec(str);
+  const m = dateFormatRegex.exec(str);
+  let hour = m[4];
   if (hour == '24') hour = '00';
-  return `${yyyy}-${mm}-${dd}T${hour}:${min}:${sec}Z`;
+  return `${m[3]}-${m[1]}-${m[2]}T${hour}:${m[5]}:${m[6]}Z`;
 }
 
 /**

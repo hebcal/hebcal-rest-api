@@ -86,12 +86,12 @@
 <!-- hebcal-->
 <script src='./node-process-browser.js'></script>
 <script src='./node_modules/@hebcal/core/dist/bundle.js'></script>
-<script src='./dist/bundle.min.js'></script>
+<script src='./dist/bundle.js'></script>
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-    var location = hebcal__core.Location.lookup('Helsinki');
+    var location = hebcal__core.Location.lookup('Miami');
     var calendar = window['hebcalFullCalendar'] = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'dayGrid' ],
       defaultView: 'dayGridMonth',

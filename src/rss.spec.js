@@ -50,21 +50,21 @@ test('eventToRssItem', (t) => {
   const expected = [
     '<item>\n' +
     '<title>Candle lighting: 18:44</title>\n' +
-    '<link>https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-06T15%3A44%3A22#candle-lighting</link>\n' +
-    '<guid isPermaLink="false">https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-06T15%3A44%3A22#candle-lighting</guid>\n' +
+    '<link>https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-06T15%3A44%3A00#candle-lighting</link>\n' +
+    '<guid isPermaLink="false">https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-06T15%3A44%3A00#candle-lighting</guid>\n' +
     '<description>Friday, April 06, 1990</description>\n' +
     '<category>candles</category>\n' +
-    '<pubDate>Fri, 06 Apr 1990 15:44:22 GMT</pubDate>\n' +
+    '<pubDate>Fri, 06 Apr 1990 15:44:00 GMT</pubDate>\n' +
     '<geo:lat>29.55805</geo:lat>\n' +
     '<geo:long>34.94821</geo:long>\n' +
     '</item>\n',
   '<item>\n' +
     '<title>Havdalah (50 min): 19:53</title>\n' +
-    '<link>https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A53%3A57#havdalah</link>\n' +
-    '<guid isPermaLink="false">https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A53%3A57#havdalah</guid>\n' +
+    '<link>https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A53%3A00#havdalah</link>\n' +
+    '<guid isPermaLink="false">https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A53%3A00#havdalah</guid>\n' +
     '<description>Saturday, April 07, 1990</description>\n' +
     '<category>havdalah</category>\n' +
-    '<pubDate>Sat, 07 Apr 1990 16:53:57 GMT</pubDate>\n' +
+    '<pubDate>Sat, 07 Apr 1990 16:53:00 GMT</pubDate>\n' +
     '</item>\n',
   '<item>\n' +
     '<title>Erev Pesach</title>\n' +

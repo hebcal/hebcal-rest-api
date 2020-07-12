@@ -35,3 +35,30 @@ test('eventsToCsv', (t) => {
   t.is(csv[1], `"Pesach I","4/10/1990",,,,"true","Passover; the Feast of Unleavened Bread","4","Jewish Holidays"`);
   t.is(csv[2], '');
 });
+
+test('appendHebrewToSubject', (t) => {
+  const options = {
+    start: new Date(2020, 4, 23),
+    end: new Date(2020, 4, 30),
+    sedrot: true,
+    candlelighting: true,
+    havdalahMins: 42,
+    location: Location.lookup('Gibraltar'),
+    appendHebrewToSubject: true,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const csv = eventsToCsv(events, options).split('\r\n').slice(1, 10);
+  const subject = csv.map((line) => line.substring(0, line.indexOf(',')));
+  const expected = [
+    '"Parashat Bamidbar / פרשת בְּמִדְבַּר"',
+    '"Havdalah (42 min) / הַבדָלָה"',
+    '"Rosh Chodesh Sivan / רֹאשׁ חודש סִיוָן"',
+    '"Erev Shavuot / עֶרֶב שָׁבוּעוֹת"',
+    '"Candle lighting / הדלקת נרות"',
+    '"Shavuot I / שָׁבוּעוֹת יוֹם א׳"',
+    '"Candle lighting / הדלקת נרות"',
+    '"Shavuot II / שָׁבוּעוֹת יוֹם ב׳"',
+    '"Havdalah (42 min) / הַבדָלָה"',
+  ];
+  t.deepEqual(subject, expected);
+});

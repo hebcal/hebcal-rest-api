@@ -51,6 +51,14 @@ export function eventToCsv(e, options) {
   }
 
   subj = subj.replace(/,/g, '').replace(/"/g, '\'\'');
+
+  if (options.appendHebrewToSubject) {
+    const hebrew = e.renderBrief('he');
+    if (hebrew) {
+      subj += ` / ${hebrew}`;
+    }
+  }
+
   const memo0 = attrs.memo || getHolidayDescription(e, true);
   const memo = memo0.replace(/,/g, ';').replace(/"/g, '\'\'');
 

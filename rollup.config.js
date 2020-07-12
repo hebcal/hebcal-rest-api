@@ -59,7 +59,6 @@ export default [
         presets: [
           ['@babel/env', {
             modules: false,
-            debug: true,
             exclude: ['es.symbol.description', 'es.string.replace'],
             targets: {
               edge: '17',

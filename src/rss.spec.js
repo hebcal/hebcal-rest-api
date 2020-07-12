@@ -54,7 +54,7 @@ test('eventToRssItem', (t) => {
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-06T15%3A44%3A22#candle-lighting</guid>\n' +
     '<description>Friday, April 06, 1990</description>\n' +
     '<category>candles</category>\n' +
-    '<pubDate>Fri, 06 Apr 1990 07:00:00 GMT</pubDate>\n' +
+    '<pubDate>Fri, 06 Apr 1990 15:44:22 GMT</pubDate>\n' +
     '<geo:lat>29.55805</geo:lat>\n' +
     '<geo:long>34.94821</geo:long>\n' +
     '</item>\n',
@@ -64,7 +64,7 @@ test('eventToRssItem', (t) => {
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A53%3A57#havdalah</guid>\n' +
     '<description>Saturday, April 07, 1990</description>\n' +
     '<category>havdalah</category>\n' +
-    '<pubDate>Sat, 07 Apr 1990 07:00:00 GMT</pubDate>\n' +
+    '<pubDate>Sat, 07 Apr 1990 16:53:57 GMT</pubDate>\n' +
     '</item>\n',
   '<item>\n' +
     '<title>Erev Pesach</title>\n' +
@@ -72,7 +72,7 @@ test('eventToRssItem', (t) => {
     '<guid isPermaLink="false">https://www.hebcal.com/holidays/pesach?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-09</guid>\n' +
     '<description>Monday, April 09, 1990</description>\n' +
     '<category>holiday</category>\n' +
-    '<pubDate>Mon, 09 Apr 1990 07:00:00 GMT</pubDate>\n' +
+    '<pubDate>Mon, 09 Apr 1990 00:00:00 GMT</pubDate>\n' +
     '</item>\n',
   ];
   t.deepEqual(items, expected);

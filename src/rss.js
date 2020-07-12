@@ -67,6 +67,25 @@ export function eventsToRss(events, location, lang='en-US', evPubDate=true) {
 }
 
 /**
+ * @private
+ * @param {Event} ev
+ * @param {boolean} evPubDate
+ * @param {Date} evDate
+ * @param {string} lastBuildDate
+ * @return {string}
+ */
+function getPubDate(ev, evPubDate, evDate, lastBuildDate) {
+  if (evPubDate) {
+    const dt = ev.getAttrs().eventTime;
+    if (dt) {
+      return dt.toUTCString();
+    }
+    return evDate.toUTCString().replace(/ \S+ GMT$/, ' 00:00:00 GMT');
+  }
+  return lastBuildDate;
+}
+
+/**
  * @param {Event} ev
  * @param {boolean} evPubDate
  * @param {string} lastBuildDate
@@ -77,7 +96,7 @@ export function eventsToRss(events, location, lang='en-US', evPubDate=true) {
 export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location) {
   const subj = ev.render();
   const evDate = ev.getDate().greg();
-  const pubDate = evPubDate ? evDate.toUTCString() : lastBuildDate;
+  const pubDate = getPubDate(ev, evPubDate, evDate, lastBuildDate);
   const linkGuid = getLinkAndGuid(ev);
   const link = linkGuid[0];
   const guid = linkGuid[1];

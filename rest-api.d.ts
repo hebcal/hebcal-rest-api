@@ -31,6 +31,11 @@ export function eventToRssItem(ev: Event, evPubDate: boolean, lastBuildDate: str
 export function getDownloadFilename(options: HebrewCalendar.Options): string;
 export function pad2(number: number): string;
 /**
+ * Helper function to transform a string to make it more usable in a URL or filename.
+ * Converts to lowercase and replaces non-word characters with hyphen ('-').
+ */
+export function makeAnchor(s: string): string;
+/**
  * Get offset string (like "+05:00" or "-08:00") from tzid (like "Europe/Moscow")
  */
 export function timeZoneOffsetStr(tzid: string, date: Date): string;

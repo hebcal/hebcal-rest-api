@@ -1,5 +1,5 @@
 /// <reference types="node"/>
-import {HebrewCalendar, Event} from '@hebcal/core';
+import {HebrewCalendar, Event, Location} from '@hebcal/core';
 declare module '@hebcal/rest-api' {
 /**
  * Renders an Event as a string
@@ -26,7 +26,7 @@ export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any;
  * @param [lang] - language such as 'he' (default 'en-US')
  * @param [evPubDate] - if true, use event time as pubDate (false uses lastBuildDate)
  */
-export function eventsToRss(events: Event[], location: Location, lang?: string, evPubDate?: boolean): string;
+export function eventsToRss(events: Event[], location: Location, mainUrl: string, selfUrl: string, lang?: string, evPubDate?: boolean): string;
 export function eventToRssItem(ev: Event, evPubDate: boolean, lastBuildDate: string, dayFormat: Intl.DateTimeFormat, location: Location): string;
 export function getDownloadFilename(options: HebrewCalendar.Options): string;
 export function pad2(number: number): string;

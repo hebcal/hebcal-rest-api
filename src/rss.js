@@ -32,15 +32,16 @@ function getLinkAndGuid(ev) {
 /**
  * @param {Event[]} events
  * @param {Location} location
+ * @param {string} mainUrl
+ * @param {string} selfUrl
  * @param {string} [lang] language such as 'he' (default 'en-US')
  * @param {boolean} [evPubDate] if true, use event time as pubDate (false uses lastBuildDate)
  * @return {string}
  */
-export function eventsToRss(events, location, lang='en-US', evPubDate=true) {
+export function eventsToRss(events, location, mainUrl, selfUrl, lang='en-US', evPubDate=true) {
   const cityDescr = location.getName();
   const thisYear = new Date().getFullYear();
   const title = 'Shabbat Times for ' + cityDescr;
-  const mainUrl = 'https://hebcal.com/bogus?a=b';
   const lastBuildDate = new Date().toUTCString();
   const dayFormat = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
@@ -48,12 +49,14 @@ export function eventsToRss(events, location, lang='en-US', evPubDate=true) {
     month: 'long',
     year: 'numeric',
   });
+  mainUrl = mainUrl.replace(/&/g, '&amp;');
+  selfUrl = selfUrl.replace(/&/g, '&amp;');
   let str = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <title>${title}</title>
 <link>${mainUrl}&amp;${utmParam}</link>
-<atom:link href="${mainUrl}&amp;cfg=r" rel="self" type="application/rss+xml" />
+<atom:link href="${selfUrl}" rel="self" type="application/rss+xml" />
 <description>Weekly Shabbat candle lighting times for ${cityDescr}</description>
 <language>${lang}</language>
 <copyright>Copyright (c) ${thisYear} Michael J. Radwin. All rights reserved.</copyright>

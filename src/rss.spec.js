@@ -16,7 +16,9 @@ test('eventsToRss', (t) => {
     location: location,
   };
   const events = HebrewCalendar.calendar(options).slice(0, 10);
-  const rss = eventsToRss(events, location).split('\n');
+  const mainUrl = 'https://www.hebcal.com/shabbat/?geonameid=4887398&m=50&lg=s';
+  const selfUrl = 'https://www.hebcal.com/shabbat/?cfg=r&geonameid=4887398&m=50&lg=s&pubDate=1';
+  const rss = eventsToRss(events, location, mainUrl, selfUrl, 'en-US', true).split('\n');
   t.is(rss[2], '<channel>');
   t.is(rss[3], '<title>Shabbat Times for Chicago</title>');
   t.is(rss[10], '<item>');

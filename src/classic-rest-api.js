@@ -118,14 +118,18 @@ function formatAliyot(result, aliyot) {
  */
 function formatLeyningResult(reading) {
   const result = {};
-  result.torah = reading.summary;
+  if (reading.summary) {
+    result.torah = reading.summary;
+  }
   if (reading.haftara) {
     result.haftarah = reading.haftara;
   }
   if (reading.sephardic) {
     result.haftarah_sephardic = reading.sephardic;
   }
-  formatAliyot(result, reading.fullkriyah);
+  if (reading.fullkriyah) {
+    formatAliyot(result, reading.fullkriyah);
+  }
   if (reading.reason) {
     ['7', '8', 'M'].forEach((num) => {
       if (reading.reason[num]) {

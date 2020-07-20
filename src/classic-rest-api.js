@@ -106,8 +106,10 @@ export function eventToClassicApiObject(ev, tzid, il) {
 function formatAliyot(result, aliyot) {
   Object.keys(aliyot).forEach((num) => {
     const aliyah = aliyot[num];
-    const k = num == 'M' ? 'maftir' : num;
-    result[k] = leyning.formatAliyahWithBook(aliyah);
+    if (typeof aliyah !== 'undefined') {
+      const k = num == 'M' ? 'maftir' : num;
+      result[k] = leyning.formatAliyahWithBook(aliyah);
+    }
   });
   return result;
 }

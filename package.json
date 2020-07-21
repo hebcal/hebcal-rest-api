@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@hebcal/core": "^2.1.4",
+    "@hebcal/geo-sqlite": "^2.2.4",
     "@hebcal/leyning": "^2.1.1"
   },
   "scripts": {

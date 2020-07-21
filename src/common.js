@@ -32,8 +32,8 @@ export function getDownloadFilename(options) {
     fileName += '_' + options.month;
   }
   if (options.location) {
-    const name = options.location.getShortName();
-    fileName += '_' + makeAnchor(name);
+    const name = options.location.zip || options.location.asciiname || options.location.getShortName();
+    fileName += '_' + name.replace(/[^A-Za-z0-9]/g, '_');
   }
   return fileName;
 }

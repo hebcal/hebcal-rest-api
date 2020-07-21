@@ -17,20 +17,28 @@ import holidayDescription from './holidays.json';
  */
 export function eventsToClassicApi(events, options) {
   const result = {
-    date: new Date().toISOString(),
     title: getCalendarTitle(events, options),
+    date: new Date().toISOString(),
   };
   const location = options.location;
   const tzid = location && location.getTzid();
   if (location && location.name) {
     result.location = {
-      city: location.getName(),
+      title: location.getName(),
+      city: location.getShortName(),
       tzid: tzid,
       latitude: location.getLatitude(),
       longitude: location.getLongitude(),
       cc: location.getCountryCode(),
       country: countryNames[location.getCountryCode()],
     };
+    ['admin1', 'asciiname', 'geo', 'zip', 'state', 'geonameid'].forEach((k) => {
+      if (location[k]) {
+        result.location[k] = location[k];
+      }
+    });
+  } else {
+    result.location = {geo: 'none'};
   }
   result.items = events.map((ev) => eventToClassicApiObject(ev, tzid, options.il));
   return result;

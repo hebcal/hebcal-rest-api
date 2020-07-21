@@ -95,6 +95,7 @@ test('eventsToClassicApi', (t) => {
   const locationExpected = {
     cc: 'CA',
     city: 'Vancouver',
+    title: 'Vancouver',
     country: 'Canada',
     latitude: 49.24966,
     longitude: -123.11934,
@@ -130,6 +131,9 @@ test('classic-api-no-sedra', (t) => {
   delete apiResult.date;
   const expected = {
     title: 'Hebcal Israel May 2022',
+    location: {
+      geo: 'none',
+    },
     items: [
       {
         title: 'Pesach Sheni',

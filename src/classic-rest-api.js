@@ -1,5 +1,5 @@
 import {Locale, flags} from '@hebcal/core';
-import leyning from '@hebcal/leyning';
+import leyn from '@hebcal/leyning';
 import {
   getCalendarTitle,
   getEventCategories,
@@ -13,9 +13,10 @@ import holidayDescription from './holidays.json';
  * Formats a list events for the classic Hebcal.com JSON API response
  * @param {Event[]} events
  * @param {HebcalOptions} options
+ * @param {boolean} [leyning=true]
  * @return {Object}
  */
-export function eventsToClassicApi(events, options) {
+export function eventsToClassicApi(events, options, leyning=true) {
   const result = {
     title: getCalendarTitle(events, options),
     date: new Date().toISOString(),
@@ -40,7 +41,7 @@ export function eventsToClassicApi(events, options) {
   } else {
     result.location = {geo: 'none'};
   }
-  result.items = events.map((ev) => eventToClassicApiObject(ev, tzid, options.il));
+  result.items = events.map((ev) => eventToClassicApiObject(ev, tzid, options.il, leyning));
   return result;
 }
 
@@ -49,9 +50,10 @@ export function eventsToClassicApi(events, options) {
  * @param {Event} ev
  * @param {string} tzid timeZone identifier
  * @param {boolean} il true if Israel
+ * @param {boolean} [leyning=true]
  * @return {Object}
  */
-export function eventToClassicApiObject(ev, tzid, il) {
+export function eventToClassicApiObject(ev, tzid, il, leyning=true) {
   const attrs = ev.getAttrs();
   const timed = Boolean(attrs.eventTime);
   const dt = ev.getDate().greg();
@@ -80,16 +82,18 @@ export function eventToClassicApiObject(ev, tzid, il) {
     result.hebrew = Locale.hebrewStripNikkud(hebrew);
   }
   if (!timed) {
-    const isParsha = ev.getFlags() == flags.PARSHA_HASHAVUA;
-    const reading = isParsha ?
-      leyning.getLeyningForParshaHaShavua(ev, il) :
-      leyning.getLeyningForHoliday(ev, il);
-    if (reading) {
-      result.leyning = formatLeyningResult(reading);
-      if (isParsha && !il) {
-        const triReading = leyning.getTriennialForParshaHaShavua(ev);
-        if (triReading) {
-          result.leyning.triennial = formatAliyot({}, triReading);
+    if (leyning) {
+      const isParsha = ev.getFlags() == flags.PARSHA_HASHAVUA;
+      const reading = isParsha ?
+        leyn.getLeyningForParshaHaShavua(ev, il) :
+        leyn.getLeyningForHoliday(ev, il);
+      if (reading) {
+        result.leyning = formatLeyningResult(reading);
+        if (isParsha && !il) {
+          const triReading = leyn.getTriennialForParshaHaShavua(ev);
+          if (triReading) {
+            result.leyning.triennial = formatAliyot({}, triReading);
+          }
         }
       }
     }
@@ -118,14 +122,14 @@ function formatAliyot(result, aliyot) {
     const aliyah = aliyot[num];
     if (typeof aliyah !== 'undefined') {
       const k = num == 'M' ? 'maftir' : num;
-      result[k] = leyning.formatAliyahWithBook(aliyah);
+      result[k] = leyn.formatAliyahWithBook(aliyah);
     }
   });
   return result;
 }
 
 /**
- * @param {leyning.Leyning} reading
+ * @param {leyn.Leyning} reading
  * @return {Object}
  */
 function formatLeyningResult(reading) {

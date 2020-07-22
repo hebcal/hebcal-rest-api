@@ -9,13 +9,13 @@ export function eventsToCsv(events: Event[], options: HebrewCalendar.Options): s
 /**
  * Formats a list events for the classic Hebcal.com JSON API response
  */
-export function eventsToClassicApi(events: Event[], options: HebrewCalendar.Options): any;
+export function eventsToClassicApi(events: Event[], options: HebrewCalendar.Options, leyning?: boolean): any;
 /**
  * Converts a Hebcal event to a classic Hebcal.com JSON API object
  * @param tzid - timeZone identifier
  * @param il - true if Israel
  */
-export function eventToClassicApiObject(ev: Event, tzid: string, il: boolean): any;
+export function eventToClassicApiObject(ev: Event, tzid: string, il: boolean, leyning?: boolean): any;
 /**
  * Converts a Hebcal event to a FullCalendar.io object
  * @param tzid - timeZone identifier

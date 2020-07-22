@@ -174,3 +174,23 @@ test('classic-api-no-sedra', (t) => {
   };
   t.deepEqual(apiResult, expected);
 });
+
+test('no-leyning', (t) => {
+  const options = {
+    start: new Date(2020, 4, 22),
+    end: new Date(2020, 4, 30),
+    sedrot: true,
+    il: false,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const apiObjs = events.map((ev) => eventToClassicApiObject(ev, 'UTC', options.il, false));
+  const bamidbarActual = apiObjs[1];
+  const bamidbarExpected = {
+    title: 'Parashat Bamidbar',
+    date: '2020-05-23',
+    category: 'parashat',
+    hebrew: 'פרשת במדבר',
+    link: 'https://www.hebcal.com/sedrot/bamidbar?utm_source=js&utm_medium=api',
+  };
+  t.deepEqual(bamidbarActual, bamidbarExpected);
+});

@@ -1,4 +1,4 @@
-import {Locale, flags} from '@hebcal/core';
+import {Locale, flags, HebrewCalendar} from '@hebcal/core';
 import leyn from '@hebcal/leyning';
 import {
   getCalendarTitle,
@@ -12,7 +12,7 @@ import holidayDescription from './holidays.json';
 /**
  * Formats a list events for the classic Hebcal.com JSON API response
  * @param {Event[]} events
- * @param {HebcalOptions} options
+ * @param {HebrewCalendar.Options} options
  * @param {boolean} [leyning=true]
  * @return {Object}
  */
@@ -22,12 +22,11 @@ export function eventsToClassicApi(events, options, leyning=true) {
     date: new Date().toISOString(),
   };
   const location = options.location;
-  const tzid = location && location.getTzid();
-  if (location && location.name) {
+  if (typeof location === 'object' && typeof location.name === 'string') {
     result.location = {
       title: location.getName(),
       city: location.getShortName(),
-      tzid: tzid,
+      tzid: location.getTzid(),
       latitude: location.getLatitude(),
       longitude: location.getLongitude(),
       cc: location.getCountryCode(),
@@ -41,27 +40,34 @@ export function eventsToClassicApi(events, options, leyning=true) {
   } else {
     result.location = {geo: 'none'};
   }
-  result.items = events.map((ev) => eventToClassicApiObject(ev, tzid, options.il, leyning));
+  result.items = events.map((ev) => eventToClassicApiObject(ev, options, leyning));
   return result;
 }
 
 /**
  * Converts a Hebcal event to a classic Hebcal.com JSON API object
  * @param {Event} ev
- * @param {string} tzid timeZone identifier
- * @param {boolean} il true if Israel
+ * @param {HebrewCalendar.Options} options
  * @param {boolean} [leyning=true]
  * @return {Object}
  */
-export function eventToClassicApiObject(ev, tzid, il, leyning=true) {
+export function eventToClassicApiObject(ev, options, leyning=true) {
   const attrs = ev.getAttrs();
   const timed = Boolean(attrs.eventTime);
   const dt = ev.getDate().greg();
+  const tzid = typeof options.location === 'object' ? options.location.getTzid() : 'UTC';
   const date = timed ?
     toISOStringWithTimezone(dt, attrs.eventTimeStr, tzid) :
     toISOString(dt);
   const categories = getEventCategories(ev);
-  const title = ev.render();
+  let title = ev.render();
+  if (timed) {
+    const colon = title.indexOf(': ');
+    if (colon != -1) {
+      const time = HebrewCalendar.reformatTimeStr(attrs.eventTimeStr, 'pm', options);
+      title = title.substring(0, colon) + ': ' + time;
+    }
+  }
   const result = {
     title: title,
     date: date,
@@ -83,6 +89,7 @@ export function eventToClassicApiObject(ev, tzid, il, leyning=true) {
   }
   if (!timed) {
     if (leyning) {
+      const il = options.il;
       const isParsha = ev.getFlags() == flags.PARSHA_HASHAVUA;
       const reading = isParsha ?
         leyn.getLeyningForParshaHaShavua(ev, il) :

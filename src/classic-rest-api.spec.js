@@ -14,7 +14,7 @@ test('eventToClassicApiObject', (t) => {
     il: false,
   };
   const events = HebrewCalendar.calendar(options);
-  const apiObjs = events.map((ev) => eventToClassicApiObject(ev, location.getTzid(), options.il));
+  const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options));
   const candlesActual = apiObjs[1];
   const candlesExpected = {
     title: 'Candle lighting: 21:17',
@@ -110,6 +110,7 @@ test('eventsToClassicApi', (t) => {
     hebrew: 'ראש חודש אייר',
     link: 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar?utm_source=js&utm_medium=api',
     title: 'Rosh Chodesh Iyyar',
+    // eslint-disable-next-line max-len
     memo: 'Beginning of new Hebrew month of Iyyar. Iyyar (somtimes transliterated Iyar) is the 2nd month of the Hebrew year. Corresponds to April or May on the Gregorian calendar',
   };
   t.deepEqual(roshChodesh, roshChodeshExpected);
@@ -168,11 +169,32 @@ test('classic-api-no-sedra', (t) => {
         category: 'roshchodesh',
         hebrew: 'ראש חודש סיון',
         link: 'https://www.hebcal.com/holidays/rosh-chodesh-sivan?utm_source=js&utm_medium=api',
+        // eslint-disable-next-line max-len
         memo: 'Beginning of new Hebrew month of Sivan. Sivan is the 3rd month of the Hebrew year. Corresponds to May or June on the Gregorian calendar',
       },
     ],
   };
   t.deepEqual(apiResult, expected);
+});
+
+test('reformat-time-usa', (t) => {
+  const options = {
+    start: new Date(2020, 4, 22),
+    end: new Date(2020, 4, 30),
+    noHolidays: true,
+    location: Location.lookup('Boston'),
+    candlelighting: true,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
+  const expected = {
+    title: 'Candle lighting: 7:49pm',
+    date: '2020-05-22T19:49:00-04:00',
+    category: 'candles',
+    title_orig: 'Candle lighting',
+    hebrew: 'הדלקת נרות',
+  };
+  t.deepEqual(apiObjs[0], expected);
 });
 
 test('no-leyning', (t) => {
@@ -183,7 +205,7 @@ test('no-leyning', (t) => {
     il: false,
   };
   const events = HebrewCalendar.calendar(options);
-  const apiObjs = events.map((ev) => eventToClassicApiObject(ev, 'UTC', options.il, false));
+  const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
   const bamidbarActual = apiObjs[1];
   const bamidbarExpected = {
     title: 'Parashat Bamidbar',

@@ -1,4 +1,5 @@
 import {getEventCategories, makeAnchor} from './common';
+import {Locale, HebrewCalendar} from '@hebcal/core';
 
 const utmParam = 'utm_source=shabbat1c&amp;utm_medium=rss';
 
@@ -97,7 +98,7 @@ function getPubDate(ev, evPubDate, evDate, lastBuildDate) {
  * @return {string}
  */
 export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location) {
-  const subj = ev.render();
+  let subj = ev.render();
   const evDate = ev.getDate().greg();
   const pubDate = getPubDate(ev, evPubDate, evDate, lastBuildDate);
   const linkGuid = getLinkAndGuid(ev);
@@ -106,6 +107,15 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
   const description = dayFormat.format(evDate);
   const categories = getEventCategories(ev);
   const cat0 = categories[0];
+  const attrs = ev.getAttrs();
+  if (typeof attrs.eventTimeStr === 'string') {
+    const colon = subj.indexOf(': ');
+    if (colon != -1) {
+      const options = {location, il: location.getIsrael(), locale: Locale.getLocaleName()};
+      const time = HebrewCalendar.reformatTimeStr(attrs.eventTimeStr, 'pm', options);
+      subj = subj.substring(0, colon) + ': ' + time;
+    }
+  }
   const geoTags = (cat0 == 'candles') ?
     `<geo:lat>${location.getLatitude()}</geo:lat>\n<geo:long>${location.getLongitude()}</geo:long>\n` :
     '';

@@ -88,7 +88,9 @@ export function eventToClassicApiObject(ev, tzid, il) {
       result.leyning = formatLeyningResult(reading);
       if (isParsha && !il) {
         const triReading = leyning.getTriennialForParshaHaShavua(ev);
-        result.leyning.triennial = formatAliyot({}, triReading);
+        if (triReading) {
+          result.leyning.triennial = formatAliyot({}, triReading);
+        }
       }
     }
     const url = ev.url();

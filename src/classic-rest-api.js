@@ -54,7 +54,8 @@ export function eventsToClassicApi(events, options, leyning=true) {
 export function eventToClassicApiObject(ev, options, leyning=true) {
   const attrs = ev.getAttrs();
   const timed = Boolean(attrs.eventTime);
-  const dt = ev.getDate().greg();
+  const hd = ev.getDate();
+  const dt = hd.greg();
   const tzid = typeof options.location === 'object' ? options.location.getTzid() : 'UTC';
   const date = timed ?
     toISOStringWithTimezone(dt, attrs.eventTimeStr, tzid) :
@@ -96,7 +97,8 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
         leyn.getLeyningForHoliday(ev, il);
       if (reading) {
         result.leyning = formatLeyningResult(reading);
-        if (isParsha && !il) {
+        const hyear = hd.getFullYear();
+        if (isParsha && !il && hyear >= 5745 && hyear <= 5830) {
           const triReading = leyn.getTriennialForParshaHaShavua(ev);
           if (triReading) {
             result.leyning.triennial = formatAliyot({}, triReading);

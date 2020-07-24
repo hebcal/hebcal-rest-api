@@ -20,7 +20,7 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^2.1.4",
+    "@hebcal/core": "^2.2.3",
     "@hebcal/geo-sqlite": "^2.2.4",
     "@hebcal/leyning": "^2.1.2"
   },
@@ -62,7 +62,7 @@
     "core-js": "^3.6.5",
     "eslint": "^7.5.0",
     "eslint-config-google": "^0.14.0",
-    "jsdoc": "^3.6.4",
+    "jsdoc": "^3.6.5",
     "jsdoc-to-markdown": "^5.0.3",
     "rollup": "^1.29.0",
     "rollup-plugin-terser": "^6.1.0"

@@ -216,3 +216,13 @@ test('no-leyning', (t) => {
   };
   t.deepEqual(bamidbarActual, bamidbarExpected);
 });
+
+test('2-digit-year', (t) => {
+  const options = {
+    year: 23,
+    month: 1,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
+  t.is(apiObjs[1].date, '0023-01-23');
+});

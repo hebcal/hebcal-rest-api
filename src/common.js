@@ -50,6 +50,21 @@ export function pad2(number) {
 }
 
 /**
+ * @param {number} number
+ * @return {string}
+ */
+export function pad4(number) {
+  if (number < 10) {
+    return '000' + number;
+  } else if (number < 100) {
+    return '00' + number;
+  } else if (number < 1000) {
+    return '0' + number;
+  }
+  return String(number);
+}
+
+/**
  * Get offset string (like "+05:00" or "-08:00") from tzid (like "Europe/Moscow")
  * @param {string} tzid
  * @param {Date} date
@@ -70,7 +85,7 @@ export function timeZoneOffsetStr(tzid, date) {
  * @return {string}
  */
 export function toISOString(d) {
-  return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  return pad4(d.getFullYear()) + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
 }
 
 /**

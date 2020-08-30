@@ -6,3 +6,6 @@ export * from './fullcalendar';
 
 import countryNames from './countryNames.json';
 export {countryNames};
+
+import holidayDescription from './holidays.json';
+export {holidayDescription};

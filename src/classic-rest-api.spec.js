@@ -61,7 +61,7 @@ test('eventToClassicApiObject', (t) => {
     date: '2020-05-29',
     category: 'holiday',
     subcat: 'major',
-    memo: 'Festival of Weeks, commemorates the giving of the Torah at Mount Sinai',
+    memo: 'Festival of Weeks. Commemorates the giving of the Torah at Mount Sinai',
     yomtov: true,
     hebrew: 'שבועות יום א׳',
     leyning: {

@@ -16,8 +16,8 @@ test('eventsToRss', (t) => {
     location: location,
   };
   const events = HebrewCalendar.calendar(options).slice(0, 10);
-  const mainUrl = 'https://www.hebcal.com/shabbat/?geonameid=4887398&m=50&lg=s';
-  const selfUrl = 'https://www.hebcal.com/shabbat/?cfg=r&geonameid=4887398&m=50&lg=s&pubDate=1';
+  const mainUrl = 'https://www.hebcal.com/shabbat?geonameid=4887398&m=50&lg=s';
+  const selfUrl = 'https://www.hebcal.com/shabbat?cfg=r&geonameid=4887398&m=50&lg=s&pubDate=1';
   const rss = eventsToRss(events, location, mainUrl, selfUrl, 'en-US', true).split('\n');
   t.is(rss[2], '<channel>');
   t.is(rss[3], '<title>Shabbat Times for Chicago</title>');
@@ -51,22 +51,22 @@ test('eventToRssItem', (t) => {
   const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location));
   const expected = [
     '<item>\n' +
-    '<title>Candle lighting: 18:44</title>\n' +
-    '<link>https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-06T15%3A44%3A00#candle-lighting</link>\n' +
-    '<guid isPermaLink="false">https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-06T15%3A44%3A00#candle-lighting</guid>\n' +
+    '<title>Candle lighting: 18:43</title>\n' +
+    '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-06T15%3A43%3A00#candle-lighting</link>\n' +
+    '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-06T15%3A43%3A00#candle-lighting</guid>\n' +
     '<description>Friday, April 06, 1990</description>\n' +
     '<category>candles</category>\n' +
-    '<pubDate>Fri, 06 Apr 1990 15:44:00 GMT</pubDate>\n' +
+    '<pubDate>Fri, 06 Apr 1990 15:43:00 GMT</pubDate>\n' +
     '<geo:lat>29.55805</geo:lat>\n' +
     '<geo:long>34.94821</geo:long>\n' +
     '</item>\n',
   '<item>\n' +
-    '<title>Havdalah (50 min): 19:53</title>\n' +
-    '<link>https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A53%3A00#havdalah</link>\n' +
-    '<guid isPermaLink="false">https://www.hebcal.com/shabbat/?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A53%3A00#havdalah</guid>\n' +
+    '<title>Havdalah (50 min): 19:52</title>\n' +
+    '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A52%3A00#havdalah</link>\n' +
+    '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A52%3A00#havdalah</guid>\n' +
     '<description>Saturday, April 07, 1990</description>\n' +
     '<category>havdalah</category>\n' +
-    '<pubDate>Sat, 07 Apr 1990 16:53:00 GMT</pubDate>\n' +
+    '<pubDate>Sat, 07 Apr 1990 16:52:00 GMT</pubDate>\n' +
     '</item>\n',
   '<item>\n' +
     '<title>Erev Pesach</title>\n' +

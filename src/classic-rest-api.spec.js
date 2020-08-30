@@ -117,9 +117,9 @@ test('eventsToClassicApi', (t) => {
   const candleLighting = apiResult.items[4];
   const candleLightingExpected = {
     category: 'candles',
-    date: '2022-05-06T20:19:00-07:00',
+    date: '2022-05-06T20:18:00-07:00',
     hebrew: 'הדלקת נרות',
-    title: 'Candle lighting: 20:19',
+    title: 'Candle lighting: 8:18pm',
     title_orig: 'Candle lighting',
   };
   t.deepEqual(candleLighting, candleLightingExpected);
@@ -188,8 +188,8 @@ test('reformat-time-usa', (t) => {
   const events = HebrewCalendar.calendar(options);
   const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
   const expected = {
-    title: 'Candle lighting: 7:49pm',
-    date: '2020-05-22T19:49:00-04:00',
+    title: 'Candle lighting: 7:48pm',
+    date: '2020-05-22T19:48:00-04:00',
     category: 'candles',
     title_orig: 'Candle lighting',
     hebrew: 'הדלקת נרות',

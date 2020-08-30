@@ -22,7 +22,7 @@ test('eventToFullCalendar', (t) => {
   const expected = [
     {
       title: 'Candle lighting',
-      start: '1990-04-06T19:04:00-05:00',
+      start: '1990-04-06T19:03:00-05:00',
       allDay: false,
       hebrew: 'הדלקת נרות',
       className: 'candles',
@@ -45,7 +45,7 @@ test('eventToFullCalendar', (t) => {
     },
     {
       title: 'Candle lighting',
-      start: '1990-04-09T19:07:00-05:00',
+      start: '1990-04-09T19:06:00-05:00',
       allDay: false,
       hebrew: 'הדלקת נרות',
       className: 'candles',
@@ -61,7 +61,7 @@ test('eventToFullCalendar', (t) => {
     },
     {
       title: 'Candle lighting',
-      start: '1990-04-10T20:17:00-05:00',
+      start: '1990-04-10T20:16:00-05:00',
       allDay: false,
       hebrew: 'הדלקת נרות',
       className: 'candles',
@@ -77,7 +77,7 @@ test('eventToFullCalendar', (t) => {
     },
     {
       title: 'Havdalah (50 min)',
-      start: '1990-04-11T20:18:00-05:00',
+      start: '1990-04-11T20:17:00-05:00',
       allDay: false,
       hebrew: 'הבדלה',
       className: 'havdalah',
@@ -101,7 +101,5 @@ test('eventToFullCalendar', (t) => {
       description: pesachMemo,
     },
   ];
-  for (let i = 0; i < fc.length; i++) {
-    t.deepEqual(fc[i], expected[i], `FullCalendar result ${i} not equal`);
-  }
+  t.deepEqual(fc, expected);
 });

@@ -25,7 +25,7 @@ function getLinkAndGuid(ev) {
     guid = link + '&amp;dt=' + dtStr;
   } else {
     const anchor = makeAnchor(ev.getDesc());
-    guid = link = 'https://www.hebcal.com/shabbat/?' + utmParam + '&amp;dt=' + dtStr + '#' + anchor;
+    guid = link = 'https://www.hebcal.com/shabbat?' + utmParam + '&amp;dt=' + dtStr + '#' + anchor;
   }
   return [link, guid];
 }

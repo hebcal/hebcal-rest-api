@@ -52,20 +52,21 @@ export function eventsToClassicApi(events, options, leyning=true) {
  * @return {Object}
  */
 export function eventToClassicApiObject(ev, options, leyning=true) {
-  const attrs = ev.getAttrs();
-  const timed = Boolean(attrs.eventTime);
+  const timed = Boolean(ev.eventTime);
   const hd = ev.getDate();
   const dt = hd.greg();
   const tzid = typeof options.location === 'object' ? options.location.getTzid() : 'UTC';
   const date = timed ?
-    toISOStringWithTimezone(dt, attrs.eventTimeStr, tzid) :
+    toISOStringWithTimezone(dt, ev.eventTimeStr, tzid) :
     toISOString(dt);
   const categories = getEventCategories(ev);
   let title = ev.render();
-  if (timed) {
+  const desc = ev.getDesc();
+  const candles = desc === 'Havdalah' || desc === 'Candle lighting';
+  if (candles) {
     const colon = title.indexOf(': ');
     if (colon != -1) {
-      const time = HebrewCalendar.reformatTimeStr(attrs.eventTimeStr, 'pm', options);
+      const time = HebrewCalendar.reformatTimeStr(ev.eventTimeStr, 'pm', options);
       title = title.substring(0, colon) + ': ' + time;
     }
   }
@@ -80,7 +81,6 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   if (categories[0] == 'holiday' && ev.getFlags() & flags.CHAG) {
     result.yomtov = true;
   }
-  const desc = ev.getDesc();
   if (title != desc) {
     result.title_orig = desc;
   }
@@ -88,7 +88,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   if (hebrew) {
     result.hebrew = Locale.hebrewStripNikkud(hebrew);
   }
-  if (!timed) {
+  if (!candles) {
     if (leyning) {
       const il = options.il;
       const isParsha = ev.getFlags() == flags.PARSHA_HASHAVUA;
@@ -116,7 +116,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
       }
     }
   }
-  const memo = attrs.memo || holidayDescription[ev.basename()];
+  const memo = ev.memo || holidayDescription[ev.basename()];
   if (memo) result.memo = memo;
   return result;
 }

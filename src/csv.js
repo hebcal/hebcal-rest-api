@@ -23,10 +23,10 @@ export function eventToCsv(e, options) {
   let endDate = '';
   let allDay = '"true"';
 
-  const attrs = e.getAttrs();
-  const timed = Boolean(attrs.eventTime);
-  if (timed) {
-    const timeStr = HebrewCalendar.reformatTimeStr(attrs.eventTimeStr, ' PM', options);
+  const timed = Boolean(e.eventTime);
+  const desc = e.getDesc();
+  if (desc === 'Havdalah' || desc === 'Candle lighting') {
+    const timeStr = HebrewCalendar.reformatTimeStr(e.eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;
     endDate = date;
     allDay = '"false"';
@@ -59,7 +59,7 @@ export function eventToCsv(e, options) {
     }
   }
 
-  const memo0 = attrs.memo || getHolidayDescription(e, true);
+  const memo0 = e.memo || getHolidayDescription(e, true);
   const memo = memo0.replace(/,/g, ';').replace(/"/g, '\'\'');
 
   const showTimeAs = (timed || (mask & flags.CHAG)) ? 4 : 3;

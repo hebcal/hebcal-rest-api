@@ -120,7 +120,7 @@ export function getEventCategories(ev) {
     default:
       break; // fall through to string-based category
   }
-  if (ev.getAttrs().cholHaMoedDay) {
+  if (ev.cholHaMoedDay) {
     return ['holiday', 'major', 'cholhamoed'];
   }
   switch (ev.getDesc()) {

@@ -10,10 +10,9 @@ const utmParam = 'utm_source=shabbat1c&amp;utm_medium=rss';
 function getLinkAndGuid(ev) {
   let link;
   let guid;
-  const attrs = ev.getAttrs();
-  const dt = attrs.eventTime || ev.getDate().greg();
+  const dt = ev.eventTime || ev.getDate().greg();
   const dtStr0 = dt.toISOString();
-  const dtStr = encodeURIComponent(dtStr0.substring(0, attrs.eventTime ? 19 : 10));
+  const dtStr = encodeURIComponent(dtStr0.substring(0, ev.eventTime ? 19 : 10));
   const url = ev.url();
   if (url) {
     const question = url.indexOf('?');
@@ -80,7 +79,7 @@ export function eventsToRss(events, location, mainUrl, selfUrl, lang='en-US', ev
  */
 function getPubDate(ev, evPubDate, evDate, lastBuildDate) {
   if (evPubDate) {
-    const dt = ev.getAttrs().eventTime;
+    const dt = ev.eventTime;
     if (dt) {
       return dt.toUTCString();
     }
@@ -107,12 +106,13 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
   const description = dayFormat.format(evDate);
   const categories = getEventCategories(ev);
   const cat0 = categories[0];
-  const attrs = ev.getAttrs();
-  if (typeof attrs.eventTimeStr === 'string') {
+  const desc = ev.getDesc();
+  const candles = desc === 'Havdalah' || desc === 'Candle lighting';
+  if (candles) {
     const colon = subj.indexOf(': ');
     if (colon != -1) {
       const options = {location, il: location.getIsrael(), locale: Locale.getLocaleName()};
-      const time = HebrewCalendar.reformatTimeStr(attrs.eventTimeStr, 'pm', options);
+      const time = HebrewCalendar.reformatTimeStr(ev.eventTimeStr, 'pm', options);
       subj = subj.substring(0, colon) + ': ' + time;
     }
   }

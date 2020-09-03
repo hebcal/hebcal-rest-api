@@ -10,14 +10,14 @@ import holidayDescription from './holidays.json';
  * @return {Object}
  */
 export function eventToFullCalendar(ev, tzid, il) {
-  const attrs = ev.getAttrs();
   const classes = getEventCategories(ev);
   if (classes[0] == 'holiday' && ev.getFlags() & flags.CHAG) {
     classes.push('yomtov');
   }
   let title = ev.render();
   const desc = ev.getDesc();
-  if (desc == 'Havdalah' || desc == 'Candle lighting') {
+  const candles = desc === 'Havdalah' || desc === 'Candle lighting';
+  if (candles) {
     const colon = title.indexOf(':');
     if (colon != -1) {
       title = title.substring(0, colon);
@@ -28,10 +28,10 @@ export function eventToFullCalendar(ev, tzid, il) {
       title = title.substring(colon + 1);
     }
   }
-  const timed = Boolean(attrs.eventTime);
+  const timed = Boolean(ev.eventTime);
   const result = {
     title: title,
-    start: toISOStringWithTimezone(ev.getDate().greg(), attrs.eventTimeStr, tzid),
+    start: toISOStringWithTimezone(ev.getDate().greg(), ev.eventTimeStr, tzid),
     allDay: !timed,
     className: classes.join(' '),
   };
@@ -52,8 +52,8 @@ export function eventToFullCalendar(ev, tzid, il) {
       result.url = url + sep + 'utm_source=hebcal.com&utm_medium=fc';
     }
   }
-  if (!timed) {
-    const memo = attrs.memo || holidayDescription[ev.basename()];
+  if (!candles) {
+    const memo = ev.memo || holidayDescription[ev.basename()];
     if (memo) result.description = memo;
   }
   return result;

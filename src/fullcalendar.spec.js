@@ -103,3 +103,74 @@ test('eventToFullCalendar', (t) => {
   ];
   t.deepEqual(fc, expected);
 });
+
+test('chanukah-candles', (t) => {
+  const options = {
+    start: new Date(2020, 11, 10),
+    end: new Date(2020, 11, 11),
+    location: Location.lookup('Boston'),
+    candlelighting: true,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const tzid = options && options.location && options.location.tzid;
+  const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
+  const expected = [
+    {
+      title: 'Chanukah: 1 Candle',
+      start: '2020-12-10T16:58:00-05:00',
+      allDay: false,
+      className: 'holiday major',
+      hebrew: 'חנוכה: א׳ נר',
+      url: 'https://www.hebcal.com/holidays/chanukah?utm_source=js&utm_medium=fc',
+      description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
+    },
+    {
+      title: 'Chanukah: 2 Candles',
+      start: '2020-12-11T15:53:00-05:00',
+      allDay: false,
+      className: 'holiday major',
+      hebrew: 'חנוכה: ב׳ נרות',
+      url: 'https://www.hebcal.com/holidays/chanukah?utm_source=js&utm_medium=fc',
+      description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
+    },
+    {
+      title: 'Candle lighting',
+      start: '2020-12-11T15:53:00-05:00',
+      allDay: false,
+      className: 'candles',
+      hebrew: 'הדלקת נרות',
+    },
+  ];
+  t.deepEqual(fc, expected);
+});
+
+test('chanukah-nocandles', (t) => {
+  const options = {
+    start: new Date(2020, 11, 10),
+    end: new Date(2020, 11, 11),
+  };
+  const events = HebrewCalendar.calendar(options);
+  const fc = events.map((ev) => eventToFullCalendar(ev, 'UTC'));
+  const expected = [
+    {
+      title: 'Chanukah: 1 Candle',
+      start: '2020-12-10',
+      allDay: true,
+      className: 'holiday major',
+      hebrew: 'חנוכה: א׳ נר',
+      url: 'https://www.hebcal.com/holidays/chanukah?utm_source=js&utm_medium=fc',
+      description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
+    },
+    {
+      title: 'Chanukah: 2 Candles',
+      start: '2020-12-11',
+      allDay: true,
+      className: 'holiday major',
+      hebrew: 'חנוכה: ב׳ נרות',
+      url: 'https://www.hebcal.com/holidays/chanukah?utm_source=js&utm_medium=fc',
+      description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
+    },
+  ];
+
+  t.deepEqual(fc, expected);
+});

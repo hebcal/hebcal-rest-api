@@ -25,15 +25,17 @@ export function eventToCsv(e, options) {
 
   const timed = Boolean(e.eventTime);
   const desc = e.getDesc();
-  if (desc === 'Havdalah' || desc === 'Candle lighting') {
+  if (e.eventTime) {
     const timeStr = HebrewCalendar.reformatTimeStr(e.eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;
     endDate = date;
     allDay = '"false"';
-    // replace "Candle lighting: 15:34" with shorter title
-    const colon = subj.indexOf(': ');
-    if (colon != -1) {
-      subj = subj.substring(0, colon);
+    if (desc === 'Havdalah' || desc === 'Candle lighting') {
+      // replace "Candle lighting: 15:34" with shorter title
+      const colon = subj.indexOf(': ');
+      if (colon != -1) {
+        subj = subj.substring(0, colon);
+      }
     }
   }
 

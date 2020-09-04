@@ -62,3 +62,15 @@ test('appendHebrewToSubject', (t) => {
   ];
   t.deepEqual(subject, expected);
 });
+
+test('chanukah-candles', (t) => {
+  const options = {
+    start: new Date(2020, 11, 10),
+    end: new Date(2020, 11, 10),
+    location: Location.lookup('Boston'),
+    candlelighting: true,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const csv = eventToCsv(events[0], options);
+  t.is(csv, '"Chanukah: 1 Candle","12/10/2020","4:58 PM","12/10/2020","4:58 PM","false","Hanukkah; the Jewish festival of rededication","4","Boston"');
+});

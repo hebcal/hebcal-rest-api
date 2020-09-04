@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -22,7 +22,7 @@
   "dependencies": {
     "@hebcal/core": "^2.4.0",
     "@hebcal/geo-sqlite": "^2.2.5",
-    "@hebcal/leyning": "^2.3.0"
+    "@hebcal/leyning": "^3.0.0"
   },
   "scripts": {
     "build": "rollup -c",

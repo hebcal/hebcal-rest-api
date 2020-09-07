@@ -18,7 +18,7 @@ test('eventToFullCalendar', (t) => {
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
   const pesachMemo = 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah),' +
     ' it commemorates the Exodus and freedom of the Israelites from ancient Egypt';
-  const expectedUrl = 'https://www.hebcal.com/holidays/pesach?utm_source=js&utm_medium=fc';
+  const expectedUrl = 'https://www.hebcal.com/holidays/pesach-1990?utm_source=js&utm_medium=fc';
   const expected = [
     {
       title: 'Candle lighting',
@@ -121,7 +121,7 @@ test('chanukah-candles', (t) => {
       allDay: false,
       className: 'holiday major',
       hebrew: 'חנוכה: א׳ נר',
-      url: 'https://www.hebcal.com/holidays/chanukah?utm_source=js&utm_medium=fc',
+      url: 'https://www.hebcal.com/holidays/chanukah-2020?utm_source=js&utm_medium=fc',
       description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
@@ -130,7 +130,7 @@ test('chanukah-candles', (t) => {
       allDay: false,
       className: 'holiday major',
       hebrew: 'חנוכה: ב׳ נרות',
-      url: 'https://www.hebcal.com/holidays/chanukah?utm_source=js&utm_medium=fc',
+      url: 'https://www.hebcal.com/holidays/chanukah-2020?utm_source=js&utm_medium=fc',
       description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
@@ -158,7 +158,7 @@ test('chanukah-nocandles', (t) => {
       allDay: true,
       className: 'holiday major',
       hebrew: 'חנוכה: א׳ נר',
-      url: 'https://www.hebcal.com/holidays/chanukah?utm_source=js&utm_medium=fc',
+      url: 'https://www.hebcal.com/holidays/chanukah-2020?utm_source=js&utm_medium=fc',
       description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
@@ -167,7 +167,7 @@ test('chanukah-nocandles', (t) => {
       allDay: true,
       className: 'holiday major',
       hebrew: 'חנוכה: ב׳ נרות',
-      url: 'https://www.hebcal.com/holidays/chanukah?utm_source=js&utm_medium=fc',
+      url: 'https://www.hebcal.com/holidays/chanukah-2020?utm_source=js&utm_medium=fc',
       description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
   ];

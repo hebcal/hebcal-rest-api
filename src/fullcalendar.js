@@ -46,7 +46,8 @@ export function eventToFullCalendar(ev, tzid, il) {
   const url = ev.url();
   if (url) {
     if (url.substring(0, 22) == 'https://www.hebcal.com') {
-      result.url = url + '?utm_source=js&utm_medium=fc';
+      const suffix = il ? 'i=on&' : '';
+      result.url = `${url}?${suffix}utm_source=js&utm_medium=fc`;
     } else {
       const sep = url.indexOf('?') == -1 ? '?' : '&';
       result.url = url + sep + 'utm_source=hebcal.com&utm_medium=fc';

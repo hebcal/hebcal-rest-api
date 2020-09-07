@@ -70,8 +70,8 @@ test('eventToRssItem', (t) => {
     '</item>\n',
   '<item>\n' +
     '<title>Erev Pesach</title>\n' +
-    '<link>https://www.hebcal.com/holidays/pesach?utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
-    '<guid isPermaLink="false">https://www.hebcal.com/holidays/pesach?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-09</guid>\n' +
+    '<link>https://www.hebcal.com/holidays/pesach-1990?utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
+    '<guid isPermaLink="false">https://www.hebcal.com/holidays/pesach-1990?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-09</guid>\n' +
     '<description>Monday, April 09, 1990</description>\n' +
     '<category>holiday</category>\n' +
     '<pubDate>Mon, 09 Apr 1990 00:00:00 GMT</pubDate>\n' +

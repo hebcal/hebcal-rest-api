@@ -23,6 +23,10 @@ declare module '@hebcal/rest-api' {
    */
   export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any;
   /**
+   * Makes mulit-line text that summarizes Torah & Haftarah
+   */
+  export function makeTorahMemoText(ev: Event, il: boolean): string;
+  /**
    * @param [lang] - language such as 'he' (default 'en-US')
    * @param [evPubDate] - if true, use event time as pubDate (false uses lastBuildDate)
    */

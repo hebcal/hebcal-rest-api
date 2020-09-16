@@ -134,7 +134,7 @@ test('makeTorahMemoText', (t) => {
     start: new Date(2021, 1, 13),
     end: new Date(2021, 1, 13),
   });
-  const memo = makeTorahMemoText(events[0], false).split('\\n');
+  const memo = makeTorahMemoText(events[0], false).split('\n');
   const expected = [
     'Torah: Exodus 21:1-24:18',
     '7th aliyah: Numbers 28:9 - 28:15 | Shabbat Shekalim (on Rosh Chodesh)',

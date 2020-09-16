@@ -215,12 +215,12 @@ export function makeTorahMemoText(ev, il) {
         if (special) {
           const aname = num === '7' ? '7th aliyah' : 'Maftir';
           const verses = leyning.formatAliyahWithBook(reading.fullkriyah[num]);
-          memo += `\\n${aname}: ${verses} | ${special}`;
+          memo += `\n${aname}: ${verses} | ${special}`;
         }
       }
     }
     if (reading.haftara) {
-      memo += '\\nHaftarah: ' + reading.haftara;
+      memo += '\nHaftarah: ' + reading.haftara;
       if (reading.reason && reading.reason.haftara) {
         memo += ' | ' + reading.reason.haftara;
       }
@@ -232,7 +232,7 @@ export function makeTorahMemoText(ev, il) {
         memo += `Torah: ${reading.summary}`;
       }
       if (reading.summary && reading.haftara) {
-        memo += '\\n';
+        memo += '\n';
       }
       if (reading.haftara) {
         memo += 'Haftarah: ' + reading.haftara;
@@ -241,7 +241,7 @@ export function makeTorahMemoText(ev, il) {
     }
   }
   if (reading && reading.sephardic) {
-    memo += '\\nHaftarah for Sephardim: ' + reading.sephardic;
+    memo += '\nHaftarah for Sephardim: ' + reading.sephardic;
   }
   return memo;
 }

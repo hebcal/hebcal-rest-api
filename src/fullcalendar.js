@@ -1,5 +1,5 @@
 import {Locale, flags} from '@hebcal/core';
-import {toISOStringWithTimezone, getEventCategories} from './common';
+import {toISOStringWithTimezone, getEventCategories, makeTorahMemoText} from './common';
 import holidayDescription from './holidays.json';
 
 /**
@@ -54,7 +54,9 @@ export function eventToFullCalendar(ev, tzid, il) {
     }
   }
   if (!candles) {
-    const memo = ev.memo || holidayDescription[ev.basename()];
+    const memo = (ev.getFlags() & flags.PARSHA_HASHAVUA) ?
+        makeTorahMemoText(ev, il) :
+        ev.memo || holidayDescription[ev.basename()];
     if (memo) result.description = memo;
   }
   return result;

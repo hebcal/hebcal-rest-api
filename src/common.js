@@ -1,5 +1,6 @@
 import {getTimezoneOffset} from './getTimezoneOffset';
 import {flags} from '@hebcal/core';
+import leyning from '@hebcal/leyning';
 import holidayDescription from './holidays.json';
 
 /**
@@ -194,4 +195,53 @@ export function getHolidayDescription(ev, firstSentence=false) {
     }
   }
   return str;
+}
+
+/**
+ * Makes mulit-line text that summarizes Torah & Haftarah
+ * @param {Event} ev
+ * @param {boolean} il
+ * @return {string}
+ */
+export function makeTorahMemoText(ev, il) {
+  let reading;
+  let memo = '';
+  if (ev.getFlags() & flags.PARSHA_HASHAVUA) {
+    reading = leyning.getLeyningForParshaHaShavua(ev, il);
+    memo = `Torah: ${reading.summary}`;
+    if (reading.reason) {
+      for (const num of ['7', 'M']) {
+        const special = reading.reason[num];
+        if (special) {
+          const aname = num === '7' ? '7th aliyah' : 'Maftir';
+          const verses = leyning.formatAliyahWithBook(reading.fullkriyah[num]);
+          memo += `\\n${aname}: ${verses} | ${special}`;
+        }
+      }
+    }
+    if (reading.haftara) {
+      memo += '\\nHaftarah: ' + reading.haftara;
+      if (reading.reason && reading.reason.haftara) {
+        memo += ' | ' + reading.reason.haftara;
+      }
+    }
+  } else {
+    reading = leyning.getLeyningForHoliday(ev, il);
+    if (reading && (reading.summary || reading.haftara)) {
+      if (reading.summary) {
+        memo += `Torah: ${reading.summary}`;
+      }
+      if (reading.summary && reading.haftara) {
+        memo += '\\n';
+      }
+      if (reading.haftara) {
+        memo += 'Haftarah: ' + reading.haftara;
+      }
+      return memo;
+    }
+  }
+  if (reading && reading.sephardic) {
+    memo += '\\nHaftarah for Sephardim: ' + reading.sephardic;
+  }
+  return memo;
 }

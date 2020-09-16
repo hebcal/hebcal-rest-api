@@ -1,5 +1,5 @@
 import test from 'ava';
-import {timeZoneOffsetStr, getDownloadFilename, getCalendarTitle} from './common';
+import {timeZoneOffsetStr, getDownloadFilename, getCalendarTitle, makeTorahMemoText} from './common';
 import {HebrewCalendar, Location} from '@hebcal/core';
 
 test('timeZoneOffsetStr', (t) => {
@@ -125,4 +125,21 @@ test('getCalendarTitle', (t) => {
   options = {year: 5780, isHebrewYear: true};
   events = HebrewCalendar.calendar(options);
   t.is(getCalendarTitle(events, options), 'Hebcal Diaspora 5780');
+});
+
+test('makeTorahMemoText', (t) => {
+  const events = HebrewCalendar.calendar({
+    noHolidays: true,
+    sedrot: true,
+    start: new Date(2021, 1, 13),
+    end: new Date(2021, 1, 13),
+  });
+  const memo = makeTorahMemoText(events[0], false).split('\\n');
+  const expected = [
+    'Torah: Exodus 21:1-24:18',
+    '7th aliyah: Numbers 28:9 - 28:15 | Shabbat Shekalim (on Rosh Chodesh)',
+    'Maftir: Exodus 30:11 - 30:16 | Shabbat Shekalim (on Rosh Chodesh)',
+    'Haftarah: II Kings 12:1 - 12:17 | Shabbat Shekalim (on Rosh Chodesh)',
+  ];
+  t.deepEqual(memo, expected);
 });

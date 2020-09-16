@@ -44,6 +44,8 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dd></dd>
 <dt><a href="#pad2">pad2(number)</a> ⇒ <code>string</code></dt>
 <dd></dd>
+<dt><a href="#pad4">pad4(number)</a> ⇒ <code>string</code></dt>
+<dd></dd>
 <dt><a href="#timeZoneOffsetStr">timeZoneOffsetStr(tzid, date)</a> ⇒ <code>string</code></dt>
 <dd><p>Get offset string (like &quot;+05:00&quot; or &quot;-08:00&quot;) from tzid (like &quot;Europe/Moscow&quot;)</p>
 </dd>
@@ -62,15 +64,18 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dt><a href="#getHolidayDescription">getHolidayDescription(ev, [firstSentence])</a> ⇒ <code>string</code></dt>
 <dd><p>Returns an English language description of the holiday</p>
 </dd>
+<dt><a href="#makeTorahMemoText">makeTorahMemoText(ev, il)</a> ⇒ <code>string</code></dt>
+<dd><p>Makes mulit-line text that summarizes Torah &amp; Haftarah</p>
+</dd>
 <dt><a href="#eventToCsv">eventToCsv(e, options)</a> ⇒ <code>string</code></dt>
 <dd><p>Renders an Event as a string</p>
 </dd>
 <dt><a href="#eventsToCsv">eventsToCsv(events, options)</a> ⇒ <code>string</code></dt>
 <dd></dd>
-<dt><a href="#eventsToClassicApi">eventsToClassicApi(events, options)</a> ⇒ <code>Object</code></dt>
+<dt><a href="#eventsToClassicApi">eventsToClassicApi(events, options, [leyning])</a> ⇒ <code>Object</code></dt>
 <dd><p>Formats a list events for the classic Hebcal.com JSON API response</p>
 </dd>
-<dt><a href="#eventToClassicApiObject">eventToClassicApiObject(ev, tzid, il)</a> ⇒ <code>Object</code></dt>
+<dt><a href="#eventToClassicApiObject">eventToClassicApiObject(ev, options, [leyning])</a> ⇒ <code>Object</code></dt>
 <dd><p>Converts a Hebcal event to a classic Hebcal.com JSON API object</p>
 </dd>
 <dt><a href="#formatAliyot">formatAliyot(result, aliyot)</a> ⇒ <code>Object</code></dt>
@@ -79,7 +84,7 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dd></dd>
 <dt><a href="#getLinkAndGuid">getLinkAndGuid(ev)</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
 <dd></dd>
-<dt><a href="#eventsToRss">eventsToRss(events, location, [lang], [evPubDate])</a> ⇒ <code>string</code></dt>
+<dt><a href="#eventsToRss">eventsToRss(events, location, mainUrl, selfUrl, [lang], [evPubDate])</a> ⇒ <code>string</code></dt>
 <dd></dd>
 <dt><a href="#eventToRssItem">eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location)</a> ⇒ <code>string</code></dt>
 <dd></dd>
@@ -145,6 +150,15 @@ makeAnchor('Rosh Chodesh Adar II') // 'rosh-chodesh-adar-ii'
 <a name="pad2"></a>
 
 ## pad2(number) ⇒ <code>string</code>
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| number | <code>number</code> | 
+
+<a name="pad4"></a>
+
+## pad4(number) ⇒ <code>string</code>
 **Kind**: global function  
 
 | Param | Type |
@@ -222,6 +236,18 @@ Returns an English language description of the holiday
 | ev | <code>Event</code> |  | 
 | [firstSentence] | <code>boolean</code> | <code>false</code> | 
 
+<a name="makeTorahMemoText"></a>
+
+## makeTorahMemoText(ev, il) ⇒ <code>string</code>
+Makes mulit-line text that summarizes Torah & Haftarah
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| ev | <code>Event</code> | 
+| il | <code>boolean</code> | 
+
 <a name="eventToCsv"></a>
 
 ## eventToCsv(e, options) ⇒ <code>string</code>
@@ -246,28 +272,29 @@ Renders an Event as a string
 
 <a name="eventsToClassicApi"></a>
 
-## eventsToClassicApi(events, options) ⇒ <code>Object</code>
+## eventsToClassicApi(events, options, [leyning]) ⇒ <code>Object</code>
 Formats a list events for the classic Hebcal.com JSON API response
 
 **Kind**: global function  
 
-| Param | Type |
-| --- | --- |
-| events | <code>Array.&lt;Event&gt;</code> | 
-| options | <code>HebcalOptions</code> | 
+| Param | Type | Default |
+| --- | --- | --- |
+| events | <code>Array.&lt;Event&gt;</code> |  | 
+| options | <code>HebrewCalendar.Options</code> |  | 
+| [leyning] | <code>boolean</code> | <code>true</code> | 
 
 <a name="eventToClassicApiObject"></a>
 
-## eventToClassicApiObject(ev, tzid, il) ⇒ <code>Object</code>
+## eventToClassicApiObject(ev, options, [leyning]) ⇒ <code>Object</code>
 Converts a Hebcal event to a classic Hebcal.com JSON API object
 
 **Kind**: global function  
 
-| Param | Type | Description |
+| Param | Type | Default |
 | --- | --- | --- |
-| ev | <code>Event</code> |  |
-| tzid | <code>string</code> | timeZone identifier |
-| il | <code>boolean</code> | true if Israel |
+| ev | <code>Event</code> |  | 
+| options | <code>HebrewCalendar.Options</code> |  | 
+| [leyning] | <code>boolean</code> | <code>true</code> | 
 
 <a name="formatAliyot"></a>
 
@@ -286,7 +313,7 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 
 | Param | Type |
 | --- | --- |
-| reading | <code>leyning.Leyning</code> | 
+| reading | <code>leyn.Leyning</code> | 
 
 <a name="getLinkAndGuid"></a>
 
@@ -299,15 +326,17 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 
 <a name="eventsToRss"></a>
 
-## eventsToRss(events, location, [lang], [evPubDate]) ⇒ <code>string</code>
+## eventsToRss(events, location, mainUrl, selfUrl, [lang], [evPubDate]) ⇒ <code>string</code>
 **Kind**: global function  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| events | <code>Array.&lt;Event&gt;</code> |  |
-| location | <code>Location</code> |  |
-| [lang] | <code>string</code> | language such as 'he' (default 'en-US') |
-| [evPubDate] | <code>boolean</code> | if true, use event time as pubDate (false uses lastBuildDate) |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| events | <code>Array.&lt;Event&gt;</code> |  |  |
+| location | <code>Location</code> |  |  |
+| mainUrl | <code>string</code> |  |  |
+| selfUrl | <code>string</code> |  |  |
+| [lang] | <code>string</code> | <code>&quot;en-US&quot;</code> | language such as 'he' (default 'en-US') |
+| [evPubDate] | <code>boolean</code> | <code>true</code> | if true, use event time as pubDate (false uses lastBuildDate) |
 
 <a name="eventToRssItem"></a>
 

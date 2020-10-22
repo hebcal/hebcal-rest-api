@@ -3,10 +3,11 @@
 <head>
 <meta charset='utf-8' />
 
-
   <title>
     Hebcal FullCalendar demo
   </title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.css">
 
   <style>
 
@@ -22,63 +23,87 @@
       margin: 40px auto;
     }
 
-.fc-event.hebdate, .fc-event.omer,
-.fc-event.hebdate:hover, .fc-event.omer:hover {
+@font-face {
+  font-family: 'SBL Hebrew';
+  src: url('https://www.hebcal.com/i/SBLHebrew-1.56a.woff2') format('woff2'),
+    url('https://www.hebcal.com/i/SBLHebrew-1.56a.woff') format('woff');
+  font-display: swap;
+}
+
+:lang(he) {
+  font-family:'SBL Hebrew',David,serif;
+  font-size:115%;
+  direction:rtl;
+}
+
+a:hover .fc-event-title {
+ text-decoration: underline;
+}
+
+a:not([href]):hover .fc-event-title {
+  text-decoration: none;
+}
+
+.fc-daygrid-dot-event .fc-event-title  {
+  font-weight: normal;
+}
+
+.fc-event.hebdate, .fc-event.omer {
  background-color:#FFF;
  border-color:#FFF;
+}
+.hebdate .fc-event-title, .omer .fc-event-title {
  color:#999;
 }
-.fc-event.dafyomi, .fc-event.dafyomi:hover {
+.fc-event.dafyomi {
  background-color:#FFF;
  border-color:#FFF;
- color:#08c;
 }
-.fc-event.dafyomi a {
- color: #0088cc;
+a.dafyomi .fc-event-title {
+ color: #08c;
 }
-.fc-event.dafyomi a:hover,
-.fc-event.dafyomi a:focus {
+a:hover.dafyomi .fc-event-title,
+a:focus.dafyomi .fc-event-title {
  color: #005580;
 }
-.fc-event.candles, .fc-event.havdalah,
-.fc-event.candles:hover, .fc-event.havdalah:hover {
+.fc-event.candles, .fc-event.havdalah {
  background-color:#FFF;
  border-color:#FFF;
+}
+.candles .fc-event-title, .havdalah .fc-event-title {
  color:#333;
 }
 .fc-event.holiday {
  background-color:#3a87ad;
  border-color:#3a87ad;
- color:#FFF;
+}
+.fc-daygrid-dot-event.holiday  {
+  background-color:#FFF;
+  border-color:#FFF;
 }
 .fc-event.holiday.yomtov {
  background-color:#ffd446;
  border-color:#ffd446;
- color:#333;
 }
-.fc-event.parashat {
- background-color:#257e4a;
- border-color:#257e4a;
+.holiday .fc-event-title {
  color:#FFF;
 }
-.fc-event.hebrew .fc-title {
- font-family:'Alef Hebrew','SBL Hebrew',David;
- font-size:110%;
- font-weight:normal;
- direction:rtl;
+.holiday.yomtov .fc-event-title {
+ color:#333;
 }
-.fc-event.hebrew .fc-time {
- direction:ltr;
- unicode-bidi: bidi-override;
+.fc-daygrid-dot-event.holiday .fc-event-title {
+  color:#333;
 }
+.fc-event.parashat, .fc-event.roshchodesh {
+ background-color:#257e4a;
+ border-color:#257e4a;
+}
+.parashat .fc-event-title, .roshchodesh .fc-event-title {
+ color:#FFF;
+}
+</style>
 
-  </style>
-
-<link href='https://unpkg.com/@fullcalendar/core@4.4.2/main.min.css' rel='stylesheet' />  
-<link href='https://unpkg.com/@fullcalendar/daygrid@4.4.2/main.min.css' rel='stylesheet' />
-
-<script src='https://unpkg.com/@fullcalendar/core@4.4.2/main.min.js'></script>
-<script src='https://unpkg.com/@fullcalendar/daygrid@4.4.2/main.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.js"></script>
 
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://unpkg.com/tippy.js@6"></script>
@@ -86,6 +111,7 @@
 <!-- hebcal-->
 <script src='./node-process-browser.js'></script>
 <script src='./node_modules/@hebcal/core/dist/bundle.js'></script>
+<script src='./node_modules/@hebcal/leyning/dist/bundle.js'></script>
 <script src='./dist/bundle.js'></script>
 <script>
 
@@ -93,9 +119,8 @@
     var calendarEl = document.getElementById('calendar');
     var location = hebcal__core.Location.lookup('Miami');
     var calendar = window['hebcalFullCalendar'] = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'dayGrid' ],
-      defaultView: 'dayGridMonth',
-      header: {
+      initialView: 'dayGridMonth',
+      headerToolbar: {
         left: 'title',
         right: 'prev,next today',
       },
@@ -116,17 +141,16 @@
         };
         const events = hebcal__core.HebrewCalendar.calendar(options);
         const fcEvents = events.map((ev) => hebcal__rest_api.eventToFullCalendar(ev, location.tzid));
-        for (let i = 0; i < fcEvents.length; i++) {
-          if (fcEvents[i].hebrew) {
-            fcEvents[i].title += '\n' + fcEvents[i].hebrew;
-          }
-        }
         successCallback(fcEvents);
       },
-      eventRender: function(info) {
+      eventDidMount: function(info) {
+        if (info.event.extendedProps.hebrew) {
+          info.el.querySelector('.fc-event-title').innerHTML = info.event.title +
+            '<br><span lang="he" dir="rtl">' + info.event.extendedProps.hebrew + '</span>';
+        }
         if (info.event.extendedProps.description) {
           tippy(info.el, {
-            content: info.event.extendedProps.description,
+            content: info.event.extendedProps.description.replace(/\n/g, '<br>'),
             allowHTML: true,
           });
         }

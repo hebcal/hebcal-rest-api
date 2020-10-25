@@ -116,8 +116,11 @@ export function getEventCategories(ev) {
     case flags.ROSH_CHODESH: return ['roshchodesh'];
     case flags.SPECIAL_SHABBAT: return ['holiday', 'shabbat'];
     case flags.MINOR_FAST: return ['holiday', 'fast'];
+    case flags.MAJOR_FAST: return ['holiday', 'fast', 'major'];
     case flags.MODERN_HOLIDAY: return ['holiday', 'modern'];
     case flags.SHABBAT_MEVARCHIM: return ['mevarchim'];
+    case flags.MOLAD: return ['molad'];
+    case flags.USER_EVENT: return ['user'];
     default:
       break; // fall through to string-based category
   }
@@ -197,6 +200,10 @@ export function getHolidayDescription(ev, firstSentence=false) {
   return str;
 }
 
+const HOLIDAY_IGNORE_MASK = flags.DAF_YOMI | flags.OMER_COUNT |
+  flags.SHABBAT_MEVARCHIM | flags.MOLAD | flags.USER_EVENT |
+  flags.HEBREW_DATE;
+
 /**
  * Makes mulit-line text that summarizes Torah & Haftarah
  * @param {Event} ev
@@ -206,7 +213,8 @@ export function getHolidayDescription(ev, firstSentence=false) {
 export function makeTorahMemoText(ev, il) {
   let reading;
   let memo = '';
-  if (ev.getFlags() & flags.PARSHA_HASHAVUA) {
+  const mask = ev.getFlags();
+  if (mask & flags.PARSHA_HASHAVUA) {
     reading = leyning.getLeyningForParshaHaShavua(ev, il);
     memo = `Torah: ${reading.summary}`;
     if (reading.reason) {
@@ -225,6 +233,8 @@ export function makeTorahMemoText(ev, il) {
         memo += ' | ' + reading.reason.haftara;
       }
     }
+  } else if (mask & HOLIDAY_IGNORE_MASK) {
+    return '';
   } else {
     reading = leyning.getLeyningForHoliday(ev, il);
     if (reading && (reading.summary || reading.haftara)) {

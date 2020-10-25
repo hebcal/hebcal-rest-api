@@ -70,7 +70,7 @@ test('eventToClassicApiObject', (t) => {
       '3': 'Exodus 19:14 - 19:19',
       '4': 'Exodus 19:20 - 20:14',
       '5': 'Exodus 20:15 - 20:23',
-      'torah': 'Exodus 19:1-20:23',
+      'torah': 'Exodus 19:1-20:23; Numbers 28:26-28:31',
       'haftarah': 'Ezekiel 1:1-28; 3:12',
       'maftir': 'Numbers 28:26 - 28:31',
     },

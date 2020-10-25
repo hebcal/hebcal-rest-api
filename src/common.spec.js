@@ -1,6 +1,6 @@
 import test from 'ava';
 import {timeZoneOffsetStr, getDownloadFilename, getCalendarTitle, makeTorahMemoText} from './common';
-import {HebrewCalendar, Location} from '@hebcal/core';
+import {HebrewCalendar, Location, Event, HDate, flags} from '@hebcal/core';
 
 test('timeZoneOffsetStr', (t) => {
   const winter = new Date(Date.UTC(2020, 1, 22, 0, 0, 0, 0));
@@ -142,4 +142,13 @@ test('makeTorahMemoText', (t) => {
     'Haftarah: II Kings 12:1 - 12:17 | Shabbat Shekalim (on Rosh Chodesh)',
   ];
   t.deepEqual(memo, expected);
+});
+
+test('makeTorahMemoText-userEvent', (t) => {
+  const hd = new HDate(new Date(2021, 1, 13));
+  const userEvent = new Event(hd, 'User Event', flags.USER_EVENT);
+  t.is(makeTorahMemoText(userEvent, false), '');
+
+  const holidayEvent = new Event(hd, 'Holiday Event', 0);
+  t.is(makeTorahMemoText(holidayEvent, false), 'Haftarah: Isaiah 66:1 - 66:24');
 });

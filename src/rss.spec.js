@@ -60,7 +60,7 @@ test('eventToRssItem', (t) => {
     '<geo:lat>29.55805</geo:lat>\n' +
     '<geo:long>34.94821</geo:long>\n' +
     '</item>\n',
-  '<item>\n' +
+    '<item>\n' +
     '<title>Havdalah (50 min): 19:52</title>\n' +
     '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A52%3A00#havdalah</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-07T16%3A52%3A00#havdalah</guid>\n' +
@@ -68,14 +68,86 @@ test('eventToRssItem', (t) => {
     '<category>havdalah</category>\n' +
     '<pubDate>Sat, 07 Apr 1990 16:52:00 GMT</pubDate>\n' +
     '</item>\n',
-  '<item>\n' +
+    '<item>\n' +
     '<title>Erev Pesach</title>\n' +
-    '<link>https://www.hebcal.com/holidays/pesach-1990?utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
-    '<guid isPermaLink="false">https://www.hebcal.com/holidays/pesach-1990?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-09</guid>\n' +
+    '<link>https://www.hebcal.com/holidays/pesach-1990?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
+    '<guid isPermaLink="false">https://www.hebcal.com/holidays/pesach-1990?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=1990-04-09</guid>\n' +
     '<description>Monday, April 09, 1990</description>\n' +
     '<category>holiday</category>\n' +
     '<pubDate>Mon, 09 Apr 1990 00:00:00 GMT</pubDate>\n' +
     '</item>\n',
+  ];
+  t.deepEqual(items, expected);
+});
+
+test('parsha', (t) => {
+  const events = HebrewCalendar.calendar({
+    start: new Date(2020, 10, 28),
+    end: new Date(2020, 10, 28),
+    sedrot: true,
+  });
+  const dayFormat = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
+  const location = Location.lookup('Kiev');
+  const item = eventToRssItem(events[0], true, '', dayFormat, location);
+  const expected = '<item>\n' +
+    '<title>Parashat Vayetzei</title>\n' +
+    '<link>https://www.hebcal.com/sedrot/vayetzei-20201128?utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
+    '<guid isPermaLink="false">https://www.hebcal.com/sedrot/vayetzei-20201128?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2020-11-28</guid>\n' +
+    '<description>Saturday, November 28, 2020</description>\n' +
+    '<category>parashat</category>\n' +
+    '<pubDate>Sat, 28 Nov 2020 00:00:00 GMT</pubDate>\n' +
+    '</item>\n';
+  t.is(item, expected);
+});
+
+test('fastStartEnd', (t) => {
+  const location = Location.lookup('Tel Aviv');
+  const options = {
+    start: new Date(2021, 5, 27),
+    end: new Date(2021, 5, 27),
+    location,
+    il: location.getIsrael(),
+    candlelighting: true,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const dayFormat = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
+  const lastBuildDate = 'Mon, 22 Jun 2020 20:03:18 GMT';
+  const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location));
+  const expected = [
+    '<item>\n' +
+      '<title>Fast begins: 04:08</title>\n' +
+      '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T01%3A08%3A43#fast-begins</link>\n' +
+      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T01%3A08%3A43#fast-begins</guid>\n' +
+      '<description>Sunday, June 27, 2021</description>\n' +
+      '<category>holiday</category>\n' +
+      '<pubDate>Sun, 27 Jun 2021 01:08:43 GMT</pubDate>\n' +
+      '</item>\n',
+    '<item>\n' +
+      '<title>Tzom Tammuz</title>\n' +
+      '<link>https://www.hebcal.com/holidays/tzom-tammuz-2021?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
+      '<guid isPermaLink="false">https://www.hebcal.com/holidays/tzom-tammuz-2021?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27</guid>\n' +
+      '<description>Sunday, June 27, 2021</description>\n' +
+      '<category>holiday</category>\n' +
+      '<pubDate>Sun, 27 Jun 2021 00:00:00 GMT</pubDate>\n' +
+      '</item>\n',
+    '<item>\n' +
+      '<title>Fast ends: 20:25</title>\n' +
+      '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T17%3A25%3A29#fast-ends</link>\n' +
+      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T17%3A25%3A29#fast-ends</guid>\n' +
+      '<description>Sunday, June 27, 2021</description>\n' +
+      '<category>holiday</category>\n' +
+      '<pubDate>Sun, 27 Jun 2021 17:25:29 GMT</pubDate>\n' +
+      '</item>\n',
   ];
   t.deepEqual(items, expected);
 });

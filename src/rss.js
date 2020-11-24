@@ -5,15 +5,17 @@ const utmParam = 'utm_source=shabbat1c&amp;utm_medium=rss';
 
 /**
  * @param {Event} ev
+ * @param {boolean} il
  * @return {string[]}
  */
-function getLinkAndGuid(ev) {
+function getLinkAndGuid(ev, il) {
   let link;
   let guid;
   const dt = ev.eventTime || ev.getDate().greg();
   const dtStr0 = dt.toISOString();
   const dtStr = encodeURIComponent(dtStr0.substring(0, ev.eventTime ? 19 : 10));
-  const url = ev.url();
+  const url0 = ev.url();
+  const url = url0 && il ? url0 + '?i=on' : url0;
   if (url) {
     const question = url.indexOf('?');
     if (question == -1) {
@@ -100,7 +102,7 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
   let subj = ev.render();
   const evDate = ev.getDate().greg();
   const pubDate = getPubDate(ev, evPubDate, evDate, lastBuildDate);
-  const linkGuid = getLinkAndGuid(ev);
+  const linkGuid = getLinkAndGuid(ev, location.getIsrael());
   const link = linkGuid[0];
   const guid = linkGuid[1];
   const description = dayFormat.format(evDate);

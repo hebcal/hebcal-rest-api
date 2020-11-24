@@ -1,5 +1,5 @@
 import {HebrewCalendar, flags} from '@hebcal/core';
-import {getHolidayDescription} from './common';
+import {getHolidayDescription, renderTitleWithoutTime} from './common';
 
 // eslint-disable-next-line max-len
 const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
@@ -17,26 +17,18 @@ export function eventToCsv(e, options) {
   const year = String(d.getFullYear()).padStart(4, '0');
   const date = options.euro ? `"${mday}/${mon}/${year}"` : `"${mon}/${mday}/${year}"`;
 
-  let subj = e.render();
   let startTime = '';
   let endTime = '';
   let endDate = '';
   let allDay = '"true"';
 
   const timed = Boolean(e.eventTime);
-  const desc = e.getDesc();
+  let subj = timed ? renderTitleWithoutTime(e) : e.render();
   if (e.eventTime) {
     const timeStr = HebrewCalendar.reformatTimeStr(e.eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;
     endDate = date;
     allDay = '"false"';
-    if (desc === 'Havdalah' || desc === 'Candle lighting') {
-      // replace "Candle lighting: 15:34" with shorter title
-      const colon = subj.indexOf(': ');
-      if (colon != -1) {
-        subj = subj.substring(0, colon);
-      }
-    }
   }
 
   let loc = 'Jewish Holidays';

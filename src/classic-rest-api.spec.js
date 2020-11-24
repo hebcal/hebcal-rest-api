@@ -295,3 +295,40 @@ test('chanukah-nocandles', (t) => {
   ];
   t.deepEqual(apiObjs, expected);
 });
+
+test('fastStartEnd', (t) => {
+  const options = {
+    start: new Date(2021, 5, 27),
+    end: new Date(2021, 5, 27),
+    location: Location.lookup('Providence'),
+    candlelighting: true,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
+  const expected = [
+    {
+      title: 'Fast begins',
+      date: '2021-06-27T03:19:00-04:00',
+      category: 'holiday',
+      subcat: 'fast',
+      hebrew: 'Fast begins',
+    },
+    {
+      title: 'Tzom Tammuz',
+      date: '2021-06-27',
+      category: 'holiday',
+      subcat: 'fast',
+      hebrew: 'צום תמוז',
+      link: 'https://www.hebcal.com/holidays/tzom-tammuz-2021?utm_source=js&utm_medium=api',
+      memo: 'Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple',
+    },
+    {
+      title: 'Fast ends',
+      date: '2021-06-27T21:06:00-04:00',
+      category: 'holiday',
+      subcat: 'fast',
+      hebrew: 'Fast ends',
+    },
+  ];
+  t.deepEqual(apiObjs, expected);
+});

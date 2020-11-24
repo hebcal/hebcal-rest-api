@@ -74,3 +74,20 @@ test('chanukah-candles', (t) => {
   const csv = eventToCsv(events[0], options);
   t.is(csv, '"Chanukah: 1 Candle","12/10/2020","4:58 PM","12/10/2020","4:58 PM","false","Hanukkah; the Jewish festival of rededication","4","Boston"');
 });
+
+test('fastStartEnd', (t) => {
+  const options = {
+    start: new Date(2021, 5, 27),
+    end: new Date(2021, 5, 27),
+    location: Location.lookup('Providence'),
+    candlelighting: true,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const csv = eventsToCsv(events, options).split('\r\n').slice(1, 4);
+  const expected = [
+    '"Fast begins","6/27/2021","3:19 AM","6/27/2021","3:19 AM","false","","4","Providence"',
+    '"Tzom Tammuz","6/27/2021",,,,"true","Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple","3","Jewish Holidays"',
+    '"Fast ends","6/27/2021","9:06 PM","6/27/2021","9:06 PM","false","","4","Providence"',
+  ];
+  t.deepEqual(csv, expected);
+});

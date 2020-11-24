@@ -5,6 +5,7 @@ import {
   getEventCategories,
   toISOStringWithTimezone,
   toISOString,
+  renderTitleWithoutTime,
 } from './common';
 import countryNames from './countryNames.json';
 import holidayDescription from './holidays.json';
@@ -60,15 +61,12 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
     toISOStringWithTimezone(dt, ev.eventTimeStr, tzid) :
     toISOString(dt);
   const categories = getEventCategories(ev);
-  let title = ev.render();
+  let title = timed ? renderTitleWithoutTime(ev) : ev.render();
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';
   if (candles) {
-    const colon = title.indexOf(': ');
-    if (colon != -1) {
-      const time = HebrewCalendar.reformatTimeStr(ev.eventTimeStr, 'pm', options);
-      title = title.substring(0, colon) + ': ' + time;
-    }
+    const time = HebrewCalendar.reformatTimeStr(ev.eventTimeStr, 'pm', options);
+    title += ': ' + time;
   }
   const result = {
     title: title,

@@ -146,6 +146,31 @@ export function getEventCategories(ev) {
 }
 
 /**
+ * Renders the event title in default locale, but strips off time
+ * @param {Event} ev
+ * @return {string}
+ */
+export function renderTitleWithoutTime(ev) {
+  const subj = ev.render();
+  if (ev.eventTime) {
+    const desc = ev.getDesc();
+    switch (desc) {
+      case 'Candle lighting':
+      case 'Havdalah':
+      case 'Fast begins':
+      case 'Fast ends':
+        // replace "Candle lighting: 15:34" with shorter title
+        const colon = subj.indexOf(': ');
+        if (colon !== -1) {
+          return subj.substring(0, colon);
+        }
+        break;
+    }
+  }
+  return subj;
+}
+
+/**
  * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
  * @param {Event[]} events
  * @param {HebrewCalendar.Options} options

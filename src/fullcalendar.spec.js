@@ -117,7 +117,7 @@ test('chanukah-candles', (t) => {
   const expected = [
     {
       title: 'Chanukah: 1 Candle',
-      start: '2020-12-10T16:58:00-05:00',
+      start: '2020-12-10T16:43:00-05:00',
       allDay: false,
       className: 'holiday major',
       hebrew: 'חנוכה: א׳ נר',

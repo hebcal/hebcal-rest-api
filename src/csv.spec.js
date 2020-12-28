@@ -72,7 +72,7 @@ test('chanukah-candles', (t) => {
   };
   const events = HebrewCalendar.calendar(options);
   const csv = eventToCsv(events[0], options);
-  t.is(csv, '"Chanukah: 1 Candle","12/10/2020","4:58 PM","12/10/2020","4:58 PM","false","Hanukkah; the Jewish festival of rededication","4","Boston"');
+  t.is(csv, '"Chanukah: 1 Candle","12/10/2020","4:43 PM","12/10/2020","4:43 PM","false","Hanukkah; the Jewish festival of rededication","4","Boston"');
 });
 
 test('fastStartEnd', (t) => {

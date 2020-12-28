@@ -239,7 +239,7 @@ test('chanukah-candles', (t) => {
   const expected = [
     {
       title: 'Chanukah: 1 Candle',
-      date: '2020-12-10T16:58:00-05:00',
+      date: '2020-12-10T16:43:00-05:00',
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: א׳ נר',
@@ -311,7 +311,7 @@ test('fastStartEnd', (t) => {
       date: '2021-06-27T03:19:00-04:00',
       category: 'holiday',
       subcat: 'fast',
-      hebrew: 'Fast begins',
+      hebrew: 'תחילת הצום',
     },
     {
       title: 'Tzom Tammuz',
@@ -327,7 +327,7 @@ test('fastStartEnd', (t) => {
       date: '2021-06-27T21:06:00-04:00',
       category: 'holiday',
       subcat: 'fast',
-      hebrew: 'Fast ends',
+      hebrew: 'סיום הצום',
     },
   ];
   t.deepEqual(apiObjs, expected);

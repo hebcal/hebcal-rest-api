@@ -1,6 +1,6 @@
 import {getTimezoneOffset} from './getTimezoneOffset';
 import {flags} from '@hebcal/core';
-import leyning from '@hebcal/leyning';
+import * as leyning from '@hebcal/leyning';
 import holidayDescription from './holidays.json';
 
 /**
@@ -236,9 +236,12 @@ const HOLIDAY_IGNORE_MASK = flags.DAF_YOMI | flags.OMER_COUNT |
  * @return {string}
  */
 export function makeTorahMemoText(ev, il) {
+  const mask = ev.getFlags();
+  if (mask & HOLIDAY_IGNORE_MASK) {
+    return '';
+  }
   let reading;
   let memo = '';
-  const mask = ev.getFlags();
   if (mask & flags.PARSHA_HASHAVUA) {
     reading = leyning.getLeyningForParshaHaShavua(ev, il);
     memo = `Torah: ${reading.summary}`;
@@ -258,8 +261,6 @@ export function makeTorahMemoText(ev, il) {
         memo += ' | ' + reading.reason.haftara;
       }
     }
-  } else if (mask & HOLIDAY_IGNORE_MASK) {
-    return '';
   } else {
     reading = leyning.getLeyningForHoliday(ev, il);
     if (reading && (reading.summary || reading.haftara)) {

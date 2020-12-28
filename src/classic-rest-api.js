@@ -1,5 +1,5 @@
 import {Locale, flags, HebrewCalendar} from '@hebcal/core';
-import leyn from '@hebcal/leyning';
+import * as leyn from '@hebcal/leyning';
 import {
   getCalendarTitle,
   getEventCategories,

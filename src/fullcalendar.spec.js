@@ -31,7 +31,7 @@ test('eventToFullCalendar', (t) => {
       title: 'Havdalah (50 min)',
       start: '1990-04-07T20:13:00-05:00',
       allDay: false,
-      hebrew: 'הבדלה',
+      hebrew: 'הבדלה (50 דקות)',
       className: 'havdalah',
     },
     {
@@ -79,7 +79,7 @@ test('eventToFullCalendar', (t) => {
       title: 'Havdalah (50 min)',
       start: '1990-04-11T20:17:00-05:00',
       allDay: false,
-      hebrew: 'הבדלה',
+      hebrew: 'הבדלה (50 דקות)',
       className: 'havdalah',
     },
     {
@@ -172,5 +172,43 @@ test('chanukah-nocandles', (t) => {
     },
   ];
 
+  t.deepEqual(fc, expected);
+});
+
+test('fastStartEnd', (t) => {
+  const options = {
+    start: new Date(2021, 5, 27),
+    end: new Date(2021, 5, 27),
+    location: Location.lookup('Providence'),
+    candlelighting: true,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const tzid = options && options.location && options.location.tzid;
+  const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
+  const expected = [
+    {
+      title: 'Fast begins',
+      start: '2021-06-27T03:19:00-04:00',
+      allDay: false,
+      className: 'zmanim fast',
+      hebrew: 'תחילת הצום',
+    },
+    {
+      title: 'Tzom Tammuz',
+      start: '2021-06-27',
+      allDay: true,
+      className: 'holiday fast',
+      hebrew: 'צום תמוז',
+      url: 'https://www.hebcal.com/holidays/tzom-tammuz-2021?utm_source=js&utm_medium=fc',
+      description: 'Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple',
+    },
+    {
+      title: 'Fast ends',
+      start: '2021-06-27T21:06:00-04:00',
+      allDay: false,
+      className: 'zmanim fast',
+      hebrew: 'סיום הצום',
+    },
+  ];
   t.deepEqual(fc, expected);
 });

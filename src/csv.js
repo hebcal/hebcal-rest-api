@@ -1,5 +1,5 @@
 import {HebrewCalendar, flags} from '@hebcal/core';
-import {getHolidayDescription, renderTitleWithoutTime} from './common';
+import {getHolidayDescription} from './common';
 
 // eslint-disable-next-line max-len
 const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
@@ -23,7 +23,7 @@ export function eventToCsv(e, options) {
   let allDay = '"true"';
 
   const timed = Boolean(e.eventTime);
-  let subj = timed ? renderTitleWithoutTime(e) : e.render();
+  let subj = timed ? e.renderBrief() : e.render();
   if (e.eventTime) {
     const timeStr = HebrewCalendar.reformatTimeStr(e.eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;

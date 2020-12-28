@@ -108,6 +108,11 @@ export function toISOStringWithTimezone(date, timeStr, tzid) {
  * @return {string[]}
  */
 export function getEventCategories(ev) {
+  const desc = ev.getDesc();
+  // since these use flags.MINOR_FAST or flags.MAJOR_FAST, check description first
+  if (desc === 'Fast begins' || desc === 'Fast ends') {
+    return ['zmanim', 'fast'];
+  }
   switch (ev.getFlags()) {
     case flags.OMER_COUNT: return ['omer'];
     case flags.HEBREW_DATE: return ['hebdate'];
@@ -127,7 +132,7 @@ export function getEventCategories(ev) {
   if (ev.cholHaMoedDay) {
     return ['holiday', 'major', 'cholhamoed'];
   }
-  switch (ev.getDesc()) {
+  switch (desc) {
     case 'Havdalah':
       return ['havdalah'];
     case 'Candle lighting':
@@ -151,23 +156,7 @@ export function getEventCategories(ev) {
  * @return {string}
  */
 export function renderTitleWithoutTime(ev) {
-  const subj = ev.render();
-  if (ev.eventTime) {
-    const desc = ev.getDesc();
-    switch (desc) {
-      case 'Candle lighting':
-      case 'Havdalah':
-      case 'Fast begins':
-      case 'Fast ends':
-        // replace "Candle lighting: 15:34" with shorter title
-        const colon = subj.indexOf(': ');
-        if (colon !== -1) {
-          return subj.substring(0, colon);
-        }
-        break;
-    }
-  }
-  return subj;
+  return typeof ev.eventTime === 'undefined' ? ev.render() : ev.renderBrief();
 }
 
 /**

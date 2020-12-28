@@ -129,7 +129,7 @@ test('fastStartEnd', (t) => {
       '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T01%3A08%3A43#fast-begins</link>\n' +
       '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T01%3A08%3A43#fast-begins</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
-      '<category>holiday</category>\n' +
+      '<category>zmanim</category>\n' +
       '<pubDate>Sun, 27 Jun 2021 01:08:43 GMT</pubDate>\n' +
       '</item>\n',
     '<item>\n' +
@@ -145,7 +145,7 @@ test('fastStartEnd', (t) => {
       '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T17%3A25%3A29#fast-ends</link>\n' +
       '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T17%3A25%3A29#fast-ends</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
-      '<category>holiday</category>\n' +
+      '<category>zmanim</category>\n' +
       '<pubDate>Sun, 27 Jun 2021 17:25:29 GMT</pubDate>\n' +
       '</item>\n',
   ];

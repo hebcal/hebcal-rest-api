@@ -51,14 +51,14 @@ test('appendHebrewToSubject', (t) => {
   const subject = csv.map((line) => line.substring(0, line.indexOf(',')));
   const expected = [
     '"Parashat Bamidbar / פרשת בְּמִדְבַּר"',
-    '"Havdalah (42 min) / הַבדָלָה"',
+    '"Havdalah (42 min) / הַבדָלָה (42 דקות)"',
     '"Rosh Chodesh Sivan / רֹאשׁ חודש סִיוָן"',
     '"Erev Shavuot / עֶרֶב שָׁבוּעוֹת"',
     '"Candle lighting / הדלקת נרות"',
     '"Shavuot I / שָׁבוּעוֹת יוֹם א׳"',
     '"Candle lighting / הדלקת נרות"',
     '"Shavuot II / שָׁבוּעוֹת יוֹם ב׳"',
-    '"Havdalah (42 min) / הַבדָלָה"',
+    '"Havdalah (42 min) / הַבדָלָה (42 דקות)"',
   ];
   t.deepEqual(subject, expected);
 });

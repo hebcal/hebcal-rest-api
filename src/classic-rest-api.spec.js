@@ -309,7 +309,7 @@ test('fastStartEnd', (t) => {
     {
       title: 'Fast begins',
       date: '2021-06-27T03:19:00-04:00',
-      category: 'holiday',
+      category: 'zmanim',
       subcat: 'fast',
       hebrew: 'תחילת הצום',
     },
@@ -325,7 +325,7 @@ test('fastStartEnd', (t) => {
     {
       title: 'Fast ends',
       date: '2021-06-27T21:06:00-04:00',
-      category: 'holiday',
+      category: 'zmanim',
       subcat: 'fast',
       hebrew: 'סיום הצום',
     },

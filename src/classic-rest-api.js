@@ -5,7 +5,6 @@ import {
   getEventCategories,
   toISOStringWithTimezone,
   toISOString,
-  renderTitleWithoutTime,
 } from './common';
 import countryNames from './countryNames.json';
 import holidayDescription from './holidays.json';
@@ -61,7 +60,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
     toISOStringWithTimezone(dt, ev.eventTimeStr, tzid) :
     toISOString(dt);
   const categories = getEventCategories(ev);
-  let title = timed ? renderTitleWithoutTime(ev) : ev.render();
+  let title = timed ? ev.renderBrief() : ev.render();
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';
   if (candles) {

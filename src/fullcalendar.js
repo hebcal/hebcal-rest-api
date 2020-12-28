@@ -14,21 +14,8 @@ export function eventToFullCalendar(ev, tzid, il) {
   if (classes[0] == 'holiday' && ev.getFlags() & flags.CHAG) {
     classes.push('yomtov');
   }
-  let title = ev.render();
-  const desc = ev.getDesc();
-  const candles = desc === 'Havdalah' || desc === 'Candle lighting';
-  if (candles) {
-    const colon = title.indexOf(':');
-    if (colon != -1) {
-      title = title.substring(0, colon);
-    }
-  } else if (ev.getFlags() & flags.DAF_YOMI) {
-    const colon = title.indexOf(':');
-    if (colon != -1) {
-      title = title.substring(colon + 1);
-    }
-  }
   const timed = Boolean(ev.eventTime);
+  const title = timed || (ev.getFlags() & flags.DAF_YOMI) ? ev.renderBrief() : ev.render();
   const result = {
     title: title,
     start: toISOStringWithTimezone(ev.getDate().greg(), ev.eventTimeStr, tzid),
@@ -53,6 +40,8 @@ export function eventToFullCalendar(ev, tzid, il) {
       result.url = url + sep + 'utm_source=hebcal.com&utm_medium=fc';
     }
   }
+  const desc = ev.getDesc();
+  const candles = desc === 'Havdalah' || desc === 'Candle lighting';
   if (!candles) {
     const memo = (ev.getFlags() & flags.PARSHA_HASHAVUA) ?
         makeTorahMemoText(ev, il) :

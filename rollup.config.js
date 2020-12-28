@@ -5,39 +5,15 @@ import json from '@rollup/plugin-json';
 import pkg from './package.json';
 import {terser} from 'rollup-plugin-terser';
 
+const banner = '/*! ' + pkg.name + ' v' + pkg.version + ' */';
+
 export default [
   {
     input: 'src/index.js',
-    output: {
-      file: pkg.main, format: 'cjs', name: pkg.name,
-      banner: '/*! ' + pkg.name + ' v' + pkg.version + ' */',
-    },
-    plugins: [
-      json({compact: true}),
-      babel({
-        babelHelpers: 'bundled',
-        presets: [
-          ['@babel/env', {
-            modules: false,
-            targets: {
-              node: '10.21.0',
-            },
-          }],
-        ],
-        exclude: ['node_modules/**'],
-      }),
-      nodeResolve(),
-      commonjs(),
+    output: [
+      {file: pkg.main, format: 'cjs', name: pkg.name, banner},
+      {file: pkg.module, format: 'es', name: pkg.name, banner},
     ],
-    external: ['@hebcal/core', '@hebcal/leyning'],
-  },
-  {
-    input: 'src/index.js',
-    output: {
-      file: pkg.module, format: 'es', name: pkg.name,
-      banner: '/*! ' + pkg.name + ' v' + pkg.version + ' */',
-    },
-    external: ['@hebcal/core', '@hebcal/leyning'],
     plugins: [
       json({compact: true}),
       babel({
@@ -55,6 +31,7 @@ export default [
       nodeResolve(),
       commonjs(),
     ],
+    external: ['@hebcal/core', '@hebcal/leyning'],
   },
   {
     input: 'src/index.js',
@@ -68,7 +45,7 @@ export default [
           '@hebcal/leyning': 'hebcal__leyning',
         },
         indent: false,
-        banner: '/*! ' + pkg.name + ' v' + pkg.version + ' */',
+        banner,
       },
       {
         file: 'dist/bundle.min.js',
@@ -79,7 +56,7 @@ export default [
           '@hebcal/leyning': 'hebcal__leyning',
         },
         plugins: [terser()],
-        banner: '/*! ' + pkg.name + ' v' + pkg.version + ' */',
+        banner,
       },
     ],
     plugins: [
@@ -87,7 +64,7 @@ export default [
       babel({
         babelHelpers: 'bundled',
         presets: [
-          ['@babel/env', {
+          ['@babel/preset-env', {
             modules: false,
             exclude: ['es.symbol.description', 'es.string.replace'],
             targets: {

@@ -192,6 +192,7 @@ test('fastStartEnd', (t) => {
       allDay: false,
       className: 'zmanim fast',
       hebrew: 'תחילת הצום',
+      description: 'Tzom Tammuz',
     },
     {
       title: 'Tzom Tammuz',
@@ -208,6 +209,7 @@ test('fastStartEnd', (t) => {
       allDay: false,
       className: 'zmanim fast',
       hebrew: 'סיום הצום',
+      description: 'Tzom Tammuz',
     },
   ];
   t.deepEqual(fc, expected);

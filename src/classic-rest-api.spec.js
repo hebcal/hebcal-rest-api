@@ -312,6 +312,7 @@ test('fastStartEnd', (t) => {
       category: 'zmanim',
       subcat: 'fast',
       hebrew: 'תחילת הצום',
+      memo: 'Tzom Tammuz',
     },
     {
       title: 'Tzom Tammuz',
@@ -328,6 +329,7 @@ test('fastStartEnd', (t) => {
       category: 'zmanim',
       subcat: 'fast',
       hebrew: 'סיום הצום',
+      memo: 'Tzom Tammuz',
     },
   ];
   t.deepEqual(apiObjs, expected);

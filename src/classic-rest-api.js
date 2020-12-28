@@ -115,7 +115,11 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
     }
   }
   const memo = ev.memo || holidayDescription[ev.basename()];
-  if (memo) result.memo = memo;
+  if (memo) {
+    result.memo = memo;
+  } else if (typeof ev.linkedEvent !== 'undefined') {
+    result.memo = ev.linkedEvent.render();
+  }
   return result;
 }
 

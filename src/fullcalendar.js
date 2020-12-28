@@ -46,7 +46,11 @@ export function eventToFullCalendar(ev, tzid, il) {
     const memo = (ev.getFlags() & flags.PARSHA_HASHAVUA) ?
         makeTorahMemoText(ev, il) :
         ev.memo || holidayDescription[ev.basename()];
-    if (memo) result.description = memo;
+    if (memo) {
+      result.description = memo;
+    } else if (typeof ev.linkedEvent !== 'undefined') {
+      result.description = ev.linkedEvent.render();
+    }
   }
   return result;
 }

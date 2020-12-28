@@ -53,7 +53,10 @@ export function eventToCsv(e, options) {
     }
   }
 
-  const memo0 = e.memo || getHolidayDescription(e, true);
+  let memo0 = e.memo || getHolidayDescription(e, true);
+  if (!memo0 && typeof e.linkedEvent !== 'undefined') {
+    memo0 = e.linkedEvent.render();
+  }
   const memo = memo0.replace(/,/g, ';').replace(/"/g, '\'\'');
 
   const showTimeAs = (timed || (mask & flags.CHAG)) ? 4 : 3;

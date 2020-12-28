@@ -18,7 +18,7 @@ test('eventToCsv', (t) => {
   t.is(csv[0], `"Candle lighting","4/6/1990","7:03 PM","4/6/1990","7:03 PM","false","","4","Chicago"`);
   t.is(csv[1], `"Havdalah","4/7/1990","8:05 PM","4/7/1990","8:05 PM","false","","4","Chicago"`);
   t.is(csv[2], `"Erev Pesach","4/9/1990",,,,"true","Passover; the Feast of Unleavened Bread","3","Jewish Holidays"`);
-  t.is(csv[3], `"Candle lighting","4/9/1990","7:06 PM","4/9/1990","7:06 PM","false","","4","Chicago"`);
+  t.is(csv[3], `"Candle lighting","4/9/1990","7:06 PM","4/9/1990","7:06 PM","false","Erev Pesach","4","Chicago"`);
   t.is(csv[4], `"Pesach I","4/10/1990",,,,"true","Passover; the Feast of Unleavened Bread","4","Jewish Holidays"`);
 });
 
@@ -85,9 +85,9 @@ test('fastStartEnd', (t) => {
   const events = HebrewCalendar.calendar(options);
   const csv = eventsToCsv(events, options).split('\r\n').slice(1, 4);
   const expected = [
-    '"Fast begins","6/27/2021","3:19 AM","6/27/2021","3:19 AM","false","","4","Providence"',
+    '"Fast begins","6/27/2021","3:19 AM","6/27/2021","3:19 AM","false","Tzom Tammuz","4","Providence"',
     '"Tzom Tammuz","6/27/2021",,,,"true","Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple","3","Jewish Holidays"',
-    '"Fast ends","6/27/2021","9:06 PM","6/27/2021","9:06 PM","false","","4","Providence"',
+    '"Fast ends","6/27/2021","9:06 PM","6/27/2021","9:06 PM","false","Tzom Tammuz","4","Providence"',
   ];
   t.deepEqual(csv, expected);
 });

@@ -1,8 +1,20 @@
 import {HebrewCalendar, flags} from '@hebcal/core';
-import {getHolidayDescription} from './common';
+import {getHolidayDescription, getEventCategories} from './common';
 
 // eslint-disable-next-line max-len
 const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
+
+const CATEGORY = {
+  dafyomi: 'Daf Yomi',
+  hebdate: 'Hebrew Date',
+  holiday: 'Jewish Holidays',
+  mevarchim: null,
+  molad: null,
+  omer: null,
+  parashat: 'Torah Reading',
+  roshchodesh: 'Jewish Holidays',
+  user: 'Personal',
+};
 
 /**
  * Renders an Event as a string
@@ -34,13 +46,19 @@ export function eventToCsv(e, options) {
   let loc = 'Jewish Holidays';
   const mask = e.getFlags();
   if (timed && options.location && options.location.name) {
-    const comma = options.location.name.indexOf(',');
-    loc = (comma == -1) ? options.location.name : options.location.name.substring(0, comma);
+    const locationName = options.location.name;
+    const comma = locationName.indexOf(',');
+    loc = (comma === -1) ? locationName : locationName.substring(0, comma);
   } else if (mask & flags.DAF_YOMI) {
     const colon = subj.indexOf(': ');
     if (colon != -1) {
       loc = subj.substring(0, colon);
       subj = subj.substring(colon + 2);
+    }
+  } else {
+    const category = CATEGORY[getEventCategories(e)[0]];
+    if (category) {
+      loc = category;
     }
   }
 

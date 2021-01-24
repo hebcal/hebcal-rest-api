@@ -52,11 +52,11 @@ test('appendHebrewToSubject', (t) => {
   const expected = [
     '"Parashat Bamidbar / פרשת בְּמִדְבַּר"',
     '"Havdalah (42 min) / הַבדָלָה (42 דקות)"',
-    '"Rosh Chodesh Sivan / רֹאשׁ חודש סִיוָן"',
+    '"Rosh Chodesh Sivan / רֹאשׁ חוֹדֶשׁ סִיוָן"',
     '"Erev Shavuot / עֶרֶב שָׁבוּעוֹת"',
-    '"Candle lighting / הדלקת נרות"',
+    '"Candle lighting / הַדלָקָת נֵרוֹת"',
     '"Shavuot I / שָׁבוּעוֹת יוֹם א׳"',
-    '"Candle lighting / הדלקת נרות"',
+    '"Candle lighting / הַדלָקָת נֵרוֹת"',
     '"Shavuot II / שָׁבוּעוֹת יוֹם ב׳"',
     '"Havdalah (42 min) / הַבדָלָה (42 דקות)"',
   ];

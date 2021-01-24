@@ -7,7 +7,6 @@
   ],
   "description": "Jewish holidays and Hebrew calendar as plain JSON objects and CSV export",
   "main": "dist/index.js",
-  "browser": "dist/bundle.js",
   "module": "dist/index.mjs",
   "typings": "rest-api.d.ts",
   "files": [
@@ -59,14 +58,14 @@
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.0.1",
-    "ava": "^3.14.0",
-    "core-js": "^3.8.1",
-    "eslint": "^7.16.0",
+    "@rollup/plugin-node-resolve": "^11.1.0",
+    "ava": "^3.15.0",
+    "core-js": "^3.8.3",
+    "eslint": "^7.18.0",
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^3.6.6",
     "jsdoc-to-markdown": "^5.0.3",
-    "rollup": "^2.35.1",
+    "rollup": "^2.38.0",
     "rollup-plugin-terser": "^7.0.2"
   }
 }

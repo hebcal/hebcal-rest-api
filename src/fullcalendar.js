@@ -1,5 +1,5 @@
-import {Locale, flags} from '@hebcal/core';
-import {toISOStringWithTimezone, getEventCategories, makeTorahMemoText} from './common';
+import {Locale, flags, Zmanim} from '@hebcal/core';
+import {getEventCategories, makeTorahMemoText, toISOString} from './common';
 import holidayDescription from './holidays.json';
 
 /**
@@ -16,9 +16,12 @@ export function eventToFullCalendar(ev, tzid, il) {
   }
   const timed = Boolean(ev.eventTime);
   const title = timed || (ev.getFlags() & flags.DAF_YOMI) ? ev.renderBrief() : ev.render();
+  const start = timed ?
+    Zmanim.formatISOWithTimeZone(tzid, ev.eventTime) :
+    toISOString(ev.getDate().greg());
   const result = {
-    title: title,
-    start: toISOStringWithTimezone(ev.getDate().greg(), ev.eventTimeStr, tzid),
+    title,
+    start,
     allDay: !timed,
     className: classes.join(' '),
   };

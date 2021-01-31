@@ -30,12 +30,6 @@ console.log(JSON.stringify(csv));
 ## Functions
 
 <dl>
-<dt><a href="#getFormatter">getFormatter(tzid)</a> ⇒ <code>Intl.DateTimeFormat</code></dt>
-<dd></dd>
-<dt><a href="#getPseudoISO">getPseudoISO(tzid, date)</a> ⇒ <code>string</code></dt>
-<dd></dd>
-<dt><a href="#getTimezoneOffset">getTimezoneOffset(tzid, date)</a> ⇒ <code>number</code></dt>
-<dd></dd>
 <dt><a href="#makeAnchor">makeAnchor(s)</a> ⇒ <code>string</code></dt>
 <dd><p>Helper function to transform a string to make it more usable in a URL or filename.
 Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;).</p>
@@ -46,17 +40,20 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dd></dd>
 <dt><a href="#pad4">pad4(number)</a> ⇒ <code>string</code></dt>
 <dd></dd>
-<dt><a href="#timeZoneOffsetStr">timeZoneOffsetStr(tzid, date)</a> ⇒ <code>string</code></dt>
+<dt><del><a href="#timeZoneOffsetStr">timeZoneOffsetStr(tzid, date)</a> ⇒ <code>string</code></del></dt>
 <dd><p>Get offset string (like &quot;+05:00&quot; or &quot;-08:00&quot;) from tzid (like &quot;Europe/Moscow&quot;)</p>
 </dd>
 <dt><a href="#toISOString">toISOString(d)</a> ⇒ <code>string</code></dt>
 <dd><p>Returns just the date portion as YYYY-MM-DD</p>
 </dd>
-<dt><a href="#toISOStringWithTimezone">toISOStringWithTimezone(date, timeStr, tzid)</a> ⇒ <code>string</code></dt>
-<dd><p>Returns a string like &quot;2018-09-01T12:30:00-05:00&#39;&quot;</p>
+<dt><del><a href="#toISOStringWithTimezone">toISOStringWithTimezone(date, timeStr, tzid)</a> ⇒ <code>string</code></del></dt>
+<dd><p>Returns a string like &quot;2018-09-01T12:30:00-05:00&quot;</p>
 </dd>
 <dt><a href="#getEventCategories">getEventCategories(ev)</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
 <dd><p>Returns a category and subcategory name</p>
+</dd>
+<dt><a href="#renderTitleWithoutTime">renderTitleWithoutTime(ev)</a> ⇒ <code>string</code></dt>
+<dd><p>Renders the event title in default locale, but strips off time</p>
 </dd>
 <dt><a href="#getCalendarTitle">getCalendarTitle(events, options)</a> ⇒ <code>string</code></dt>
 <dd><p>Generates a title like &quot;Hebcal 2020 Israel&quot; or &quot;Hebcal May 1993 Providence&quot;</p>
@@ -82,7 +79,7 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dd></dd>
 <dt><a href="#formatLeyningResult">formatLeyningResult(reading)</a> ⇒ <code>Object</code></dt>
 <dd></dd>
-<dt><a href="#getLinkAndGuid">getLinkAndGuid(ev)</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
+<dt><a href="#getLinkAndGuid">getLinkAndGuid(ev, il)</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
 <dd></dd>
 <dt><a href="#eventsToRss">eventsToRss(events, location, mainUrl, selfUrl, [lang], [evPubDate])</a> ⇒ <code>string</code></dt>
 <dd></dd>
@@ -92,35 +89,6 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dd><p>Converts a Hebcal event to a FullCalendar.io object</p>
 </dd>
 </dl>
-
-<a name="getFormatter"></a>
-
-## getFormatter(tzid) ⇒ <code>Intl.DateTimeFormat</code>
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| tzid | <code>string</code> | 
-
-<a name="getPseudoISO"></a>
-
-## getPseudoISO(tzid, date) ⇒ <code>string</code>
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| tzid | <code>string</code> | 
-| date | <code>Date</code> | 
-
-<a name="getTimezoneOffset"></a>
-
-## getTimezoneOffset(tzid, date) ⇒ <code>number</code>
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| tzid | <code>string</code> | 
-| date | <code>Date</code> | 
 
 <a name="makeAnchor"></a>
 
@@ -167,7 +135,9 @@ makeAnchor('Rosh Chodesh Adar II') // 'rosh-chodesh-adar-ii'
 
 <a name="timeZoneOffsetStr"></a>
 
-## timeZoneOffsetStr(tzid, date) ⇒ <code>string</code>
+## ~~timeZoneOffsetStr(tzid, date) ⇒ <code>string</code>~~
+***Deprecated***
+
 Get offset string (like "+05:00" or "-08:00") from tzid (like "Europe/Moscow")
 
 **Kind**: global function  
@@ -190,8 +160,10 @@ Returns just the date portion as YYYY-MM-DD
 
 <a name="toISOStringWithTimezone"></a>
 
-## toISOStringWithTimezone(date, timeStr, tzid) ⇒ <code>string</code>
-Returns a string like "2018-09-01T12:30:00-05:00'"
+## ~~toISOStringWithTimezone(date, timeStr, tzid) ⇒ <code>string</code>~~
+***Deprecated***
+
+Returns a string like "2018-09-01T12:30:00-05:00"
 
 **Kind**: global function  
 
@@ -205,6 +177,17 @@ Returns a string like "2018-09-01T12:30:00-05:00'"
 
 ## getEventCategories(ev) ⇒ <code>Array.&lt;string&gt;</code>
 Returns a category and subcategory name
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| ev | <code>Event</code> | 
+
+<a name="renderTitleWithoutTime"></a>
+
+## renderTitleWithoutTime(ev) ⇒ <code>string</code>
+Renders the event title in default locale, but strips off time
 
 **Kind**: global function  
 
@@ -317,12 +300,13 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 
 <a name="getLinkAndGuid"></a>
 
-## getLinkAndGuid(ev) ⇒ <code>Array.&lt;string&gt;</code>
+## getLinkAndGuid(ev, il) ⇒ <code>Array.&lt;string&gt;</code>
 **Kind**: global function  
 
 | Param | Type |
 | --- | --- |
 | ev | <code>Event</code> | 
+| il | <code>boolean</code> | 
 
 <a name="eventsToRss"></a>
 

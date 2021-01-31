@@ -188,7 +188,7 @@ test('fastStartEnd', (t) => {
   const expected = [
     {
       title: 'Fast begins',
-      start: '2021-06-27T03:19:00-04:00',
+      start: '2021-06-27T03:20:00-04:00',
       allDay: false,
       className: 'zmanim fast',
       hebrew: 'תחילת הצום',
@@ -205,7 +205,7 @@ test('fastStartEnd', (t) => {
     },
     {
       title: 'Fast ends',
-      start: '2021-06-27T21:06:00-04:00',
+      start: '2021-06-27T21:07:00-04:00',
       allDay: false,
       className: 'zmanim fast',
       hebrew: 'סיום הצום',

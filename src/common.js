@@ -1,5 +1,4 @@
-import {getTimezoneOffset} from './getTimezoneOffset';
-import {flags} from '@hebcal/core';
+import {flags, Zmanim} from '@hebcal/core';
 import * as leyning from '@hebcal/leyning';
 import holidayDescription from './holidays.json';
 
@@ -67,17 +66,13 @@ export function pad4(number) {
 
 /**
  * Get offset string (like "+05:00" or "-08:00") from tzid (like "Europe/Moscow")
+ * @deprecated
  * @param {string} tzid
  * @param {Date} date
  * @return {string}
  */
 export function timeZoneOffsetStr(tzid, date) {
-  const offset = getTimezoneOffset(tzid, date);
-  const offsetAbs = Math.abs(offset);
-  const dir = Boolean(offset < 0);
-  const hours = Math.floor(offsetAbs / 60);
-  const minutes = offsetAbs % 60;
-  return (dir ? '+' : '-') + pad2(hours) + ':' + pad2(minutes);
+  return Zmanim.timeZoneOffset(tzid, date);
 }
 
 /**
@@ -90,7 +85,8 @@ export function toISOString(d) {
 }
 
 /**
- * Returns a string like "2018-09-01T12:30:00-05:00'"
+ * Returns a string like "2018-09-01T12:30:00-05:00"
+ * @deprecated
  * @param {Date} date
  * @param {string} timeStr must be formatted with only hours and minutes, like "17:12"
  * @param {string} tzid like "America/New_York"
@@ -99,7 +95,7 @@ export function toISOString(d) {
 export function toISOStringWithTimezone(date, timeStr, tzid) {
   const str = toISOString(date);
   if (!timeStr) return str;
-  return str + 'T' + timeStr + ':00' + timeZoneOffsetStr(tzid, date);
+  return str + 'T' + timeStr + ':00' + Zmanim.timeZoneOffset(tzid, date);
 }
 
 /**

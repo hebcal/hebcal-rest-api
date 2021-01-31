@@ -1,9 +1,8 @@
-import {Locale, flags, HebrewCalendar} from '@hebcal/core';
+import {Locale, flags, HebrewCalendar, Zmanim} from '@hebcal/core';
 import * as leyn from '@hebcal/leyning';
 import {
   getCalendarTitle,
   getEventCategories,
-  toISOStringWithTimezone,
   toISOString,
 } from './common';
 import countryNames from './countryNames.json';
@@ -57,7 +56,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   const dt = hd.greg();
   const tzid = typeof options.location === 'object' ? options.location.getTzid() : 'UTC';
   const date = timed ?
-    toISOStringWithTimezone(dt, ev.eventTimeStr, tzid) :
+    Zmanim.formatISOWithTimeZone(tzid, ev.eventTime) :
     toISOString(dt);
   const categories = getEventCategories(ev);
   let title = timed ? ev.renderBrief() : ev.render();

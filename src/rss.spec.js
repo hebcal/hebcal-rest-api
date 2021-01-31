@@ -125,12 +125,12 @@ test('fastStartEnd', (t) => {
   const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location));
   const expected = [
     '<item>\n' +
-      '<title>Fast begins: 04:08</title>\n' +
-      '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T01%3A08%3A43#fast-begins</link>\n' +
-      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T01%3A08%3A43#fast-begins</guid>\n' +
+      '<title>Fast begins: 04:09</title>\n' +
+      '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T01%3A09%3A00#fast-begins</link>\n' +
+      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T01%3A09%3A00#fast-begins</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
       '<category>zmanim</category>\n' +
-      '<pubDate>Sun, 27 Jun 2021 01:08:43 GMT</pubDate>\n' +
+      '<pubDate>Sun, 27 Jun 2021 01:09:00 GMT</pubDate>\n' +
       '</item>\n',
     '<item>\n' +
       '<title>Tzom Tammuz</title>\n' +
@@ -142,11 +142,11 @@ test('fastStartEnd', (t) => {
       '</item>\n',
     '<item>\n' +
       '<title>Fast ends: 20:25</title>\n' +
-      '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T17%3A25%3A29#fast-ends</link>\n' +
-      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T17%3A25%3A29#fast-ends</guid>\n' +
+      '<link>https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T17%3A25%3A00#fast-ends</link>\n' +
+      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?utm_source=shabbat1c&amp;utm_medium=rss&amp;dt=2021-06-27T17%3A25%3A00#fast-ends</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
       '<category>zmanim</category>\n' +
-      '<pubDate>Sun, 27 Jun 2021 17:25:29 GMT</pubDate>\n' +
+      '<pubDate>Sun, 27 Jun 2021 17:25:00 GMT</pubDate>\n' +
       '</item>\n',
   ];
   t.deepEqual(items, expected);

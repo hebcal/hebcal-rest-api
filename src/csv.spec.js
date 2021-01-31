@@ -85,9 +85,9 @@ test('fastStartEnd', (t) => {
   const events = HebrewCalendar.calendar(options);
   const csv = eventsToCsv(events, options).split('\r\n').slice(1, 4);
   const expected = [
-    '"Fast begins","6/27/2021","3:19 AM","6/27/2021","3:19 AM","false","Tzom Tammuz","4","Providence"',
+    '"Fast begins","6/27/2021","3:20 AM","6/27/2021","3:20 AM","false","Tzom Tammuz","4","Providence"',
     '"Tzom Tammuz","6/27/2021",,,,"true","Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple","3","Jewish Holidays"',
-    '"Fast ends","6/27/2021","9:06 PM","6/27/2021","9:06 PM","false","Tzom Tammuz","4","Providence"',
+    '"Fast ends","6/27/2021","9:07 PM","6/27/2021","9:07 PM","false","Tzom Tammuz","4","Providence"',
   ];
   t.deepEqual(csv, expected);
 });

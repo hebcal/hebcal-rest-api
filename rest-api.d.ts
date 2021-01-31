@@ -42,6 +42,7 @@ declare module '@hebcal/rest-api' {
   export function makeAnchor(s: string): string;
   /**
    * Get offset string (like "+05:00" or "-08:00") from tzid (like "Europe/Moscow")
+   * @deprecated
    */
   export function timeZoneOffsetStr(tzid: string, date: Date): string;
   /**
@@ -50,6 +51,7 @@ declare module '@hebcal/rest-api' {
   export function toISOString(d: Date): string;
   /**
    * Returns a string like "2018-09-01T12:30:00-05:00'"
+   * @deprecated
    * @param timeStr - must be formatted with only hours and minutes, like "17:12"
    * @param tzid - like "America/New_York"
    */

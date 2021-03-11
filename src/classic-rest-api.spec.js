@@ -111,7 +111,7 @@ test('eventsToClassicApi', (t) => {
     link: 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar-2022?utm_source=js&utm_medium=api',
     title: 'Rosh Chodesh Iyyar',
     // eslint-disable-next-line max-len
-    memo: 'Beginning of new Hebrew month of Iyyar. Iyyar (somtimes transliterated Iyar) is the 2nd month of the Hebrew year. Corresponds to April or May on the Gregorian calendar',
+    memo: 'Start of month of Iyyar on the Hebrew calendar. אִיָיר (transliterated Iyyar or Iyar) is the 2nd month of the Hebrew year, and corresponds to April or May on the Gregorian calendar. Iyyar has 29 days',
   };
   t.deepEqual(roshChodesh, roshChodeshExpected);
   const candleLighting = apiResult.items[4];
@@ -170,7 +170,7 @@ test('classic-api-no-sedra', (t) => {
         hebrew: 'ראש חודש סיון',
         link: 'https://www.hebcal.com/holidays/rosh-chodesh-sivan-2022?i=on&utm_source=js&utm_medium=api',
         // eslint-disable-next-line max-len
-        memo: 'Beginning of new Hebrew month of Sivan. Sivan is the 3rd month of the Hebrew year. Corresponds to May or June on the Gregorian calendar',
+        memo: 'Start of month of Sivan on the Hebrew calendar. Sivan (סִיוָן) is the 3rd month of the Hebrew year, and corresponds to May or June on the Gregorian calendar. Sivan has 30 days',
       },
     ],
   };

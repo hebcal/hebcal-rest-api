@@ -111,7 +111,7 @@ test('eventsToClassicApi', (t) => {
     link: 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar-2022?utm_source=js&utm_medium=api',
     title: 'Rosh Chodesh Iyyar',
     // eslint-disable-next-line max-len
-    memo: 'Start of month of Iyyar on the Hebrew calendar. אִיָיר (transliterated Iyyar or Iyar) is the 2nd month of the Hebrew year, and corresponds to April or May on the Gregorian calendar. Iyyar has 29 days',
+    memo: 'Start of month of Iyyar on the Hebrew calendar. אִיָיר (transliterated Iyyar or Iyar) is the 2nd month of the Hebrew year, has 29 days, and corresponds to April or May on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon',
   };
   t.deepEqual(roshChodesh, roshChodeshExpected);
   const candleLighting = apiResult.items[4];
@@ -170,7 +170,7 @@ test('classic-api-no-sedra', (t) => {
         hebrew: 'ראש חודש סיון',
         link: 'https://www.hebcal.com/holidays/rosh-chodesh-sivan-2022?i=on&utm_source=js&utm_medium=api',
         // eslint-disable-next-line max-len
-        memo: 'Start of month of Sivan on the Hebrew calendar. Sivan (סִיוָן) is the 3rd month of the Hebrew year, and corresponds to May or June on the Gregorian calendar. Sivan has 30 days',
+        memo: 'Start of month of Sivan on the Hebrew calendar. Sivan (סִיוָן) is the 3rd month of the Hebrew year, has 30 days, and corresponds to May or June on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon',
       },
     ],
   };
@@ -224,7 +224,7 @@ test('2-digit-year', (t) => {
   };
   const events = HebrewCalendar.calendar(options);
   const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
-  t.is(apiObjs[1].date, '0023-01-23');
+  t.is(apiObjs[2].date, '0023-01-23');
 });
 
 test('chanukah-candles', (t) => {

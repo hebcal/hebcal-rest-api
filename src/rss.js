@@ -43,7 +43,7 @@ function getLinkAndGuid(ev, il) {
 export function eventsToRss(events, location, mainUrl, selfUrl, lang='en-US', evPubDate=true) {
   const cityDescr = location.getName();
   const thisYear = new Date().getFullYear();
-  const title = 'Shabbat Times for ' + cityDescr;
+  const title = Locale.gettext('Shabbat') + ' Times for ' + cityDescr;
   const lastBuildDate = new Date().toUTCString();
   const dayFormat = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',

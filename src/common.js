@@ -231,14 +231,14 @@ export function makeTorahMemoText(ev, il) {
     reading = leyning.getLeyningForParshaHaShavua(ev, il);
     memo = `Torah: ${reading.summary}`;
     if (reading.reason) {
-      for (const num of ['7', 'M']) {
+      ['7', 'M'].forEach((num) => {
         const special = reading.reason[num];
         if (special) {
           const aname = num === '7' ? '7th aliyah' : 'Maftir';
           const verses = leyning.formatAliyahWithBook(reading.fullkriyah[num]);
           memo += `\n${aname}: ${verses} | ${special}`;
         }
-      }
+      });
     }
     if (reading.haftara) {
       memo += '\nHaftarah: ' + reading.haftara;

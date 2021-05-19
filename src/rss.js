@@ -1,32 +1,27 @@
-import {getEventCategories, makeAnchor} from './common';
+import {getEventCategories, makeAnchor, appendIsraelAndTracking} from './common';
 import {Locale, HebrewCalendar} from '@hebcal/core';
 
-const utmParam = 'utm_source=shabbat1c&amp;utm_medium=rss';
-
 /**
+ * @private
  * @param {Event} ev
  * @param {boolean} il
+ * @param {string} mainUrl
  * @return {string[]}
  */
-function getLinkAndGuid(ev, il) {
+function getLinkAndGuid(ev, il, mainUrl) {
   let link;
   let guid;
   const dt = ev.eventTime || ev.getDate().greg();
   const dtStr0 = dt.toISOString();
   const dtStr = encodeURIComponent(dtStr0.substring(0, ev.eventTime ? 19 : 10));
   const url0 = ev.url();
-  const url = url0 && il ? url0 + '?i=on' : url0;
-  if (url) {
-    const question = url.indexOf('?');
-    if (question == -1) {
-      link = url + '?' + utmParam;
-    } else {
-      link = url + '&amp;' + utmParam;
-    }
+  const url = appendIsraelAndTracking(url0 || mainUrl, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
+  if (url0) {
+    link = url;
     guid = link + '&amp;dt=' + dtStr;
   } else {
     const anchor = makeAnchor(ev.getDesc());
-    guid = link = 'https://www.hebcal.com/shabbat?' + utmParam + '&amp;dt=' + dtStr + '#' + anchor;
+    guid = link = url + '&amp;dt=' + dtStr + '#' + anchor;
   }
   return [link, guid];
 }
@@ -51,13 +46,13 @@ export function eventsToRss(events, location, mainUrl, selfUrl, lang='en-US', ev
     month: 'long',
     year: 'numeric',
   });
-  mainUrl = mainUrl.replace(/&/g, '&amp;');
+  const mainUrlEsc = appendIsraelAndTracking(mainUrl, location.getIsrael(), 'shabbat1c', 'rss').replace(/&/g, '&amp;');
   selfUrl = selfUrl.replace(/&/g, '&amp;');
   let str = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <title>${title}</title>
-<link>${mainUrl}&amp;${utmParam}</link>
+<link>${mainUrlEsc}</link>
 <atom:link href="${selfUrl}" rel="self" type="application/rss+xml" />
 <description>Weekly Shabbat candle lighting times for ${cityDescr}</description>
 <language>${lang}</language>
@@ -65,7 +60,7 @@ export function eventsToRss(events, location, mainUrl, selfUrl, lang='en-US', ev
 <lastBuildDate>${lastBuildDate}</lastBuildDate>
 `;
   events.forEach((ev) => {
-    str += eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location);
+    str += eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl);
   });
   str += '</channel>\n</rss>\n';
   return str;
@@ -96,13 +91,14 @@ function getPubDate(ev, evPubDate, evDate, lastBuildDate) {
  * @param {string} lastBuildDate
  * @param {Intl.DateTimeFormat} dayFormat
  * @param {Location} location
+ * @param {string} mainUrl
  * @return {string}
  */
-export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location) {
+export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl) {
   let subj = ev.render();
   const evDate = ev.getDate().greg();
   const pubDate = getPubDate(ev, evPubDate, evDate, lastBuildDate);
-  const linkGuid = getLinkAndGuid(ev, location.getIsrael());
+  const linkGuid = getLinkAndGuid(ev, location.getIsrael(), mainUrl);
   const link = linkGuid[0];
   const guid = linkGuid[1];
   const description = dayFormat.format(evDate);

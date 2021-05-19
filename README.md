@@ -1,4 +1,4 @@
-# hebcal-rest-api
+# @hebcal/rest-api
 Jewish holidays and Hebrew calendar as plain JSON objects, RSS, and CSV export
 
 ## Installation
@@ -79,11 +79,9 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dd></dd>
 <dt><a href="#formatLeyningResult">formatLeyningResult(reading)</a> ⇒ <code>Object</code></dt>
 <dd></dd>
-<dt><a href="#getLinkAndGuid">getLinkAndGuid(ev, il)</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
-<dd></dd>
 <dt><a href="#eventsToRss">eventsToRss(events, location, mainUrl, selfUrl, [lang], [evPubDate])</a> ⇒ <code>string</code></dt>
 <dd></dd>
-<dt><a href="#eventToRssItem">eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location)</a> ⇒ <code>string</code></dt>
+<dt><a href="#eventToRssItem">eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl)</a> ⇒ <code>string</code></dt>
 <dd></dd>
 <dt><a href="#eventToFullCalendar">eventToFullCalendar(ev, tzid, il)</a> ⇒ <code>Object</code></dt>
 <dd><p>Converts a Hebcal event to a FullCalendar.io object</p>
@@ -298,16 +296,6 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 | --- | --- |
 | reading | <code>leyn.Leyning</code> | 
 
-<a name="getLinkAndGuid"></a>
-
-## getLinkAndGuid(ev, il) ⇒ <code>Array.&lt;string&gt;</code>
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| ev | <code>Event</code> | 
-| il | <code>boolean</code> | 
-
 <a name="eventsToRss"></a>
 
 ## eventsToRss(events, location, mainUrl, selfUrl, [lang], [evPubDate]) ⇒ <code>string</code>
@@ -324,7 +312,7 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 
 <a name="eventToRssItem"></a>
 
-## eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location) ⇒ <code>string</code>
+## eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl) ⇒ <code>string</code>
 **Kind**: global function  
 
 | Param | Type |
@@ -334,6 +322,7 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 | lastBuildDate | <code>string</code> | 
 | dayFormat | <code>Intl.DateTimeFormat</code> | 
 | location | <code>Location</code> | 
+| mainUrl | <code>string</code> | 
 
 <a name="eventToFullCalendar"></a>
 

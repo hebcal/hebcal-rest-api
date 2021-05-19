@@ -266,3 +266,22 @@ export function makeTorahMemoText(ev, il) {
   }
   return memo;
 }
+
+/**
+ * @private
+ * @param {string} url
+ * @param {boolean} il
+ * @param {string} utmSource
+ * @param {string} utmMedium
+ * @return {string}
+ */
+export function appendIsraelAndTracking(url, il, utmSource, utmMedium) {
+  if (url.substring(0, 22) !== 'https://www.hebcal.com') {
+    utmSource = 'hebcal.com';
+  } else if (il && url.indexOf('?') === -1) {
+    url += '?i=on';
+  }
+  const sep = url.indexOf('?') === -1 ? '?' : '&';
+  const utm = `utm_source=${utmSource}&utm_medium=${utmMedium}`;
+  return url + sep + utm;
+}

@@ -4,6 +4,7 @@ import {
   getCalendarTitle,
   getEventCategories,
   toISOString,
+  appendIsraelAndTracking,
 } from './common';
 import countryNames from './countryNames.json';
 import holidayDescription from './holidays.json';
@@ -104,13 +105,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
     }
     const url = ev.url();
     if (url) {
-      if (url.substring(0, 22) == 'https://www.hebcal.com') {
-        const suffix = options.il ? 'i=on&' : '';
-        result.link = `${url}?${suffix}utm_source=js&utm_medium=api`;
-      } else {
-        const sep = url.indexOf('?') == -1 ? '?' : '&';
-        result.link = url + sep + 'utm_source=hebcal.com&utm_medium=api';
-      }
+      result.link = appendIsraelAndTracking(url, options.il, 'js', 'api');
     }
   }
   const memo = ev.memo || holidayDescription[ev.basename()];

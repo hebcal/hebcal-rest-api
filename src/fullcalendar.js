@@ -1,5 +1,6 @@
 import {Locale, flags, Zmanim} from '@hebcal/core';
-import {getEventCategories, makeTorahMemoText, toISOString} from './common';
+import {getEventCategories, makeTorahMemoText, toISOString,
+  appendIsraelAndTracking} from './common';
 import holidayDescription from './holidays.json';
 
 /**
@@ -35,13 +36,7 @@ export function eventToFullCalendar(ev, tzid, il) {
   }
   const url = ev.url();
   if (url) {
-    if (url.substring(0, 22) == 'https://www.hebcal.com') {
-      const suffix = il ? 'i=on&' : '';
-      result.url = `${url}?${suffix}utm_source=js&utm_medium=fc`;
-    } else {
-      const sep = url.indexOf('?') == -1 ? '?' : '&';
-      result.url = url + sep + 'utm_source=hebcal.com&utm_medium=fc';
-    }
+    result.url = appendIsraelAndTracking(url, il, 'js', 'fc');
   }
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';

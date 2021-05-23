@@ -225,7 +225,7 @@ test('bce', (t) => {
   const fc = eventToFullCalendar(ev);
   const expected = {
     title: 'Erev Shavuot',
-    start: '-00001-05-06',
+    start: '-000001-05-06',
     allDay: true,
     className: 'holiday major',
     hebrew: 'ערב שבועות',

@@ -55,7 +55,7 @@ export function pad2(number) {
  */
 export function pad4(number) {
   if (number < 0) {
-    return '-0' + pad4(-number);
+    return '-00' + pad4(-number);
   } else if (number < 10) {
     return '000' + number;
   } else if (number < 100) {

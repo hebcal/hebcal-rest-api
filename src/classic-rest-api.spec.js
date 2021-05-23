@@ -89,7 +89,7 @@ test('bce', (t) => {
   const apiObj = eventToClassicApiObject(ev, options);
   const expected = {
     title: 'Erev Shavuot',
-    date: '-00001-05-06',
+    date: '-000001-05-06',
     category: 'holiday',
     subcat: 'major',
     hebrew: 'ערב שבועות',

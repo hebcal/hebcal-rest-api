@@ -79,6 +79,25 @@ test('eventToClassicApiObject', (t) => {
   t.deepEqual(shavuotActual, shavuotExpected);
 });
 
+test('bce', (t) => {
+  const options = {
+    start: new Date(-1, 4, 6),
+    end: new Date(-1, 4, 6),
+    il: false,
+  };
+  const ev = HebrewCalendar.calendar(options)[0];
+  const apiObj = eventToClassicApiObject(ev, options);
+  const expected = {
+    title: 'Erev Shavuot',
+    date: '-00001-05-06',
+    category: 'holiday',
+    subcat: 'major',
+    hebrew: 'ערב שבועות',
+    memo: 'Festival of Weeks. Commemorates the giving of the Torah at Mount Sinai',
+  };
+  t.deepEqual(apiObj, expected);
+});
+
 test('eventsToClassicApi', (t) => {
   const location = Location.lookup('Vancouver');
   const options = {

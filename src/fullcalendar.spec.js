@@ -214,3 +214,22 @@ test('fastStartEnd', (t) => {
   ];
   t.deepEqual(fc, expected);
 });
+
+test('bce', (t) => {
+  const options = {
+    start: new Date(-1, 4, 6),
+    end: new Date(-1, 4, 6),
+    il: false,
+  };
+  const ev = HebrewCalendar.calendar(options)[0];
+  const fc = eventToFullCalendar(ev);
+  const expected = {
+    title: 'Erev Shavuot',
+    start: '-00001-05-06',
+    allDay: true,
+    className: 'holiday major',
+    hebrew: 'ערב שבועות',
+    description: 'Festival of Weeks. Commemorates the giving of the Torah at Mount Sinai',
+  };
+  t.deepEqual(fc, expected);
+});

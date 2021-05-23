@@ -13,7 +13,8 @@ function getLinkAndGuid(ev, il, mainUrl) {
   let guid;
   const dt = ev.eventTime || ev.getDate().greg();
   const dtStr0 = dt.toISOString();
-  const dtStr = encodeURIComponent(dtStr0.substring(0, ev.eventTime ? 19 : 10));
+  const timeIdx = dtStr0.indexOf('T');
+  const dtStr = encodeURIComponent(dtStr0.substring(0, ev.eventTime ? timeIdx + 9 : timeIdx));
   const url0 = ev.url();
   const url = appendIsraelAndTracking(url0 || mainUrl, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
   if (url0) {
@@ -98,7 +99,8 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
   let subj = ev.render();
   const evDate = ev.getDate().greg();
   const pubDate = getPubDate(ev, evPubDate, evDate, lastBuildDate);
-  const linkGuid = getLinkAndGuid(ev, location.getIsrael(), mainUrl);
+  const il = location ? location.getIsrael() : false;
+  const linkGuid = getLinkAndGuid(ev, il, mainUrl);
   const link = linkGuid[0];
   const guid = linkGuid[1];
   const description = dayFormat.format(evDate);
@@ -109,7 +111,7 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
   if (candles) {
     const colon = subj.indexOf(': ');
     if (colon != -1) {
-      const options = {location, il: location.getIsrael(), locale: Locale.getLocaleName()};
+      const options = {location, il, locale: Locale.getLocaleName()};
       const time = HebrewCalendar.reformatTimeStr(ev.eventTimeStr, 'pm', options);
       subj = subj.substring(0, colon) + ': ' + time;
     }

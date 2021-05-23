@@ -54,7 +54,9 @@ export function pad2(number) {
  * @return {string}
  */
 export function pad4(number) {
-  if (number < 10) {
+  if (number < 0) {
+    return '-0' + pad4(-number);
+  } else if (number < 10) {
     return '000' + number;
   } else if (number < 100) {
     return '00' + number;

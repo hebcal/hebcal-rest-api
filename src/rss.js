@@ -1,4 +1,4 @@
-import {getEventCategories, makeAnchor, appendIsraelAndTracking} from './common';
+import {getEventCategories, makeAnchor, appendIsraelAndTracking, pad4, pad2} from './common';
 import {Locale, HebrewCalendar} from '@hebcal/core';
 
 /**
@@ -12,17 +12,20 @@ function getLinkAndGuid(ev, il, mainUrl) {
   let link;
   let guid;
   const dt = ev.eventTime || ev.getDate().greg();
-  const dtStr0 = dt.toISOString();
-  const timeIdx = dtStr0.indexOf('T');
-  const dtStr = encodeURIComponent(dtStr0.substring(0, ev.eventTime ? timeIdx + 9 : timeIdx));
+  const isoDate = dt.toISOString();
+  const dtAnchor = isoDate.substring(0, isoDate.indexOf('T')).replace(/-/g, '');
+  const descAnchor = makeAnchor(ev.getDesc());
+  const anchor = `${dtAnchor}-${descAnchor}`;
   const url0 = ev.url();
-  const url = appendIsraelAndTracking(url0 || mainUrl, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
   if (url0) {
-    link = url;
-    guid = link + '&amp;dt=' + dtStr;
+    link = appendIsraelAndTracking(url0, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
+    guid = `${url0}#${anchor}`;
   } else {
-    const anchor = makeAnchor(ev.getDesc());
-    guid = link = url + '&amp;dt=' + dtStr + '#' + anchor;
+    const dtStr = pad4(dt.getFullYear()) + '-' + pad2(dt.getMonth() + 1) + '-' + pad2(dt.getDate());
+    const url1 = `${mainUrl}&amp;dt=${dtStr}`;
+    const url = appendIsraelAndTracking(url1, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
+    guid = `${url1}#${anchor}`;
+    link = `${url}#${anchor}`;
   }
   return [link, guid];
 }

@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "3.4.2",
+  "version": "3.4.3",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -21,7 +21,7 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^3.17.3",
+    "@hebcal/core": "^3.17.5",
     "@hebcal/geo-sqlite": "^3.4.1",
     "@hebcal/leyning": "^4.4.0"
   },

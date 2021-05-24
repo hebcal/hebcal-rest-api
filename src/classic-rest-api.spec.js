@@ -353,3 +353,22 @@ test('fastStartEnd', (t) => {
   ];
   t.deepEqual(apiObjs, expected);
 });
+
+test('candles-year221', (t) => {
+  const options = {
+    start: new Date(221, 0, 5),
+    end: new Date(221, 0, 5),
+    location: Location.lookup('London'),
+    candlelighting: true,
+  };
+  const ev = HebrewCalendar.calendar(options)[0];
+  const apiObj = eventToClassicApiObject(ev, options, false);
+  const expected = {
+    title: 'Candle lighting: 15:49',
+    date: '0221-01-05T15:49:43-00:02',
+    category: 'candles',
+    title_orig: 'Candle lighting',
+    hebrew: 'הדלקת נרות',
+  };
+  t.deepEqual(apiObj, expected);
+});

@@ -54,7 +54,7 @@ test('eventToRssItem', (t) => {
   const expected = [
     '<item>\n' +
     '<title>Candle lighting: 18:43</title>\n' +
-    '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;amp;dt=1990-04-06&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900406-candle-lighting</link>\n' +
+    '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-06&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900406-candle-lighting</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-06#19900406-candle-lighting</guid>\n' +
     '<description>Friday, April 06, 1990</description>\n' +
     '<category>candles</category>\n' +
@@ -64,7 +64,7 @@ test('eventToRssItem', (t) => {
     '</item>\n',
     '<item>\n' +
     '<title>Havdalah (50 min): 19:52</title>\n' +
-    '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;amp;dt=1990-04-07&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900407-havdalah</link>\n' +
+    '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-07&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900407-havdalah</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-07#19900407-havdalah</guid>\n' +
     '<description>Saturday, April 07, 1990</description>\n' +
     '<category>havdalah</category>\n' +
@@ -131,13 +131,13 @@ test('fastStartEnd', (t) => {
   };
   const events = HebrewCalendar.calendar(options);
   const lastBuildDate = 'Mon, 22 Jun 2020 20:03:18 GMT';
-  const mainUrl = 'https://www.hebcal.com/shabbat?city=Tel+Aviv';
+  const mainUrl = 'https://www.hebcal.com/shabbat?city=Tel+Aviv&lg=s';
   const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location, mainUrl));
   const expected = [
     '<item>\n' +
       '<title>Fast begins: 04:09</title>\n' +
-      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;amp;dt=2021-06-26&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-begins</link>\n' +
-      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;dt=2021-06-26#20210627-fast-begins</guid>\n' +
+      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-26&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-begins</link>\n' +
+      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-26#20210627-fast-begins</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
       '<category>zmanim</category>\n' +
       '<pubDate>Sun, 27 Jun 2021 01:09:00 GMT</pubDate>\n' +
@@ -152,8 +152,8 @@ test('fastStartEnd', (t) => {
       '</item>\n',
     '<item>\n' +
       '<title>Fast ends: 20:25</title>\n' +
-      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;amp;dt=2021-06-27&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-ends</link>\n' +
-      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;dt=2021-06-27#20210627-fast-ends</guid>\n' +
+      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-ends</link>\n' +
+      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27#20210627-fast-ends</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
       '<category>zmanim</category>\n' +
       '<pubDate>Sun, 27 Jun 2021 17:25:00 GMT</pubDate>\n' +

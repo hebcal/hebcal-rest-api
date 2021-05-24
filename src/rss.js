@@ -22,9 +22,9 @@ function getLinkAndGuid(ev, il, mainUrl) {
     guid = `${url0}#${anchor}`;
   } else {
     const dtStr = pad4(dt.getFullYear()) + '-' + pad2(dt.getMonth() + 1) + '-' + pad2(dt.getDate());
-    const url1 = `${mainUrl}&amp;dt=${dtStr}`;
+    const url1 = `${mainUrl}&dt=${dtStr}`;
     const url = appendIsraelAndTracking(url1, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
-    guid = `${url1}#${anchor}`;
+    guid = url1.replace(/&/g, '&amp;') + `#${anchor}`;
     link = `${url}#${anchor}`;
   }
   return [link, guid];

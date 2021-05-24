@@ -1,19 +1,21 @@
-import {getEventCategories, makeAnchor, appendIsraelAndTracking, pad4, pad2} from './common';
-import {Locale, HebrewCalendar} from '@hebcal/core';
+import {getEventCategories, makeAnchor, appendIsraelAndTracking} from './common';
+import {Locale, HebrewCalendar, Zmanim} from '@hebcal/core';
 
 /**
  * @private
  * @param {Event} ev
  * @param {boolean} il
+ * @param {string} tzid
  * @param {string} mainUrl
  * @return {string[]}
  */
-function getLinkAndGuid(ev, il, mainUrl) {
+function getLinkAndGuid(ev, il, tzid, mainUrl) {
   let link;
   let guid;
   const dt = ev.eventTime || ev.getDate().greg();
-  const isoDate = dt.toISOString();
-  const dtAnchor = isoDate.substring(0, isoDate.indexOf('T')).replace(/-/g, '');
+  const isoDateTime = Zmanim.formatISOWithTimeZone(tzid, dt);
+  const dtStr = isoDateTime.substring(0, isoDateTime.indexOf('T'));
+  const dtAnchor = dtStr.replace(/-/g, '');
   const descAnchor = makeAnchor(ev.getDesc());
   const anchor = `${dtAnchor}-${descAnchor}`;
   const url0 = ev.url();
@@ -21,7 +23,6 @@ function getLinkAndGuid(ev, il, mainUrl) {
     link = appendIsraelAndTracking(url0, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
     guid = `${url0}#${anchor}`;
   } else {
-    const dtStr = pad4(dt.getFullYear()) + '-' + pad2(dt.getMonth() + 1) + '-' + pad2(dt.getDate());
     const url1 = `${mainUrl}&dt=${dtStr}`;
     const url = appendIsraelAndTracking(url1, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
     guid = url1.replace(/&/g, '&amp;') + `#${anchor}`;
@@ -103,7 +104,8 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
   const evDate = ev.getDate().greg();
   const pubDate = getPubDate(ev, evPubDate, evDate, lastBuildDate);
   const il = location ? location.getIsrael() : false;
-  const linkGuid = getLinkAndGuid(ev, il, mainUrl);
+  const tzid = location ? location.getTzid() : 'UTC';
+  const linkGuid = getLinkAndGuid(ev, il, tzid, mainUrl);
   const link = linkGuid[0];
   const guid = linkGuid[1];
   const description = dayFormat.format(evDate);

@@ -136,8 +136,8 @@ test('fastStartEnd', (t) => {
   const expected = [
     '<item>\n' +
       '<title>Fast begins: 04:09</title>\n' +
-      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-26&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-begins</link>\n' +
-      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-26#20210627-fast-begins</guid>\n' +
+      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-begins</link>\n' +
+      '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27#20210627-fast-begins</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
       '<category>zmanim</category>\n' +
       '<pubDate>Sun, 27 Jun 2021 01:09:00 GMT</pubDate>\n' +

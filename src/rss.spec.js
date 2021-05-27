@@ -74,7 +74,7 @@ test('eventToRssItem', (t) => {
     '<title>Erev Pesach</title>\n' +
     '<link>https://www.hebcal.com/holidays/pesach-1990?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/holidays/pesach-1990#19900409-erev-pesach</guid>\n' +
-    '<description>Monday, April 09, 1990</description>\n' +
+    '<description>Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah), it commemorates the Exodus and freedom of the Israelites from ancient Egypt</description>\n' +
     '<category>holiday</category>\n' +
     '<pubDate>Mon, 09 Apr 1990 00:00:00 GMT</pubDate>\n' +
     '</item>\n',
@@ -94,7 +94,9 @@ test('parsha', (t) => {
     '<title>Parashat Vayetzei</title>\n' +
     '<link>https://www.hebcal.com/sedrot/vayetzei-20201128?utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/sedrot/vayetzei-20201128#20201128-parashat-vayetzei</guid>\n' +
-    '<description>Saturday, November 28, 2020</description>\n' +
+    '<description>Torah: Genesis 28:10-32:3\n' +
+      'Haftarah: Hosea 12:13 - 14:10\n' +
+      'Haftarah for Sephardim: Hosea 11:7 - 12:12</description>\n' +
     '<category>parashat</category>\n' +
     '<pubDate>Sat, 28 Nov 2020 00:00:00 GMT</pubDate>\n' +
     '</item>\n';
@@ -113,7 +115,9 @@ test('parsha-il', (t) => {
     '<title>Parashat Vayetzei</title>\n' +
     '<link>https://www.hebcal.com/sedrot/vayetzei-20201128?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/sedrot/vayetzei-20201128#20201128-parashat-vayetzei</guid>\n' +
-    '<description>Saturday, November 28, 2020</description>\n' +
+    '<description>Torah: Genesis 28:10-32:3\n' +
+      'Haftarah: Hosea 12:13 - 14:10\n' +
+      'Haftarah for Sephardim: Hosea 11:7 - 12:12</description>\n' +
     '<category>parashat</category>\n' +
     '<pubDate>Sat, 28 Nov 2020 00:00:00 GMT</pubDate>\n' +
     '</item>\n';
@@ -146,7 +150,7 @@ test('fastStartEnd', (t) => {
       '<title>Tzom Tammuz</title>\n' +
       '<link>https://www.hebcal.com/holidays/tzom-tammuz-2021?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
       '<guid isPermaLink="false">https://www.hebcal.com/holidays/tzom-tammuz-2021#20210627-tzom-tammuz</guid>\n' +
-      '<description>Sunday, June 27, 2021</description>\n' +
+      '<description>Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple</description>\n' +
       '<category>holiday</category>\n' +
       '<pubDate>Sun, 27 Jun 2021 00:00:00 GMT</pubDate>\n' +
       '</item>\n',

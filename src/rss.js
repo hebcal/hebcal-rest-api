@@ -1,5 +1,6 @@
-import {getEventCategories, makeAnchor, appendIsraelAndTracking} from './common';
-import {Locale, HebrewCalendar, Zmanim} from '@hebcal/core';
+import {getEventCategories, makeAnchor, appendIsraelAndTracking, makeTorahMemoText} from './common';
+import {Locale, HebrewCalendar, Zmanim, flags} from '@hebcal/core';
+import holidayDescription from './holidays.json';
 
 /**
  * @private
@@ -108,11 +109,11 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
   const linkGuid = getLinkAndGuid(ev, il, tzid, mainUrl);
   const link = linkGuid[0];
   const guid = linkGuid[1];
-  const description = dayFormat.format(evDate);
   const categories = getEventCategories(ev);
   const cat0 = categories[0];
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';
+  let memo;
   if (candles) {
     const colon = subj.indexOf(': ');
     if (colon != -1) {
@@ -120,7 +121,12 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
       const time = HebrewCalendar.reformatTimeStr(ev.eventTimeStr, 'pm', options);
       subj = subj.substring(0, colon) + ': ' + time;
     }
+  } else {
+    memo = (ev.getFlags() & flags.PARSHA_HASHAVUA) ?
+        makeTorahMemoText(ev, il) :
+        ev.memo || holidayDescription[ev.basename()];
   }
+  const description = memo || dayFormat.format(evDate);
   const geoTags = (cat0 == 'candles') ?
     `<geo:lat>${location.getLatitude()}</geo:lat>\n<geo:long>${location.getLongitude()}</geo:long>\n` :
     '';

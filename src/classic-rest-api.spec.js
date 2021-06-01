@@ -354,7 +354,7 @@ test('fastStartEnd', (t) => {
   t.deepEqual(apiObjs, expected);
 });
 
-test('candles-year221', (t) => {
+test.skip('candles-year221', (t) => {
   const options = {
     start: new Date(221, 0, 5),
     end: new Date(221, 0, 5),

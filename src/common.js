@@ -270,7 +270,7 @@ export function makeTorahMemoText(ev, il) {
 }
 
 /**
- * @private
+ * Appends utm_source and utm_medium parameters to a URL
  * @param {string} url
  * @param {boolean} il
  * @param {string} utmSource

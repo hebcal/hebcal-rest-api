@@ -27,6 +27,10 @@ declare module '@hebcal/rest-api' {
    */
   export function makeTorahMemoText(ev: Event, il: boolean): string;
   /**
+   * Appends utm_source and utm_medium parameters to a URL
+   */
+  export function appendIsraelAndTracking(url: string, il: boolean, utmSource: string, utmMedium: string): string;
+  /**
    * @param [lang] - language such as 'he' (default 'en-US')
    * @param [evPubDate] - if true, use event time as pubDate (false uses lastBuildDate)
    */

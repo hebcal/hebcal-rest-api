@@ -22,6 +22,7 @@ test('eventToClassicApiObject', (t) => {
     category: 'candles',
     hebrew: 'הדלקת נרות',
     title_orig: 'Candle lighting',
+    memo: 'Parashat Bamidbar',
   };
   t.deepEqual(candlesActual, candlesExpected);
   const bamidbarActual = apiObjs[2];
@@ -140,6 +141,7 @@ test('eventsToClassicApi', (t) => {
     hebrew: 'הדלקת נרות',
     title: 'Candle lighting: 8:18pm',
     title_orig: 'Candle lighting',
+    memo: 'Parashat Kedoshim',
   };
   t.deepEqual(candleLighting, candleLightingExpected);
 });

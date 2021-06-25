@@ -124,6 +124,7 @@ export function getEventCategories(ev) {
     case flags.SHABBAT_MEVARCHIM: return ['mevarchim'];
     case flags.MOLAD: return ['molad'];
     case flags.USER_EVENT: return ['user'];
+    case flags.MINOR_HOLIDAY: return ['holiday', 'minor'];
     default:
       break; // fall through to string-based category
   }
@@ -142,6 +143,7 @@ export function getEventCategories(ev) {
     case 'Shushan Purim':
     case 'Tu B\'Av':
     case 'Tu BiShvat':
+    case 'Rosh Hashana LaBehemot':
       return ['holiday', 'minor'];
     default:
       return ['holiday', 'major'];

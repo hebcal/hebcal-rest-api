@@ -229,40 +229,22 @@ export function makeTorahMemoText(ev, il) {
   if (mask & HOLIDAY_IGNORE_MASK) {
     return '';
   }
-  let reading;
+  const reading = (mask & flags.PARSHA_HASHAVUA) ?
+    leyning.getLeyningForParshaHaShavua(ev, il) :
+    leyning.getLeyningForHoliday(ev, il);
   let memo = '';
-  if (mask & flags.PARSHA_HASHAVUA) {
-    reading = leyning.getLeyningForParshaHaShavua(ev, il);
-    memo = `Torah: ${reading.summary}`;
-    if (reading.reason) {
-      ['7', 'M'].forEach((num) => {
-        const special = reading.reason[num];
-        if (special) {
-          const aname = num === '7' ? '7th aliyah' : 'Maftir';
-          const verses = leyning.formatAliyahWithBook(reading.fullkriyah[num]);
-          memo += `\n${aname}: ${verses} | ${special}`;
-        }
-      });
+  if (reading && (reading.summary || reading.haftara)) {
+    if (reading.summary) {
+      memo += `Torah: ${reading.summary}`;
+    }
+    if (reading.summary && reading.haftara) {
+      memo += '\n';
     }
     if (reading.haftara) {
-      memo += '\nHaftarah: ' + reading.haftara;
+      memo += 'Haftarah: ' + reading.haftara;
       if (reading.reason && reading.reason.haftara) {
         memo += ' | ' + reading.reason.haftara;
       }
-    }
-  } else {
-    reading = leyning.getLeyningForHoliday(ev, il);
-    if (reading && (reading.summary || reading.haftara)) {
-      if (reading.summary) {
-        memo += `Torah: ${reading.summary}`;
-      }
-      if (reading.summary && reading.haftara) {
-        memo += '\n';
-      }
-      if (reading.haftara) {
-        memo += 'Haftarah: ' + reading.haftara;
-      }
-      return memo;
     }
   }
   if (reading && reading.sephardic) {

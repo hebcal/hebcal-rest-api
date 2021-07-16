@@ -79,9 +79,7 @@ test('makeTorahMemoText', (t) => {
   });
   const memo = makeTorahMemoText(events[0], false).split('\n');
   const expected = [
-    'Torah: Exodus 21:1-24:18',
-    '7th aliyah: Numbers 28:9 - 28:15 | Shabbat Shekalim (on Rosh Chodesh)',
-    'Maftir: Exodus 30:11 - 30:16 | Shabbat Shekalim (on Rosh Chodesh)',
+    'Torah: Exodus 21:1-24:18; Numbers 28:9-15; Exodus 30:11-16',
     'Haftarah: II Kings 12:1 - 12:17 | Shabbat Shekalim (on Rosh Chodesh)',
   ];
   t.deepEqual(memo, expected);

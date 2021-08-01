@@ -259,9 +259,10 @@ export function makeTorahMemoText(ev, il) {
  * @param {boolean} il
  * @param {string} utmSource
  * @param {string} utmMedium
+ * @param {string} utmCampaign
  * @return {string}
  */
-export function appendIsraelAndTracking(url, il, utmSource, utmMedium) {
+export function appendIsraelAndTracking(url, il, utmSource, utmMedium, utmCampaign) {
   if (url.substring(0, 22) !== 'https://www.hebcal.com') {
     utmSource = 'hebcal.com';
   } else if (il && url.indexOf('?') === -1) {
@@ -269,5 +270,6 @@ export function appendIsraelAndTracking(url, il, utmSource, utmMedium) {
   }
   const sep = url.indexOf('?') === -1 ? '?' : '&';
   const utm = `utm_source=${utmSource}&utm_medium=${utmMedium}`;
-  return url + sep + utm;
+  const campaign = utmCampaign ? `&utm_campaign=${utmCampaign}` : '';
+  return url + sep + utm + campaign;
 }

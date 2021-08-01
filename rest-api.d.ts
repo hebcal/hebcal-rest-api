@@ -29,7 +29,7 @@ declare module '@hebcal/rest-api' {
   /**
    * Appends utm_source and utm_medium parameters to a URL
    */
-  export function appendIsraelAndTracking(url: string, il: boolean, utmSource: string, utmMedium: string): string;
+  export function appendIsraelAndTracking(url: string, il: boolean, utmSource: string, utmMedium: string, utmCampaign?: string): string;
   /**
    * @param [lang] - language such as 'he' (default 'en-US')
    * @param [evPubDate] - if true, use event time as pubDate (false uses lastBuildDate)

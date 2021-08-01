@@ -105,7 +105,11 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
     }
     const url = ev.url();
     if (url) {
-      result.link = appendIsraelAndTracking(url, options.il, 'js', 'api');
+      const utmSource = options.utmSource || 'js';
+      const utmMedium = options.utmMedium || 'api';
+      const utmCampaign = options.utmCampaign;
+      result.link = appendIsraelAndTracking(url, options.il,
+          utmSource, utmMedium, utmCampaign);
     }
   }
   const memo = ev.memo || holidayDescription[ev.basename()];

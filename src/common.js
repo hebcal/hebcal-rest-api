@@ -26,14 +26,14 @@ export function makeAnchor(s) {
 export function getDownloadFilename(options) {
   let fileName = 'hebcal_' + options.year;
   if (options.isHebrewYear) {
-    fileName += 'H';
+    fileName += 'h';
   }
   if (options.month) {
     fileName += '_' + options.month;
   }
   if (options.location) {
     const name = options.location.zip || options.location.asciiname || options.location.getShortName();
-    fileName += '_' + name.replace(/[^A-Za-z0-9]/g, '_');
+    fileName += '_' + makeAnchor(name).replace(/[-]/g, '_');
   }
   return fileName;
 }

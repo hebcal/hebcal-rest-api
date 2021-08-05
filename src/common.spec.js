@@ -11,33 +11,33 @@ test('getDownloadFilename', (t) => {
     candlelighting: true,
     location: location,
   };
-  t.is(getDownloadFilename(options), 'hebcal_2018_Chesterfield');
+  t.is(getDownloadFilename(options), 'hebcal_2018_chesterfield');
   options.year = 5749;
   options.isHebrewYear = true;
-  t.is(getDownloadFilename(options), 'hebcal_5749H_Chesterfield');
+  t.is(getDownloadFilename(options), 'hebcal_5749h_chesterfield');
   t.is(getDownloadFilename({year: 2017}), 'hebcal_2017');
   t.is(getDownloadFilename({year: 2017, il: true}), 'hebcal_2017');
-  t.is(getDownloadFilename({year: 5780, isHebrewYear: true}), 'hebcal_5780H');
+  t.is(getDownloadFilename({year: 5780, isHebrewYear: true}), 'hebcal_5780h');
 
   const loc2 = new Location(-23.5475, -46.63611, false, 'America/Sao_Paulo',
       'São Paulo, Brazil', 'BR', 3448439);
   loc2.asciiname = 'Sao Paulo';
   options.location = loc2;
-  t.is(getDownloadFilename(options), 'hebcal_5749H_Sao_Paulo');
+  t.is(getDownloadFilename(options), 'hebcal_5749h_sao_paulo');
 
   const loc3 = new Location(34.103131, -118.416253, false, 'America/Los_Angeles',
       'Beverly Hills, CA 90210', 'US', '90210');
   loc3.state = 'CA';
   loc3.zip = '90210';
   options.location = loc3;
-  t.is(getDownloadFilename(options), 'hebcal_5749H_90210');
+  t.is(getDownloadFilename(options), 'hebcal_5749h_90210');
 
   const loc4 = new Location(32.1836, 34.87386, true, 'Asia/Jerusalem',
       'Ra\'anana, Israel', 'IL', 293807);
   loc4.asciiname = 'Ra\'anana';
   loc4.admin1 = 'Central District';
   options.location = loc4;
-  t.is(getDownloadFilename(options), 'hebcal_5749H_Ra_anana');
+  t.is(getDownloadFilename(options), 'hebcal_5749h_raanana');
 });
 
 test('getCalendarTitle', (t) => {

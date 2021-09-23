@@ -55,9 +55,9 @@ test('appendHebrewToSubject', (t) => {
     '"Rosh Chodesh Sivan / רֹאשׁ חוֹדֶשׁ סִיוָן"',
     '"Erev Shavuot / עֶרֶב שָׁבוּעוֹת"',
     '"Candle lighting / הַדלָקָת נֵרוֹת"',
-    '"Shavuot I / שָׁבוּעוֹת יוֹם א׳"',
+    '"Shavuot I / שָׁבוּעוֹת א׳"',
     '"Candle lighting / הַדלָקָת נֵרוֹת"',
-    '"Shavuot II / שָׁבוּעוֹת יוֹם ב׳"',
+    '"Shavuot II / שָׁבוּעוֹת ב׳"',
     '"Havdalah (42 min) / הַבדָלָה (42 דקות)"',
   ];
   t.deepEqual(subject, expected);

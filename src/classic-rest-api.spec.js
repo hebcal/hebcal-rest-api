@@ -64,7 +64,7 @@ test('eventToClassicApiObject', (t) => {
     subcat: 'major',
     memo: 'Festival of Weeks. Commemorates the giving of the Torah at Mount Sinai',
     yomtov: true,
-    hebrew: 'שבועות יום א׳',
+    hebrew: 'שבועות א׳',
     leyning: {
       '1': 'Exodus 19:1 - 19:6',
       '2': 'Exodus 19:7 - 19:13',

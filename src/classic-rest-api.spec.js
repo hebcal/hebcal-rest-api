@@ -128,6 +128,13 @@ test('eventsToClassicApi', (t) => {
     category: 'roshchodesh',
     date: '2022-05-01',
     hebrew: 'ראש חודש אייר',
+    leyning: {
+      'torah': 'Numbers 28:1-15',
+      '1': 'Numbers 28:1 - 28:3',
+      '2': 'Numbers 28:3 - 28:5',
+      '3': 'Numbers 28:6 - 28:10',
+      '4': 'Numbers 28:11 - 28:15',
+    },
     link: 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar-2022?utm_source=js&utm_medium=api',
     title: 'Rosh Chodesh Iyyar',
     // eslint-disable-next-line max-len
@@ -189,6 +196,13 @@ test('classic-api-no-sedra', (t) => {
         date: '2022-05-31',
         category: 'roshchodesh',
         hebrew: 'ראש חודש סיון',
+        leyning: {
+          'torah': 'Numbers 28:1-15',
+          '1': 'Numbers 28:1 - 28:3',
+          '2': 'Numbers 28:3 - 28:5',
+          '3': 'Numbers 28:6 - 28:10',
+          '4': 'Numbers 28:11 - 28:15',
+        },
         link: 'https://www.hebcal.com/holidays/rosh-chodesh-sivan-2022?i=on&utm_source=js&utm_medium=api',
         // eslint-disable-next-line max-len
         memo: 'Start of month of Sivan on the Hebrew calendar. Sivan (סִיוָן) is the 3rd month of the Hebrew year, has 30 days, and corresponds to May or June on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon',

@@ -50,7 +50,7 @@ test('appendHebrewToSubject', (t) => {
   const csv = eventsToCsv(events, options).split('\r\n').slice(1, 10);
   const subject = csv.map((line) => line.substring(0, line.indexOf(',')));
   const expected = [
-    '"Parashat Bamidbar / פרשת בְּמִדְבַּר"',
+    '"Parashat Bamidbar / פָּרָשַׁת בְּמִדְבַּר"',
     '"Havdalah (42 min) / הַבדָלָה (42 דקות)"',
     '"Rosh Chodesh Sivan / רֹאשׁ חוֹדֶשׁ סִיוָן"',
     '"Erev Shavuot / עֶרֶב שָׁבוּעוֹת"',

@@ -3,6 +3,8 @@ import {getEventCategories, makeTorahMemoText, toISOString,
   appendIsraelAndTracking} from './common';
 import holidayDescription from './holidays.json';
 
+const BRIEF_FLAGS = flags.DAF_YOMI | flags.HEBREW_DATE;
+
 /**
  * Converts a Hebcal event to a FullCalendar.io object
  * @param {Event} ev
@@ -12,11 +14,12 @@ import holidayDescription from './holidays.json';
  */
 export function eventToFullCalendar(ev, tzid, il) {
   const classes = getEventCategories(ev);
-  if (classes[0] == 'holiday' && ev.getFlags() & flags.CHAG) {
+  const mask = ev.getFlags();
+  if (classes[0] == 'holiday' && mask & flags.CHAG) {
     classes.push('yomtov');
   }
   const timed = Boolean(ev.eventTime);
-  const title = timed || (ev.getFlags() & flags.DAF_YOMI) ? ev.renderBrief() : ev.render();
+  const title = timed || (mask & BRIEF_FLAGS) ? ev.renderBrief() : ev.render();
   const start = timed ?
     Zmanim.formatISOWithTimeZone(tzid, ev.eventTime) :
     toISOString(ev.getDate().greg());
@@ -26,12 +29,8 @@ export function eventToFullCalendar(ev, tzid, il) {
     allDay: !timed,
     className: classes.join(' '),
   };
-  let hebrew = ev.renderBrief('he');
+  const hebrew = ev.renderBrief('he');
   if (hebrew) {
-    const colon = hebrew.indexOf(':');
-    if (colon != -1 && ev.getFlags() & flags.DAF_YOMI) {
-      hebrew = hebrew.substring(colon + 1);
-    }
     result.hebrew = Locale.hebrewStripNikkud(hebrew);
   }
   const url = ev.url();
@@ -41,7 +40,7 @@ export function eventToFullCalendar(ev, tzid, il) {
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';
   if (!candles) {
-    const memo = (ev.getFlags() & flags.PARSHA_HASHAVUA) ?
+    const memo = (mask & flags.PARSHA_HASHAVUA) ?
         makeTorahMemoText(ev, il) :
         ev.memo || holidayDescription[ev.basename()];
     if (memo) {

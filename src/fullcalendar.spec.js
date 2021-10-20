@@ -1,5 +1,5 @@
 import test from 'ava';
-import {HebrewCalendar, Location} from '@hebcal/core';
+import {HebrewCalendar, Location, DafYomiEvent, HDate, HebrewDateEvent} from '@hebcal/core';
 import {eventToFullCalendar} from './fullcalendar';
 
 test('eventToFullCalendar', (t) => {
@@ -230,6 +230,33 @@ test('bce', (t) => {
     className: 'holiday major',
     hebrew: 'ערב שבועות',
     description: 'Festival of Weeks. Commemorates the giving of the Torah at Mount Sinai',
+  };
+  t.deepEqual(fc, expected);
+});
+
+test('daf-yomi', (t) => {
+  const ev = new DafYomiEvent(new HDate(new Date(1995, 11, 17)));
+  const fc = eventToFullCalendar(ev, null, false);
+  const expected = {
+    title: 'Avodah Zarah 68',
+    start: '1995-12-17',
+    allDay: true,
+    className: 'dafyomi',
+    hebrew: 'עבודה זרה 68',
+    url: 'https://www.sefaria.org/Avodah_Zarah.68a?lang=bi&utm_source=hebcal.com&utm_medium=fc',
+  };
+  t.deepEqual(fc, expected);
+});
+
+test('hebdate', (t) => {
+  const ev = new HebrewDateEvent(new HDate(new Date(1995, 11, 17)));
+  const fc = eventToFullCalendar(ev, null, false);
+  const expected = {
+    title: '24th of Kislev',
+    start: '1995-12-17',
+    allDay: true,
+    className: 'hebdate',
+    hebrew: 'כ״ד כסלו',
   };
   t.deepEqual(fc, expected);
 });

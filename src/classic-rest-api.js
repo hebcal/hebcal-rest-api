@@ -44,6 +44,8 @@ export function eventsToClassicApi(events, options, leyning=true) {
   return result;
 }
 
+const BRIEF_FLAGS = flags.DAF_YOMI | flags.HEBREW_DATE;
+
 /**
  * Converts a Hebcal event to a classic Hebcal.com JSON API object
  * @param {Event} ev
@@ -60,7 +62,8 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
     Zmanim.formatISOWithTimeZone(tzid, ev.eventTime) :
     toISOString(dt);
   const categories = getEventCategories(ev);
-  let title = timed ? ev.renderBrief() : ev.render();
+  const mask = ev.getFlags();
+  let title = timed || (mask & BRIEF_FLAGS) ? ev.renderBrief(options.locale) : ev.render(options.locale);
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';
   if (candles) {
@@ -75,7 +78,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   if (categories.length > 1) {
     result.subcat = categories[1];
   }
-  if (categories[0] == 'holiday' && ev.getFlags() & flags.CHAG) {
+  if (categories[0] === 'holiday' && (mask & flags.CHAG)) {
     result.yomtov = true;
   }
   if (title != desc) {
@@ -88,7 +91,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   if (!candles) {
     if (leyning) {
       const il = options.il;
-      const isParsha = ev.getFlags() == flags.PARSHA_HASHAVUA;
+      const isParsha = (mask === flags.PARSHA_HASHAVUA);
       const reading = isParsha ?
         leyn.getLeyningForParshaHaShavua(ev, il) :
         leyn.getLeyningForHoliday(ev, il);
@@ -116,7 +119,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   if (memo) {
     result.memo = memo;
   } else if (typeof ev.linkedEvent !== 'undefined') {
-    result.memo = ev.linkedEvent.render();
+    result.memo = ev.linkedEvent.render(options.locale);
   }
   return result;
 }

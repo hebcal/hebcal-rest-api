@@ -1,5 +1,5 @@
 import test from 'ava';
-import {HebrewCalendar, Location} from '@hebcal/core';
+import {HebrewCalendar, Location, DafYomiEvent, HDate, HebrewDateEvent} from '@hebcal/core';
 import {eventsToClassicApi, eventToClassicApiObject} from './classic-rest-api';
 
 test('eventToClassicApiObject', (t) => {
@@ -387,4 +387,30 @@ test.skip('candles-year221', (t) => {
     hebrew: 'הדלקת נרות',
   };
   t.deepEqual(apiObj, expected);
+});
+
+test('daf-yomi', (t) => {
+  const ev = new DafYomiEvent(new HDate(new Date(1995, 11, 17)));
+  const obj = eventToClassicApiObject(ev, {}, false);
+  const expected = {
+    title: 'Avodah Zarah 68',
+    date: '1995-12-17',
+    category: 'dafyomi',
+    hebrew: 'עבודה זרה 68',
+    link: 'https://www.sefaria.org/Avodah_Zarah.68a?lang=bi&utm_source=hebcal.com&utm_medium=api',
+  };
+  t.deepEqual(obj, expected);
+});
+
+test('hebdate', (t) => {
+  const ev = new HebrewDateEvent(new HDate(new Date(1995, 11, 17)));
+  const obj = eventToClassicApiObject(ev, {}, false);
+  const expected = {
+    title: '24th of Kislev',
+    date: '1995-12-17',
+    category: 'hebdate',
+    title_orig: '24 Kislev 5756',
+    hebrew: 'כ״ד כסלו',
+  };
+  t.deepEqual(obj, expected);
 });

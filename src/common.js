@@ -139,12 +139,15 @@ export function getEventCategories(ev) {
     case 'Lag BaOmer':
     case 'Leil Selichot':
     case 'Pesach Sheni':
+    case 'Erev Purim':
     case 'Purim Katan':
     case 'Shushan Purim':
     case 'Tu B\'Av':
     case 'Tu BiShvat':
     case 'Rosh Hashana LaBehemot':
       return ['holiday', 'minor'];
+    case 'Erev Tish\'a B\'Av':
+      return ['holiday', 'fast', 'major'];
     default:
       return ['holiday', 'major'];
   }

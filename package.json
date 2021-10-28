@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@hebcal/core": "^3.26.7",
-    "@hebcal/leyning": "^4.10.0"
+    "@hebcal/leyning": "^4.10.2"
   },
   "scripts": {
     "build": "rollup -c",

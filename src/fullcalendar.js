@@ -1,9 +1,7 @@
 import {Locale, flags, Zmanim} from '@hebcal/core';
 import {getEventCategories, makeTorahMemoText, toISOString,
-  appendIsraelAndTracking} from './common';
+  appendIsraelAndTracking, shouldRenderBrief} from './common';
 import holidayDescription from './holidays.json';
-
-const BRIEF_FLAGS = flags.DAF_YOMI | flags.HEBREW_DATE;
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object
@@ -19,7 +17,7 @@ export function eventToFullCalendar(ev, tzid, il) {
     classes.push('yomtov');
   }
   const timed = Boolean(ev.eventTime);
-  const title = timed || (mask & BRIEF_FLAGS) ? ev.renderBrief() : ev.render();
+  const title = shouldRenderBrief(ev) ? ev.renderBrief() : ev.render();
   const start = timed ?
     Zmanim.formatISOWithTimeZone(tzid, ev.eventTime) :
     toISOString(ev.getDate().greg());

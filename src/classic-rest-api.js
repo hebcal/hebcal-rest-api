@@ -5,6 +5,7 @@ import {
   getEventCategories,
   toISOString,
   appendIsraelAndTracking,
+  shouldRenderBrief,
 } from './common';
 import countryNames from './countryNames.json';
 import holidayDescription from './holidays.json';
@@ -44,8 +45,6 @@ export function eventsToClassicApi(events, options, leyning=true) {
   return result;
 }
 
-const BRIEF_FLAGS = flags.DAF_YOMI | flags.HEBREW_DATE;
-
 /**
  * Converts a Hebcal event to a classic Hebcal.com JSON API object
  * @param {Event} ev
@@ -63,7 +62,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
     toISOString(dt);
   const categories = getEventCategories(ev);
   const mask = ev.getFlags();
-  let title = timed || (mask & BRIEF_FLAGS) ? ev.renderBrief(options.locale) : ev.render(options.locale);
+  let title = shouldRenderBrief(ev) ? ev.renderBrief(options.locale) : ev.render(options.locale);
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';
   if (candles) {

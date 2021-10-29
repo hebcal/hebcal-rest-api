@@ -31,6 +31,10 @@ declare module '@hebcal/rest-api' {
    */
   export function appendIsraelAndTracking(url: string, il: boolean, utmSource: string, utmMedium: string, utmCampaign?: string): string;
   /**
+   * @private
+   */
+  export function shouldRenderBrief(ev: Event): boolean;
+  /**
    * @param [lang] - language such as 'he' (default 'en-US')
    * @param [evPubDate] - if true, use event time as pubDate (false uses lastBuildDate)
    */

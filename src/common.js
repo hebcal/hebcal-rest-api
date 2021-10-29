@@ -276,3 +276,21 @@ export function appendIsraelAndTracking(url, il, utmSource, utmMedium, utmCampai
   const campaign = utmCampaign ? `&utm_campaign=${utmCampaign}` : '';
   return url + sep + utm + campaign;
 }
+
+/**
+ * @private
+ * @param {Event} ev
+ * @return {boolean}
+ */
+export function shouldRenderBrief(ev) {
+  if (typeof ev.eventTime !== 'undefined') return true;
+  const mask = ev.getFlags();
+  if (mask & flags.HEBREW_DATE) {
+    const hd = ev.getDate();
+    return (hd.getDate() === 1) ? false : true;
+  } else if (mask & flags.DAF_YOMI) {
+    return true;
+  } else {
+    return false;
+  }
+}

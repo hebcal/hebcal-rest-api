@@ -1,5 +1,5 @@
 import {HebrewCalendar, flags} from '@hebcal/core';
-import {getHolidayDescription, getEventCategories} from './common';
+import {getHolidayDescription, getEventCategories, shouldRenderBrief} from './common';
 
 // eslint-disable-next-line max-len
 const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
@@ -19,7 +19,7 @@ const CATEGORY = {
 /**
  * Renders an Event as a string
  * @param {Event} e
- * @param {HebcalOptions} options
+ * @param {HebrewCalendar.Options} options
  * @return {string}
  */
 export function eventToCsv(e, options) {
@@ -35,7 +35,7 @@ export function eventToCsv(e, options) {
   let allDay = '"true"';
 
   const timed = Boolean(e.eventTime);
-  let subj = timed ? e.renderBrief() : e.render();
+  let subj = shouldRenderBrief(e) ? e.renderBrief(options.locale) : e.render(options.locale);
   if (e.eventTime) {
     const timeStr = HebrewCalendar.reformatTimeStr(e.eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;
@@ -73,7 +73,7 @@ export function eventToCsv(e, options) {
 
   let memo0 = e.memo || getHolidayDescription(e, true);
   if (!memo0 && typeof e.linkedEvent !== 'undefined') {
-    memo0 = e.linkedEvent.render();
+    memo0 = e.linkedEvent.render(options.locale);
   }
   const memo = memo0.replace(/,/g, ';').replace(/"/g, '\'\'');
 

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import test from 'ava';
-import {HebrewCalendar, Location} from '@hebcal/core';
+import {HebrewCalendar, Location, HDate, HebrewDateEvent} from '@hebcal/core';
 import {eventToCsv, eventsToCsv} from './csv';
 
 test('eventToCsv', (t) => {
@@ -90,4 +90,11 @@ test('fastStartEnd', (t) => {
     '"Fast ends","6/27/2021","9:07 PM","6/27/2021","9:07 PM","false","Tzom Tammuz","4","Providence"',
   ];
   t.deepEqual(csv, expected);
+});
+
+test('HebrewDateEvent', (t) => {
+  const ev = new HebrewDateEvent(new HDate(new Date(1995, 11, 17)));
+  t.is(eventToCsv(ev, {locale: 'en'}), '"24th of Kislev","12/17/1995",,,,"true","","3","Hebrew Date"');
+  t.is(eventToCsv(ev, {locale: 'he'}), '"כ״ד כִּסְלֵו","12/17/1995",,,,"true","","3","Hebrew Date"');
+  t.is(eventToCsv(ev, {locale: 'he-x-NoNikud'}), '"כ״ד כסלו","12/17/1995",,,,"true","","3","Hebrew Date"');
 });

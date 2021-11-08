@@ -182,6 +182,9 @@ export function getCalendarTitle(events, options) {
   } else {
     title += ' Diaspora';
   }
+  if (options.subscribe == '1') {
+    return title;
+  }
   if (options.isHebrewYear || events.length == 0) {
     title += ' ' + options.year;
   } else {

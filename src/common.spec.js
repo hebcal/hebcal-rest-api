@@ -52,6 +52,10 @@ test('getCalendarTitle', (t) => {
   let events = HebrewCalendar.calendar(options);
   t.is(getCalendarTitle(events, options), 'Hebcal Chesterfield 2018');
 
+  options.subscribe = '1';
+  t.is(getCalendarTitle(events, options), 'Hebcal Chesterfield');
+
+  options.subscribe = '0';
   options.year = 5749;
   options.isHebrewYear = true;
   events = HebrewCalendar.calendar(options);

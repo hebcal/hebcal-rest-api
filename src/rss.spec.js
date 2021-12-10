@@ -95,8 +95,8 @@ test('parsha', (t) => {
     '<link>https://www.hebcal.com/sedrot/vayetzei-20201128?utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/sedrot/vayetzei-20201128#20201128-parashat-vayetzei</guid>\n' +
     '<description>Torah: Genesis 28:10-32:3\n' +
-      'Haftarah: Hosea 12:13 - 14:10\n' +
-      'Haftarah for Sephardim: Hosea 11:7 - 12:12</description>\n' +
+      'Haftarah: Hosea 12:13-14:10\n' +
+      'Haftarah for Sephardim: Hosea 11:7-12:12</description>\n' +
     '<category>parashat</category>\n' +
     '<pubDate>Sat, 28 Nov 2020 00:00:00 GMT</pubDate>\n' +
     '</item>\n';
@@ -116,8 +116,8 @@ test('parsha-il', (t) => {
     '<link>https://www.hebcal.com/sedrot/vayetzei-20201128?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/sedrot/vayetzei-20201128#20201128-parashat-vayetzei</guid>\n' +
     '<description>Torah: Genesis 28:10-32:3\n' +
-      'Haftarah: Hosea 12:13 - 14:10\n' +
-      'Haftarah for Sephardim: Hosea 11:7 - 12:12</description>\n' +
+      'Haftarah: Hosea 12:13-14:10\n' +
+      'Haftarah for Sephardim: Hosea 11:7-12:12</description>\n' +
     '<category>parashat</category>\n' +
     '<pubDate>Sat, 28 Nov 2020 00:00:00 GMT</pubDate>\n' +
     '</item>\n';

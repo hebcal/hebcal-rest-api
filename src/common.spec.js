@@ -84,7 +84,7 @@ test('makeTorahMemoText', (t) => {
   const memo = makeTorahMemoText(events[0], false).split('\n');
   const expected = [
     'Torah: Exodus 21:1-24:18; Numbers 28:9-15; Exodus 30:11-16',
-    'Haftarah: II Kings 12:1 - 12:17 | Shabbat Shekalim (on Rosh Chodesh)',
+    'Haftarah: II Kings 12:1-17 | Shabbat Shekalim (on Rosh Chodesh)',
   ];
   t.deepEqual(memo, expected);
 });
@@ -95,7 +95,7 @@ test('makeTorahMemoText-userEvent', (t) => {
   t.is(makeTorahMemoText(userEvent, false), '');
 
   const holidayEvent = new Event(hd, 'Holiday Event', 0);
-  t.is(makeTorahMemoText(holidayEvent, false), 'Haftarah: Isaiah 66:1 - 66:24');
+  t.is(makeTorahMemoText(holidayEvent, false), 'Haftarah: Isaiah 66:1-24');
 });
 
 test('getEventCategories', (t) => {

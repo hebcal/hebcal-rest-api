@@ -50,7 +50,7 @@ test('eventsToRss2', (t) => {
   const events = HebrewCalendar.calendar(options).slice(0, 2);
   options.mainUrl = 'https://www.hebcal.com/shabbat?geonameid=4887398&m=50&lg=s';
   options.selfUrl = 'https://www.hebcal.com/shabbat?cfg=r&geonameid=4887398&m=50&lg=s&pubDate=1';
-  options.buildDate = new Date(2021, 11, 15, 12, 34, 56);
+  options.buildDate = new Date(Date.UTC(2021, 11, 15, 12, 34, 56));
   options.utmSource = 'foobar';
   options.utmMedium = 'quux';
   options.description = 'The quick brown fox';
@@ -65,14 +65,14 @@ test('eventsToRss2', (t) => {
     '<description>The quick brown fox</description>',
     '<language>en-US</language>',
     '<copyright>Copyright (c) 2021 Michael J. Radwin. All rights reserved.</copyright>',
-    '<lastBuildDate>Wed, 15 Dec 2021 20:34:56 GMT</lastBuildDate>',
+    '<lastBuildDate>Wed, 15 Dec 2021 12:34:56 GMT</lastBuildDate>',
     '<item>',
     '<title>Candle lighting: 7:03pm</title>',
     '<link>https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-06&amp;utm_source=foobar&amp;utm_medium=quux#19900406-candle-lighting</link>',
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-06#19900406-candle-lighting</guid>',
     '<description>Friday, April 06, 1990</description>',
     '<category>candles</category>',
-    '<pubDate>Wed, 15 Dec 2021 20:34:56 GMT</pubDate>',
+    '<pubDate>Wed, 15 Dec 2021 12:34:56 GMT</pubDate>',
     '<geo:lat>41.85003</geo:lat>',
     '<geo:long>-87.65005</geo:long>',
     '</item>',
@@ -82,7 +82,7 @@ test('eventsToRss2', (t) => {
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-07#19900407-havdalah</guid>',
     '<description>Saturday, April 07, 1990</description>',
     '<category>havdalah</category>',
-    '<pubDate>Wed, 15 Dec 2021 20:34:56 GMT</pubDate>',
+    '<pubDate>Wed, 15 Dec 2021 12:34:56 GMT</pubDate>',
     '</item>',
     '</channel>',
     '</rss>',

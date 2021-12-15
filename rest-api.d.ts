@@ -39,6 +39,7 @@ declare module '@hebcal/rest-api' {
    * @param [evPubDate] - if true, use event time as pubDate (false uses lastBuildDate)
    */
   export function eventsToRss(events: Event[], location: Location, mainUrl: string, selfUrl: string, lang?: string, evPubDate?: boolean): string;
+  export function eventsToRss2(events: Event[], options: HebrewCalendar.Options): string;
   export function eventToRssItem(ev: Event, evPubDate: boolean, lastBuildDate: string, dayFormat: Intl.DateTimeFormat, location: Location, baseUrl: string): string;
   export function getDownloadFilename(options: HebrewCalendar.Options): string;
   export function pad2(number: number): string;

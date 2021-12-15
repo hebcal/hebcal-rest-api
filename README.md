@@ -66,6 +66,9 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dt><a href="#makeTorahMemoText">makeTorahMemoText(ev, il)</a> ⇒ <code>string</code></dt>
 <dd><p>Makes mulit-line text that summarizes Torah &amp; Haftarah</p>
 </dd>
+<dt><a href="#appendIsraelAndTracking">appendIsraelAndTracking(url, il, utmSource, utmMedium, utmCampaign)</a> ⇒ <code>string</code></dt>
+<dd><p>Appends utm_source and utm_medium parameters to a URL</p>
+</dd>
 <dt><a href="#eventToCsv">eventToCsv(e, options)</a> ⇒ <code>string</code></dt>
 <dd><p>Renders an Event as a string</p>
 </dd>
@@ -82,6 +85,8 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dt><a href="#formatLeyningResult">formatLeyningResult(reading)</a> ⇒ <code>Object</code></dt>
 <dd></dd>
 <dt><a href="#eventsToRss">eventsToRss(events, location, mainUrl, selfUrl, [lang], [evPubDate])</a> ⇒ <code>string</code></dt>
+<dd></dd>
+<dt><a href="#eventsToRss2">eventsToRss2(events, options)</a> ⇒ <code>string</code></dt>
 <dd></dd>
 <dt><a href="#eventToRssItem">eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl)</a> ⇒ <code>string</code></dt>
 <dd></dd>
@@ -231,6 +236,21 @@ Makes mulit-line text that summarizes Torah & Haftarah
 | ev | <code>Event</code> | 
 | il | <code>boolean</code> | 
 
+<a name="appendIsraelAndTracking"></a>
+
+## appendIsraelAndTracking(url, il, utmSource, utmMedium, utmCampaign) ⇒ <code>string</code>
+Appends utm_source and utm_medium parameters to a URL
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| url | <code>string</code> | 
+| il | <code>boolean</code> | 
+| utmSource | <code>string</code> | 
+| utmMedium | <code>string</code> | 
+| utmCampaign | <code>string</code> | 
+
 <a name="eventToCsv"></a>
 
 ## eventToCsv(e, options) ⇒ <code>string</code>
@@ -241,7 +261,7 @@ Renders an Event as a string
 | Param | Type |
 | --- | --- |
 | e | <code>Event</code> | 
-| options | <code>HebcalOptions</code> | 
+| options | <code>HebrewCalendar.Options</code> | 
 
 <a name="eventsToCsv"></a>
 
@@ -311,6 +331,16 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 | selfUrl | <code>string</code> |  |  |
 | [lang] | <code>string</code> | <code>&quot;en-US&quot;</code> | language such as 'he' (default 'en-US') |
 | [evPubDate] | <code>boolean</code> | <code>true</code> | if true, use event time as pubDate (false uses lastBuildDate) |
+
+<a name="eventsToRss2"></a>
+
+## eventsToRss2(events, options) ⇒ <code>string</code>
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| events | <code>Array.&lt;Event&gt;</code> | 
+| options | <code>HebrewCalendar.Options</code> | 
 
 <a name="eventToRssItem"></a>
 

@@ -43,25 +43,51 @@ function getLinkAndGuid(ev, il, tzid, mainUrl) {
  */
 export function eventsToRss(events, location, mainUrl, selfUrl, lang='en-US', evPubDate=true) {
   const cityDescr = location.getName();
-  const thisYear = new Date().getFullYear();
-  const title = Locale.gettext('Shabbat') + ' Times for ' + cityDescr;
-  const lastBuildDate = new Date().toUTCString();
+  const options = {
+    location,
+    mainUrl,
+    selfUrl,
+    lang,
+    evPubDate,
+    title: Locale.gettext('Shabbat') + ` Times for ${cityDescr}`,
+    description: `Weekly Shabbat candle lighting times for ${cityDescr}`,
+    utmSource: 'shabbat1c',
+    utmMedium: 'rss',
+  };
+  return eventsToRss2(events, options);
+}
+
+/**
+ * @param {Event[]} events
+ * @param {HebrewCalendar.Options} options
+ * @return {string}
+ */
+export function eventsToRss2(events, options) {
+  const now = new Date();
+  const thisYear = now.getFullYear();
+  const lastBuildDate = now.toUTCString();
   const dayFormat = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: '2-digit',
     month: 'long',
     year: 'numeric',
   });
-  const mainUrlEsc = appendIsraelAndTracking(mainUrl, location.getIsrael(), 'shabbat1c', 'rss').replace(/&/g, '&amp;');
-  selfUrl = selfUrl.replace(/&/g, '&amp;');
+  const location = options.location;
+  const mainUrl = options.mainUrl;
+  const evPubDate = options.evPubDate;
+  const title = options.title;
+  const mainUrlEsc = appendIsraelAndTracking(mainUrl,
+      location && location.getIsrael(),
+      options.utmSource, options.utmMedium, options.utmCampaign).replace(/&/g, '&amp;');
+  const selfUrlEsc = options.selfUrl.replace(/&/g, '&amp;');
   let str = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <title>${title}</title>
 <link>${mainUrlEsc}</link>
-<atom:link href="${selfUrl}" rel="self" type="application/rss+xml" />
-<description>Weekly Shabbat candle lighting times for ${cityDescr}</description>
-<language>${lang}</language>
+<atom:link href="${selfUrlEsc}" rel="self" type="application/rss+xml" />
+<description>${options.description}</description>
+<language>${options.lang}</language>
 <copyright>Copyright (c) ${thisYear} Michael J. Radwin. All rights reserved.</copyright>
 <lastBuildDate>${lastBuildDate}</lastBuildDate>
 `;

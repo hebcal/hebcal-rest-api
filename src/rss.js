@@ -9,9 +9,11 @@ import holidayDescription from './holidays.json';
  * @param {boolean} il
  * @param {string} tzid
  * @param {string} mainUrl
+ * @param {string} utmSource
+ * @param {string} utmMedium
  * @return {string[]}
  */
-function getLinkAndGuid(ev, il, tzid, mainUrl) {
+function getLinkAndGuid(ev, il, tzid, mainUrl, utmSource, utmMedium) {
   let link;
   let guid;
   const dt = ev.eventTime || ev.getDate().greg();
@@ -22,11 +24,11 @@ function getLinkAndGuid(ev, il, tzid, mainUrl) {
   const anchor = `${dtAnchor}-${descAnchor}`;
   const url0 = ev.url();
   if (url0) {
-    link = appendIsraelAndTracking(url0, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
+    link = appendIsraelAndTracking(url0, il, utmSource, utmMedium).replace(/&/g, '&amp;');
     guid = `${url0}#${anchor}`;
   } else {
     const url1 = `${mainUrl}&dt=${dtStr}`;
-    const url = appendIsraelAndTracking(url1, il, 'shabbat1c', 'rss').replace(/&/g, '&amp;');
+    const url = appendIsraelAndTracking(url1, il, utmSource, utmMedium).replace(/&/g, '&amp;');
     guid = url1.replace(/&/g, '&amp;') + `#${anchor}`;
     link = `${url}#${anchor}`;
   }
@@ -73,7 +75,7 @@ const localeToLg = {
  * @return {string}
  */
 export function eventsToRss2(events, options) {
-  const dayFormat = new Intl.DateTimeFormat('en-US', {
+  options.dayFormat = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: '2-digit',
     month: 'long',
@@ -81,15 +83,16 @@ export function eventsToRss2(events, options) {
   });
   const location = options.location;
   const mainUrl = options.mainUrl;
-  const evPubDate = options.evPubDate;
-  const buildDate = options.buildDate || new Date();
+  const buildDate = options.buildDate = options.buildDate || new Date();
   const thisYear = buildDate.getFullYear();
-  const lastBuildDate = buildDate.toUTCString();
+  const lastBuildDate = options.lastBuildDate = buildDate.toUTCString();
   const title = options.title || getCalendarTitle(events, options);
   const description = options.description || title;
+  const utmSource = options.utmSource || 'shabbat1c';
+  const utmMedium = options.utmMedium || 'rss';
   const mainUrlEsc = appendIsraelAndTracking(mainUrl,
       location && location.getIsrael(),
-      options.utmSource, options.utmMedium, options.utmCampaign).replace(/&/g, '&amp;');
+      utmSource, utmMedium, options.utmCampaign).replace(/&/g, '&amp;');
   const selfUrlEsc = options.selfUrl.replace(/&/g, '&amp;');
   const lang = options.lang || localeToLg[options.locale] || options.locale || 'en-US';
   let str = `<?xml version="1.0" encoding="UTF-8"?>
@@ -104,7 +107,7 @@ export function eventsToRss2(events, options) {
 <lastBuildDate>${lastBuildDate}</lastBuildDate>
 `;
   events.forEach((ev) => {
-    str += eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl);
+    str += eventToRssItem2(ev, options);
   });
   str += '</channel>\n</rss>\n';
   return str;
@@ -131,20 +134,39 @@ function getPubDate(ev, evPubDate, evDate, lastBuildDate) {
 
 /**
  * @param {Event} ev
+ * @param {HebrewCalendar.Options} options
+ * @return {string}
+ */
+export function eventToRssItem2(ev, options) {
+  return eventToRssItem(
+      ev,
+      options.evPubDate,
+      options.lastBuildDate,
+      options.dayFormat,
+      options.location,
+      options.mainUrl,
+      options);
+}
+
+/**
+ * @param {Event} ev
  * @param {boolean} evPubDate
  * @param {string} lastBuildDate
  * @param {Intl.DateTimeFormat} dayFormat
  * @param {Location} location
  * @param {string} mainUrl
+ * @param {HebrewCalendar.Options} [options]
  * @return {string}
  */
-export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl) {
+export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl, options) {
   let subj = ev.render();
   const evDate = ev.getDate().greg();
   const pubDate = getPubDate(ev, evPubDate, evDate, lastBuildDate);
   const il = location ? location.getIsrael() : false;
   const tzid = location ? location.getTzid() : 'UTC';
-  const linkGuid = getLinkAndGuid(ev, il, tzid, mainUrl);
+  const utmSource = (options && options.utmSource) || 'shabbat1c';
+  const utmMedium = (options && options.utmMedium) || 'rss';
+  const linkGuid = getLinkAndGuid(ev, il, tzid, mainUrl, utmSource, utmMedium);
   const link = linkGuid[0];
   const guid = linkGuid[1];
   const categories = getEventCategories(ev);

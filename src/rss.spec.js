@@ -51,6 +51,8 @@ test('eventsToRss2', (t) => {
   options.mainUrl = 'https://www.hebcal.com/shabbat?geonameid=4887398&m=50&lg=s';
   options.selfUrl = 'https://www.hebcal.com/shabbat?cfg=r&geonameid=4887398&m=50&lg=s&pubDate=1';
   options.buildDate = new Date(2021, 11, 15, 12, 34, 56);
+  options.utmSource = 'foobar';
+  options.utmMedium = 'quux';
   options.description = 'The quick brown fox';
   const rss = eventsToRss2(events, options).split('\n');
   const expected = [
@@ -58,7 +60,7 @@ test('eventsToRss2', (t) => {
     '<rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:atom="http://www.w3.org/2005/Atom">',
     '<channel>',
     '<title>Hebcal Chicago April 1990</title>',
-    '<link>https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;utm_source=undefined&amp;utm_medium=undefined</link>',
+    '<link>https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;utm_source=foobar&amp;utm_medium=quux</link>',
     '<atom:link href="https://www.hebcal.com/shabbat?cfg=r&amp;geonameid=4887398&amp;m=50&amp;lg=s&amp;pubDate=1" rel="self" type="application/rss+xml" />',
     '<description>The quick brown fox</description>',
     '<language>en-US</language>',
@@ -66,7 +68,7 @@ test('eventsToRss2', (t) => {
     '<lastBuildDate>Wed, 15 Dec 2021 20:34:56 GMT</lastBuildDate>',
     '<item>',
     '<title>Candle lighting: 7:03pm</title>',
-    '<link>https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-06&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900406-candle-lighting</link>',
+    '<link>https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-06&amp;utm_source=foobar&amp;utm_medium=quux#19900406-candle-lighting</link>',
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-06#19900406-candle-lighting</guid>',
     '<description>Friday, April 06, 1990</description>',
     '<category>candles</category>',
@@ -76,7 +78,7 @@ test('eventsToRss2', (t) => {
     '</item>',
     '<item>',
     '<title>Havdalah (50 min): 8:13pm</title>',
-    '<link>https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-07&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900407-havdalah</link>',
+    '<link>https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-07&amp;utm_source=foobar&amp;utm_medium=quux#19900407-havdalah</link>',
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-07#19900407-havdalah</guid>',
     '<description>Saturday, April 07, 1990</description>',
     '<category>havdalah</category>',

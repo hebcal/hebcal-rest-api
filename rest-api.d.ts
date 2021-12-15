@@ -40,7 +40,8 @@ declare module '@hebcal/rest-api' {
    */
   export function eventsToRss(events: Event[], location: Location, mainUrl: string, selfUrl: string, lang?: string, evPubDate?: boolean): string;
   export function eventsToRss2(events: Event[], options: HebrewCalendar.Options): string;
-  export function eventToRssItem(ev: Event, evPubDate: boolean, lastBuildDate: string, dayFormat: Intl.DateTimeFormat, location: Location, baseUrl: string): string;
+  export function eventToRssItem(ev: Event, evPubDate: boolean, lastBuildDate: string, dayFormat: Intl.DateTimeFormat, location: Location, baseUrl: string, options?: HebrewCalendar.Options): string;
+  export function eventToRssItem2(ev: Event, options: HebrewCalendar.Options): string;
   export function getDownloadFilename(options: HebrewCalendar.Options): string;
   export function pad2(number: number): string;
   export function pad4(number: number): string;

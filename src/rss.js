@@ -1,4 +1,5 @@
-import {getEventCategories, makeAnchor, appendIsraelAndTracking, makeTorahMemoText} from './common';
+import {getEventCategories, makeAnchor, appendIsraelAndTracking,
+  makeTorahMemoText, getCalendarTitle} from './common';
 import {Locale, HebrewCalendar, Zmanim, flags} from '@hebcal/core';
 import holidayDescription from './holidays.json';
 
@@ -57,15 +58,21 @@ export function eventsToRss(events, location, mainUrl, selfUrl, lang='en-US', ev
   return eventsToRss2(events, options);
 }
 
+const localeToLg = {
+  's': 'en',
+  'a': 'en',
+  'he-x-NoNikud': 'he',
+  'h': 'he',
+  'ah': 'en',
+  'sh': 'en',
+};
+
 /**
  * @param {Event[]} events
  * @param {HebrewCalendar.Options} options
  * @return {string}
  */
 export function eventsToRss2(events, options) {
-  const now = new Date();
-  const thisYear = now.getFullYear();
-  const lastBuildDate = now.toUTCString();
   const dayFormat = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: '2-digit',
@@ -75,19 +82,24 @@ export function eventsToRss2(events, options) {
   const location = options.location;
   const mainUrl = options.mainUrl;
   const evPubDate = options.evPubDate;
-  const title = options.title;
+  const buildDate = options.buildDate || new Date();
+  const thisYear = buildDate.getFullYear();
+  const lastBuildDate = buildDate.toUTCString();
+  const title = options.title || getCalendarTitle(events, options);
+  const description = options.description || title;
   const mainUrlEsc = appendIsraelAndTracking(mainUrl,
       location && location.getIsrael(),
       options.utmSource, options.utmMedium, options.utmCampaign).replace(/&/g, '&amp;');
   const selfUrlEsc = options.selfUrl.replace(/&/g, '&amp;');
+  const lang = options.lang || localeToLg[options.locale] || options.locale || 'en-US';
   let str = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <title>${title}</title>
 <link>${mainUrlEsc}</link>
 <atom:link href="${selfUrlEsc}" rel="self" type="application/rss+xml" />
-<description>${options.description}</description>
-<language>${options.lang}</language>
+<description>${description}</description>
+<language>${lang}</language>
 <copyright>Copyright (c) ${thisYear} Michael J. Radwin. All rights reserved.</copyright>
 <lastBuildDate>${lastBuildDate}</lastBuildDate>
 `;

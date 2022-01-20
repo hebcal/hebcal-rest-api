@@ -1,5 +1,5 @@
 import test from 'ava';
-import {HebrewCalendar, Location, DafYomiEvent, HDate, HebrewDateEvent} from '@hebcal/core';
+import {HebrewCalendar, Location, DafYomiEvent, HDate, HebrewDateEvent, MishnaYomiEvent} from '@hebcal/core';
 import {eventsToClassicApi, eventToClassicApiObject} from './classic-rest-api';
 
 test('eventToClassicApiObject', (t) => {
@@ -411,6 +411,21 @@ test('hebdate', (t) => {
     category: 'hebdate',
     title_orig: '24 Kislev 5756',
     hebrew: 'כ״ד כסלו',
+  };
+  t.deepEqual(obj, expected);
+});
+
+test('mishna-yomi', (t) => {
+  const my = [{k: 'Berakhot', v: '3:6'}, {k: 'Berakhot', v: '4:1'}];
+  const hd = new HDate(new Date(1947, 4, 29));
+  const ev = new MishnaYomiEvent(hd, my);
+  const obj = eventToClassicApiObject(ev, {}, false);
+  const expected = {
+    title: 'Berakhot 3:6-4:1',
+    date: '1947-05-29',
+    category: 'mishnayomi',
+    hebrew: 'ברכות 3:6-4:1',
+    link: 'https://www.sefaria.org/Mishnah_Berakhot.3.6-4.1?lang=bi&utm_source=hebcal.com&utm_medium=api',
   };
   t.deepEqual(obj, expected);
 });

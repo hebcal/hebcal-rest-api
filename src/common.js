@@ -125,6 +125,7 @@ export function getEventCategories(ev) {
     case flags.MOLAD: return ['molad'];
     case flags.USER_EVENT: return ['user'];
     case flags.MINOR_HOLIDAY: return ['holiday', 'minor'];
+    case flags.MISHNA_YOMI: return ['mishnayomi'];
     default:
       break; // fall through to string-based category
   }

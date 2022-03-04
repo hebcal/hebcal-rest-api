@@ -33,7 +33,7 @@ export function eventsToClassicApi(events, options, leyning=true) {
       cc: location.getCountryCode(),
       country: countryNames[location.getCountryCode()],
     };
-    ['admin1', 'asciiname', 'geo', 'zip', 'state', 'geonameid'].forEach((k) => {
+    ['admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'].forEach((k) => {
       if (location[k]) {
         result.location[k] = location[k];
       }

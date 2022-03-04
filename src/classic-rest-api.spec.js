@@ -429,3 +429,39 @@ test('mishna-yomi', (t) => {
   };
   t.deepEqual(obj, expected);
 });
+
+test('location-zip', (t) => {
+  const location = new Location(41.83815, -71.393139, false, 'America/New_York', 'Providence, RI 02906', 'US');
+  location.admin1 = location.state = 'RI';
+  location.zip = '02906';
+  location.stateName = 'Rhode Island';
+  const ev = new HebrewDateEvent(new HDate(new Date(2022, 2, 4)));
+  const apiResult = eventsToClassicApi([ev], {location});
+  delete apiResult.date;
+  const expected = {
+    title: 'Hebcal Providence March 2022',
+    location: {
+      title: 'Providence, RI 02906',
+      city: 'Providence',
+      tzid: 'America/New_York',
+      latitude: 41.83815,
+      longitude: -71.393139,
+      cc: 'US',
+      country: 'United States',
+      admin1: 'RI',
+      zip: '02906',
+      state: 'RI',
+      stateName: 'Rhode Island',
+    },
+    items: [
+      {
+        title: '1st of Adar II, 5782',
+        date: '2022-03-04',
+        category: 'hebdate',
+        title_orig: '1 Adar II 5782',
+        hebrew: 'א׳ אדר ב׳',
+      },
+    ],
+  };
+  t.deepEqual(apiResult, expected);
+});

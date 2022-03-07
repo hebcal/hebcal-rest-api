@@ -111,7 +111,7 @@ test('eventToRssItem', (t) => {
   const expected = [
     '<item>\n' +
     '<title>Candle lighting: 18:43</title>\n' +
-    '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-06&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900406-candle-lighting</link>\n' +
+    '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-06&amp;i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900406-candle-lighting</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-06#19900406-candle-lighting</guid>\n' +
     '<description>Friday, April 06, 1990</description>\n' +
     '<category>candles</category>\n' +
@@ -121,7 +121,7 @@ test('eventToRssItem', (t) => {
     '</item>\n',
     '<item>\n' +
     '<title>Havdalah (50 min): 19:52</title>\n' +
-    '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-07&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900407-havdalah</link>\n' +
+    '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-07&amp;i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900407-havdalah</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-07#19900407-havdalah</guid>\n' +
     '<description>Saturday, April 07, 1990</description>\n' +
     '<category>havdalah</category>\n' +
@@ -129,7 +129,7 @@ test('eventToRssItem', (t) => {
     '</item>\n',
     '<item>\n' +
     '<title>Erev Pesach</title>\n' +
-    '<link>https://www.hebcal.com/holidays/pesach-1990?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
+    '<link>https://hebcal.com/h/pesach-1990?i=on&amp;us=shabbat1c&amp;um=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/holidays/pesach-1990#19900409-erev-pesach</guid>\n' +
     '<description>Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah), it commemorates the Exodus and freedom of the Israelites from ancient Egypt</description>\n' +
     '<category>holiday</category>\n' +
@@ -149,7 +149,7 @@ test('parsha', (t) => {
   const item = eventToRssItem(events[0], true, '', dayFormat, location, '');
   const expected = '<item>\n' +
     '<title>Parashat Vayetzei</title>\n' +
-    '<link>https://www.hebcal.com/sedrot/vayetzei-20201128?utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
+    '<link>https://hebcal.com/s/vayetzei-20201128?us=shabbat1c&amp;um=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/sedrot/vayetzei-20201128#20201128-parashat-vayetzei</guid>\n' +
     '<description>Torah: Genesis 28:10-32:3\n' +
       'Haftarah: Hosea 12:13-14:10\n' +
@@ -170,7 +170,7 @@ test('parsha-il', (t) => {
   const item = eventToRssItem(events[0], true, '', dayFormat, location, '');
   const expected = '<item>\n' +
     '<title>Parashat Vayetzei</title>\n' +
-    '<link>https://www.hebcal.com/sedrot/vayetzei-20201128?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
+    '<link>https://hebcal.com/s/vayetzei-20201128?i=on&amp;us=shabbat1c&amp;um=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/sedrot/vayetzei-20201128#20201128-parashat-vayetzei</guid>\n' +
     '<description>Torah: Genesis 28:10-32:3\n' +
       'Haftarah: Hosea 12:13-14:10\n' +
@@ -197,7 +197,7 @@ test('fastStartEnd', (t) => {
   const expected = [
     '<item>\n' +
       '<title>Fast begins: 04:09</title>\n' +
-      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-begins</link>\n' +
+      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27&amp;i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-begins</link>\n' +
       '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27#20210627-fast-begins</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
       '<category>zmanim</category>\n' +
@@ -205,7 +205,7 @@ test('fastStartEnd', (t) => {
       '</item>\n',
     '<item>\n' +
       '<title>Tzom Tammuz</title>\n' +
-      '<link>https://www.hebcal.com/holidays/tzom-tammuz-2021?i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss</link>\n' +
+      '<link>https://hebcal.com/h/tzom-tammuz-2021?i=on&amp;us=shabbat1c&amp;um=rss</link>\n' +
       '<guid isPermaLink="false">https://www.hebcal.com/holidays/tzom-tammuz-2021#20210627-tzom-tammuz</guid>\n' +
       '<description>Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple</description>\n' +
       '<category>holiday</category>\n' +
@@ -213,7 +213,7 @@ test('fastStartEnd', (t) => {
       '</item>\n',
     '<item>\n' +
       '<title>Fast ends: 20:25</title>\n' +
-      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-ends</link>\n' +
+      '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27&amp;i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-ends</link>\n' +
       '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27#20210627-fast-ends</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
       '<category>zmanim</category>\n' +

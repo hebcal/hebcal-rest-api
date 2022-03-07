@@ -53,7 +53,7 @@ test('eventToClassicApiObject', (t) => {
         'maftir': 'Numbers 1:52-1:54',
       },
     },
-    link: 'https://www.hebcal.com/sedrot/bamidbar-20200523?utm_source=js&utm_medium=api',
+    link: 'https://hebcal.com/s/bamidbar-20200523?us=js&um=api',
   };
   t.deepEqual(bamidbarActual, bamidbarExpected);
   const shavuotActual = apiObjs[7];
@@ -75,7 +75,7 @@ test('eventToClassicApiObject', (t) => {
       'haftarah': 'Ezekiel 1:1-28, 3:12',
       'maftir': 'Numbers 28:26-28:31',
     },
-    link: 'https://www.hebcal.com/holidays/shavuot-2020?utm_source=js&utm_medium=api',
+    link: 'https://hebcal.com/h/shavuot-2020?us=js&um=api',
   };
   t.deepEqual(shavuotActual, shavuotExpected);
 });
@@ -135,7 +135,7 @@ test('eventsToClassicApi', (t) => {
       '3': 'Numbers 28:6-28:10',
       '4': 'Numbers 28:11-28:15',
     },
-    link: 'https://www.hebcal.com/holidays/rosh-chodesh-iyyar-2022?utm_source=js&utm_medium=api',
+    link: 'https://hebcal.com/h/rosh-chodesh-iyyar-2022?us=js&um=api',
     title: 'Rosh Chodesh Iyyar',
     // eslint-disable-next-line max-len
     memo: 'Start of month of Iyyar on the Hebrew calendar. אִיָיר (transliterated Iyyar or Iyar) is the 2nd month of the Hebrew year, has 29 days, and corresponds to April or May on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon',
@@ -170,7 +170,7 @@ test('classic-api-no-sedra', (t) => {
         category: 'holiday',
         subcat: 'minor',
         hebrew: 'פסח שני',
-        link: 'https://www.hebcal.com/holidays/pesach-sheni-2022?i=on&utm_source=js&utm_medium=api',
+        link: 'https://hebcal.com/h/pesach-sheni-2022?i=on&us=js&um=api',
         memo: 'Second Passover, one month after Passover',
       },
       {
@@ -179,7 +179,7 @@ test('classic-api-no-sedra', (t) => {
         category: 'holiday',
         subcat: 'minor',
         hebrew: 'ל״ג בעומר',
-        link: 'https://www.hebcal.com/holidays/lag-baomer-2022?i=on&utm_source=js&utm_medium=api',
+        link: 'https://hebcal.com/h/lag-baomer-2022?i=on&us=js&um=api',
         memo: '33rd day of counting the Omer',
       },
       {
@@ -188,7 +188,7 @@ test('classic-api-no-sedra', (t) => {
         category: 'holiday',
         subcat: 'modern',
         hebrew: 'יום ירושלים',
-        link: 'https://www.hebcal.com/holidays/yom-yerushalayim-2022?i=on&utm_source=js&utm_medium=api',
+        link: 'https://hebcal.com/h/yom-yerushalayim-2022?i=on&us=js&um=api',
         memo: 'Jerusalem Day. Commemorates the re-unification of Jerusalem in 1967',
       },
       {
@@ -203,7 +203,7 @@ test('classic-api-no-sedra', (t) => {
           '3': 'Numbers 28:6-28:10',
           '4': 'Numbers 28:11-28:15',
         },
-        link: 'https://www.hebcal.com/holidays/rosh-chodesh-sivan-2022?i=on&utm_source=js&utm_medium=api',
+        link: 'https://hebcal.com/h/rosh-chodesh-sivan-2022?i=on&us=js&um=api',
         // eslint-disable-next-line max-len
         memo: 'Start of month of Sivan on the Hebrew calendar. Sivan (סִיוָן) is the 3rd month of the Hebrew year, has 30 days, and corresponds to May or June on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon',
       },
@@ -247,7 +247,7 @@ test('no-leyning', (t) => {
     date: '2020-05-23',
     category: 'parashat',
     hebrew: 'פרשת במדבר',
-    link: 'https://www.hebcal.com/sedrot/bamidbar-20200523?i=on&utm_source=js&utm_medium=api',
+    link: 'https://hebcal.com/s/bamidbar-20200523?i=on&us=js&um=api',
   };
   t.deepEqual(bamidbarActual, bamidbarExpected);
 });
@@ -278,7 +278,7 @@ test('chanukah-candles', (t) => {
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: א׳ נר',
-      link: 'https://www.hebcal.com/holidays/chanukah-2020?utm_source=js&utm_medium=api',
+      link: 'https://hebcal.com/h/chanukah-2020?us=js&um=api',
       memo: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
@@ -287,7 +287,7 @@ test('chanukah-candles', (t) => {
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: ב׳ נרות',
-      link: 'https://www.hebcal.com/holidays/chanukah-2020?utm_source=js&utm_medium=api',
+      link: 'https://hebcal.com/h/chanukah-2020?us=js&um=api',
       memo: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
@@ -315,7 +315,7 @@ test('chanukah-nocandles', (t) => {
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: א׳ נר',
-      link: 'https://www.hebcal.com/holidays/chanukah-2020?utm_source=js&utm_medium=api',
+      link: 'https://hebcal.com/h/chanukah-2020?us=js&um=api',
       memo: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
@@ -324,7 +324,7 @@ test('chanukah-nocandles', (t) => {
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: ב׳ נרות',
-      link: 'https://www.hebcal.com/holidays/chanukah-2020?utm_source=js&utm_medium=api',
+      link: 'https://hebcal.com/h/chanukah-2020?us=js&um=api',
       memo: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
   ];
@@ -355,7 +355,7 @@ test('fastStartEnd', (t) => {
       category: 'holiday',
       subcat: 'fast',
       hebrew: 'צום תמוז',
-      link: 'https://www.hebcal.com/holidays/tzom-tammuz-2021?utm_source=js&utm_medium=api',
+      link: 'https://hebcal.com/h/tzom-tammuz-2021?us=js&um=api',
       memo: 'Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple',
     },
     {

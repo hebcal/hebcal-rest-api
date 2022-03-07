@@ -270,15 +270,45 @@ export function makeTorahMemoText(ev, il) {
  * @return {string}
  */
 export function appendIsraelAndTracking(url, il, utmSource, utmMedium, utmCampaign) {
-  if (url.substring(0, 22) !== 'https://www.hebcal.com') {
-    utmSource = 'hebcal.com';
-  } else if (il && url.indexOf('?') === -1) {
-    url += '?i=on';
+  const u = new URL(url);
+  const isHebcal = u.host === 'www.hebcal.com';
+  if (isHebcal) {
+    if (il) {
+      u.searchParams.set('i', 'on');
+    }
+    const path = u.pathname;
+    const isHolidays = path.startsWith('/holidays/');
+    const isSedrot = path.startsWith('/sedrot/');
+    if (isHolidays || isSedrot) {
+      u.host = 'hebcal.com';
+      if (isHolidays) {
+        u.pathname = '/h/' + path.substring(10);
+      } else {
+        u.pathname = '/s/' + path.substring(8);
+      }
+      if (utmSource) {
+        u.searchParams.set('us', utmSource);
+      }
+      if (utmMedium) {
+        u.searchParams.set('um', utmMedium);
+      }
+      if (utmCampaign) {
+        u.searchParams.set('uc', utmCampaign);
+      }
+      return u.toString();
+    }
   }
-  const sep = url.indexOf('?') === -1 ? '?' : '&';
-  const utm = `utm_source=${utmSource}&utm_medium=${utmMedium}`;
-  const campaign = utmCampaign ? `&utm_campaign=${utmCampaign}` : '';
-  return url + sep + utm + campaign;
+  utmSource = isHebcal ? utmSource : 'hebcal.com';
+  if (utmSource) {
+    u.searchParams.set('utm_source', utmSource);
+  }
+  if (utmMedium) {
+    u.searchParams.set('utm_medium', utmMedium);
+  }
+  if (utmCampaign) {
+    u.searchParams.set('utm_campaign', utmCampaign);
+  }
+  return u.toString();
 }
 
 /**

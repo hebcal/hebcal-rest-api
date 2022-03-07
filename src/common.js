@@ -286,11 +286,13 @@ export function appendIsraelAndTracking(url, il, utmSource, utmMedium, utmCampai
       } else {
         u.pathname = '/s/' + path.substring(8);
       }
-      if (utmSource) {
-        u.searchParams.set('us', utmSource);
-      }
-      if (utmMedium) {
-        u.searchParams.set('um', utmMedium);
+      if (!utmCampaign || !(utmCampaign.startsWith('ical-') || utmCampaign.startsWith('pdf-'))) {
+        if (utmSource) {
+          u.searchParams.set('us', utmSource);
+        }
+        if (utmMedium) {
+          u.searchParams.set('um', utmMedium);
+        }
       }
       if (utmCampaign) {
         u.searchParams.set('uc', utmCampaign);

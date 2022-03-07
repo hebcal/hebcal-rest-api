@@ -1,5 +1,6 @@
 import test from 'ava';
-import {getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories} from './common';
+import {getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
+  appendIsraelAndTracking} from './common';
 import {HebrewCalendar, Location, Event, HDate, flags} from '@hebcal/core';
 
 test('getDownloadFilename', (t) => {
@@ -197,4 +198,21 @@ test('getEventCategories', (t) => {
     {h: 'Chanukah: 8th Day', c: ['holiday', 'minor']},
   ];
   t.deepEqual(actual, expected);
+});
+
+test('appendIsraelAndTracking', (t) => {
+  t.is(appendIsraelAndTracking('https://www.hebcal.com/foo', true, 'foo', 'bar'),
+      'https://www.hebcal.com/foo?i=on&utm_source=foo&utm_medium=bar');
+  t.is(appendIsraelAndTracking('https://www.hebcal.com/foo', false, 'foo', 'bar'),
+      'https://www.hebcal.com/foo?utm_source=foo&utm_medium=bar');
+  t.is(appendIsraelAndTracking('https://www.hebcal.com/sedrot/foo-123', true, 'foo', 'bar'),
+      'https://hebcal.com/s/foo-123?i=on&us=foo&um=bar');
+  t.is(appendIsraelAndTracking('https://www.hebcal.com/sedrot/foo-345', false, 'foo', 'bar'),
+      'https://hebcal.com/s/foo-345?us=foo&um=bar');
+  t.is(appendIsraelAndTracking('https://www.hebcal.com/sedrot/foo-345', false, 'foo', 'bar', 'hello'),
+      'https://hebcal.com/s/foo-345?us=foo&um=bar&uc=hello');
+  t.is(appendIsraelAndTracking('https://www.hebcal.com/holidays/quux-678', true, 'foo', 'bar', 'ical-abc'),
+      'https://hebcal.com/h/quux-678?i=on&uc=ical-abc');
+  t.is(appendIsraelAndTracking('https://www.hebcal.com/holidays/quux-987', false, 'foo', 'bar', 'pdf-abc'),
+      'https://hebcal.com/h/quux-987?uc=pdf-abc');
 });

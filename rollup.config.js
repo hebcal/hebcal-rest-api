@@ -12,7 +12,6 @@ export default [
     input: 'src/index.js',
     output: [
       {file: pkg.main, format: 'cjs', name: pkg.name, banner},
-      {file: pkg.module, format: 'es', name: pkg.name, banner},
     ],
     plugins: [
       json({compact: true}),
@@ -23,6 +22,30 @@ export default [
             modules: false,
             targets: {
               node: '10.21.0',
+            },
+          }],
+        ],
+        exclude: ['node_modules/**'],
+      }),
+      nodeResolve(),
+      commonjs(),
+    ],
+    external: ['@hebcal/core', '@hebcal/leyning'],
+  },
+  {
+    input: 'src/index.js',
+    output: [
+      {file: pkg.module, format: 'es', name: pkg.name, banner},
+    ],
+    plugins: [
+      json({compact: true, preferConst: true}),
+      babel({
+        babelHelpers: 'bundled',
+        presets: [
+          ['@babel/preset-env', {
+            modules: false,
+            targets: {
+              node: '12.22.0',
             },
           }],
         ],

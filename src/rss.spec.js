@@ -107,7 +107,7 @@ test('eventToRssItem', (t) => {
   const events = HebrewCalendar.calendar(options).slice(0, 3);
   const lastBuildDate = 'Mon, 22 Jun 2020 20:03:18 GMT';
   const mainUrl = 'https://www.hebcal.com/shabbat?city=Eilat';
-  const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location, mainUrl));
+  const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location, mainUrl, options));
   const expected = [
     '<item>\n' +
     '<title>Candle lighting: 18:43</title>\n' +
@@ -130,7 +130,7 @@ test('eventToRssItem', (t) => {
     '<item>\n' +
     '<title>Erev Pesach</title>\n' +
     '<link>https://hebcal.com/h/pesach-1990?i=on&amp;us=shabbat1c&amp;um=rss</link>\n' +
-    '<guid isPermaLink="false">https://www.hebcal.com/holidays/pesach-1990#19900409-erev-pesach</guid>\n' +
+    '<guid isPermaLink="false">https://www.hebcal.com/holidays/pesach-1990?i=on#19900409-erev-pesach</guid>\n' +
     '<description>Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah), it commemorates the Exodus and freedom of the Israelites from ancient Egypt</description>\n' +
     '<category>holiday</category>\n' +
     '<pubDate>Mon, 09 Apr 1990 00:00:00 GMT</pubDate>\n' +
@@ -193,7 +193,7 @@ test('fastStartEnd', (t) => {
   const events = HebrewCalendar.calendar(options);
   const lastBuildDate = 'Mon, 22 Jun 2020 20:03:18 GMT';
   const mainUrl = 'https://www.hebcal.com/shabbat?city=Tel+Aviv&lg=s';
-  const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location, mainUrl));
+  const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location, mainUrl, options));
   const expected = [
     '<item>\n' +
       '<title>Fast begins: 04:09</title>\n' +

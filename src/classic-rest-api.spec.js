@@ -1,5 +1,5 @@
 import test from 'ava';
-import {HebrewCalendar, Location, DafYomiEvent, HDate, HebrewDateEvent, MishnaYomiEvent} from '@hebcal/core';
+import {HebrewCalendar, Location, DafYomiEvent, HDate, HebrewDateEvent, MishnaYomiEvent, OmerEvent} from '@hebcal/core';
 import {eventsToClassicApi, eventToClassicApiObject} from './classic-rest-api';
 
 test('eventToClassicApiObject', (t) => {
@@ -464,4 +464,19 @@ test('location-zip', (t) => {
     ],
   };
   t.deepEqual(apiResult, expected);
+});
+
+test('omer', (t) => {
+  const ev = new OmerEvent(new HDate(2, 'Sivan', 5770), 46);
+  const obj = eventToClassicApiObject(ev, {}, false);
+  const expected = {
+    title: '46th day of the Omer',
+    date: '2010-05-15',
+    category: 'omer',
+    title_orig: 'Omer 46',
+    hebrew: 'עומר יום 46',
+    link: 'https://hebcal.com/o/5770/46?us=js&um=api',
+    memo: 'Eternity within Majesty\nנֶּֽצַח שֶׁבְּמַּלְכוּת\nNetzach sheb\'Malkhut',
+  };
+  t.deepEqual(obj, expected);
 });

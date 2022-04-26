@@ -279,12 +279,15 @@ export function appendIsraelAndTracking(url, il, utmSource, utmMedium, utmCampai
     const path = u.pathname;
     const isHolidays = path.startsWith('/holidays/');
     const isSedrot = path.startsWith('/sedrot/');
-    if (isHolidays || isSedrot) {
+    const isOmer = path.startsWith('/omer/');
+    if (isHolidays || isSedrot || isOmer) {
       u.host = 'hebcal.com';
       if (isHolidays) {
         u.pathname = '/h/' + path.substring(10);
-      } else {
+      } else if (isSedrot) {
         u.pathname = '/s/' + path.substring(8);
+      } else { // isOmer
+        u.pathname = '/o/' + path.substring(6);
       }
       if (!utmCampaign || !(utmCampaign.startsWith('ical-') || utmCampaign.startsWith('pdf-'))) {
         if (utmSource) {

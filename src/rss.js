@@ -71,7 +71,7 @@ const localeToLg = {
 
 /**
  * @param {Event[]} events
- * @param {HebrewCalendar.Options} options
+ * @param {CalOptions} options
  * @return {string}
  */
 export function eventsToRss2(events, options) {
@@ -134,7 +134,7 @@ function getPubDate(ev, evPubDate, evDate, lastBuildDate) {
 
 /**
  * @param {Event} ev
- * @param {HebrewCalendar.Options} options
+ * @param {CalOptions} options
  * @return {string}
  */
 export function eventToRssItem2(ev, options) {
@@ -155,7 +155,7 @@ export function eventToRssItem2(ev, options) {
  * @param {Intl.DateTimeFormat} dayFormat
  * @param {Location} location
  * @param {string} mainUrl
- * @param {HebrewCalendar.Options} [options]
+ * @param {CalOptions} [options]
  * @return {string}
  */
 export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl, options) {

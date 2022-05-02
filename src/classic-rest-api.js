@@ -6,14 +6,14 @@ import {
   toISOString,
   appendIsraelAndTracking,
   shouldRenderBrief,
+  locationToPlainObj,
 } from './common';
-import countryNames from './countryNames.json';
 import holidayDescription from './holidays.json';
 
 /**
  * Formats a list events for the classic Hebcal.com JSON API response
  * @param {Event[]} events
- * @param {HebrewCalendar.Options} options
+ * @param {CalOptions} options
  * @param {boolean} [leyning=true]
  * @return {Object}
  */
@@ -22,25 +22,7 @@ export function eventsToClassicApi(events, options, leyning=true) {
     title: getCalendarTitle(events, options),
     date: new Date().toISOString(),
   };
-  const location = options.location;
-  if (typeof location === 'object' && typeof location.name === 'string') {
-    result.location = {
-      title: location.getName(),
-      city: location.getShortName(),
-      tzid: location.getTzid(),
-      latitude: location.getLatitude(),
-      longitude: location.getLongitude(),
-      cc: location.getCountryCode(),
-      country: countryNames[location.getCountryCode()],
-    };
-    ['admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'].forEach((k) => {
-      if (location[k]) {
-        result.location[k] = location[k];
-      }
-    });
-  } else {
-    result.location = {geo: 'none'};
-  }
+  result.location = locationToPlainObj(options.location);
   result.items = events.map((ev) => eventToClassicApiObject(ev, options, leyning));
   return result;
 }
@@ -48,7 +30,7 @@ export function eventsToClassicApi(events, options, leyning=true) {
 /**
  * Converts a Hebcal event to a classic Hebcal.com JSON API object
  * @param {Event} ev
- * @param {HebrewCalendar.Options} options
+ * @param {CalOptions} options
  * @param {boolean} [leyning=true]
  * @return {Object}
  */

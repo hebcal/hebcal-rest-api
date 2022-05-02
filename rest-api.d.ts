@@ -1,21 +1,21 @@
 /// <reference types="node"/>
 
-import {HebrewCalendar, Event, Location} from '@hebcal/core';
+import {Event, Location, CalOptions} from '@hebcal/core';
 
 declare module '@hebcal/rest-api' {
   /**
    * Renders an Event as a string
    */
-  export function eventToCsv(e: Event, options: HebrewCalendar.Options): string;
-  export function eventsToCsv(events: Event[], options: HebrewCalendar.Options): string;
+  export function eventToCsv(e: Event, options: CalOptions): string;
+  export function eventsToCsv(events: Event[], options: CalOptions): string;
   /**
    * Formats a list events for the classic Hebcal.com JSON API response
    */
-  export function eventsToClassicApi(events: Event[], options: HebrewCalendar.Options, leyning?: boolean): any;
+  export function eventsToClassicApi(events: Event[], options: CalOptions, leyning?: boolean): any;
   /**
    * Converts a Hebcal event to a classic Hebcal.com JSON API object
    */
-  export function eventToClassicApiObject(ev: Event, options: HebrewCalendar.Options, leyning?: boolean): any;
+  export function eventToClassicApiObject(ev: Event, options: CalOptions, leyning?: boolean): any;
   /**
    * Converts a Hebcal event to a FullCalendar.io object
    * @param tzid - timeZone identifier
@@ -39,10 +39,10 @@ declare module '@hebcal/rest-api' {
    * @param [evPubDate] - if true, use event time as pubDate (false uses lastBuildDate)
    */
   export function eventsToRss(events: Event[], location: Location, mainUrl: string, selfUrl: string, lang?: string, evPubDate?: boolean): string;
-  export function eventsToRss2(events: Event[], options: HebrewCalendar.Options): string;
-  export function eventToRssItem(ev: Event, evPubDate: boolean, lastBuildDate: string, dayFormat: Intl.DateTimeFormat, location: Location, baseUrl: string, options?: HebrewCalendar.Options): string;
-  export function eventToRssItem2(ev: Event, options: HebrewCalendar.Options): string;
-  export function getDownloadFilename(options: HebrewCalendar.Options): string;
+  export function eventsToRss2(events: Event[], options: CalOptions): string;
+  export function eventToRssItem(ev: Event, evPubDate: boolean, lastBuildDate: string, dayFormat: Intl.DateTimeFormat, location: Location, baseUrl: string, options?: CalOptions): string;
+  export function eventToRssItem2(ev: Event, options: CalOptions): string;
+  export function getDownloadFilename(options: CalOptions): string;
   export function pad2(number: number): string;
   export function pad4(number: number): string;
   /**
@@ -73,13 +73,15 @@ declare module '@hebcal/rest-api' {
   /**
    * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
    */
-  export function getCalendarTitle(events: Event[], options: HebrewCalendar.Options): string;
+  export function getCalendarTitle(events: Event[], options: CalOptions): string;
 
   /**
    * Returns an English language description of the holiday
    * @param [firstSentence=false]
    */
   export function getHolidayDescription(ev: Event, firstSentence?: boolean): string;
+
+  export function locationToPlainObj(location: Location): string;
 
   export interface StringMap {
     [key: string]: string;

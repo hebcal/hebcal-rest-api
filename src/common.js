@@ -1,6 +1,33 @@
 import {flags, Zmanim} from '@hebcal/core';
 import * as leyning from '@hebcal/leyning';
 import holidayDescription from './holidays.json';
+import countryNames from './countryNames.json';
+
+/**
+ * @param {Location} location
+ * @return {string}
+ */
+export function locationToPlainObj(location) {
+  if (typeof location === 'object' && location !== null && typeof location.name === 'string') {
+    const o = {
+      title: location.getName(),
+      city: location.getShortName(),
+      tzid: location.getTzid(),
+      latitude: location.getLatitude(),
+      longitude: location.getLongitude(),
+      cc: location.getCountryCode(),
+      country: countryNames[location.getCountryCode()],
+    };
+    ['admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'].forEach((k) => {
+      if (location[k]) {
+        o[k] = location[k];
+      }
+    });
+    return o;
+  } else {
+    return {geo: 'none'};
+  }
+}
 
 /**
  * Helper function to transform a string to make it more usable in a URL or filename.
@@ -20,7 +47,7 @@ export function makeAnchor(s) {
 }
 
 /**
- * @param {HebrewCalendar.Options} options
+ * @param {CalOptions} options
  * @return {string}
  */
 export function getDownloadFilename(options) {
@@ -166,7 +193,7 @@ export function renderTitleWithoutTime(ev) {
 /**
  * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
  * @param {Event[]} events
- * @param {HebrewCalendar.Options} options
+ * @param {CalOptions} options
  * @return {string}
  */
 export function getCalendarTitle(events, options) {

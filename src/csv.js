@@ -19,7 +19,7 @@ const CATEGORY = {
 /**
  * Renders an Event as a string
  * @param {Event} e
- * @param {HebrewCalendar.Options} options
+ * @param {CalOptions} options
  * @return {string}
  */
 export function eventToCsv(e, options) {

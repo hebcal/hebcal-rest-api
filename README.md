@@ -32,6 +32,8 @@ console.log(JSON.stringify(csv));
 ## Functions
 
 <dl>
+<dt><a href="#locationToPlainObj">locationToPlainObj(location)</a> ⇒ <code>string</code></dt>
+<dd></dd>
 <dt><a href="#makeAnchor">makeAnchor(s)</a> ⇒ <code>string</code></dt>
 <dd><p>Helper function to transform a string to make it more usable in a URL or filename.
 Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;).</p>
@@ -88,12 +90,23 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 <dd></dd>
 <dt><a href="#eventsToRss2">eventsToRss2(events, options)</a> ⇒ <code>string</code></dt>
 <dd></dd>
-<dt><a href="#eventToRssItem">eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl)</a> ⇒ <code>string</code></dt>
+<dt><a href="#eventToRssItem2">eventToRssItem2(ev, options)</a> ⇒ <code>string</code></dt>
+<dd></dd>
+<dt><a href="#eventToRssItem">eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl, [options])</a> ⇒ <code>string</code></dt>
 <dd></dd>
 <dt><a href="#eventToFullCalendar">eventToFullCalendar(ev, tzid, il)</a> ⇒ <code>Object</code></dt>
 <dd><p>Converts a Hebcal event to a FullCalendar.io object</p>
 </dd>
 </dl>
+
+<a name="locationToPlainObj"></a>
+
+## locationToPlainObj(location) ⇒ <code>string</code>
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| location | <code>Location</code> | 
 
 <a name="makeAnchor"></a>
 
@@ -118,7 +131,7 @@ makeAnchor('Rosh Chodesh Adar II') // 'rosh-chodesh-adar-ii'
 
 | Param | Type |
 | --- | --- |
-| options | <code>HebrewCalendar.Options</code> | 
+| options | <code>CalOptions</code> | 
 
 <a name="pad2"></a>
 
@@ -210,7 +223,7 @@ Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
 | Param | Type |
 | --- | --- |
 | events | <code>Array.&lt;Event&gt;</code> | 
-| options | <code>HebrewCalendar.Options</code> | 
+| options | <code>CalOptions</code> | 
 
 <a name="getHolidayDescription"></a>
 
@@ -261,7 +274,7 @@ Renders an Event as a string
 | Param | Type |
 | --- | --- |
 | e | <code>Event</code> | 
-| options | <code>HebrewCalendar.Options</code> | 
+| options | <code>CalOptions</code> | 
 
 <a name="eventsToCsv"></a>
 
@@ -283,7 +296,7 @@ Formats a list events for the classic Hebcal.com JSON API response
 | Param | Type | Default |
 | --- | --- | --- |
 | events | <code>Array.&lt;Event&gt;</code> |  | 
-| options | <code>HebrewCalendar.Options</code> |  | 
+| options | <code>CalOptions</code> |  | 
 | [leyning] | <code>boolean</code> | <code>true</code> | 
 
 <a name="eventToClassicApiObject"></a>
@@ -296,7 +309,7 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 | Param | Type | Default |
 | --- | --- | --- |
 | ev | <code>Event</code> |  | 
-| options | <code>HebrewCalendar.Options</code> |  | 
+| options | <code>CalOptions</code> |  | 
 | [leyning] | <code>boolean</code> | <code>true</code> | 
 
 <a name="formatAliyot"></a>
@@ -340,11 +353,21 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 | Param | Type |
 | --- | --- |
 | events | <code>Array.&lt;Event&gt;</code> | 
-| options | <code>HebrewCalendar.Options</code> | 
+| options | <code>CalOptions</code> | 
+
+<a name="eventToRssItem2"></a>
+
+## eventToRssItem2(ev, options) ⇒ <code>string</code>
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| ev | <code>Event</code> | 
+| options | <code>CalOptions</code> | 
 
 <a name="eventToRssItem"></a>
 
-## eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl) ⇒ <code>string</code>
+## eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl, [options]) ⇒ <code>string</code>
 **Kind**: global function  
 
 | Param | Type |
@@ -355,6 +378,7 @@ Converts a Hebcal event to a classic Hebcal.com JSON API object
 | dayFormat | <code>Intl.DateTimeFormat</code> | 
 | location | <code>Location</code> | 
 | mainUrl | <code>string</code> | 
+| [options] | <code>CalOptions</code> | 
 
 <a name="eventToFullCalendar"></a>
 

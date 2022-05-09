@@ -19,7 +19,6 @@ test('eventToClassicApiObject', (t) => {
   const candlesExpected = {
     title: 'Candle lighting: 21:17',
     date: '2020-05-22T21:17:00+02:00',
-    hdate: '28 Iyyar 5780',
     category: 'candles',
     hebrew: 'הדלקת נרות',
     title_orig: 'Candle lighting',
@@ -150,7 +149,6 @@ test('eventsToClassicApi', (t) => {
   const candleLightingExpected = {
     category: 'candles',
     date: '2022-05-06T20:18:00-07:00',
-    hdate: '5 Iyyar 5782',
     hebrew: 'הדלקת נרות',
     title: 'Candle lighting: 8:18pm',
     title_orig: 'Candle lighting',
@@ -235,7 +233,6 @@ test('reformat-time-usa', (t) => {
   const expected = {
     title: 'Candle lighting: 7:48pm',
     date: '2020-05-22T19:48:00-04:00',
-    hdate: '28 Iyyar 5780',
     category: 'candles',
     title_orig: 'Candle lighting',
     hebrew: 'הדלקת נרות',
@@ -287,7 +284,6 @@ test('chanukah-candles', (t) => {
     {
       title: 'Chanukah: 1 Candle',
       date: '2020-12-10T16:43:00-05:00',
-      hdate: '24 Kislev 5781',
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: א׳ נר',
@@ -297,7 +293,6 @@ test('chanukah-candles', (t) => {
     {
       title: 'Chanukah: 2 Candles',
       date: '2020-12-11T15:53:00-05:00',
-      hdate: '25 Kislev 5781',
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: ב׳ נרות',
@@ -307,7 +302,6 @@ test('chanukah-candles', (t) => {
     {
       title: 'Candle lighting: 3:53pm',
       date: '2020-12-11T15:53:00-05:00',
-      hdate: '25 Kislev 5781',
       category: 'candles',
       title_orig: 'Candle lighting',
       hebrew: 'הדלקת נרות',
@@ -361,7 +355,6 @@ test('fastStartEnd', (t) => {
     {
       title: 'Fast begins',
       date: '2021-06-27T03:20:00-04:00',
-      hdate: '17 Tamuz 5781',
       category: 'zmanim',
       subcat: 'fast',
       hebrew: 'תחילת הצום',
@@ -380,7 +373,6 @@ test('fastStartEnd', (t) => {
     {
       title: 'Fast ends',
       date: '2021-06-27T21:07:00-04:00',
-      hdate: '17 Tamuz 5781',
       category: 'zmanim',
       subcat: 'fast',
       hebrew: 'סיום הצום',

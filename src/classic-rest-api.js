@@ -54,6 +54,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   const result = {
     title: title,
     date: date,
+    hdate: hd.toString(),
     category: categories[0],
   };
   if (categories.length > 1) {

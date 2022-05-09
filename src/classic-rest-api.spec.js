@@ -19,6 +19,7 @@ test('eventToClassicApiObject', (t) => {
   const candlesExpected = {
     title: 'Candle lighting: 21:17',
     date: '2020-05-22T21:17:00+02:00',
+    hdate: '28 Iyyar 5780',
     category: 'candles',
     hebrew: 'הדלקת נרות',
     title_orig: 'Candle lighting',
@@ -29,6 +30,7 @@ test('eventToClassicApiObject', (t) => {
   const bamidbarExpected = {
     title: 'Parashat Bamidbar',
     date: '2020-05-23',
+    hdate: '29 Iyyar 5780',
     category: 'parashat',
     hebrew: 'פרשת במדבר',
     leyning: {
@@ -60,6 +62,7 @@ test('eventToClassicApiObject', (t) => {
   const shavuotExpected = {
     title: 'Shavuot I',
     date: '2020-05-29',
+    hdate: '6 Sivan 5780',
     category: 'holiday',
     subcat: 'major',
     memo: 'Festival of Weeks. Commemorates the giving of the Torah at Mount Sinai',
@@ -91,6 +94,7 @@ test('bce', (t) => {
   const expected = {
     title: 'Erev Shavuot',
     date: '-000001-05-06',
+    hdate: '5 Sivan 3759',
     category: 'holiday',
     subcat: 'major',
     hebrew: 'ערב שבועות',
@@ -127,6 +131,7 @@ test('eventsToClassicApi', (t) => {
   const roshChodeshExpected = {
     category: 'roshchodesh',
     date: '2022-05-01',
+    hdate: '30 Nisan 5782',
     hebrew: 'ראש חודש אייר',
     leyning: {
       'torah': 'Numbers 28:1-15',
@@ -145,6 +150,7 @@ test('eventsToClassicApi', (t) => {
   const candleLightingExpected = {
     category: 'candles',
     date: '2022-05-06T20:18:00-07:00',
+    hdate: '5 Iyyar 5782',
     hebrew: 'הדלקת נרות',
     title: 'Candle lighting: 8:18pm',
     title_orig: 'Candle lighting',
@@ -167,6 +173,7 @@ test('classic-api-no-sedra', (t) => {
       {
         title: 'Pesach Sheni',
         date: '2022-05-15',
+        hdate: '14 Iyyar 5782',
         category: 'holiday',
         subcat: 'minor',
         hebrew: 'פסח שני',
@@ -176,6 +183,7 @@ test('classic-api-no-sedra', (t) => {
       {
         title: 'Lag BaOmer',
         date: '2022-05-19',
+        hdate: '18 Iyyar 5782',
         category: 'holiday',
         subcat: 'minor',
         hebrew: 'ל״ג בעומר',
@@ -185,6 +193,7 @@ test('classic-api-no-sedra', (t) => {
       {
         title: 'Yom Yerushalayim',
         date: '2022-05-29',
+        hdate: '28 Iyyar 5782',
         category: 'holiday',
         subcat: 'modern',
         hebrew: 'יום ירושלים',
@@ -194,6 +203,7 @@ test('classic-api-no-sedra', (t) => {
       {
         title: 'Rosh Chodesh Sivan',
         date: '2022-05-31',
+        hdate: '1 Sivan 5782',
         category: 'roshchodesh',
         hebrew: 'ראש חודש סיון',
         leyning: {
@@ -225,6 +235,7 @@ test('reformat-time-usa', (t) => {
   const expected = {
     title: 'Candle lighting: 7:48pm',
     date: '2020-05-22T19:48:00-04:00',
+    hdate: '28 Iyyar 5780',
     category: 'candles',
     title_orig: 'Candle lighting',
     hebrew: 'הדלקת נרות',
@@ -245,6 +256,7 @@ test('no-leyning', (t) => {
   const bamidbarExpected = {
     title: 'Parashat Bamidbar',
     date: '2020-05-23',
+    hdate: '29 Iyyar 5780',
     category: 'parashat',
     hebrew: 'פרשת במדבר',
     link: 'https://hebcal.com/s/bamidbar-20200523?i=on&us=js&um=api',
@@ -275,6 +287,7 @@ test('chanukah-candles', (t) => {
     {
       title: 'Chanukah: 1 Candle',
       date: '2020-12-10T16:43:00-05:00',
+      hdate: '24 Kislev 5781',
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: א׳ נר',
@@ -284,6 +297,7 @@ test('chanukah-candles', (t) => {
     {
       title: 'Chanukah: 2 Candles',
       date: '2020-12-11T15:53:00-05:00',
+      hdate: '25 Kislev 5781',
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: ב׳ נרות',
@@ -293,6 +307,7 @@ test('chanukah-candles', (t) => {
     {
       title: 'Candle lighting: 3:53pm',
       date: '2020-12-11T15:53:00-05:00',
+      hdate: '25 Kislev 5781',
       category: 'candles',
       title_orig: 'Candle lighting',
       hebrew: 'הדלקת נרות',
@@ -312,6 +327,7 @@ test('chanukah-nocandles', (t) => {
     {
       title: 'Chanukah: 1 Candle',
       date: '2020-12-10',
+      hdate: '24 Kislev 5781',
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: א׳ נר',
@@ -321,6 +337,7 @@ test('chanukah-nocandles', (t) => {
     {
       title: 'Chanukah: 2 Candles',
       date: '2020-12-11',
+      hdate: '25 Kislev 5781',
       category: 'holiday',
       subcat: 'major',
       hebrew: 'חנוכה: ב׳ נרות',
@@ -344,6 +361,7 @@ test('fastStartEnd', (t) => {
     {
       title: 'Fast begins',
       date: '2021-06-27T03:20:00-04:00',
+      hdate: '17 Tamuz 5781',
       category: 'zmanim',
       subcat: 'fast',
       hebrew: 'תחילת הצום',
@@ -352,6 +370,7 @@ test('fastStartEnd', (t) => {
     {
       title: 'Tzom Tammuz',
       date: '2021-06-27',
+      hdate: '17 Tamuz 5781',
       category: 'holiday',
       subcat: 'fast',
       hebrew: 'צום תמוז',
@@ -361,6 +380,7 @@ test('fastStartEnd', (t) => {
     {
       title: 'Fast ends',
       date: '2021-06-27T21:07:00-04:00',
+      hdate: '17 Tamuz 5781',
       category: 'zmanim',
       subcat: 'fast',
       hebrew: 'סיום הצום',
@@ -395,6 +415,7 @@ test('daf-yomi', (t) => {
   const expected = {
     title: 'Avodah Zarah 68',
     date: '1995-12-17',
+    hdate: '24 Kislev 5756',
     category: 'dafyomi',
     hebrew: 'עבודה זרה 68',
     link: 'https://www.sefaria.org/Avodah_Zarah.68a?lang=bi&utm_source=hebcal.com&utm_medium=api',
@@ -408,6 +429,7 @@ test('hebdate', (t) => {
   const expected = {
     title: '24th of Kislev',
     date: '1995-12-17',
+    hdate: '24 Kislev 5756',
     category: 'hebdate',
     title_orig: '24 Kislev 5756',
     hebrew: 'כ״ד כסלו',
@@ -423,6 +445,7 @@ test('mishna-yomi', (t) => {
   const expected = {
     title: 'Berakhot 3:6-4:1',
     date: '1947-05-29',
+    hdate: '10 Sivan 5707',
     category: 'mishnayomi',
     hebrew: 'ברכות 3:6-4:1',
     link: 'https://www.sefaria.org/Mishnah_Berakhot.3.6-4.1?lang=bi&utm_source=hebcal.com&utm_medium=api',
@@ -457,6 +480,7 @@ test('location-zip', (t) => {
       {
         title: '1st of Adar II, 5782',
         date: '2022-03-04',
+        hdate: '1 Adar II 5782',
         category: 'hebdate',
         title_orig: '1 Adar II 5782',
         hebrew: 'א׳ אדר ב׳',
@@ -472,6 +496,7 @@ test('omer', (t) => {
   const expected = {
     title: '46th day of the Omer',
     date: '2010-05-15',
+    hdate: '2 Sivan 5770',
     category: 'omer',
     title_orig: 'Omer 46',
     hebrew: 'עומר יום 46',

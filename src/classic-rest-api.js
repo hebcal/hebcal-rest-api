@@ -99,6 +99,19 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
           utmSource, utmMedium, utmCampaign);
     }
   }
+  if (mask & flags.OMER_COUNT) {
+    result.omer = {
+      count: {
+        he: ev.getTodayIs('he'),
+        en: ev.getTodayIs('en'),
+      },
+      sefira: {
+        he: ev.sefira('he'),
+        translit: ev.sefira('translit'),
+        en: ev.sefira('en'),
+      },
+    };
+  }
   const memo = ev.memo || holidayDescription[ev.basename()];
   if (memo) {
     result.memo = memo;

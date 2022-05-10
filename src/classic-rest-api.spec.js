@@ -493,7 +493,17 @@ test('omer', (t) => {
     title_orig: 'Omer 46',
     hebrew: 'עומר יום 46',
     link: 'https://hebcal.com/o/5770/46?us=js&um=api',
-    memo: 'Eternity within Majesty\nנֶּֽצַח שֶׁבְּמַּלְכוּת\nNetzach sheb\'Malkhut',
+    omer: {
+      count: {
+        en: 'Today is 46 days, which is 6 weeks and 4 days of the Omer',
+        he: 'הַיוֹם שִׁשָׁה וְאַרְבָּעִים יוֹם, שְׁהֵם שִׁשָׁה שָׁבוּעוֹת וְאַרְבָּעָה יָמִים לָעוֹמֶר',
+      },
+      sefira: {
+        en: 'Eternity within Majesty',
+        he: 'נֶּֽצַח שֶׁבְּמַּלְכוּת',
+        translit: 'Netzach sheb\'Malkhut',
+      },
+    },
   };
   t.deepEqual(obj, expected);
 });

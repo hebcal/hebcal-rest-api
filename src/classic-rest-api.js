@@ -11,6 +11,15 @@ import {
 import holidayDescription from './holidays.json';
 
 /**
+ * @private
+ * @param {Event} ev
+ * @return {string}
+ */
+function eventIsoDate(ev) {
+  return toISOString(ev.getDate().greg());
+}
+
+/**
  * Formats a list events for the classic Hebcal.com JSON API response
  * @param {Event[]} events
  * @param {CalOptions} options
@@ -23,6 +32,12 @@ export function eventsToClassicApi(events, options, leyning=true) {
     date: new Date().toISOString(),
   };
   result.location = locationToPlainObj(options.location);
+  if (events.length) {
+    result.range = {
+      start: eventIsoDate(events[0]),
+      end: eventIsoDate(events[events.length - 1]),
+    };
+  }
   result.items = events.map((ev) => eventToClassicApiObject(ev, options, leyning));
   return result;
 }

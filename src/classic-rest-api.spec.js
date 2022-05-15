@@ -167,6 +167,10 @@ test('classic-api-no-sedra', (t) => {
     location: {
       geo: 'none',
     },
+    range: {
+      start: '2022-05-15',
+      end: '2022-05-31',
+    },
     items: [
       {
         title: 'Pesach Sheni',
@@ -468,6 +472,10 @@ test('location-zip', (t) => {
       state: 'RI',
       stateName: 'Rhode Island',
     },
+    range: {
+      start: '2022-03-04',
+      end: '2022-03-04',
+    },
     items: [
       {
         title: '1st of Adar II, 5782',
@@ -506,4 +514,15 @@ test('omer', (t) => {
     },
   };
   t.deepEqual(obj, expected);
+});
+
+test('classic-api-empty', (t) => {
+  const apiResult = eventsToClassicApi([], {}, false);
+  delete apiResult.date;
+  const expected = {
+    title: 'Hebcal Diaspora',
+    location: {geo: 'none'},
+    items: [],
+  };
+  t.deepEqual(apiResult, expected);
 });

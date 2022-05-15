@@ -213,9 +213,9 @@ export function getCalendarTitle(events, options) {
   if (options.subscribe == '1') {
     return title;
   }
-  if (options.isHebrewYear || events.length == 0) {
+  if (options.year && (options.isHebrewYear || events.length == 0)) {
     title += ' ' + options.year;
-  } else {
+  } else if (events.length) {
     const start = events[0].getDate().greg();
     const end = events[events.length - 1].getDate().greg();
     if (start.getFullYear() != end.getFullYear()) {

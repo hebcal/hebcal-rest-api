@@ -133,6 +133,9 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   } else if (typeof ev.linkedEvent !== 'undefined') {
     result.memo = ev.linkedEvent.render(options.locale);
   }
+  if (options.includeEvent) {
+    result.ev = ev;
+  }
   return result;
 }
 

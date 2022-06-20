@@ -21,7 +21,7 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^3.38.2",
+    "@hebcal/core": "^3.39.2",
     "@hebcal/leyning": "^4.13.3"
   },
   "scripts": {
@@ -51,12 +51,12 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "ava": "^4.3.0",
-    "core-js": "^3.23.1",
-    "eslint": "^8.17.0",
+    "core-js": "^3.23.2",
+    "eslint": "^8.18.0",
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^3.6.10",
     "jsdoc-to-markdown": "^7.1.1",
-    "rollup": "^2.75.6",
+    "rollup": "^2.75.7",
     "rollup-plugin-terser": "^7.0.2"
   }
 }

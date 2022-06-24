@@ -356,6 +356,10 @@ export function shouldRenderBrief(ev) {
     return (hd.getDate() === 1) ? false : true;
   } else if (mask & flags.DAF_YOMI) {
     return true;
+  } else if (mask & flags.MINOR_FAST && ev.getDesc().substring(0, 16) === 'Yom Kippur Katan') {
+    return true;
+  } else if (mask & flags.SHABBAT_MEVARCHIM) {
+    return true;
   } else {
     return false;
   }

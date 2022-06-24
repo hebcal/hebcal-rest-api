@@ -1,8 +1,8 @@
 import test from 'ava';
 import {getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
   getHolidayDescription,
-  appendIsraelAndTracking, locationToPlainObj} from './common';
-import {HebrewCalendar, Location, Event, HDate, flags, HolidayEvent} from '@hebcal/core';
+  appendIsraelAndTracking, locationToPlainObj, shouldRenderBrief} from './common';
+import {HebrewCalendar, Location, Event, HDate, flags, HolidayEvent, HebrewDateEvent, TimedEvent, DafYomiEvent} from '@hebcal/core';
 
 test('getDownloadFilename', (t) => {
   const location = new Location(38.672294, -90.533239, false, 'America/Chicago',
@@ -279,4 +279,18 @@ test('getHolidayDescription-notfound', (t) => {
   const ev = new Event(new HDate(3, 'Tevet', 5784), 'Foobar', flags.USER_EVENT);
   const s = getHolidayDescription(ev);
   t.is(s, '');
+});
+
+test('shouldRenderBrief', (t) => {
+  t.is(shouldRenderBrief(new HolidayEvent(new HDate(17, 'Tevet', 5784), 'Asara B\'Tevet', flags.MINOR_FAST)), false);
+  t.is(shouldRenderBrief(new HolidayEvent(new HDate(29, 'Tevet', 5784), 'Yom Kippur Katan', flags.MINOR_FAST)), true);
+  t.is(shouldRenderBrief(new HolidayEvent(new HDate(14, 'Nisan', 5784), 'Erev Pesach', flags.EREV)), false);
+  t.is(shouldRenderBrief(new HebrewDateEvent(new HDate(1, 'Nisan', 5784))), false);
+  t.is(shouldRenderBrief(new HebrewDateEvent(new HDate(2, 'Nisan', 5784))), true);
+  t.is(shouldRenderBrief(new Event(new HDate(new Date('1959-11-28')),
+      'Shabbat Mevarchim Chodesh Kislev', flags.SHABBAT_MEVARCHIM)), true);
+  t.is(shouldRenderBrief(new TimedEvent(new HDate(25, 'Sivan', 5782),
+      'Candle lighting: 8:15pm', flags.LIGHT_CANDLES,
+      new Date(), Location.lookup('Boston'))), true);
+  t.is(shouldRenderBrief(new DafYomiEvent(new HDate(25, 'Sivan', 5782))), true);
 });

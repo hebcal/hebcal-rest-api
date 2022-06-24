@@ -1,7 +1,8 @@
 import test from 'ava';
 import {getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
+  getHolidayDescription,
   appendIsraelAndTracking, locationToPlainObj} from './common';
-import {HebrewCalendar, Location, Event, HDate, flags} from '@hebcal/core';
+import {HebrewCalendar, Location, Event, HDate, flags, HolidayEvent} from '@hebcal/core';
 
 test('getDownloadFilename', (t) => {
   const location = new Location(38.672294, -90.533239, false, 'America/Chicago',
@@ -259,4 +260,23 @@ test('locationToPlainObj-none', (t) => {
   t.deepEqual(locationToPlainObj(null), expected);
   t.deepEqual(locationToPlainObj(undefined), expected);
   t.deepEqual(locationToPlainObj({}), expected);
+});
+
+test('getHolidayDescription-firstSentence', (t) => {
+  const ev = new HolidayEvent(new HDate(14, 'Nisan', 5784), 'Erev Pesach', flags.EREV);
+  t.is(getHolidayDescription(ev, true), 'Passover, the Feast of Unleavened Bread');
+  // eslint-disable-next-line max-len
+  t.is(getHolidayDescription(ev, false), 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah), it commemorates the Exodus and freedom of the Israelites from ancient Egypt');
+});
+
+test('getHolidayDescription-ykk', (t) => {
+  const ev = new HolidayEvent(new HDate(29, 'Tevet', 5784), 'Yom Kippur Katan', flags.MINOR_FAST);
+  const s = getHolidayDescription(ev);
+  t.is(s, 'Minor day of atonement occurring monthly on the day preceeding each Rosh Chodesh');
+});
+
+test('getHolidayDescription-notfound', (t) => {
+  const ev = new Event(new HDate(3, 'Tevet', 5784), 'Foobar', flags.USER_EVENT);
+  const s = getHolidayDescription(ev);
+  t.is(s, '');
 });

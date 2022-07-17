@@ -98,3 +98,10 @@ test('HebrewDateEvent', (t) => {
   t.is(eventToCsv(ev, {locale: 'he'}), '"כ״ד כִּסְלֵו","12/17/1995",,,,"true","","3","Hebrew Date"');
   t.is(eventToCsv(ev, {locale: 'he-x-NoNikud'}), '"כ״ד כסלו","12/17/1995",,,,"true","","3","Hebrew Date"');
 });
+
+test('newline', (t) => {
+  const ev = new HebrewDateEvent(new HDate(2, 'Sivan', 5770));
+  ev.memo = 'foo\nbar\nbaaz';
+  const actual = eventToCsv(ev, {locale: 'en'});
+  t.is(actual, '"2nd of Sivan","5/15/2010",,,,"true","foo / bar / baaz","3","Hebrew Date"');
+});

@@ -75,7 +75,7 @@ export function eventToCsv(e, options) {
   if (!memo0 && typeof e.linkedEvent !== 'undefined') {
     memo0 = e.linkedEvent.render(options.locale);
   }
-  const memo = memo0.replace(/,/g, ';').replace(/"/g, '\'\'');
+  const memo = memo0.replace(/,/g, ';').replace(/"/g, '\'\'').replace(/\n/g, ' / ');
 
   const showTimeAs = (timed || (mask & flags.CHAG)) ? 4 : 3;
   return `"${subj}",${date},${startTime},${endDate},${endTime},${allDay},"${memo}","${showTimeAs}","${loc}"`;

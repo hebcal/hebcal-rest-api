@@ -2,7 +2,8 @@ import test from 'ava';
 import {getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
   getHolidayDescription,
   appendIsraelAndTracking, locationToPlainObj, shouldRenderBrief} from './common';
-import {HebrewCalendar, Location, Event, HDate, flags, HolidayEvent, HebrewDateEvent, TimedEvent, DafYomiEvent} from '@hebcal/core';
+import {HebrewCalendar, Location, Event, HDate, flags, HolidayEvent,
+  HebrewDateEvent, TimedEvent, DafYomiEvent} from '@hebcal/core';
 
 test('getDownloadFilename', (t) => {
   const location = new Location(38.672294, -90.533239, false, 'America/Chicago',
@@ -40,6 +41,10 @@ test('getDownloadFilename', (t) => {
   loc4.admin1 = 'Central District';
   options.location = loc4;
   t.is(getDownloadFilename(options), 'hebcal_5749h_raanana');
+
+  const loc5 = new Location(19.4349023, -99.2069489, false, 'America/Mexico_City');
+  options.location = loc5;
+  t.is(getDownloadFilename(options), 'hebcal_5749h');
 });
 
 test('getCalendarTitle', (t) => {

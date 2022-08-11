@@ -1,4 +1,4 @@
-import {Locale, flags, HebrewCalendar, Zmanim} from '@hebcal/core';
+import {Locale, flags, HebrewCalendar, Zmanim, gematriya} from '@hebcal/core';
 import * as leyn from '@hebcal/leyning';
 import {
   getCalendarTitle,
@@ -97,7 +97,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
       if (reading) {
         result.leyning = formatLeyningResult(reading);
         const hyear = hd.getFullYear();
-        if (isParsha && !il && hyear >= 5745 && hyear <= 5830) {
+        if (isParsha && !il && hyear >= 5745) {
           const triReading = leyn.getTriennialForParshaHaShavua(ev);
           if (triReading) {
             result.leyning.triennial = formatAliyot({}, triReading);
@@ -125,6 +125,16 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
         translit: ev.sefira('translit'),
         en: ev.sefira('en'),
       },
+    };
+  }
+  if (mask & flags.HEBREW_DATE) {
+    const yy = hd.getFullYear();
+    const mm = hd.getMonthName();
+    const dd = hd.getDate();
+    result.heDateParts = {
+      y: gematriya(yy),
+      m: Locale.gettext(mm, 'he-x-NoNikud'),
+      d: gematriya(dd),
     };
   }
   const memo = ev.memo || holidayDescription[ev.basename()];

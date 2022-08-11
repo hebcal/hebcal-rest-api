@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "3.19.3",
+  "version": "3.19.4",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -21,8 +21,8 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^3.42.0",
-    "@hebcal/leyning": "^4.15.1"
+    "@hebcal/core": "^3.42.1",
+    "@hebcal/leyning": "^4.17.0"
   },
   "scripts": {
     "build": "rollup -c",
@@ -56,7 +56,7 @@
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^3.6.11",
     "jsdoc-to-markdown": "^7.1.1",
-    "rollup": "^2.77.2",
+    "rollup": "^2.77.3",
     "rollup-plugin-terser": "^7.0.2"
   }
 }

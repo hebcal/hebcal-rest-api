@@ -429,6 +429,11 @@ test('hebdate', (t) => {
     category: 'hebdate',
     title_orig: '24 Kislev 5756',
     hebrew: 'כ״ד כסלו',
+    heDateParts: {
+      d: 'כ״ד',
+      m: 'כסלו',
+      y: 'תשנ״ו',
+    },
   };
   t.deepEqual(obj, expected);
 });
@@ -484,6 +489,11 @@ test('location-zip', (t) => {
         category: 'hebdate',
         title_orig: '1 Adar II 5782',
         hebrew: 'א׳ אדר ב׳',
+        heDateParts: {
+          d: 'א׳',
+          m: 'אדר ב׳',
+          y: 'תשפ״ב',
+        },
       },
     ],
   };

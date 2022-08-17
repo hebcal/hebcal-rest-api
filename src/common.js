@@ -1,4 +1,4 @@
-import {flags, Zmanim} from '@hebcal/core';
+import {flags, Zmanim, HDate} from '@hebcal/core';
 import * as leyning from '@hebcal/leyning';
 import holidayDescription from './holidays.json';
 import countryNames from './countryNames.json';
@@ -51,14 +51,27 @@ export function makeAnchor(s) {
  * @return {string}
  */
 export function getDownloadFilename(options) {
-  let fileName = 'hebcal_' + options.year;
-  if (options.isHebrewYear) {
-    fileName += 'h';
+  let fileName = 'hebcal';
+  if (options.year) {
+    fileName += '_' + options.year;
+    if (options.isHebrewYear) {
+      fileName += 'h';
+    }
+    if (options.month) {
+      fileName += '_' + options.month;
+    }
+  } else if (typeof options.start === 'object' && typeof options.end === 'object') {
+    const start = new HDate(options.start);
+    const end = new HDate(options.end);
+    const y1 = start.greg().getFullYear();
+    const y2 = end.greg().getFullYear();
+    if (y1 === y2) {
+      fileName += '_' + y1;
+    } else {
+      fileName += '_' + y1 + '_' + y2;
+    }
   }
-  if (options.month) {
-    fileName += '_' + options.month;
-  }
-  if (options.location) {
+  if (typeof options.location === 'object') {
     const loc = options.location;
     const name = loc.zip || loc.asciiname || loc.getShortName();
     if (name) {
@@ -76,7 +89,7 @@ export function pad2(number) {
   if (number < 10) {
     return '0' + number;
   }
-  return String(number);
+  return '' + number;
 }
 
 /**
@@ -93,7 +106,7 @@ export function pad4(number) {
   } else if (number < 1000) {
     return '0' + number;
   }
-  return String(number);
+  return '' + number;
 }
 
 /**

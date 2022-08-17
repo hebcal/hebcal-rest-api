@@ -299,3 +299,26 @@ test('shouldRenderBrief', (t) => {
       new Date(), Location.lookup('Boston'))), true);
   t.is(shouldRenderBrief(new DafYomiEvent(new HDate(25, 'Sivan', 5782))), true);
 });
+
+test('getDownloadFilename-nodate', (t) => {
+  t.is(getDownloadFilename({}), 'hebcal');
+});
+
+test('getDownloadFilename-year-month', (t) => {
+  t.is(getDownloadFilename({year: 1993, month: 6}), 'hebcal_1993_6');
+});
+
+test('getDownloadFilename-start-end', (t) => {
+  t.is(getDownloadFilename({
+    start: new Date(1995, 10, 10),
+    end: new Date(1996, 2, 2),
+  }), 'hebcal_1995_1996');
+  t.is(getDownloadFilename({
+    start: new Date(2022, 10, 10),
+    end: new Date(2022, 11, 11),
+  }), 'hebcal_2022');
+  t.is(getDownloadFilename({
+    start: new HDate(new Date(2021, 1, 13)),
+    end: new HDate(new Date(2021, 11, 13)),
+  }), 'hebcal_2021');
+});

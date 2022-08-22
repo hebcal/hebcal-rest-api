@@ -1,38 +1,13 @@
 /* eslint-disable max-len */
 import test from 'ava';
 import {HebrewCalendar, Location} from '@hebcal/core';
-import {eventsToRss, eventToRssItem, eventsToRss2} from './rss';
+import {eventToRssItem2, eventsToRss2} from './rss';
 
 const dayFormat = new Intl.DateTimeFormat('en-US', {
   weekday: 'long',
   day: '2-digit',
   month: 'long',
   year: 'numeric',
-});
-
-test('eventsToRss', (t) => {
-  const location = new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398);
-  const options = {
-    year: 1990,
-    month: 4,
-    noMinorFast: true,
-    noRoshChodesh: true,
-    noSpecialShabbat: true,
-    candlelighting: true,
-    havdalahMins: 50,
-    location: location,
-  };
-  const events = HebrewCalendar.calendar(options).slice(0, 10);
-  const mainUrl = 'https://www.hebcal.com/shabbat?geonameid=4887398&m=50&lg=s';
-  const selfUrl = 'https://www.hebcal.com/shabbat?cfg=r&geonameid=4887398&m=50&lg=s&pubDate=1';
-  const rss = eventsToRss(events, location, mainUrl, selfUrl, 'en-US', true).split('\n');
-  t.is(rss[2], '<channel>');
-  t.is(rss[3], '<title>Shabbat Times for Chicago</title>');
-  t.is(rss[10], '<item>');
-  t.is(rss[rss.length - 4], '</item>');
-  t.is(rss[rss.length - 3], '</channel>');
-  t.is(rss[rss.length - 2], '</rss>');
-  t.is(rss[rss.length - 1], '');
 });
 
 test('eventsToRss2', (t) => {
@@ -92,7 +67,7 @@ test('eventsToRss2', (t) => {
 });
 
 
-test('eventToRssItem', (t) => {
+test('eventToRssItem2', (t) => {
   const location = Location.lookup('Eilat');
   const options = {
     year: 1990,
@@ -105,9 +80,11 @@ test('eventToRssItem', (t) => {
     location: location,
   };
   const events = HebrewCalendar.calendar(options).slice(0, 3);
-  const lastBuildDate = 'Mon, 22 Jun 2020 20:03:18 GMT';
-  const mainUrl = 'https://www.hebcal.com/shabbat?city=Eilat';
-  const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location, mainUrl, options));
+  options.evPubDate = true;
+  options.lastBuildDate = 'Mon, 22 Jun 2020 20:03:18 GMT';
+  options.mainUrl = 'https://www.hebcal.com/shabbat?city=Eilat';
+  options.dayFormat = dayFormat;
+  const items = events.map((ev) => eventToRssItem2(ev, options));
   const expected = [
     '<item>\n' +
     '<title>Candle lighting: 18:43</title>\n' +
@@ -146,7 +123,15 @@ test('parsha', (t) => {
     sedrot: true,
   });
   const location = Location.lookup('Kiev');
-  const item = eventToRssItem(events[0], true, '', dayFormat, location, '');
+  const options = {
+    location,
+    dayFormat,
+    evPubDate: true,
+    lastBuildDate: '',
+    mainUrl: '',
+    selfUrl: '',
+  };
+  const item = eventToRssItem2(events[0], options);
   const expected = '<item>\n' +
     '<title>Parashat Vayetzei</title>\n' +
     '<link>https://hebcal.com/s/vayetzei-20201128?us=shabbat1c&amp;um=rss</link>\n' +
@@ -167,7 +152,15 @@ test('parsha-il', (t) => {
     sedrot: true,
   });
   const location = Location.lookup('Jerusalem');
-  const item = eventToRssItem(events[0], true, '', dayFormat, location, '');
+  const options = {
+    location,
+    dayFormat,
+    evPubDate: true,
+    lastBuildDate: '',
+    mainUrl: '',
+    selfUrl: '',
+  };
+  const item = eventToRssItem2(events[0], options);
   const expected = '<item>\n' +
     '<title>Parashat Vayetzei</title>\n' +
     '<link>https://hebcal.com/s/vayetzei-20201128?i=on&amp;us=shabbat1c&amp;um=rss</link>\n' +
@@ -191,9 +184,11 @@ test('fastStartEnd', (t) => {
     candlelighting: true,
   };
   const events = HebrewCalendar.calendar(options);
-  const lastBuildDate = 'Mon, 22 Jun 2020 20:03:18 GMT';
-  const mainUrl = 'https://www.hebcal.com/shabbat?city=Tel+Aviv&lg=s';
-  const items = events.map((ev) => eventToRssItem(ev, true, lastBuildDate, dayFormat, location, mainUrl, options));
+  options.evPubDate = true;
+  options.dayFormat = dayFormat;
+  options.lastBuildDate = 'Mon, 22 Jun 2020 20:03:18 GMT';
+  options.mainUrl = 'https://www.hebcal.com/shabbat?city=Tel+Aviv&lg=s';
+  const items = events.map((ev) => eventToRssItem2(ev, options));
   const expected = [
     '<item>\n' +
       '<title>Fast begins: 04:09</title>\n' +

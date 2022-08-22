@@ -35,31 +35,6 @@ function getLinkAndGuid(ev, il, tzid, mainUrl, utmSource, utmMedium) {
   return [link, guid];
 }
 
-/**
- * @param {Event[]} events
- * @param {Location} location
- * @param {string} mainUrl
- * @param {string} selfUrl
- * @param {string} [lang] language such as 'he' (default 'en-US')
- * @param {boolean} [evPubDate] if true, use event time as pubDate (false uses lastBuildDate)
- * @return {string}
- */
-export function eventsToRss(events, location, mainUrl, selfUrl, lang='en-US', evPubDate=true) {
-  const cityDescr = location.getName();
-  const options = {
-    location,
-    mainUrl,
-    selfUrl,
-    lang,
-    evPubDate,
-    title: Locale.gettext('Shabbat') + ` Times for ${cityDescr}`,
-    description: `Weekly Shabbat candle lighting times for ${cityDescr}`,
-    utmSource: 'shabbat1c',
-    utmMedium: 'rss',
-  };
-  return eventsToRss2(events, options);
-}
-
 const localeToLg = {
   's': 'en',
   'a': 'en',
@@ -138,35 +113,15 @@ function getPubDate(ev, evPubDate, evDate, lastBuildDate) {
  * @return {string}
  */
 export function eventToRssItem2(ev, options) {
-  return eventToRssItem(
-      ev,
-      options.evPubDate,
-      options.lastBuildDate,
-      options.dayFormat,
-      options.location,
-      options.mainUrl,
-      options);
-}
-
-/**
- * @param {Event} ev
- * @param {boolean} evPubDate
- * @param {string} lastBuildDate
- * @param {Intl.DateTimeFormat} dayFormat
- * @param {Location} location
- * @param {string} mainUrl
- * @param {CalOptions} [options]
- * @return {string}
- */
-export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location, mainUrl, options) {
   let subj = ev.render();
   const evDate = ev.getDate().greg();
-  const pubDate = getPubDate(ev, evPubDate, evDate, lastBuildDate);
+  const pubDate = getPubDate(ev, options.evPubDate, evDate, options.lastBuildDate);
+  const location = options.location;
   const il = location ? location.getIsrael() : false;
   const tzid = location ? location.getTzid() : 'UTC';
   const utmSource = (options && options.utmSource) || 'shabbat1c';
   const utmMedium = (options && options.utmMedium) || 'rss';
-  const linkGuid = getLinkAndGuid(ev, il, tzid, mainUrl, utmSource, utmMedium);
+  const linkGuid = getLinkAndGuid(ev, il, tzid, options.mainUrl, utmSource, utmMedium);
   const link = linkGuid[0];
   const guid = linkGuid[1];
   const categories = getEventCategories(ev);
@@ -186,6 +141,7 @@ export function eventToRssItem(ev, evPubDate, lastBuildDate, dayFormat, location
         makeTorahMemoText(ev, il) :
         ev.memo || holidayDescription[ev.basename()];
   }
+  const dayFormat = options.dayFormat;
   const description = memo || dayFormat.format(evDate);
   const geoTags = (cat0 == 'candles') ?
     `<geo:lat>${location.getLatitude()}</geo:lat>\n<geo:long>${location.getLongitude()}</geo:long>\n` :

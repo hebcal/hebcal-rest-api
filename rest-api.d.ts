@@ -35,12 +35,11 @@ declare module '@hebcal/rest-api' {
    */
   export function shouldRenderBrief(ev: Event): boolean;
   /**
-   * @param [lang] - language such as 'he' (default 'en-US')
-   * @param [evPubDate] - if true, use event time as pubDate (false uses lastBuildDate)
+   * Extends `CalOptions` with
+   * `lang` - language such as 'he' (default 'en-US')
+   * `evPubDate` - if true, use event time as pubDate (false uses lastBuildDate)
    */
-  export function eventsToRss(events: Event[], location: Location, mainUrl: string, selfUrl: string, lang?: string, evPubDate?: boolean): string;
   export function eventsToRss2(events: Event[], options: CalOptions): string;
-  export function eventToRssItem(ev: Event, evPubDate: boolean, lastBuildDate: string, dayFormat: Intl.DateTimeFormat, location: Location, baseUrl: string, options?: CalOptions): string;
   export function eventToRssItem2(ev: Event, options: CalOptions): string;
   export function getDownloadFilename(options: CalOptions): string;
   export function pad2(number: number): string;
@@ -51,21 +50,9 @@ declare module '@hebcal/rest-api' {
    */
   export function makeAnchor(s: string): string;
   /**
-   * Get offset string (like "+05:00" or "-08:00") from tzid (like "Europe/Moscow")
-   * @deprecated
-   */
-  export function timeZoneOffsetStr(tzid: string, date: Date): string;
-  /**
    * Returns just the date portion as YYYY-MM-DD
    */
   export function toISOString(d: Date): string;
-  /**
-   * Returns a string like "2018-09-01T12:30:00-05:00'"
-   * @deprecated
-   * @param timeStr - must be formatted with only hours and minutes, like "17:12"
-   * @param tzid - like "America/New_York"
-   */
-  export function toISOStringWithTimezone(date: Date, timeStr: string, tzid: string): string;
   /**
    * Returns a category and subcategory name
    */

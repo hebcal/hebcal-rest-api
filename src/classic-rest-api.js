@@ -1,5 +1,6 @@
 import {Locale, flags, HebrewCalendar, Zmanim, gematriya} from '@hebcal/core';
-import * as leyn from '@hebcal/leyning';
+import {formatAliyahWithBook, getLeyningForHoliday,
+  getLeyningForParshaHaShavua, getTriennialForParshaHaShavua} from '@hebcal/leyning';
 import {
   getCalendarTitle,
   getEventCategories,
@@ -92,15 +93,15 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
       const il = options.il;
       const isParsha = (mask === flags.PARSHA_HASHAVUA);
       const reading = isParsha ?
-        leyn.getLeyningForParshaHaShavua(ev, il) :
-        leyn.getLeyningForHoliday(ev, il);
+        getLeyningForParshaHaShavua(ev, il) :
+        getLeyningForHoliday(ev, il);
       if (reading) {
         result.leyning = formatLeyningResult(reading);
         const hyear = hd.getFullYear();
         if (isParsha && !il && hyear >= 5745) {
-          const triReading = leyn.getTriennialForParshaHaShavua(ev);
+          const triReading = getTriennialForParshaHaShavua(ev);
           if (triReading) {
-            result.leyning.triennial = formatAliyot({}, triReading);
+            result.leyning.triennial = formatAliyot({}, triReading.aliyot);
           }
         }
       }
@@ -159,14 +160,14 @@ function formatAliyot(result, aliyot) {
     const aliyah = aliyot[num];
     if (typeof aliyah !== 'undefined') {
       const k = num == 'M' ? 'maftir' : num;
-      result[k] = leyn.formatAliyahWithBook(aliyah);
+      result[k] = formatAliyahWithBook(aliyah);
     }
   });
   return result;
 }
 
 /**
- * @param {leyn.Leyning} reading
+ * @param {Leyning} reading
  * @return {Object}
  */
 function formatLeyningResult(reading) {

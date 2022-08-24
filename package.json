@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@hebcal/core": "^3.42.2",
-    "@hebcal/leyning": "^5.0.0"
+    "@hebcal/leyning": "^6.0.0",
+    "@hebcal/triennial": "^1.0.0"
   },
   "scripts": {
     "build": "rollup -c",

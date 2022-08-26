@@ -30,7 +30,7 @@ export default [
       nodeResolve(),
       commonjs(),
     ],
-    external: ['@hebcal/core', '@hebcal/leyning'],
+    external: ['@hebcal/core', '@hebcal/leyning', '@hebcal/triennial'],
   },
   {
     input: 'src/index.js',
@@ -54,7 +54,7 @@ export default [
       nodeResolve(),
       commonjs(),
     ],
-    external: ['@hebcal/core', '@hebcal/leyning'],
+    external: ['@hebcal/core', '@hebcal/leyning', '@hebcal/triennial'],
   },
   {
     input: 'src/index.js',
@@ -66,6 +66,7 @@ export default [
         globals: {
           '@hebcal/core': 'hebcal',
           '@hebcal/leyning': 'hebcal__leyning',
+          '@hebcal/triennial': 'hebcal__triennial',
         },
         indent: false,
         banner,
@@ -77,6 +78,7 @@ export default [
         globals: {
           '@hebcal/core': 'hebcal',
           '@hebcal/leyning': 'hebcal__leyning',
+          '@hebcal/triennial': 'hebcal__triennial',
         },
         plugins: [terser()],
         banner,
@@ -100,6 +102,44 @@ export default [
             corejs: 3,
           }],
         ],
+        exclude: ['node_modules/**'],
+      }),
+      nodeResolve(),
+      commonjs(),
+    ],
+    external: ['@hebcal/core', '@hebcal/leyning', '@hebcal/triennial'],
+  },
+  {
+    input: 'src/fullcalendar.js',
+    output: [
+      {
+        file: 'dist/fullcalendar.js',
+        format: 'iife',
+        name: 'hebcalFullCalendar',
+        globals: {
+          '@hebcal/core': 'hebcal',
+          '@hebcal/leyning': 'hebcal__leyning',
+        },
+        indent: false,
+        banner,
+      },
+      {
+        file: 'dist/fullcalendar.min.js',
+        format: 'iife',
+        name: 'hebcalFullCalendar',
+        globals: {
+          '@hebcal/core': 'hebcal',
+          '@hebcal/leyning': 'hebcal__leyning',
+        },
+        plugins: [terser()],
+        banner,
+      },
+    ],
+    plugins: [
+      json({compact: true}),
+      babel({
+        babelHelpers: 'bundled',
+        presets: ['@babel/preset-env'],
         exclude: ['node_modules/**'],
       }),
       nodeResolve(),

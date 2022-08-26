@@ -1,4 +1,4 @@
-import {flags, Zmanim, HDate} from '@hebcal/core';
+import {flags, HDate} from '@hebcal/core';
 import {getLeyningForParshaHaShavua, getLeyningForHoliday} from '@hebcal/leyning';
 import holidayDescription from './holidays.json';
 import countryNames from './countryNames.json';

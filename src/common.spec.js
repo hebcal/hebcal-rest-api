@@ -187,7 +187,6 @@ test('getEventCategories', (t) => {
     {h: 'Simchat Torah', c: ['holiday', 'major']},
     {h: 'Rosh Chodesh Cheshvan', c: ['roshchodesh']},
     {h: 'Rosh Chodesh Cheshvan', c: ['roshchodesh']},
-    {h: 'Yom HaAliyah School Observance', c: ['holiday', 'modern']},
     {h: 'Sigd', c: ['holiday', 'modern']},
     {h: 'Rosh Chodesh Kislev', c: ['roshchodesh']},
     {h: 'Rosh Chodesh Kislev', c: ['roshchodesh']},

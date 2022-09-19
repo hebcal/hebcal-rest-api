@@ -118,6 +118,24 @@ export function toISOString(d) {
   return pad4(d.getFullYear()) + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
 }
 
+const flagToCategory = [
+  [flags.MAJOR_FAST, 'holiday', 'major', 'fast'],
+  [flags.CHANUKAH_CANDLES, 'holiday', 'major'],
+  [flags.DAF_YOMI, 'dafyomi'],
+  [flags.HEBREW_DATE, 'hebdate'],
+  [flags.MINOR_FAST, 'holiday', 'fast'],
+  [flags.MINOR_HOLIDAY, 'holiday', 'minor'],
+  [flags.MISHNA_YOMI, 'mishnayomi'],
+  [flags.MODERN_HOLIDAY, 'holiday', 'modern'],
+  [flags.MOLAD, 'molad'],
+  [flags.OMER_COUNT, 'omer'],
+  [flags.PARSHA_HASHAVUA, 'parashat'], // backwards-compat
+  [flags.ROSH_CHODESH, 'roshchodesh'],
+  [flags.SHABBAT_MEVARCHIM, 'mevarchim'],
+  [flags.SPECIAL_SHABBAT, 'holiday', 'shabbat'],
+  [flags.USER_EVENT, 'user'],
+];
+
 /**
  * Returns a category and subcategory name
  * @param {Event} ev
@@ -129,26 +147,15 @@ export function getEventCategories(ev) {
   if (desc === 'Fast begins' || desc === 'Fast ends') {
     return ['zmanim', 'fast'];
   }
-  switch (ev.getFlags()) {
-    case flags.OMER_COUNT: return ['omer'];
-    case flags.HEBREW_DATE: return ['hebdate'];
-    case flags.PARSHA_HASHAVUA: return ['parashat']; // backwards-compat
-    case flags.DAF_YOMI: return ['dafyomi'];
-    case flags.ROSH_CHODESH: return ['roshchodesh'];
-    case flags.SPECIAL_SHABBAT: return ['holiday', 'shabbat'];
-    case flags.MINOR_FAST: return ['holiday', 'fast'];
-    case flags.MAJOR_FAST: return ['holiday', 'fast', 'major'];
-    case flags.MODERN_HOLIDAY: return ['holiday', 'modern'];
-    case flags.SHABBAT_MEVARCHIM: return ['mevarchim'];
-    case flags.MOLAD: return ['molad'];
-    case flags.USER_EVENT: return ['user'];
-    case flags.MINOR_HOLIDAY: return ['holiday', 'minor'];
-    case flags.MISHNA_YOMI: return ['mishnayomi'];
-    default:
-      break; // fall through to string-based category
-  }
   if (ev.cholHaMoedDay) {
     return ['holiday', 'major', 'cholhamoed'];
+  }
+  const mask = ev.getFlags();
+  for (let i = 0; i < flagToCategory.length; i++) {
+    const attrs = flagToCategory[i];
+    if (mask & attrs[0]) {
+      return attrs.slice(1);
+    }
   }
   switch (desc) {
     case 'Havdalah':
@@ -165,8 +172,6 @@ export function getEventCategories(ev) {
     case 'Tu BiShvat':
     case 'Rosh Hashana LaBehemot':
       return ['holiday', 'minor'];
-    case 'Erev Tish\'a B\'Av':
-      return ['holiday', 'fast', 'major'];
     default:
       return ['holiday', 'major'];
   }

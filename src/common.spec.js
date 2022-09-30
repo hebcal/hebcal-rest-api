@@ -125,6 +125,7 @@ test('getEventCategories', (t) => {
     'Erev Purim': ['holiday', 'minor'],
     'Purim': ['holiday', 'minor'],
     'Shushan Purim': ['holiday', 'minor'],
+    'Shushan Purim Katan': ['holiday', 'minor'],
     'Shabbat Parah': ['holiday', 'shabbat'],
     'Shabbat HaChodesh': ['holiday', 'shabbat'],
     'Rosh Chodesh Nisan': ['roshchodesh'],

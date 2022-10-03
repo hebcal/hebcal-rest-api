@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@hebcal/core": "^3.45.0",
-    "@hebcal/leyning": "^6.1.1",
+    "@hebcal/leyning": "^6.2.1",
     "@hebcal/triennial": "^1.0.4"
   },
   "scripts": {
@@ -52,7 +52,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^14.1.0",
     "ava": "^4.3.3",
-    "core-js": "^3.25.3",
+    "core-js": "^3.25.5",
     "eslint": "^8.24.0",
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^3.6.11",

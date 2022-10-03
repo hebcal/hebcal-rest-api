@@ -143,9 +143,17 @@ const flagToCategory = [
  */
 export function getEventCategories(ev) {
   const desc = ev.getDesc();
-  // since these use flags.MINOR_FAST or flags.MAJOR_FAST, check description first
-  if (desc === 'Fast begins' || desc === 'Fast ends') {
-    return ['zmanim', 'fast'];
+  switch (desc) {
+    // LIGHT_CANDLES or LIGHT_CANDLES_TZEIS
+    case 'Candle lighting':
+      return ['candles'];
+    // YOM_TOV_ENDS
+    case 'Havdalah':
+      return ['havdalah'];
+    // flags.MINOR_FAST or flags.MAJOR_FAST
+    case 'Fast begins':
+    case 'Fast ends':
+      return ['zmanim', 'fast'];
   }
   if (ev.cholHaMoedDay) {
     return ['holiday', 'major', 'cholhamoed'];
@@ -157,11 +165,8 @@ export function getEventCategories(ev) {
       return attrs.slice(1);
     }
   }
+  // Don't depend on flags.MINOR_HOLIDAY always being set
   switch (desc) {
-    case 'Havdalah':
-      return ['havdalah'];
-    case 'Candle lighting':
-      return ['candles'];
     case 'Lag BaOmer':
     case 'Leil Selichot':
     case 'Pesach Sheni':

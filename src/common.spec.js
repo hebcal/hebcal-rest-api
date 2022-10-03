@@ -199,6 +199,28 @@ test('getEventCategories', (t) => {
   t.deepEqual(actual, expected);
 });
 
+test('getEventCategories-candles', (t) => {
+  const events = HebrewCalendar.calendar({
+    start: new HDate(9, 'Tishrei', 5783),
+    end: new HDate(13, 'Tishrei', 5783),
+    candlelighting: true,
+    location: Location.lookup('Los Angeles'),
+  });
+  const actual = [];
+  for (const ev of events) {
+    actual.push([ev.getDesc(), getEventCategories(ev)]);
+  }
+  const expected = [
+    ['Erev Yom Kippur', ['holiday', 'major']],
+    ['Candle lighting', ['candles']],
+    ['Yom Kippur', ['holiday', 'major', 'fast']],
+    ['Havdalah', ['havdalah']],
+    ['Candle lighting', ['candles']],
+    ['Havdalah', ['havdalah']],
+  ];
+  t.deepEqual(actual, expected);
+});
+
 test('appendIsraelAndTracking', (t) => {
   t.is(appendIsraelAndTracking('https://www.hebcal.com/foo', true, 'foo', 'bar'),
       'https://www.hebcal.com/foo?i=on&utm_source=foo&utm_medium=bar');

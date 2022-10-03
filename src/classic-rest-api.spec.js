@@ -413,7 +413,7 @@ test('daf-yomi', (t) => {
     date: '1995-12-17',
     hdate: '24 Kislev 5756',
     category: 'dafyomi',
-    hebrew: 'עבודה זרה 68',
+    hebrew: 'עבודה זרה דף ס״ח',
     link: 'https://www.sefaria.org/Avodah_Zarah.68a?lang=bi&utm_source=hebcal.com&utm_medium=api',
   };
   t.deepEqual(obj, expected);

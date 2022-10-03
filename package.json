@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "4.3.3",
+  "version": "4.3.4",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -21,7 +21,7 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^3.45.0",
+    "@hebcal/core": "^3.45.1",
     "@hebcal/leyning": "^6.2.1",
     "@hebcal/triennial": "^1.0.4"
   },

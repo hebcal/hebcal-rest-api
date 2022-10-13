@@ -129,7 +129,7 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
       },
     };
   }
-  if (mask & flags.HEBREW_DATE) {
+  if ((options.heDateParts && !timed) || (mask & flags.HEBREW_DATE)) {
     const yy = hd.getFullYear();
     const mm = hd.getMonthName();
     const dd = hd.getDate();

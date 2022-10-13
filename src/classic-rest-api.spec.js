@@ -536,3 +536,12 @@ test('classic-api-empty', (t) => {
   };
   t.deepEqual(apiResult, expected);
 });
+
+test('options.heDateParts', (t) => {
+  const hd = new HDate(18, 'Tishrei', 5783);
+  const options = {start: hd, end: hd};
+  const events = HebrewCalendar.calendar(options);
+  options.heDateParts = true;
+  const actual = eventToClassicApiObject(events[0], options, false);
+  t.deepEqual(actual.heDateParts, {y: 'תשפ״ג', m: 'תשרי', d: 'י״ח'});
+});

@@ -1,7 +1,7 @@
 # @hebcal/rest-api
 Jewish holidays and Hebrew calendar as plain JSON objects, RSS, and CSV export
 
-[![Build Status](https://circleci.com/gh/hebcal/hebcal-rest-api.svg?style=svg)](https://circleci.com/gh/hebcal/hebcal-rest-api)
+[![Build Status](https://github.com/hebcal/hebcal-rest-api/actions/workflows/node.js.yml/badge.svg)](https://github.com/hebcal/hebcal-rest-api/actions/workflows/node.js.yml)
 
 ## Installation
 ```bash

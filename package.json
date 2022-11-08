@@ -44,8 +44,8 @@
     "verbose": true
   },
   "devDependencies": {
-    "@babel/core": "^7.19.6",
-    "@babel/preset-env": "^7.19.4",
+    "@babel/core": "^7.20.2",
+    "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.18.9",
     "@rollup/plugin-babel": "^6.0.2",
     "@rollup/plugin-commonjs": "^23.0.2",
@@ -54,9 +54,9 @@
     "@rollup/plugin-terser": "^0.1.0",
     "ava": "^5.0.1",
     "core-js": "^3.26.0",
-    "eslint": "^8.26.0",
+    "eslint": "^8.27.0",
     "eslint-config-google": "^0.14.0",
-    "jsdoc": "^3.6.11",
+    "jsdoc": "^4.0.0",
     "jsdoc-to-markdown": "^7.1.1",
     "rollup": "^3.2.5"
   }

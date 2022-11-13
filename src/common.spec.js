@@ -105,6 +105,21 @@ test('makeTorahMemoText-userEvent', (t) => {
   t.is(makeTorahMemoText(holidayEvent, false), 'Haftarah: Isaiah 66:1-24');
 });
 
+test('makeTorahMemoText-untimed', (t) => {
+  const ev1 = HebrewCalendar.calendar({
+    start: new Date(2020, 11, 14),
+    end: new Date(2020, 11, 14),
+  })[0];
+  t.is(makeTorahMemoText(ev1, false), 'Torah: Numbers 7:30-41');
+  const ev2 = HebrewCalendar.calendar({
+    start: new Date(2020, 11, 14),
+    end: new Date(2020, 11, 14),
+    location: Location.lookup('Boston'),
+    candlelighting: true,
+  })[0];
+  t.is(makeTorahMemoText(ev2, false), '');
+});
+
 test('getEventCategories', (t) => {
   const events = HebrewCalendar.calendar({year: 2022, il: true});
   const actual = {};

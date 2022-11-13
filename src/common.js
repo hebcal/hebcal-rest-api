@@ -263,6 +263,8 @@ export function makeTorahMemoText(ev, il) {
   const mask = ev.getFlags();
   if (mask & HOLIDAY_IGNORE_MASK) {
     return '';
+  } else if (typeof ev.eventTime !== 'undefined') {
+    return '';
   }
   const reading = (mask & flags.PARSHA_HASHAVUA) ?
     getLeyningForParshaHaShavua(ev, il) :

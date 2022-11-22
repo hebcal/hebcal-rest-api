@@ -126,6 +126,7 @@ const flagToCategory = [
   [flags.MINOR_FAST, 'holiday', 'fast'],
   [flags.MINOR_HOLIDAY, 'holiday', 'minor'],
   [flags.MISHNA_YOMI, 'mishnayomi'],
+  [flags.YERUSHALMI_YOMI, 'yerushalmi'],
   [flags.MODERN_HOLIDAY, 'holiday', 'modern'],
   [flags.MOLAD, 'molad'],
   [flags.OMER_COUNT, 'omer'],
@@ -251,7 +252,7 @@ export function getHolidayDescription(ev, firstSentence=false) {
 
 const HOLIDAY_IGNORE_MASK = flags.DAF_YOMI | flags.OMER_COUNT |
   flags.SHABBAT_MEVARCHIM | flags.MOLAD | flags.USER_EVENT |
-  flags.HEBREW_DATE;
+  flags.HEBREW_DATE | flags.YERUSHALMI_YOMI;
 
 /**
  * Makes mulit-line text that summarizes Torah & Haftarah

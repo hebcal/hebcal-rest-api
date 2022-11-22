@@ -1,5 +1,7 @@
 import test from 'ava';
-import {HebrewCalendar, Location, DafYomiEvent, HDate, HebrewDateEvent, MishnaYomiEvent, OmerEvent} from '@hebcal/core';
+import {HebrewCalendar, Location, DafYomiEvent, HDate,
+  HebrewDateEvent, MishnaYomiEvent, OmerEvent,
+  YerushalmiYomiEvent} from '@hebcal/core';
 import {eventsToClassicApi, eventToClassicApiObject} from './classic-rest-api';
 
 test('eventToClassicApiObject', (t) => {
@@ -544,4 +546,20 @@ test('options.heDateParts', (t) => {
   options.heDateParts = true;
   const actual = eventToClassicApiObject(events[0], options, false);
   t.deepEqual(actual.heDateParts, {y: 'תשפ״ג', m: 'תשרי', d: 'י״ח'});
+});
+
+test('yerushalmi-yomi', (t) => {
+  const hd = new HDate(new Date(2022, 10, 15));
+  const daf = {name: 'Berakhot', blatt: 2};
+  const ev = new YerushalmiYomiEvent(hd, daf);
+  const obj = eventToClassicApiObject(ev, {}, false);
+  const expected = {
+    title: 'Yerushalmi Berakhot 2',
+    date: '2022-11-15',
+    hdate: '21 Cheshvan 5783',
+    category: 'yerushalmi',
+    title_orig: 'Berakhot 2',
+    hebrew: 'ירושלמי ברכות דף ב׳',
+  };
+  t.deepEqual(obj, expected);
 });

@@ -554,12 +554,11 @@ test('yerushalmi-yomi', (t) => {
   const ev = new YerushalmiYomiEvent(hd, daf);
   const obj = eventToClassicApiObject(ev, {}, false);
   const expected = {
-    title: 'Yerushalmi Berakhot 2',
+    title: 'Berakhot 2',
     date: '2022-11-15',
     hdate: '21 Cheshvan 5783',
     category: 'yerushalmi',
-    title_orig: 'Berakhot 2',
-    hebrew: 'ירושלמי ברכות דף ב׳',
+    hebrew: 'ברכות דף ב׳',
   };
   t.deepEqual(obj, expected);
 });

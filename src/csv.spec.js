@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import test from 'ava';
-import {HebrewCalendar, Location, HDate, HebrewDateEvent} from '@hebcal/core';
+import {HebrewCalendar, Location, HDate, HebrewDateEvent,
+  YerushalmiYomiEvent, DafYomiEvent, MishnaYomiEvent,
+  OmerEvent} from '@hebcal/core';
 import {eventToCsv, eventsToCsv} from './csv';
 
 test('eventToCsv', (t) => {
@@ -104,4 +106,24 @@ test('newline', (t) => {
   ev.memo = 'foo\nbar\nbaaz';
   const actual = eventToCsv(ev, {locale: 'en'});
   t.is(actual, '"2nd of Sivan","5/15/2010",,,,"true","foo / bar / baaz","3","Hebrew Date"');
+});
+
+test('CSV Location', (t) => {
+  const hd = new HDate(new Date(2022, 10, 15));
+  const toTest = [
+    [new DafYomiEvent(hd),
+      '"Nedarim 21","11/15/2022",,,,"true","","3","Daf Yomi"'],
+    [new MishnaYomiEvent(hd,
+        [{k: 'Bikkurim', v: '4:1'}, {k: 'Bikkurim', v: '4:2'}]),
+    '"Bikkurim 4:1-2","11/15/2022",,,,"true","","3","Mishna Yomi"'],
+    [new YerushalmiYomiEvent(hd,
+        {name: 'Berakhot', blatt: 2, ed: 'vilna'}),
+    '"Berakhot 2","11/15/2022",,,,"true","","3","Yerushalmi Yomi"'],
+    [new OmerEvent(new HDate(28, 'Nisan', 5783), 13),
+      '"13th day of the Omer","4/19/2023",,,,"true","","3",""'],
+  ];
+  for (const [ev, expected] of toTest) {
+    const actual = eventToCsv(ev, {});
+    t.is(actual, expected);
+  }
 });

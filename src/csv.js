@@ -6,14 +6,17 @@ const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","Al
 
 const CATEGORY = {
   dafyomi: 'Daf Yomi',
+  mishnayomi: 'Mishna Yomi',
+  yerushalmi: 'Yerushalmi Yomi',
   hebdate: 'Hebrew Date',
   holiday: 'Jewish Holidays',
-  mevarchim: null,
-  molad: null,
-  omer: null,
+  mevarchim: '',
+  molad: '',
+  omer: '',
   parashat: 'Torah Reading',
   roshchodesh: 'Jewish Holidays',
   user: 'Personal',
+  zmanim: '',
 };
 
 /**
@@ -45,19 +48,13 @@ export function eventToCsv(e, options) {
 
   let loc = 'Jewish Holidays';
   const mask = e.getFlags();
-  if (timed && options.location && options.location.name) {
-    const locationName = options.location.name;
+  if (timed && typeof options.location === 'object') {
+    const locationName = options.location.getShortName();
     const comma = locationName.indexOf(',');
     loc = (comma === -1) ? locationName : locationName.substring(0, comma);
-  } else if (mask & flags.DAF_YOMI) {
-    const colon = subj.indexOf(': ');
-    if (colon != -1) {
-      loc = subj.substring(0, colon);
-      subj = subj.substring(colon + 2);
-    }
   } else {
     const category = CATEGORY[getEventCategories(e)[0]];
-    if (category) {
+    if (typeof category === 'string') {
       loc = category;
     }
   }

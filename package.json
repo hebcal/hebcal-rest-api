@@ -8,6 +8,10 @@
   "description": "Jewish holidays and Hebrew calendar as plain JSON objects and CSV export",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js"
+  },
   "typings": "rest-api.d.ts",
   "files": [
     "dist",
@@ -21,7 +25,7 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^3.46.5",
+    "@hebcal/core": "^3.46.6",
     "@hebcal/leyning": "^6.2.3",
     "@hebcal/triennial": "^1.0.4"
   },
@@ -51,13 +55,13 @@
     "@rollup/plugin-commonjs": "^23.0.3",
     "@rollup/plugin-json": "^5.0.2",
     "@rollup/plugin-node-resolve": "^15.0.1",
-    "@rollup/plugin-terser": "^0.1.0",
+    "@rollup/plugin-terser": "^0.2.0",
     "ava": "^5.1.0",
     "core-js": "^3.26.1",
-    "eslint": "^8.28.0",
+    "eslint": "^8.29.0",
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^4.0.0",
     "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^3.5.1"
+    "rollup": "^3.6.0"
   }
 }

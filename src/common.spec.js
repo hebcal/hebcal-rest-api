@@ -200,6 +200,7 @@ test('getEventCategories', (t) => {
     'Sigd': ['holiday', 'modern'],
     'Rosh Chodesh Kislev': ['roshchodesh'],
     'Ben-Gurion Day': ['holiday', 'modern'],
+    'Chag HaBanot': ['holiday', 'minor'],
     'Chanukah: 1 Candle': ['holiday', 'major'],
     'Chanukah: 2 Candles': ['holiday', 'major'],
     'Chanukah: 3 Candles': ['holiday', 'major'],

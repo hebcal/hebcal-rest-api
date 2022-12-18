@@ -292,6 +292,26 @@ export function makeTorahMemoText(ev, il) {
 }
 
 /**
+ * @private
+ * @param {Event} ev
+ * @param {boolean} il
+ * @return {string}
+ */
+export function makeMemo(ev, il) {
+  if (ev.getFlags() & flags.PARSHA_HASHAVUA) {
+    try {
+      const memo = makeTorahMemoText(ev, il);
+      if (memo) {
+        return memo;
+      }
+    } catch (err) {
+      // fallthru
+    }
+  }
+  return ev.memo || holidayDescription[ev.basename()];
+}
+
+/**
  * Appends utm_source and utm_medium parameters to a URL
  * @param {string} url
  * @param {boolean} il

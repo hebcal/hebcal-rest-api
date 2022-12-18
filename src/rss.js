@@ -1,7 +1,6 @@
 import {getEventCategories, makeAnchor, appendIsraelAndTracking,
-  makeTorahMemoText, getCalendarTitle} from './common';
-import {Locale, HebrewCalendar, Zmanim, flags} from '@hebcal/core';
-import holidayDescription from './holidays.json';
+  makeMemo, getCalendarTitle} from './common';
+import {Locale, HebrewCalendar, Zmanim} from '@hebcal/core';
 
 /**
  * @private
@@ -137,9 +136,7 @@ export function eventToRssItem2(ev, options) {
       subj = subj.substring(0, colon) + ': ' + time;
     }
   } else {
-    memo = (ev.getFlags() & flags.PARSHA_HASHAVUA) ?
-        makeTorahMemoText(ev, il) :
-        ev.memo || holidayDescription[ev.basename()];
+    memo = makeMemo(ev, il);
   }
   const dayFormat = options.dayFormat;
   const description = memo || dayFormat.format(evDate);

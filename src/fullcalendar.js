@@ -1,7 +1,6 @@
 import {Locale, flags, Zmanim} from '@hebcal/core';
-import {getEventCategories, makeTorahMemoText, toISOString,
+import {getEventCategories, makeMemo, toISOString,
   appendIsraelAndTracking, shouldRenderBrief} from './common';
-import holidayDescription from './holidays.json';
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object
@@ -38,9 +37,7 @@ export function eventToFullCalendar(ev, tzid, il) {
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';
   if (!candles) {
-    const memo = (mask & flags.PARSHA_HASHAVUA) ?
-        makeTorahMemoText(ev, il) :
-        ev.memo || holidayDescription[ev.basename()];
+    const memo = makeMemo(ev, il);
     if (memo) {
       result.description = memo;
     } else if (typeof ev.linkedEvent !== 'undefined') {

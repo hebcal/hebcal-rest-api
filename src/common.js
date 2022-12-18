@@ -126,6 +126,7 @@ const flagToCategory = [
   [flags.MINOR_FAST, 'holiday', 'fast'],
   [flags.MINOR_HOLIDAY, 'holiday', 'minor'],
   [flags.MISHNA_YOMI, 'mishnayomi'],
+  [flags.NACH_YOMI, 'nachyomi'],
   [flags.YERUSHALMI_YOMI, 'yerushalmi'],
   [flags.MODERN_HOLIDAY, 'holiday', 'modern'],
   [flags.MOLAD, 'molad'],

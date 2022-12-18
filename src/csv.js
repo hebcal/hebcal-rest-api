@@ -7,6 +7,7 @@ const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","Al
 const CATEGORY = {
   dafyomi: 'Daf Yomi',
   mishnayomi: 'Mishna Yomi',
+  nachyomi: 'Nach Yomi',
   yerushalmi: 'Yerushalmi Yomi',
   hebdate: 'Hebrew Date',
   holiday: 'Jewish Holidays',

@@ -253,6 +253,7 @@ export function getHolidayDescription(ev, firstSentence=false) {
 
 const HOLIDAY_IGNORE_MASK = flags.DAF_YOMI | flags.OMER_COUNT |
   flags.SHABBAT_MEVARCHIM | flags.MOLAD | flags.USER_EVENT |
+  flags.NACH_YOMI |
   flags.HEBREW_DATE | flags.YERUSHALMI_YOMI;
 
 /**

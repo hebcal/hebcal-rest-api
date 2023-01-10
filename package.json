@@ -25,7 +25,7 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^3.48.2",
+    "@hebcal/core": "^3.49.0",
     "@hebcal/leyning": "^7.0.0",
     "@hebcal/triennial": "^1.1.0"
   },
@@ -41,20 +41,20 @@
     "require": ["@babel/register"]
   },
   "devDependencies": {
-    "@babel/core": "^7.20.5",
+    "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.18.9",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
-    "@rollup/plugin-terser": "^0.2.0",
+    "@rollup/plugin-terser": "^0.3.0",
     "ava": "^5.1.0",
-    "core-js": "^3.26.1",
-    "eslint": "^8.30.0",
+    "core-js": "^3.27.1",
+    "eslint": "^8.31.0",
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^4.0.0",
     "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^3.7.5"
+    "rollup": "^3.9.1"
   }
 }

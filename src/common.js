@@ -156,6 +156,8 @@ export function getEventCategories(ev) {
     case 'Fast begins':
     case 'Fast ends':
       return ['zmanim', 'fast'];
+    case 'Purim':
+      return ['holiday', 'major'];
   }
   if (ev.cholHaMoedDay) {
     return ['holiday', 'major', 'cholhamoed'];

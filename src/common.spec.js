@@ -138,7 +138,7 @@ test('getEventCategories', (t) => {
     'Shabbat Zachor': ['holiday', 'shabbat'],
     'Ta\'anit Esther': ['holiday', 'fast'],
     'Erev Purim': ['holiday', 'minor'],
-    'Purim': ['holiday', 'minor'],
+    'Purim': ['holiday', 'major'],
     'Shushan Purim': ['holiday', 'minor'],
     'Shushan Purim Katan': ['holiday', 'minor'],
     'Shabbat Parah': ['holiday', 'shabbat'],

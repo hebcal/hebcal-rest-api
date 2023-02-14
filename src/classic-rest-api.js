@@ -1,4 +1,4 @@
-import {Locale, flags, HebrewCalendar, Zmanim, gematriya} from '@hebcal/core';
+import {HDate, Locale, flags, HebrewCalendar, Zmanim, gematriya} from '@hebcal/core';
 import {formatAliyahWithBook, getLeyningForHoliday,
   getLeyningForParshaHaShavua} from '@hebcal/leyning';
 import {getTriennialForParshaHaShavua} from '@hebcal/triennial';
@@ -128,6 +128,18 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
         en: ev.sefira('en'),
       },
     };
+  }
+  if (mask & flags.MOLAD) {
+    const m = ev.molad;
+    result.molad = {
+      year: m.year,
+      month: HDate.getMonthName(m.month, m.year),
+      dow: m.dow,
+      hour: m.hour,
+      minutes: m.minutes,
+      chalakim: m.chalakim,
+    };
+    delete result.hebrew;
   }
   if ((options.heDateParts && !timed) || (mask & flags.HEBREW_DATE)) {
     const yy = hd.getFullYear();

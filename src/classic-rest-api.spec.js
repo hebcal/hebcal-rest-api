@@ -562,3 +562,53 @@ test('yerushalmi-yomi', (t) => {
   };
   t.deepEqual(obj, expected);
 });
+
+test('molad', (t) => {
+  const options = {year: 2022, molad: true, noHolidays: true};
+  const events = HebrewCalendar.calendar(options);
+  const apiResult = eventsToClassicApi(events.slice(2, 5), options, false);
+  const expected = [{
+    title: 'Molad Adar II: Thu, 51 minutes and 17 chalakim after 3:00',
+    date: '2022-02-26',
+    hdate: '25 Adar I 5782',
+    category: 'molad',
+    title_orig: 'Molad Adar II 5782',
+    molad: {
+      year: 5782,
+      month: 'Adar II',
+      dow: 4,
+      hour: 3,
+      minutes: 51,
+      chalakim: 17,
+    },
+  }, {
+    title: 'Molad Nisan: Fri, 36 minutes and 0 chalakim after 16:00',
+    date: '2022-03-26',
+    hdate: '23 Adar II 5782',
+    category: 'molad',
+    title_orig: 'Molad Nisan 5782',
+    molad: {
+      year: 5782,
+      month: 'Nisan',
+      dow: 5,
+      hour: 16,
+      minutes: 36,
+      chalakim: 0,
+    },
+  }, {
+    title: 'Molad Iyyar: Sun, 20 minutes and 1 chalakim after 5:00',
+    date: '2022-04-30',
+    hdate: '29 Nisan 5782',
+    category: 'molad',
+    title_orig: 'Molad Iyyar 5782',
+    molad: {
+      year: 5782,
+      month: 'Iyyar',
+      dow: 0,
+      hour: 5,
+      minutes: 20,
+      chalakim: 1,
+    },
+  }];
+  t.deepEqual(apiResult.items, expected);
+});

@@ -6,6 +6,9 @@
     "hebcal"
   ],
   "description": "Jewish holidays and Hebrew calendar as plain JSON objects and CSV export",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "exports": {

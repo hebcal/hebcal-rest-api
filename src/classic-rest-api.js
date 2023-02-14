@@ -132,8 +132,8 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   if (mask & flags.MOLAD) {
     const m = ev.molad;
     result.molad = {
-      year: m.year,
-      month: HDate.getMonthName(m.month, m.year),
+      hy: m.year,
+      hm: HDate.getMonthName(m.month, m.year),
       dow: m.dow,
       hour: m.hour,
       minutes: m.minutes,

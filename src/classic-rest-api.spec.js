@@ -574,8 +574,8 @@ test('molad', (t) => {
     category: 'molad',
     title_orig: 'Molad Adar II 5782',
     molad: {
-      year: 5782,
-      month: 'Adar II',
+      hy: 5782,
+      hm: 'Adar II',
       dow: 4,
       hour: 3,
       minutes: 51,
@@ -588,8 +588,8 @@ test('molad', (t) => {
     category: 'molad',
     title_orig: 'Molad Nisan 5782',
     molad: {
-      year: 5782,
-      month: 'Nisan',
+      hy: 5782,
+      hm: 'Nisan',
       dow: 5,
       hour: 16,
       minutes: 36,
@@ -602,8 +602,8 @@ test('molad', (t) => {
     category: 'molad',
     title_orig: 'Molad Iyyar 5782',
     molad: {
-      year: 5782,
-      month: 'Iyyar',
+      hy: 5782,
+      hm: 'Iyyar',
       dow: 0,
       hour: 5,
       minutes: 20,

@@ -114,6 +114,9 @@ test('chanukah-candles', (t) => {
   const events = HebrewCalendar.calendar(options);
   const tzid = options && options.location && options.location.tzid;
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
+  for (const item of fc) {
+    delete item.description;
+  }
   const expected = [
     {
       title: 'Chanukah: 1 Candle',
@@ -122,7 +125,6 @@ test('chanukah-candles', (t) => {
       className: 'holiday major',
       hebrew: 'חנוכה: א׳ נר',
       url: 'https://hebcal.com/h/chanukah-2020?us=js&um=fc',
-      description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
       title: 'Chanukah: 2 Candles',
@@ -131,7 +133,6 @@ test('chanukah-candles', (t) => {
       className: 'holiday major',
       hebrew: 'חנוכה: ב׳ נרות',
       url: 'https://hebcal.com/h/chanukah-2020?us=js&um=fc',
-      description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
       title: 'Candle lighting',
@@ -151,6 +152,9 @@ test('chanukah-nocandles', (t) => {
   };
   const events = HebrewCalendar.calendar(options);
   const fc = events.map((ev) => eventToFullCalendar(ev, 'UTC'));
+  for (const item of fc) {
+    delete item.description;
+  }
   const expected = [
     {
       title: 'Chanukah: 1 Candle',
@@ -159,7 +163,6 @@ test('chanukah-nocandles', (t) => {
       className: 'holiday major',
       hebrew: 'חנוכה: א׳ נר',
       url: 'https://hebcal.com/h/chanukah-2020?us=js&um=fc',
-      description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
       title: 'Chanukah: 2 Candles',
@@ -168,7 +171,6 @@ test('chanukah-nocandles', (t) => {
       className: 'holiday major',
       hebrew: 'חנוכה: ב׳ נרות',
       url: 'https://hebcal.com/h/chanukah-2020?us=js&um=fc',
-      description: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
   ];
 

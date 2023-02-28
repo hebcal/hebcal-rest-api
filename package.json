@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "4.4.1",
+  "version": "4.4.2",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@hebcal/core": "^3.50.3",
-    "@hebcal/leyning": "^7.0.1",
+    "@hebcal/leyning": "^7.2.1",
     "@hebcal/triennial": "^1.1.0"
   },
   "scripts": {
@@ -44,20 +44,20 @@
     "require": ["@babel/register"]
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
+    "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
-    "@babel/register": "^7.18.9",
+    "@babel/register": "^7.21.0",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.4.0",
     "ava": "^5.2.0",
-    "core-js": "^3.28.0",
-    "eslint": "^8.34.0",
+    "core-js": "^3.29.0",
+    "eslint": "^8.35.0",
     "eslint-config-google": "^0.14.0",
-    "jsdoc": "^4.0.0",
+    "jsdoc": "^4.0.2",
     "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^3.15.0"
+    "rollup": "^3.17.3"
   }
 }

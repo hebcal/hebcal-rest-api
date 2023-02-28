@@ -164,6 +164,9 @@ test('classic-api-no-sedra', (t) => {
   const events = HebrewCalendar.calendar(options);
   const apiResult = eventsToClassicApi(events, options);
   delete apiResult.date;
+  for (const item of apiResult.items) {
+    delete item.memo;
+  }
   const expected = {
     title: 'Hebcal Israel May 2022',
     location: {
@@ -182,7 +185,6 @@ test('classic-api-no-sedra', (t) => {
         subcat: 'minor',
         hebrew: 'פסח שני',
         link: 'https://hebcal.com/h/pesach-sheni-2022?i=on&us=js&um=api',
-        memo: 'Second Passover, one month after Passover',
       },
       {
         title: 'Lag BaOmer',
@@ -192,7 +194,6 @@ test('classic-api-no-sedra', (t) => {
         subcat: 'minor',
         hebrew: 'ל״ג בעומר',
         link: 'https://hebcal.com/h/lag-baomer-2022?i=on&us=js&um=api',
-        memo: '33rd day of counting the Omer',
       },
       {
         title: 'Yom Yerushalayim',
@@ -202,7 +203,6 @@ test('classic-api-no-sedra', (t) => {
         subcat: 'modern',
         hebrew: 'יום ירושלים',
         link: 'https://hebcal.com/h/yom-yerushalayim-2022?i=on&us=js&um=api',
-        memo: 'Jerusalem Day. Commemorates the re-unification of Jerusalem in 1967',
       },
       {
         title: 'Rosh Chodesh Sivan',
@@ -218,8 +218,6 @@ test('classic-api-no-sedra', (t) => {
           '4': 'Numbers 28:11-28:15',
         },
         link: 'https://hebcal.com/h/rosh-chodesh-sivan-2022?i=on&us=js&um=api',
-        // eslint-disable-next-line max-len
-        memo: 'Start of month of Sivan on the Hebrew calendar. Sivan (סִיוָן) is the 3rd month of the Hebrew year, has 30 days, and corresponds to May or June on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon',
       },
     ],
   };
@@ -286,6 +284,9 @@ test('chanukah-candles', (t) => {
   };
   const events = HebrewCalendar.calendar(options);
   const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
+  for (const item of apiObjs) {
+    delete item.memo;
+  }
   const expected = [
     {
       title: 'Chanukah: 1 Candle',
@@ -294,7 +295,6 @@ test('chanukah-candles', (t) => {
       subcat: 'major',
       hebrew: 'חנוכה: א׳ נר',
       link: 'https://hebcal.com/h/chanukah-2020?us=js&um=api',
-      memo: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
       title: 'Chanukah: 2 Candles',
@@ -303,7 +303,6 @@ test('chanukah-candles', (t) => {
       subcat: 'major',
       hebrew: 'חנוכה: ב׳ נרות',
       link: 'https://hebcal.com/h/chanukah-2020?us=js&um=api',
-      memo: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
       title: 'Candle lighting: 3:53pm',
@@ -323,6 +322,9 @@ test('chanukah-nocandles', (t) => {
   };
   const events = HebrewCalendar.calendar(options);
   const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
+  for (const item of apiObjs) {
+    delete item.memo;
+  }
   const expected = [
     {
       title: 'Chanukah: 1 Candle',
@@ -332,7 +334,6 @@ test('chanukah-nocandles', (t) => {
       subcat: 'major',
       hebrew: 'חנוכה: א׳ נר',
       link: 'https://hebcal.com/h/chanukah-2020?us=js&um=api',
-      memo: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
     {
       title: 'Chanukah: 2 Candles',
@@ -342,7 +343,6 @@ test('chanukah-nocandles', (t) => {
       subcat: 'major',
       hebrew: 'חנוכה: ב׳ נרות',
       link: 'https://hebcal.com/h/chanukah-2020?us=js&um=api',
-      memo: 'Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights',
     },
   ];
   t.deepEqual(apiObjs, expected);

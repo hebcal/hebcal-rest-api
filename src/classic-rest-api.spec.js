@@ -1,7 +1,6 @@
 import test from 'ava';
-import {HebrewCalendar, Location, DafYomiEvent, HDate,
-  HebrewDateEvent, MishnaYomiEvent, OmerEvent,
-  YerushalmiYomiEvent} from '@hebcal/core';
+import {HebrewCalendar, Location, HDate, HebrewDateEvent, OmerEvent} from '@hebcal/core';
+import {DafYomiEvent, MishnaYomiEvent, YerushalmiYomiEvent} from '@hebcal/learning';
 import {eventsToClassicApi, eventToClassicApiObject} from './classic-rest-api';
 
 test('eventToClassicApiObject', (t) => {

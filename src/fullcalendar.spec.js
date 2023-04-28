@@ -1,5 +1,6 @@
 import test from 'ava';
-import {HebrewCalendar, Location, DafYomiEvent, HDate, HebrewDateEvent} from '@hebcal/core';
+import {HebrewCalendar, Location, HDate, HebrewDateEvent} from '@hebcal/core';
+import {DafYomiEvent} from '@hebcal/learning';
 import {eventToFullCalendar} from './fullcalendar';
 
 test('eventToFullCalendar', (t) => {

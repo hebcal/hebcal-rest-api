@@ -3,7 +3,8 @@ import {getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCatego
   getHolidayDescription,
   appendIsraelAndTracking, locationToPlainObj, shouldRenderBrief} from './common';
 import {HebrewCalendar, Location, Event, HDate, flags, HolidayEvent,
-  HebrewDateEvent, TimedEvent, DafYomiEvent} from '@hebcal/core';
+  HebrewDateEvent, TimedEvent} from '@hebcal/core';
+import {DafYomiEvent} from '@hebcal/learning';
 
 test('getDownloadFilename', (t) => {
   const location = new Location(38.672294, -90.533239, false, 'America/Chicago',

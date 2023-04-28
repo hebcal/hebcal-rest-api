@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 import test from 'ava';
 import {HebrewCalendar, Location, HDate, HebrewDateEvent,
-  YerushalmiYomiEvent, DafYomiEvent, MishnaYomiEvent,
   OmerEvent} from '@hebcal/core';
+import {YerushalmiYomiEvent, DafYomiEvent, MishnaYomiEvent} from '@hebcal/learning';
 import {eventToCsv, eventsToCsv} from './csv';
 
 test('eventToCsv', (t) => {

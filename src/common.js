@@ -118,26 +118,6 @@ export function toISOString(d) {
   return pad4(d.getFullYear()) + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
 }
 
-const flagToCategory = [
-  [flags.MAJOR_FAST, 'holiday', 'major', 'fast'],
-  [flags.CHANUKAH_CANDLES, 'holiday', 'major'],
-  [flags.DAF_YOMI, 'dafyomi'],
-  [flags.HEBREW_DATE, 'hebdate'],
-  [flags.MINOR_FAST, 'holiday', 'fast'],
-  [flags.MINOR_HOLIDAY, 'holiday', 'minor'],
-  [flags.MISHNA_YOMI, 'mishnayomi'],
-  [flags.NACH_YOMI, 'nachyomi'],
-  [flags.YERUSHALMI_YOMI, 'yerushalmi'],
-  [flags.MODERN_HOLIDAY, 'holiday', 'modern'],
-  [flags.MOLAD, 'molad'],
-  [flags.OMER_COUNT, 'omer'],
-  [flags.PARSHA_HASHAVUA, 'parashat'], // backwards-compat
-  [flags.ROSH_CHODESH, 'roshchodesh'],
-  [flags.SHABBAT_MEVARCHIM, 'mevarchim'],
-  [flags.SPECIAL_SHABBAT, 'holiday', 'shabbat'],
-  [flags.USER_EVENT, 'user'],
-];
-
 /**
  * Returns a category and subcategory name
  * @param {Event} ev
@@ -145,45 +125,10 @@ const flagToCategory = [
  */
 export function getEventCategories(ev) {
   const desc = ev.getDesc();
-  switch (desc) {
-    // LIGHT_CANDLES or LIGHT_CANDLES_TZEIS
-    case 'Candle lighting':
-      return ['candles'];
-    // YOM_TOV_ENDS
-    case 'Havdalah':
-      return ['havdalah'];
-    // flags.MINOR_FAST or flags.MAJOR_FAST
-    case 'Fast begins':
-    case 'Fast ends':
-      return ['zmanim', 'fast'];
-    case 'Purim':
-      return ['holiday', 'major'];
+  if (desc === 'Purim' || desc === 'Erev Purim') {
+    return ['holiday', 'major'];
   }
-  if (ev.cholHaMoedDay) {
-    return ['holiday', 'major', 'cholhamoed'];
-  }
-  const mask = ev.getFlags();
-  for (let i = 0; i < flagToCategory.length; i++) {
-    const attrs = flagToCategory[i];
-    if (mask & attrs[0]) {
-      return attrs.slice(1);
-    }
-  }
-  // Don't depend on flags.MINOR_HOLIDAY always being set
-  switch (desc) {
-    case 'Lag BaOmer':
-    case 'Leil Selichot':
-    case 'Pesach Sheni':
-    case 'Erev Purim':
-    case 'Purim Katan':
-    case 'Shushan Purim':
-    case 'Tu B\'Av':
-    case 'Tu BiShvat':
-    case 'Rosh Hashana LaBehemot':
-      return ['holiday', 'minor'];
-    default:
-      return ['holiday', 'major'];
-  }
+  return ev.getCategories();
 }
 
 /**

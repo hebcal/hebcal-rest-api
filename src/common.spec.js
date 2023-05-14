@@ -138,7 +138,7 @@ test('getEventCategories', (t) => {
     'Rosh Chodesh Adar II': ['roshchodesh'],
     'Shabbat Zachor': ['holiday', 'shabbat'],
     'Ta\'anit Esther': ['holiday', 'fast'],
-    'Erev Purim': ['holiday', 'minor'],
+    'Erev Purim': ['holiday', 'major'],
     'Purim': ['holiday', 'major'],
     'Shushan Purim': ['holiday', 'minor'],
     'Shushan Purim Katan': ['holiday', 'minor'],

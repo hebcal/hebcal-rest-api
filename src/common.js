@@ -188,7 +188,8 @@ export function getCalendarTitle(events, options) {
  * @return {string}
  */
 export function getHolidayDescription(ev, firstSentence=false) {
-  const str = holidayDescription[ev.getDesc()] || holidayDescription[ev.basename()] || '';
+  const str0 = holidayDescription[ev.getDesc()] || holidayDescription[ev.basename()] || '';
+  const str = str0.normalize();
   if (firstSentence && str) {
     const dot = str.indexOf('.');
     if (dot != -1) {

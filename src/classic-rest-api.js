@@ -152,8 +152,8 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
     };
   }
   const memo = ev.memo || holidayDescription[ev.basename()];
-  if (memo) {
-    result.memo = memo;
+  if (typeof memo === 'string' && memo.length !== 0) {
+    result.memo = memo.normalize();
   } else if (typeof ev.linkedEvent !== 'undefined') {
     result.memo = ev.linkedEvent.render(options.locale);
   }

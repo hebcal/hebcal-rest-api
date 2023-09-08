@@ -32,8 +32,9 @@ console.log(JSON.stringify(csv));
 ## Functions
 
 <dl>
-<dt><a href="#locationToPlainObj">locationToPlainObj(location)</a> ⇒ <code>string</code></dt>
-<dd></dd>
+<dt><a href="#locationToPlainObj">locationToPlainObj(location)</a> ⇒ <code><a href="#LocationPlainObj">LocationPlainObj</a></code></dt>
+<dd><p>Converts a @hebcal/core <code>Location</code> to a plain JS object.</p>
+</dd>
 <dt><a href="#makeAnchor">makeAnchor(s)</a> ⇒ <code>string</code></dt>
 <dd><p>Helper function to transform a string to make it more usable in a URL or filename.
 Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;).</p>
@@ -89,9 +90,19 @@ Converts to lowercase and replaces non-word characters with hyphen (&#39;-&#39;)
 </dd>
 </dl>
 
+## Typedefs
+
+<dl>
+<dt><a href="#LocationPlainObj">LocationPlainObj</a> : <code>Object</code></dt>
+<dd><p>Location information</p>
+</dd>
+</dl>
+
 <a name="locationToPlainObj"></a>
 
-## locationToPlainObj(location) ⇒ <code>string</code>
+## locationToPlainObj(location) ⇒ [<code>LocationPlainObj</code>](#LocationPlainObj)
+Converts a @hebcal/core `Location` to a plain JS object.
+
 **Kind**: global function  
 
 | Param | Type |
@@ -324,3 +335,29 @@ Converts a Hebcal event to a FullCalendar.io object
 | ev | <code>Event</code> |  |
 | tzid | <code>string</code> | timeZone identifier |
 | il | <code>boolean</code> | true if Israel |
+
+<a name="LocationPlainObj"></a>
+
+## LocationPlainObj : <code>Object</code>
+Location information
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| title | <code>string</code> | 
+| city | <code>string</code> | 
+| tzid | <code>string</code> | 
+| latitude | <code>number</code> | 
+| longitude | <code>number</code> | 
+| cc | <code>string</code> | 
+| country | <code>string</code> | 
+| admin1 | <code>string</code> | 
+| asciiname | <code>string</code> | 
+| geo | <code>string</code> | 
+| zip | <code>string</code> | 
+| state | <code>string</code> | 
+| stateName | <code>string</code> | 
+| geonameid | <code>number</code> | 
+

@@ -68,7 +68,24 @@ declare module '@hebcal/rest-api' {
    */
   export function getHolidayDescription(ev: Event, firstSentence?: boolean): string;
 
-  export function locationToPlainObj(location: Location): string;
+  export type LocationPlainObj = {
+    title: string;
+    city: string;
+    tzid: string;
+    latitude: number;
+    longitude: number;
+    cc: string;
+    country: string;
+    admin1?: string;
+    asciiname?: string;
+    geo?: string;
+    zip?: string;
+    state?: string;
+    stateName?: string;
+    geonameid?: number;
+  };
+
+  export function locationToPlainObj(location: Location): LocationPlainObj;
 
   export interface StringMap {
     [key: string]: string;

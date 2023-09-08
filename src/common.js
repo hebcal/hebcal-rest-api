@@ -4,8 +4,28 @@ import holidayDescription from './holidays.json';
 import countryNames from './countryNames.json';
 
 /**
+ * Location information
+ * @typedef {Object} LocationPlainObj
+ * @property {string} title
+ * @property {string} city
+ * @property {string} tzid
+ * @property {number} latitude
+ * @property {number} longitude
+ * @property {string} cc
+ * @property {string} country
+ * @property {string} admin1
+ * @property {string} asciiname
+ * @property {string} geo
+ * @property {string} zip
+ * @property {string} state
+ * @property {string} stateName
+ * @property {number} geonameid
+ */
+
+/**
+ * Converts a @hebcal/core `Location` to a plain JS object.
  * @param {Location} location
- * @return {string}
+ * @return {LocationPlainObj}
  */
 export function locationToPlainObj(location) {
   if (typeof location === 'object' && location !== null && typeof location.name === 'string') {

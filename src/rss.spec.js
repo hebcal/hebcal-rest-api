@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import test from 'ava';
-import {HebrewCalendar, Location} from '@hebcal/core';
+import {HebrewCalendar, Location, HDate, Event, flags} from '@hebcal/core';
 import {eventToRssItem2, eventsToRss2} from './rss';
 
 const dayFormat = new Intl.DateTimeFormat('en-US', {
@@ -216,4 +216,49 @@ test('fastStartEnd', (t) => {
       '</item>\n',
   ];
   t.deepEqual(items, expected);
+});
+
+// eslint-disable-next-line require-jsdoc
+class MemoEvent extends Event {
+  // eslint-disable-next-line require-jsdoc
+  constructor(date, desc, memo) {
+    super(date, desc, flags.USER_EVENT);
+    this.memo = memo;
+  }
+  // eslint-disable-next-line require-jsdoc
+  url() {
+    return 'http://localhost/';
+  }
+}
+
+test('CDATA', (t) => {
+  const hd = new HDate(new Date(2021, 1, 13));
+  const ev = new MemoEvent(hd, 'Hello World', 'Foo Bar');
+  const options = {
+    dayFormat,
+    evPubDate: true,
+    lastBuildDate: '',
+  };
+  const str = eventToRssItem2(ev, options);
+  t.is(str, `<item>
+<title>Hello World</title>
+<link>http://localhost/?utm_source=hebcal.com&amp;utm_medium=rss</link>
+<guid isPermaLink="false">http://localhost/#20210213-hello-world</guid>
+<description>Foo Bar</description>
+<category>user</category>
+<pubDate>Sat, 13 Feb 2021 00:00:00 GMT</pubDate>
+</item>
+`);
+
+  const ev2 = new MemoEvent(hd, 'Hello Two', '<p>Baaz Quux</p>');
+  const str2 = eventToRssItem2(ev2, options);
+  t.is(str2, `<item>
+<title>Hello Two</title>
+<link>http://localhost/?utm_source=hebcal.com&amp;utm_medium=rss</link>
+<guid isPermaLink="false">http://localhost/#20210213-hello-two</guid>
+<description><![CDATA[<p>Baaz Quux</p>]]></description>
+<category>user</category>
+<pubDate>Sat, 13 Feb 2021 00:00:00 GMT</pubDate>
+</item>
+`);
 });

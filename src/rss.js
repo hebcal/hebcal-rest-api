@@ -139,7 +139,8 @@ export function eventToRssItem2(ev, options) {
     memo = makeMemo(ev, il);
   }
   const dayFormat = options.dayFormat;
-  const description = memo || dayFormat.format(evDate);
+  const description0 = memo || dayFormat.format(evDate);
+  const description = description0.indexOf('<') === -1 ? description0 : `<![CDATA[${description0}]]>`;
   const geoTags = (cat0 == 'candles') ?
     `<geo:lat>${location.getLatitude()}</geo:lat>\n<geo:long>${location.getLongitude()}</geo:long>\n` :
     '';

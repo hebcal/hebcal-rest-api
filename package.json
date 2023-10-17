@@ -57,6 +57,6 @@
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^4.0.2",
     "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^3.29.4"
+    "rollup": "^4.1.4"
   }
 }

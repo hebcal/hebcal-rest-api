@@ -171,7 +171,7 @@ export function getCalendarTitle(events, options) {
   const location = options.location;
   if (options.yahrzeit) {
     title += ' Yahrzeits and Anniversaries';
-  } else if (location && location.name) {
+  } else if (location?.name) {
     const comma = location.name.indexOf(',');
     const name = (comma == -1) ? location.name : location.name.substring(0, comma);
     title += ' ' + name;
@@ -232,9 +232,7 @@ const HOLIDAY_IGNORE_MASK = flags.DAF_YOMI | flags.OMER_COUNT |
  */
 export function makeTorahMemoText(ev, il) {
   const mask = ev.getFlags();
-  if (mask & HOLIDAY_IGNORE_MASK) {
-    return '';
-  } else if (typeof ev.eventTime !== 'undefined') {
+  if ((mask & HOLIDAY_IGNORE_MASK) || (typeof ev.eventTime !== 'undefined')) {
     return '';
   }
   const reading = (mask & flags.PARSHA_HASHAVUA) ?
@@ -250,12 +248,12 @@ export function makeTorahMemoText(ev, il) {
     }
     if (reading.haftara) {
       memo += 'Haftarah: ' + reading.haftara;
-      if (reading.reason && reading.reason.haftara) {
+      if (reading.reason?.haftara) {
         memo += ' | ' + reading.reason.haftara;
       }
     }
   }
-  if (reading && reading.sephardic) {
+  if (reading?.sephardic) {
     memo += '\nHaftarah for Sephardim: ' + reading.sephardic;
   }
   return memo;

@@ -65,7 +65,7 @@ export function eventsToRss2(events, options) {
   const utmSource = options.utmSource || 'shabbat1c';
   const utmMedium = options.utmMedium || 'rss';
   const mainUrlEsc = appendIsraelAndTracking(mainUrl,
-      location && location.getIsrael(),
+      location?.getIsrael(),
       utmSource, utmMedium, options.utmCampaign).replace(/&/g, '&amp;');
   const selfUrlEsc = options.selfUrl.replace(/&/g, '&amp;');
   const lang = options.lang || localeToLg[options.locale] || options.locale || 'en-US';
@@ -118,8 +118,8 @@ export function eventToRssItem2(ev, options) {
   const location = options.location;
   const il = location ? location.getIsrael() : false;
   const tzid = location ? location.getTzid() : 'UTC';
-  const utmSource = (options && options.utmSource) || 'shabbat1c';
-  const utmMedium = (options && options.utmMedium) || 'rss';
+  const utmSource = options.utmSource || 'shabbat1c';
+  const utmMedium = options.utmMedium || 'rss';
   const linkGuid = getLinkAndGuid(ev, il, tzid, options.mainUrl, utmSource, utmMedium);
   const link = linkGuid[0];
   const guid = linkGuid[1];

@@ -38,7 +38,7 @@ export function locationToPlainObj(location) {
       cc: location.getCountryCode(),
       country: countryNames[location.getCountryCode()],
     };
-    ['admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'].forEach((k) => {
+    ['elevation', 'admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'].forEach((k) => {
       if (location[k]) {
         o[k] = location[k];
       }

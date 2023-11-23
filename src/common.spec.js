@@ -266,6 +266,7 @@ test('locationToPlainObj', (t) => {
     longitude: 2.3488,
     cc: 'FR',
     country: 'France',
+    elevation: 42,
   };
   t.deepEqual(actual, expected);
 });

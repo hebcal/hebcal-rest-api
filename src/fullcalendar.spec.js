@@ -15,7 +15,7 @@ test('eventToFullCalendar', (t) => {
     location: new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398),
   };
   const events = HebrewCalendar.calendar(options).slice(0, 10);
-  const tzid = options && options.location && options.location.tzid;
+  const tzid = options.location.getTzid();
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
   const pesachMemo = 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah),' +
     ' it commemorates the Exodus and freedom of the Israelites from ancient Egypt';
@@ -23,14 +23,14 @@ test('eventToFullCalendar', (t) => {
   const expected = [
     {
       title: 'Candle lighting',
-      start: '1990-04-06T19:03:00-05:00',
+      start: '1990-04-06T19:04:00-05:00',
       allDay: false,
       hebrew: 'הדלקת נרות',
       className: 'candles',
     },
     {
       title: 'Havdalah (50 min)',
-      start: '1990-04-07T20:13:00-05:00',
+      start: '1990-04-07T20:14:00-05:00',
       allDay: false,
       hebrew: 'הבדלה (50 דקות)',
       className: 'havdalah',
@@ -46,7 +46,7 @@ test('eventToFullCalendar', (t) => {
     },
     {
       title: 'Candle lighting',
-      start: '1990-04-09T19:06:00-05:00',
+      start: '1990-04-09T19:07:00-05:00',
       allDay: false,
       hebrew: 'הדלקת נרות',
       className: 'candles',
@@ -62,7 +62,7 @@ test('eventToFullCalendar', (t) => {
     },
     {
       title: 'Candle lighting',
-      start: '1990-04-10T20:16:00-05:00',
+      start: '1990-04-10T20:17:00-05:00',
       allDay: false,
       hebrew: 'הדלקת נרות',
       className: 'candles',
@@ -78,7 +78,7 @@ test('eventToFullCalendar', (t) => {
     },
     {
       title: 'Havdalah (50 min)',
-      start: '1990-04-11T20:17:00-05:00',
+      start: '1990-04-11T20:18:00-05:00',
       allDay: false,
       hebrew: 'הבדלה (50 דקות)',
       className: 'havdalah',
@@ -113,7 +113,7 @@ test('chanukah-candles', (t) => {
     candlelighting: true,
   };
   const events = HebrewCalendar.calendar(options);
-  const tzid = options && options.location && options.location.tzid;
+  const tzid = options.location.getTzid();
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
   for (const item of fc) {
     delete item.description;
@@ -186,7 +186,7 @@ test('fastStartEnd', (t) => {
     candlelighting: true,
   };
   const events = HebrewCalendar.calendar(options);
-  const tzid = options && options.location && options.location.tzid;
+  const tzid = options.location.getTzid();
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
   const expected = [
     {

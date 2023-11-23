@@ -28,7 +28,7 @@ import countryNames from './countryNames.json';
  * @return {LocationPlainObj}
  */
 export function locationToPlainObj(location) {
-  if (typeof location === 'object' && location !== null && typeof location.name === 'string') {
+  if (typeof location === 'object' && location !== null && typeof location.latitude === 'number') {
     const o = {
       title: location.getName(),
       city: location.getShortName(),
@@ -169,11 +169,12 @@ export function renderTitleWithoutTime(ev) {
 export function getCalendarTitle(events, options) {
   let title = 'Hebcal';
   const location = options.location;
+  const locationName = location?.getName();
   if (options.yahrzeit) {
     title += ' Yahrzeits and Anniversaries';
-  } else if (location?.name) {
-    const comma = location.name.indexOf(',');
-    const name = (comma == -1) ? location.name : location.name.substring(0, comma);
+  } else if (locationName) {
+    const comma = locationName.indexOf(',');
+    const name = (comma == -1) ? locationName : locationName.substring(0, comma);
     title += ' ' + name;
   } else if (options.il) {
     title += ' Israel';

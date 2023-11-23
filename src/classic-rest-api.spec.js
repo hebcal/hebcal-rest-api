@@ -124,6 +124,7 @@ test('eventsToClassicApi', (t) => {
     latitude: 49.24966,
     longitude: -123.11934,
     tzid: 'America/Vancouver',
+    elevation: 70,
   };
   t.deepEqual(apiResult.location, locationExpected);
   t.is(Array.isArray(apiResult.items), true);

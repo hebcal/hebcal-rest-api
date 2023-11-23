@@ -118,13 +118,14 @@ a:focus.dafyomi .fc-event-title {
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var location = hebcal.Location.lookup('Miami');
+    const tzid = location.getTzid();
     var calendar = window['hebcalFullCalendar'] = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
       headerToolbar: {
         left: 'title',
         right: 'prev,next today',
       },
-      timeZone: location.getTzid(),
+      timeZone: tzid,
       events: function(info, successCallback, failureCallback) {
         const options = {
           start: info.start,
@@ -140,7 +141,7 @@ a:focus.dafyomi .fc-event-title {
           addHebrewDates: true,
         };
         const events = hebcal.HebrewCalendar.calendar(options);
-        const fcEvents = events.map((ev) => hebcal__rest_api.eventToFullCalendar(ev, location.tzid));
+        const fcEvents = events.map((ev) => hebcal__rest_api.eventToFullCalendar(ev, tzid));
         successCallback(fcEvents);
       },
       eventDidMount: function(info) {

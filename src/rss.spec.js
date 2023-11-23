@@ -42,7 +42,7 @@ test('eventsToRss2', (t) => {
     '<copyright>Copyright (c) 2021 Michael J. Radwin. All rights reserved.</copyright>',
     '<lastBuildDate>Wed, 15 Dec 2021 12:34:56 GMT</lastBuildDate>',
     '<item>',
-    '<title>Candle lighting: 7:03pm</title>',
+    '<title>Candle lighting: 7:04pm</title>',
     '<link>https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-06&amp;utm_source=foobar&amp;utm_medium=quux#19900406-candle-lighting</link>',
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-06#19900406-candle-lighting</guid>',
     '<description>Friday, April 06, 1990</description>',
@@ -52,7 +52,7 @@ test('eventsToRss2', (t) => {
     '<geo:long>-87.65005</geo:long>',
     '</item>',
     '<item>',
-    '<title>Havdalah (50 min): 8:13pm</title>',
+    '<title>Havdalah (50 min): 8:14pm</title>',
     '<link>https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-07&amp;utm_source=foobar&amp;utm_medium=quux#19900407-havdalah</link>',
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?geonameid=4887398&amp;m=50&amp;lg=s&amp;dt=1990-04-07#19900407-havdalah</guid>',
     '<description>Saturday, April 07, 1990</description>',
@@ -97,12 +97,12 @@ test('eventToRssItem2', (t) => {
     '<geo:long>34.94821</geo:long>\n' +
     '</item>\n',
     '<item>\n' +
-    '<title>Havdalah (50 min): 19:52</title>\n' +
+    '<title>Havdalah (50 min): 19:53</title>\n' +
     '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-07&amp;i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900407-havdalah</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-07#19900407-havdalah</guid>\n' +
     '<description>Saturday, April 07, 1990</description>\n' +
     '<category>havdalah</category>\n' +
-    '<pubDate>Sat, 07 Apr 1990 16:52:00 GMT</pubDate>\n' +
+    '<pubDate>Sat, 07 Apr 1990 16:53:00 GMT</pubDate>\n' +
     '</item>\n',
     '<item>\n' +
     '<title>Erev Pesach</title>\n' +

@@ -169,13 +169,12 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
  * @return {Object}
  */
 function formatAliyot(result, aliyot) {
-  Object.keys(aliyot).forEach((num) => {
-    const aliyah = aliyot[num];
+  for (const [num, aliyah] of Object.entries(aliyot)) {
     if (typeof aliyah !== 'undefined') {
       const k = num == 'M' ? 'maftir' : num;
       result[k] = formatAliyahWithBook(aliyah);
     }
-  });
+  }
   return result;
 }
 
@@ -198,12 +197,12 @@ function formatLeyningResult(reading) {
     formatAliyot(result, reading.fullkriyah);
   }
   if (reading.reason) {
-    ['7', '8', 'M'].forEach((num) => {
+    for (const num of ['7', '8', 'M']) {
       if (reading.reason[num]) {
         const k = num == 'M' ? 'maftir' : num;
         result[k] += ' | ' + reading.reason[num];
       }
-    });
+    }
     if (reading.reason.haftara) {
       result.haftarah += ' | ' + reading.reason.haftara;
     }

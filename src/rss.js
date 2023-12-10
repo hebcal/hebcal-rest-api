@@ -80,9 +80,9 @@ export function eventsToRss2(events, options) {
 <copyright>Copyright (c) ${thisYear} Michael J. Radwin. All rights reserved.</copyright>
 <lastBuildDate>${lastBuildDate}</lastBuildDate>
 `;
-  events.forEach((ev) => {
+  for (const ev of events) {
     str += eventToRssItem2(ev, options);
-  });
+  }
   str += '</channel>\n</rss>\n';
   return str;
 }

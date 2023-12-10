@@ -22,6 +22,8 @@ import countryNames from './countryNames.json';
  * @property {number} geonameid
  */
 
+const LOC_FIELDS = ['elevation', 'admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'];
+
 /**
  * Converts a @hebcal/core `Location` to a plain JS object.
  * @param {Location} location
@@ -38,11 +40,11 @@ export function locationToPlainObj(location) {
       cc: location.getCountryCode(),
       country: countryNames[location.getCountryCode()],
     };
-    ['elevation', 'admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'].forEach((k) => {
+    for (const k of LOC_FIELDS) {
       if (location[k]) {
         o[k] = location[k];
       }
-    });
+    }
     return o;
   } else {
     return {geo: 'none'};

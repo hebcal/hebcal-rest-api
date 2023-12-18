@@ -9,8 +9,8 @@ import {
   appendIsraelAndTracking,
   shouldRenderBrief,
   locationToPlainObj,
-} from './common';
-import holidayDescription from './holidays.json';
+} from './common.js';
+import holidayDescription from './holidays.json.js';
 
 /**
  * @private

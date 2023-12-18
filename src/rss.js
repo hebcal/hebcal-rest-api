@@ -1,5 +1,5 @@
-import {getEventCategories, makeAnchor, appendIsraelAndTracking,
-  makeMemo, getCalendarTitle} from './common';
+import {appendIsraelAndTracking, getCalendarTitle,
+  getEventCategories, makeAnchor, makeMemo} from './common.js';
 import {Locale, HebrewCalendar, Zmanim} from '@hebcal/core';
 
 /**

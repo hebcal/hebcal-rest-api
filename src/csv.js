@@ -1,5 +1,5 @@
 import {HebrewCalendar, flags} from '@hebcal/core';
-import {getHolidayDescription, getEventCategories, shouldRenderBrief} from './common';
+import {getHolidayDescription, getEventCategories, shouldRenderBrief} from './common.js';
 
 // eslint-disable-next-line max-len
 const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';

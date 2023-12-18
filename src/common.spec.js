@@ -1,7 +1,7 @@
 import test from 'ava';
 import {getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
   getHolidayDescription,
-  appendIsraelAndTracking, locationToPlainObj, shouldRenderBrief} from './common';
+  appendIsraelAndTracking, locationToPlainObj, shouldRenderBrief} from './common.js';
 import {HebrewCalendar, Location, Event, HDate, flags, HolidayEvent,
   HebrewDateEvent, TimedEvent} from '@hebcal/core';
 import {DafYomiEvent} from '@hebcal/learning';

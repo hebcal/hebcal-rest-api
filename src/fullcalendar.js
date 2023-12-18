@@ -1,6 +1,6 @@
 import {Locale, flags, Zmanim} from '@hebcal/core';
-import {getEventCategories, makeMemo, toISOString,
-  appendIsraelAndTracking, shouldRenderBrief} from './common';
+import {appendIsraelAndTracking, getEventCategories, makeMemo,
+  shouldRenderBrief, toISOString} from './common.js';
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object

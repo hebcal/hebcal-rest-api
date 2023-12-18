@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import test from 'ava';
 import {HebrewCalendar, Location, HDate, Event, flags} from '@hebcal/core';
-import {eventToRssItem2, eventsToRss2} from './rss';
+import {eventToRssItem2, eventsToRss2} from './rss.js';
 
 const dayFormat = new Intl.DateTimeFormat('en-US', {
   weekday: 'long',

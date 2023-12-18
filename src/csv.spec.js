@@ -3,7 +3,7 @@ import test from 'ava';
 import {HebrewCalendar, Location, HDate, HebrewDateEvent,
   OmerEvent} from '@hebcal/core';
 import {YerushalmiYomiEvent, DafYomiEvent, MishnaYomiEvent} from '@hebcal/learning';
-import {eventToCsv, eventsToCsv} from './csv';
+import {eventToCsv, eventsToCsv} from './csv.js';
 
 test('eventToCsv', (t) => {
   const options = {

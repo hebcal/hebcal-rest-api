@@ -1,11 +1,11 @@
-export * from './csv';
-export * from './common';
-export * from './classic-rest-api';
-export * from './rss';
-export * from './fullcalendar';
+export * from './csv.js';
+export * from './common.js';
+export * from './classic-rest-api.js';
+export * from './rss.js';
+export * from './fullcalendar.js';
 
-import countryNames from './countryNames.json';
+import countryNames from './countryNames.json.js';
 export {countryNames};
 
-import holidayDescription from './holidays.json';
+import holidayDescription from './holidays.json.js';
 export {holidayDescription};

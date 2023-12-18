@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -9,8 +9,13 @@
   "engines": {
     "node": ">= 16.0.0"
   },
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.mjs",
+  "type": "module",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
+  },
   "typings": "rest-api.d.ts",
   "files": [
     "dist",
@@ -25,28 +30,21 @@
   },
   "dependencies": {
     "@hebcal/core": "^5.0.3",
-    "@hebcal/leyning": "^8.1.0",
-    "@hebcal/triennial": "^5.0.2"
+    "@hebcal/leyning": "^8.1.1",
+    "@hebcal/triennial": "^5.0.3"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build:rollup": "rollup -c",
+    "build:json2js": "for f in src/*.json; do echo 'export default' > $f.js && cat $f >> $f.js; done",
+    "build": "npm run build:json2js && npm run build:rollup",
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "readme": "npx jsdoc2md dist/index.js",
     "test": "ava"
   },
   "license": "BSD-2-Clause",
-  "ava": {
-    "require": [
-      "@babel/register"
-    ]
-  },
   "devDependencies": {
-    "@babel/core": "^7.23.6",
-    "@babel/preset-env": "^7.23.6",
-    "@babel/register": "^7.22.15",
-    "@hebcal/learning": "^5.0.1",
-    "@rollup/plugin-babel": "^6.0.4",
+    "@hebcal/learning": "^5.0.2",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",

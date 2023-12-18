@@ -1,7 +1,7 @@
 import test from 'ava';
 import {HebrewCalendar, Location, HDate, HebrewDateEvent, OmerEvent} from '@hebcal/core';
 import {DafYomiEvent, MishnaYomiEvent, YerushalmiYomiEvent} from '@hebcal/learning';
-import {eventsToClassicApi, eventToClassicApiObject} from './classic-rest-api';
+import {eventsToClassicApi, eventToClassicApiObject} from './classic-rest-api.js';
 
 test('eventToClassicApiObject', (t) => {
   const location = Location.lookup('Paris');

@@ -14,7 +14,8 @@
   "type": "module",
   "exports": {
     "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
+    "require": "./dist/index.cjs",
+    "types": "./rest-api.d.ts"
   },
   "typings": "rest-api.d.ts",
   "files": [
@@ -29,8 +30,8 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^5.0.3",
-    "@hebcal/leyning": "^8.1.1",
+    "@hebcal/core": "^5.0.7",
+    "@hebcal/leyning": "^8.1.2",
     "@hebcal/triennial": "^5.0.3"
   },
   "scripts": {
@@ -50,11 +51,10 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "ava": "^6.0.1",
-    "core-js": "^3.34.0",
     "eslint": "^8.56.0",
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^4.0.2",
     "jsdoc-to-markdown": "^8.0.0",
-    "rollup": "^4.9.1"
+    "rollup": "^4.9.2"
   }
 }

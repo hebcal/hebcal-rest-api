@@ -564,7 +564,7 @@ test('yerushalmi-yomi', (t) => {
 });
 
 test('molad', (t) => {
-  const options = {year: 2022, molad: true, noHolidays: true};
+  const options = {year: 2022, molad: true, noHolidays: true, hour12: false};
   const events = HebrewCalendar.calendar(options);
   const apiResult = eventsToClassicApi(events.slice(2, 5), options, false);
   const expected = [{

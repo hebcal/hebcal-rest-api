@@ -84,7 +84,7 @@ test('eventToFullCalendar', (t) => {
       className: 'havdalah',
     },
     {
-      title: 'Pesach III (CH\'\'M)',
+      title: 'Pesach III (CH’’M)',
       start: '1990-04-12',
       allDay: true,
       hebrew: 'פסח ג׳ (חוה״מ)',
@@ -93,7 +93,7 @@ test('eventToFullCalendar', (t) => {
       description: pesachMemo,
     },
     {
-      title: 'Pesach IV (CH\'\'M)',
+      title: 'Pesach IV (CH’’M)',
       start: '1990-04-13',
       allDay: true,
       hebrew: 'פסח ד׳ (חוה״מ)',

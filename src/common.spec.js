@@ -93,6 +93,7 @@ test('makeTorahMemoText', (t) => {
   const expected = [
     'Torah: Exodus 21:1-24:18; Numbers 28:9-15; Exodus 30:11-16',
     'Haftarah: II Kings 12:1-17 | Shabbat Shekalim (on Rosh Chodesh)',
+    'Haftarah for Sephardim: II Kings 11:17-12:17',
   ];
   t.deepEqual(memo, expected);
 });

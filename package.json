@@ -30,9 +30,9 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^5.0.8",
-    "@hebcal/leyning": "^8.1.4",
-    "@hebcal/triennial": "^5.0.3"
+    "@hebcal/core": "^5.1.0",
+    "@hebcal/leyning": "^8.1.5",
+    "@hebcal/triennial": "^5.0.4"
   },
   "scripts": {
     "build:rollup": "rollup -c",

@@ -332,6 +332,9 @@ test('shouldRenderBrief', (t) => {
       'Candle lighting: 8:15pm', flags.LIGHT_CANDLES,
       new Date(), Location.lookup('Boston'))), true);
   t.is(shouldRenderBrief(new DafYomiEvent(new HDate(25, 'Sivan', 5782))), true);
+  t.is(shouldRenderBrief(new Event(new HDate(25, 'Sivan', 5782), 'Foo Bar', flags.DAILY_LEARNING)), true);
+  t.is(shouldRenderBrief(new Event(new HDate(25, 'Sivan', 5782), 'Foo Bar', flags.CHAG)), false);
+  t.is(shouldRenderBrief(new Event(new HDate(25, 'Sivan', 5782), 'Foo Bar', 0)), false);
 });
 
 test('getDownloadFilename-nodate', (t) => {

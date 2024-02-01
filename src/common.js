@@ -224,7 +224,7 @@ export function getHolidayDescription(ev, firstSentence=false) {
 
 const HOLIDAY_IGNORE_MASK = flags.DAF_YOMI | flags.OMER_COUNT |
   flags.SHABBAT_MEVARCHIM | flags.MOLAD | flags.USER_EVENT |
-  flags.NACH_YOMI |
+  flags.NACH_YOMI | flags.DAILY_LEARNING |
   flags.HEBREW_DATE | flags.YERUSHALMI_YOMI;
 
 /**
@@ -349,7 +349,7 @@ export function shouldRenderBrief(ev) {
   if (mask & flags.HEBREW_DATE) {
     const hd = ev.getDate();
     return (hd.getDate() === 1) ? false : true;
-  } else if (mask & (flags.DAF_YOMI | flags.YERUSHALMI_YOMI)) {
+  } else if (mask & (flags.DAILY_LEARNING | flags.DAF_YOMI | flags.YERUSHALMI_YOMI)) {
     return true;
   } else if (mask & flags.MINOR_FAST && ev.getDesc().substring(0, 16) === 'Yom Kippur Katan') {
     return true;

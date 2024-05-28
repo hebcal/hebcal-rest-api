@@ -314,6 +314,13 @@ test('getHolidayDescription-ykk', (t) => {
   t.is(s, 'Minor day of atonement occurring monthly on the day preceeding each Rosh Chodesh');
 });
 
+test('getHolidayDescription Shabbat Mevarchim Chodesh', (t) => {
+  const ev = new HolidayEvent(new HDate(25, 'Adar I', 5782),
+      'Shabbat Mevarchim Chodesh Adar II', flags.SHABBAT_MEVARCHIM);
+  const s = getHolidayDescription(ev);
+  t.is(s, 'Shabbat that precedes Rosh Chodesh. The congregation blesses the forthcoming new month');
+});
+
 test('getHolidayDescription-notfound', (t) => {
   const ev = new Event(new HDate(3, 'Tevet', 5784), 'Foobar', flags.USER_EVENT);
   const s = getHolidayDescription(ev);

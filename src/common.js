@@ -211,7 +211,9 @@ export function getCalendarTitle(events, options) {
  * @return {string}
  */
 export function getHolidayDescription(ev, firstSentence=false) {
-  const str0 = holidayDescription[ev.getDesc()] || holidayDescription[ev.basename()] || '';
+  const str0 = ev.getFlags() & flags.SHABBAT_MEVARCHIM ?
+    holidayDescription['Shabbat Mevarchim Chodesh'] :
+    holidayDescription[ev.getDesc()] || holidayDescription[ev.basename()] || '';
   const str = str0.normalize();
   if (firstSentence && str) {
     const dot = str.indexOf('.');

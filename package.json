@@ -30,7 +30,7 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^5.3.8",
+    "@hebcal/core": "^5.3.13",
     "@hebcal/leyning": "^8.1.9",
     "@hebcal/triennial": "^5.0.5"
   },
@@ -45,8 +45,8 @@
   },
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "@hebcal/learning": "^5.0.7",
-    "@rollup/plugin-commonjs": "^25.0.7",
+    "@hebcal/learning": "^5.0.8",
+    "@rollup/plugin-commonjs": "^25.0.8",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
@@ -55,6 +55,6 @@
     "eslint-config-google": "^0.14.0",
     "jsdoc": "^4.0.3",
     "jsdoc-to-markdown": "^8.0.1",
-    "rollup": "^4.17.2"
+    "rollup": "^4.18.0"
   }
 }

@@ -30,7 +30,7 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^5.3.13",
+    "@hebcal/core": "^5.4.4",
     "@hebcal/leyning": "^8.1.9",
     "@hebcal/triennial": "^5.0.5"
   },

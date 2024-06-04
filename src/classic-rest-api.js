@@ -131,13 +131,14 @@ export function eventToClassicApiObject(ev, options, leyning=true) {
   }
   if (mask & flags.MOLAD) {
     const m = ev.molad;
+    const hy = m.getYear();
     result.molad = {
-      hy: m.year,
-      hm: HDate.getMonthName(m.month, m.year),
-      dow: m.dow,
-      hour: m.hour,
-      minutes: m.minutes,
-      chalakim: m.chalakim,
+      hy,
+      hm: HDate.getMonthName(m.getMonth(), hy),
+      dow: m.getDow(),
+      hour: m.getHour(),
+      minutes: m.getMinutes(),
+      chalakim: m.getChalakim(),
     };
     delete result.hebrew;
   }

@@ -1,48 +1,81 @@
-import {flags, HDate} from '@hebcal/core';
-import {getLeyningForParshaHaShavua, getLeyningForHoliday} from '@hebcal/leyning';
-import holidayDescription from './holidays.json.js';
-import countryNames from './countryNames.json.js';
+import { CalOptions, Event, HDate, Location, flags } from '@hebcal/core';
+import { isoDateString } from '@hebcal/hdate';
+import { getLeyningForHoliday, getLeyningForParshaHaShavua } from '@hebcal/leyning';
+import countryNames0 from './countryNames.json';
+import holidayDescription0 from './holidays.json';
+
+export interface StringMap {
+  [key: string]: string;
+}
+
+export type RestApiEventOptions = {
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  appendHebrewToSubject?: boolean;
+  yahrzeit?: boolean;
+  subscribe?: string | boolean;
+  heDateParts?: boolean;
+  includeEvent?: boolean;
+  euro?: boolean;
+  title?: string;
+  description?: string;
+  dayFormat?: Intl.DateTimeFormat;
+  mainUrl?: string;
+  selfUrl?: string;
+  buildDate?: Date;
+  lastBuildDate?: string;
+  evPubDate?: boolean;
+  lang?: string;
+};
+
+export type RestApiOptions = CalOptions & RestApiEventOptions;
 
 /**
  * Location information
- * @typedef {Object} LocationPlainObj
- * @property {string} title
- * @property {string} city
- * @property {string} tzid
- * @property {number} latitude
- * @property {number} longitude
- * @property {string} cc
- * @property {string} country
- * @property {string} admin1
- * @property {string} asciiname
- * @property {string} geo
- * @property {string} zip
- * @property {string} state
- * @property {string} stateName
- * @property {number} geonameid
  */
+export type LocationPlainObj = {
+  title?: string | null;
+  city?: string | null;
+  tzid?: string;
+  latitude?: number;
+  longitude?: number;
+  cc?: string;
+  country?: string;
+  admin1?: string;
+  asciiname?: string;
+  geo?: string;
+  zip?: string;
+  state?: string;
+  stateName?: string;
+  geonameid?: number;
+};
 
 const LOC_FIELDS = ['elevation', 'admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'];
 
+
+export const holidayDescription: StringMap = holidayDescription0 as StringMap;
+export const countryNames: StringMap = countryNames0 as StringMap
+
 /**
  * Converts a @hebcal/core `Location` to a plain JS object.
- * @param {Location} location
- * @return {LocationPlainObj}
  */
-export function locationToPlainObj(location) {
-  if (typeof location === 'object' && location !== null && typeof location.latitude === 'number') {
-    const o = {
+export function locationToPlainObj(location: Location | undefined): LocationPlainObj {
+  if (typeof location === 'object' && location !== null && typeof location.getLatitude === 'function') {
+    const cc: string = location.getCountryCode()!;
+    const o: LocationPlainObj = {
       title: location.getName(),
       city: location.getShortName(),
       tzid: location.getTzid(),
       latitude: location.getLatitude(),
       longitude: location.getLongitude(),
-      cc: location.getCountryCode(),
-      country: countryNames[location.getCountryCode()],
+      cc: cc,
+      country: countryNames[cc],
     };
     for (const k of LOC_FIELDS) {
-      if (location[k]) {
-        o[k] = location[k];
+      const val = (location as any)[k];
+      if (val) {
+        (o as any)[k] = val;
       }
     }
     return o;
@@ -56,10 +89,8 @@ export function locationToPlainObj(location) {
  * Converts to lowercase and replaces non-word characters with hyphen ('-').
  * @example
  * makeAnchor('Rosh Chodesh Adar II') // 'rosh-chodesh-adar-ii'
- * @param {string} s
- * @return {string}
  */
-export function makeAnchor(s) {
+export function makeAnchor(s: string): string {
   return s.toLowerCase()
       .replace(/'/g, '')
       .replace(/[^\w]/g, '-')
@@ -68,11 +99,7 @@ export function makeAnchor(s) {
       .replace(/-$/g, '');
 }
 
-/**
- * @param {CalOptions} options
- * @return {string}
- */
-export function getDownloadFilename(options) {
+export function getDownloadFilename(options: RestApiOptions): string {
   let fileName = 'hebcal';
   if (options.year) {
     fileName += '_' + options.year;
@@ -94,7 +121,7 @@ export function getDownloadFilename(options) {
     }
   }
   if (typeof options.location === 'object') {
-    const loc = options.location;
+    const loc = options.location as any;
     const name = loc.zip || loc.asciiname || loc.getShortName();
     if (name) {
       fileName += '_' + makeAnchor(name).replace(/[-]/g, '_');
@@ -104,48 +131,16 @@ export function getDownloadFilename(options) {
 }
 
 /**
- * @param {number} number
- * @return {string}
- */
-export function pad2(number) {
-  if (number < 10) {
-    return '0' + number;
-  }
-  return '' + number;
-}
-
-/**
- * @param {number} number
- * @return {string}
- */
-export function pad4(number) {
-  if (number < 0) {
-    return '-00' + pad4(-number);
-  } else if (number < 10) {
-    return '000' + number;
-  } else if (number < 100) {
-    return '00' + number;
-  } else if (number < 1000) {
-    return '0' + number;
-  }
-  return '' + number;
-}
-
-/**
  * Returns just the date portion as YYYY-MM-DD
- * @param {Date} d
- * @return {string}
  */
-export function toISOString(d) {
-  return pad4(d.getFullYear()) + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+export function toISOString(d: Date): string {
+  return isoDateString(d);
 }
 
 /**
  * Returns a category and subcategory name
- * @param {Event} ev
- * @return {string[]}
  */
-export function getEventCategories(ev) {
+export function getEventCategories(ev: Event): string[] {
   const desc = ev.getDesc();
   if (desc === 'Purim' || desc === 'Erev Purim') {
     return ['holiday', 'major'];
@@ -155,20 +150,15 @@ export function getEventCategories(ev) {
 
 /**
  * Renders the event title in default locale, but strips off time
- * @param {Event} ev
- * @return {string}
  */
-export function renderTitleWithoutTime(ev) {
-  return typeof ev.eventTime === 'undefined' ? ev.render() : ev.renderBrief();
+export function renderTitleWithoutTime(ev: Event): string {
+  return typeof (ev as any).eventTime === 'undefined' ? ev.render() : ev.renderBrief();
 }
 
 /**
  * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
- * @param {Event[]} events
- * @param {CalOptions} options
- * @return {string}
  */
-export function getCalendarTitle(events, options) {
+export function getCalendarTitle(events: Event[], options: RestApiOptions): string {
   let title = 'Hebcal';
   const location = options.location;
   const locationName = location?.getName();
@@ -206,11 +196,8 @@ export function getCalendarTitle(events, options) {
 
 /**
  * Returns an English language description of the holiday
- * @param {Event} ev
- * @param {boolean} [firstSentence=false]
- * @return {string}
  */
-export function getHolidayDescription(ev, firstSentence=false) {
+export function getHolidayDescription(ev: Event, firstSentence: boolean=false): string {
   const str0 = ev.getFlags() & flags.SHABBAT_MEVARCHIM ?
     holidayDescription['Shabbat Mevarchim Chodesh'] :
     holidayDescription[ev.getDesc()] || holidayDescription[ev.basename()] || '';
@@ -231,13 +218,10 @@ const HOLIDAY_IGNORE_MASK = flags.DAF_YOMI | flags.OMER_COUNT |
 
 /**
  * Makes mulit-line text that summarizes Torah & Haftarah
- * @param {Event} ev
- * @param {boolean} il
- * @return {string}
  */
-export function makeTorahMemoText(ev, il) {
+export function makeTorahMemoText(ev: Event, il: boolean): string {
   const mask = ev.getFlags();
-  if ((mask & HOLIDAY_IGNORE_MASK) || (typeof ev.eventTime !== 'undefined')) {
+  if ((mask & HOLIDAY_IGNORE_MASK) || (typeof (ev as any).eventTime !== 'undefined')) {
     return '';
   }
   const reading = (mask & flags.PARSHA_HASHAVUA) ?
@@ -264,13 +248,7 @@ export function makeTorahMemoText(ev, il) {
   return memo;
 }
 
-/**
- * @private
- * @param {Event} ev
- * @param {boolean} il
- * @return {string}
- */
-export function makeMemo(ev, il) {
+export function makeMemo(ev: Event, il: boolean): string {
   if (ev.getFlags() & flags.PARSHA_HASHAVUA) {
     try {
       const memo = makeTorahMemoText(ev, il);
@@ -286,14 +264,9 @@ export function makeMemo(ev, il) {
 
 /**
  * Appends utm_source and utm_medium parameters to a URL
- * @param {string} url
- * @param {boolean} il
- * @param {string} utmSource
- * @param {string} utmMedium
- * @param {string} utmCampaign
- * @return {string}
  */
-export function appendIsraelAndTracking(url, il, utmSource, utmMedium, utmCampaign) {
+export function appendIsraelAndTracking(url: string, il: boolean,
+  utmSource: string, utmMedium: string, utmCampaign?: string): string {
   const u = new URL(url);
   const isHebcal = u.host === 'www.hebcal.com';
   if (isHebcal) {
@@ -340,13 +313,10 @@ export function appendIsraelAndTracking(url, il, utmSource, utmMedium, utmCampai
   return u.toString();
 }
 
-/**
- * @private
- * @param {Event} ev
- * @return {boolean}
- */
-export function shouldRenderBrief(ev) {
-  if (typeof ev.eventTime !== 'undefined') return true;
+export function shouldRenderBrief(ev: Event): boolean {
+  if (typeof (ev as any).eventTime !== 'undefined') {
+    return true;
+  }
   const mask = ev.getFlags();
   if (mask & flags.HEBREW_DATE) {
     const hd = ev.getDate();

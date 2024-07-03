@@ -1,9 +1,8 @@
-import test from 'ava';
 import {HebrewCalendar, Location, HDate, HebrewDateEvent} from '@hebcal/core';
 import {DafYomiEvent} from '@hebcal/learning';
-import {eventToFullCalendar} from './fullcalendar.js';
+import {eventToFullCalendar} from '../src/fullcalendar';
 
-test('eventToFullCalendar', (t) => {
+test('eventToFullCalendar', () => {
   const options = {
     year: 1990,
     month: 4,
@@ -102,10 +101,10 @@ test('eventToFullCalendar', (t) => {
       description: pesachMemo,
     },
   ];
-  t.deepEqual(fc, expected);
+  expect(fc).toEqual(expected);
 });
 
-test('chanukah-candles', (t) => {
+test('chanukah-candles', () => {
   const options = {
     start: new Date(2020, 11, 10),
     end: new Date(2020, 11, 11),
@@ -143,10 +142,10 @@ test('chanukah-candles', (t) => {
       hebrew: 'הדלקת נרות',
     },
   ];
-  t.deepEqual(fc, expected);
+  expect(fc).toEqual(expected);
 });
 
-test('chanukah-nocandles', (t) => {
+test('chanukah-nocandles', () => {
   const options = {
     start: new Date(2020, 11, 10),
     end: new Date(2020, 11, 11),
@@ -175,10 +174,10 @@ test('chanukah-nocandles', (t) => {
     },
   ];
 
-  t.deepEqual(fc, expected);
+  expect(fc).toEqual(expected);
 });
 
-test('fastStartEnd', (t) => {
+test('fastStartEnd', () => {
   const options = {
     start: new Date(2021, 5, 27),
     end: new Date(2021, 5, 27),
@@ -215,10 +214,10 @@ test('fastStartEnd', (t) => {
       description: 'Tzom Tammuz',
     },
   ];
-  t.deepEqual(fc, expected);
+  expect(fc).toEqual(expected);
 });
 
-test('bce', (t) => {
+test('bce', () => {
   const options = {
     start: new Date(-1, 4, 6),
     end: new Date(-1, 4, 6),
@@ -234,10 +233,10 @@ test('bce', (t) => {
     hebrew: 'ערב שבועות',
     description: 'Festival of Weeks. Commemorates the giving of the Torah at Mount Sinai',
   };
-  t.deepEqual(fc, expected);
+  expect(fc).toEqual(expected);
 });
 
-test('daf-yomi', (t) => {
+test('daf-yomi', () => {
   const ev = new DafYomiEvent(new HDate(new Date(1995, 11, 17)));
   const fc = eventToFullCalendar(ev, null, false);
   const expected = {
@@ -248,10 +247,10 @@ test('daf-yomi', (t) => {
     hebrew: 'עבודה זרה דף ס״ח',
     url: 'https://www.sefaria.org/Avodah_Zarah.68a?lang=bi&utm_source=hebcal.com&utm_medium=fc',
   };
-  t.deepEqual(fc, expected);
+  expect(fc).toEqual(expected);
 });
 
-test('hebdate', (t) => {
+test('hebdate', () => {
   const ev = new HebrewDateEvent(new HDate(new Date(1995, 11, 17)));
   const fc = eventToFullCalendar(ev, null, false);
   const expected = {
@@ -261,5 +260,5 @@ test('hebdate', (t) => {
     className: 'hebdate',
     hebrew: 'כ״ד כסלו',
   };
-  t.deepEqual(fc, expected);
+  expect(fc).toEqual(expected);
 });

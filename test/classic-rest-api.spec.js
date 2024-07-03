@@ -1,9 +1,8 @@
-import test from 'ava';
 import {HebrewCalendar, Location, HDate, HebrewDateEvent, OmerEvent} from '@hebcal/core';
 import {DafYomiEvent, MishnaYomiEvent, YerushalmiYomiEvent} from '@hebcal/learning';
-import {eventsToClassicApi, eventToClassicApiObject} from './classic-rest-api.js';
+import {eventsToClassicApi, eventToClassicApiObject} from '../src/classic-rest-api';
 
-test('eventToClassicApiObject', (t) => {
+test('eventToClassicApiObject', () => {
   const location = Location.lookup('Paris');
   const options = {
     start: new Date(2020, 4, 22),
@@ -25,7 +24,7 @@ test('eventToClassicApiObject', (t) => {
     title_orig: 'Candle lighting',
     memo: 'Parashat Bamidbar',
   };
-  t.deepEqual(candlesActual, candlesExpected);
+  expect(candlesActual).toEqual(candlesExpected);
   const bamidbarActual = apiObjs[2];
   const bamidbarExpected = {
     title: 'Parashat Bamidbar',
@@ -57,7 +56,7 @@ test('eventToClassicApiObject', (t) => {
     },
     link: 'https://hebcal.com/s/bamidbar-20200523?us=js&um=api',
   };
-  t.deepEqual(bamidbarActual, bamidbarExpected);
+  expect(bamidbarActual).toEqual(bamidbarExpected);
   const shavuotActual = apiObjs[7];
   const shavuotExpected = {
     title: 'Shavuot I',
@@ -80,10 +79,10 @@ test('eventToClassicApiObject', (t) => {
     },
     link: 'https://hebcal.com/h/shavuot-2020?us=js&um=api',
   };
-  t.deepEqual(shavuotActual, shavuotExpected);
+  expect(shavuotActual).toEqual(shavuotExpected);
 });
 
-test('bce', (t) => {
+test('bce', () => {
   const options = {
     start: new Date(-1, 4, 6),
     end: new Date(-1, 4, 6),
@@ -100,10 +99,10 @@ test('bce', (t) => {
     hebrew: 'ערב שבועות',
     memo: 'Festival of Weeks. Commemorates the giving of the Torah at Mount Sinai',
   };
-  t.deepEqual(apiObj, expected);
+  expect(apiObj).toEqual(expected);
 });
 
-test('eventsToClassicApi', (t) => {
+test('eventsToClassicApi', () => {
   const location = Location.lookup('Vancouver');
   const options = {
     year: 2022,
@@ -115,7 +114,7 @@ test('eventsToClassicApi', (t) => {
   };
   const events = HebrewCalendar.calendar(options);
   const apiResult = eventsToClassicApi(events, options);
-  t.is(apiResult.title, 'Hebcal Vancouver May 2022');
+  expect(apiResult.title).toBe('Hebcal Vancouver May 2022');
   const locationExpected = {
     cc: 'CA',
     city: 'Vancouver',
@@ -126,8 +125,8 @@ test('eventsToClassicApi', (t) => {
     tzid: 'America/Vancouver',
     elevation: 70,
   };
-  t.deepEqual(apiResult.location, locationExpected);
-  t.is(Array.isArray(apiResult.items), true);
+  expect(apiResult.location).toEqual(locationExpected);
+  expect(Array.isArray(apiResult.items)).toBe(true);
   const roshChodesh = apiResult.items[0];
   const roshChodeshExpected = {
     category: 'roshchodesh',
@@ -146,7 +145,7 @@ test('eventsToClassicApi', (t) => {
     // eslint-disable-next-line max-len
     memo: 'Start of month of Iyyar on the Hebrew calendar. אִיָיר (transliterated Iyyar or Iyar) is the 2nd month of the Hebrew year, has 29 days, and corresponds to April or May on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon',
   };
-  t.deepEqual(roshChodesh, roshChodeshExpected);
+  expect(roshChodesh).toEqual(roshChodeshExpected);
   const candleLighting = apiResult.items[4];
   const candleLightingExpected = {
     category: 'candles',
@@ -156,10 +155,10 @@ test('eventsToClassicApi', (t) => {
     title_orig: 'Candle lighting',
     memo: 'Parashat Kedoshim',
   };
-  t.deepEqual(candleLighting, candleLightingExpected);
+  expect(candleLighting).toEqual(candleLightingExpected);
 });
 
-test('classic-api-no-sedra', (t) => {
+test('classic-api-no-sedra', () => {
   const options = {start: new Date(2022, 4, 15), end: new Date(2022, 5, 1), il: true};
   const events = HebrewCalendar.calendar(options);
   const apiResult = eventsToClassicApi(events, options);
@@ -221,10 +220,10 @@ test('classic-api-no-sedra', (t) => {
       },
     ],
   };
-  t.deepEqual(apiResult, expected);
+  expect(apiResult).toEqual(expected);
 });
 
-test('reformat-time-usa', (t) => {
+test('reformat-time-usa', () => {
   const options = {
     start: new Date(2020, 4, 22),
     end: new Date(2020, 4, 30),
@@ -241,10 +240,10 @@ test('reformat-time-usa', (t) => {
     title_orig: 'Candle lighting',
     hebrew: 'הדלקת נרות',
   };
-  t.deepEqual(apiObjs[0], expected);
+  expect(apiObjs[0]).toEqual(expected);
 });
 
-test('no-leyning', (t) => {
+test('no-leyning', () => {
   const options = {
     start: new Date(2020, 4, 22),
     end: new Date(2020, 4, 30),
@@ -262,20 +261,20 @@ test('no-leyning', (t) => {
     hebrew: 'פרשת במדבר',
     link: 'https://hebcal.com/s/bamidbar-20200523?i=on&us=js&um=api',
   };
-  t.deepEqual(bamidbarActual, bamidbarExpected);
+  expect(bamidbarActual).toEqual(bamidbarExpected);
 });
 
-test('2-digit-year', (t) => {
+test('2-digit-year', () => {
   const options = {
     year: 23,
     month: 1,
   };
   const events = HebrewCalendar.calendar(options);
   const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
-  t.is(apiObjs[2].date, '0023-01-23');
+  expect(apiObjs[2].date).toBe('0023-01-23');
 });
 
-test('chanukah-candles', (t) => {
+test('chanukah-candles', () => {
   const options = {
     start: new Date(2020, 11, 10),
     end: new Date(2020, 11, 11),
@@ -312,10 +311,10 @@ test('chanukah-candles', (t) => {
       hebrew: 'הדלקת נרות',
     },
   ];
-  t.deepEqual(apiObjs, expected);
+  expect(apiObjs).toEqual(expected);
 });
 
-test('chanukah-nocandles', (t) => {
+test('chanukah-nocandles', () => {
   const options = {
     start: new Date(2020, 11, 10),
     end: new Date(2020, 11, 11),
@@ -345,10 +344,10 @@ test('chanukah-nocandles', (t) => {
       link: 'https://hebcal.com/h/chanukah-2020?us=js&um=api',
     },
   ];
-  t.deepEqual(apiObjs, expected);
+  expect(apiObjs).toEqual(expected);
 });
 
-test('fastStartEnd', (t) => {
+test('fastStartEnd', () => {
   const options = {
     start: new Date(2021, 5, 27),
     end: new Date(2021, 5, 27),
@@ -385,10 +384,10 @@ test('fastStartEnd', (t) => {
       memo: 'Tzom Tammuz',
     },
   ];
-  t.deepEqual(apiObjs, expected);
+  expect(apiObjs).toEqual(expected);
 });
 
-test.skip('candles-year221', (t) => {
+test.skip('candles-year221', () => {
   const options = {
     start: new Date(221, 0, 5),
     end: new Date(221, 0, 5),
@@ -404,10 +403,10 @@ test.skip('candles-year221', (t) => {
     title_orig: 'Candle lighting',
     hebrew: 'הדלקת נרות',
   };
-  t.deepEqual(apiObj, expected);
+  expect(apiObj).toEqual(expected);
 });
 
-test('daf-yomi', (t) => {
+test('daf-yomi', () => {
   const ev = new DafYomiEvent(new HDate(new Date(1995, 11, 17)));
   const obj = eventToClassicApiObject(ev, {}, false);
   const expected = {
@@ -418,10 +417,10 @@ test('daf-yomi', (t) => {
     hebrew: 'עבודה זרה דף ס״ח',
     link: 'https://www.sefaria.org/Avodah_Zarah.68a?lang=bi&utm_source=hebcal.com&utm_medium=api',
   };
-  t.deepEqual(obj, expected);
+  expect(obj).toEqual(expected);
 });
 
-test('hebdate', (t) => {
+test('hebdate', () => {
   const ev = new HebrewDateEvent(new HDate(new Date(1995, 11, 17)));
   const obj = eventToClassicApiObject(ev, {}, false);
   const expected = {
@@ -437,10 +436,10 @@ test('hebdate', (t) => {
       y: 'תשנ״ו',
     },
   };
-  t.deepEqual(obj, expected);
+  expect(obj).toEqual(expected);
 });
 
-test('mishna-yomi', (t) => {
+test('mishna-yomi', () => {
   const my = [{k: 'Berakhot', v: '3:6'}, {k: 'Berakhot', v: '4:1'}];
   const hd = new HDate(new Date(1947, 4, 29));
   const ev = new MishnaYomiEvent(hd, my);
@@ -453,10 +452,10 @@ test('mishna-yomi', (t) => {
     hebrew: 'ברכות 3:6-4:1',
     link: 'https://www.sefaria.org/Mishnah_Berakhot.3.6-4.1?lang=bi&utm_source=hebcal.com&utm_medium=api',
   };
-  t.deepEqual(obj, expected);
+  expect(obj).toEqual(expected);
 });
 
-test('location-zip', (t) => {
+test('location-zip', () => {
   const location = new Location(41.83815, -71.393139, false, 'America/New_York', 'Providence, RI 02906', 'US');
   location.admin1 = location.state = 'RI';
   location.zip = '02906';
@@ -499,10 +498,10 @@ test('location-zip', (t) => {
       },
     ],
   };
-  t.deepEqual(apiResult, expected);
+  expect(apiResult).toEqual(expected);
 });
 
-test('omer', (t) => {
+test('omer', () => {
   const ev = new OmerEvent(new HDate(2, 'Sivan', 5770), 46);
   const obj = eventToClassicApiObject(ev, {}, false);
   const expected = {
@@ -525,10 +524,10 @@ test('omer', (t) => {
       },
     },
   };
-  t.deepEqual(obj, expected);
+  expect(obj).toEqual(expected);
 });
 
-test('classic-api-empty', (t) => {
+test('classic-api-empty', () => {
   const apiResult = eventsToClassicApi([], {}, false);
   delete apiResult.date;
   const expected = {
@@ -536,19 +535,19 @@ test('classic-api-empty', (t) => {
     location: {geo: 'none'},
     items: [],
   };
-  t.deepEqual(apiResult, expected);
+  expect(apiResult).toEqual(expected);
 });
 
-test('options.heDateParts', (t) => {
+test('options.heDateParts', () => {
   const hd = new HDate(18, 'Tishrei', 5783);
   const options = {start: hd, end: hd};
   const events = HebrewCalendar.calendar(options);
   options.heDateParts = true;
   const actual = eventToClassicApiObject(events[0], options, false);
-  t.deepEqual(actual.heDateParts, {y: 'תשפ״ג', m: 'תשרי', d: 'י״ח'});
+  expect(actual.heDateParts).toEqual({y: 'תשפ״ג', m: 'תשרי', d: 'י״ח'});
 });
 
-test('yerushalmi-yomi', (t) => {
+test('yerushalmi-yomi', () => {
   const hd = new HDate(new Date(2022, 10, 15));
   const daf = {name: 'Berakhot', blatt: 2};
   const ev = new YerushalmiYomiEvent(hd, daf);
@@ -560,10 +559,10 @@ test('yerushalmi-yomi', (t) => {
     category: 'yerushalmi',
     hebrew: 'ברכות דף ב׳',
   };
-  t.deepEqual(obj, expected);
+  expect(obj).toEqual(expected);
 });
 
-test('molad', (t) => {
+test('molad', () => {
   const options = {year: 2022, molad: true, noHolidays: true, hour12: false};
   const events = HebrewCalendar.calendar(options);
   const apiResult = eventsToClassicApi(events.slice(2, 5), options, false);
@@ -610,5 +609,5 @@ test('molad', (t) => {
       chalakim: 1,
     },
   }];
-  t.deepEqual(apiResult.items, expected);
+  expect(apiResult.items).toEqual(expected);
 });

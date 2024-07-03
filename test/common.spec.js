@@ -1,12 +1,11 @@
-import test from 'ava';
 import {getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
   getHolidayDescription,
-  appendIsraelAndTracking, locationToPlainObj, shouldRenderBrief} from './common.js';
+  appendIsraelAndTracking, locationToPlainObj, shouldRenderBrief} from '../src/common';
 import {HebrewCalendar, Location, Event, HDate, flags, HolidayEvent,
   HebrewDateEvent, TimedEvent} from '@hebcal/core';
 import {DafYomiEvent} from '@hebcal/learning';
 
-test('getDownloadFilename', (t) => {
+test('getDownloadFilename', () => {
   const location = new Location(38.672294, -90.533239, false, 'America/Chicago',
       'Chesterfield, MO 63017', 'US', '63017');
   const options = {
@@ -15,40 +14,40 @@ test('getDownloadFilename', (t) => {
     candlelighting: true,
     location: location,
   };
-  t.is(getDownloadFilename(options), 'hebcal_2018_chesterfield');
+  expect(getDownloadFilename(options)).toBe('hebcal_2018_chesterfield');
   options.year = 5749;
   options.isHebrewYear = true;
-  t.is(getDownloadFilename(options), 'hebcal_5749h_chesterfield');
-  t.is(getDownloadFilename({year: 2017}), 'hebcal_2017');
-  t.is(getDownloadFilename({year: 2017, il: true}), 'hebcal_2017');
-  t.is(getDownloadFilename({year: 5780, isHebrewYear: true}), 'hebcal_5780h');
+  expect(getDownloadFilename(options)).toBe('hebcal_5749h_chesterfield');
+  expect(getDownloadFilename({year: 2017})).toBe('hebcal_2017');
+  expect(getDownloadFilename({year: 2017, il: true})).toBe('hebcal_2017');
+  expect(getDownloadFilename({year: 5780, isHebrewYear: true})).toBe('hebcal_5780h');
 
   const loc2 = new Location(-23.5475, -46.63611, false, 'America/Sao_Paulo',
       'São Paulo, Brazil', 'BR', 3448439);
   loc2.asciiname = 'Sao Paulo';
   options.location = loc2;
-  t.is(getDownloadFilename(options), 'hebcal_5749h_sao_paulo');
+  expect(getDownloadFilename(options)).toBe('hebcal_5749h_sao_paulo');
 
   const loc3 = new Location(34.103131, -118.416253, false, 'America/Los_Angeles',
       'Beverly Hills, CA 90210', 'US', '90210');
   loc3.state = 'CA';
   loc3.zip = '90210';
   options.location = loc3;
-  t.is(getDownloadFilename(options), 'hebcal_5749h_90210');
+  expect(getDownloadFilename(options)).toBe('hebcal_5749h_90210');
 
   const loc4 = new Location(32.1836, 34.87386, true, 'Asia/Jerusalem',
       'Ra\'anana, Israel', 'IL', 293807);
   loc4.asciiname = 'Ra\'anana';
   loc4.admin1 = 'Central District';
   options.location = loc4;
-  t.is(getDownloadFilename(options), 'hebcal_5749h_raanana');
+  expect(getDownloadFilename(options)).toBe('hebcal_5749h_raanana');
 
   const loc5 = new Location(19.4349023, -99.2069489, false, 'America/Mexico_City');
   options.location = loc5;
-  t.is(getDownloadFilename(options), 'hebcal_5749h');
+  expect(getDownloadFilename(options)).toBe('hebcal_5749h');
 });
 
-test('getCalendarTitle', (t) => {
+test('getCalendarTitle', () => {
   const location = new Location(38.672294, -90.533239, false, 'America/Chicago',
       'Chesterfield, MO 63017', 'US', '63017');
   let options = {
@@ -58,31 +57,38 @@ test('getCalendarTitle', (t) => {
     location: location,
   };
   let events = HebrewCalendar.calendar(options);
-  t.is(getCalendarTitle(events, options), 'Hebcal Chesterfield 2018');
+  expect(getCalendarTitle(events, options)).toBe('Hebcal Chesterfield 2018');
 
-  options.subscribe = '1';
-  t.is(getCalendarTitle(events, options), 'Hebcal Chesterfield');
+  const opts1 = {subscribe: '1', ...options};
+  expect(getCalendarTitle(events, opts1)).toBe('Hebcal Chesterfield');
 
-  options.subscribe = '0';
-  options.year = 5749;
-  options.isHebrewYear = true;
-  events = HebrewCalendar.calendar(options);
-  t.is(getCalendarTitle(events, options), 'Hebcal Chesterfield 5749');
-
-  options = {year: 2017};
-  events = HebrewCalendar.calendar(options);
-  t.is(getCalendarTitle(events, options), 'Hebcal Diaspora 2017');
-
-  options = {year: 2017, il: true};
-  events = HebrewCalendar.calendar(options);
-  t.is(getCalendarTitle(events, options), 'Hebcal Israel 2017');
-
-  options = {year: 5780, isHebrewYear: true};
-  events = HebrewCalendar.calendar(options);
-  t.is(getCalendarTitle(events, options), 'Hebcal Diaspora 5780');
+  const options2 = {
+    year: 5749,
+    isHebrewYear: true,
+    sedrot: true,
+    candlelighting: true,
+    location: location,
+  };
+  events = HebrewCalendar.calendar(options2);
+  const opts2 = {subscribe: '0', ...options2};
+  expect(getCalendarTitle(events, opts2)).toBe('Hebcal Chesterfield 5749');
 });
 
-test('makeTorahMemoText', (t) => {
+test('getCalendarTitle2', () => {
+  const options = {year: 2017};
+  const events = HebrewCalendar.calendar(options);
+  expect(getCalendarTitle(events, options)).toBe('Hebcal Diaspora 2017');
+
+  const opts2 = {year: 2017, il: true};
+  const evts2 = HebrewCalendar.calendar(opts2);
+  expect(getCalendarTitle(evts2, opts2)).toBe('Hebcal Israel 2017');
+
+  const opts3 = {year: 5780, isHebrewYear: true};
+  const evts3 = HebrewCalendar.calendar(opts3);
+  expect(getCalendarTitle(evts3, opts3)).toBe('Hebcal Diaspora 5780');
+});
+
+test('makeTorahMemoText', () => {
   const events = HebrewCalendar.calendar({
     noHolidays: true,
     sedrot: true,
@@ -95,34 +101,34 @@ test('makeTorahMemoText', (t) => {
     'Haftarah: II Kings 12:1-17 | Shabbat Shekalim (on Rosh Chodesh)',
     'Haftarah for Sephardim: II Kings 11:17-12:17',
   ];
-  t.deepEqual(memo, expected);
+  expect(memo).toEqual(expected);
 });
 
-test('makeTorahMemoText-userEvent', (t) => {
+test('makeTorahMemoText-userEvent', () => {
   const hd = new HDate(new Date(2021, 1, 13));
   const userEvent = new Event(hd, 'User Event', flags.USER_EVENT);
-  t.is(makeTorahMemoText(userEvent, false), '');
+  expect(makeTorahMemoText(userEvent, false)).toBe('');
 
   const holidayEvent = new Event(hd, 'Holiday Event', 0);
-  t.is(makeTorahMemoText(holidayEvent, false), 'Haftarah: Isaiah 66:1-24');
+  expect(makeTorahMemoText(holidayEvent, false)).toBe('Haftarah: Isaiah 66:1-24');
 });
 
-test('makeTorahMemoText-untimed', (t) => {
+test('makeTorahMemoText-untimed', () => {
   const ev1 = HebrewCalendar.calendar({
     start: new Date(2020, 11, 14),
     end: new Date(2020, 11, 14),
   })[0];
-  t.is(makeTorahMemoText(ev1, false), 'Torah: Numbers 7:30-41');
+  expect(makeTorahMemoText(ev1, false)).toBe('Torah: Numbers 7:30-41');
   const ev2 = HebrewCalendar.calendar({
     start: new Date(2020, 11, 14),
     end: new Date(2020, 11, 14),
     location: Location.lookup('Boston'),
     candlelighting: true,
   })[0];
-  t.is(makeTorahMemoText(ev2, false), '');
+  expect(makeTorahMemoText(ev2, false)).toBe('');
 });
 
-test('getEventCategories', (t) => {
+test('getEventCategories', () => {
   const events = HebrewCalendar.calendar({year: 2022, il: true});
   const actual = {};
   for (const ev of events) {
@@ -214,10 +220,10 @@ test('getEventCategories', (t) => {
     'Chanukah: 8 Candles': ['holiday', 'major'],
     'Chanukah: 8th Day': ['holiday', 'minor'],
   };
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('getEventCategories-candles', (t) => {
+test('getEventCategories-candles', () => {
   const events = HebrewCalendar.calendar({
     start: new HDate(9, 'Tishrei', 5783),
     end: new HDate(13, 'Tishrei', 5783),
@@ -236,27 +242,27 @@ test('getEventCategories-candles', (t) => {
     ['Candle lighting', ['candles']],
     ['Havdalah', ['havdalah']],
   ];
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('appendIsraelAndTracking', (t) => {
-  t.is(appendIsraelAndTracking('https://www.hebcal.com/foo', true, 'foo', 'bar'),
-      'https://www.hebcal.com/foo?i=on&utm_source=foo&utm_medium=bar');
-  t.is(appendIsraelAndTracking('https://www.hebcal.com/foo', false, 'foo', 'bar'),
-      'https://www.hebcal.com/foo?utm_source=foo&utm_medium=bar');
-  t.is(appendIsraelAndTracking('https://www.hebcal.com/sedrot/foo-123', true, 'foo', 'bar'),
-      'https://hebcal.com/s/foo-123?i=on&us=foo&um=bar');
-  t.is(appendIsraelAndTracking('https://www.hebcal.com/sedrot/foo-345', false, 'foo', 'bar'),
-      'https://hebcal.com/s/foo-345?us=foo&um=bar');
-  t.is(appendIsraelAndTracking('https://www.hebcal.com/sedrot/foo-345', false, 'foo', 'bar', 'hello'),
-      'https://hebcal.com/s/foo-345?us=foo&um=bar&uc=hello');
-  t.is(appendIsraelAndTracking('https://www.hebcal.com/holidays/quux-678', true, 'foo', 'bar', 'ical-abc'),
-      'https://hebcal.com/h/quux-678?i=on&uc=ical-abc');
-  t.is(appendIsraelAndTracking('https://www.hebcal.com/holidays/quux-987', false, 'foo', 'bar', 'pdf-abc'),
-      'https://hebcal.com/h/quux-987?uc=pdf-abc');
+test('appendIsraelAndTracking', () => {
+  expect(appendIsraelAndTracking('https://www.hebcal.com/foo', true, 'foo', 'bar'))
+    .toBe('https://www.hebcal.com/foo?i=on&utm_source=foo&utm_medium=bar');
+  expect(appendIsraelAndTracking('https://www.hebcal.com/foo', false, 'foo', 'bar'))
+    .toBe('https://www.hebcal.com/foo?utm_source=foo&utm_medium=bar');
+  expect(appendIsraelAndTracking('https://www.hebcal.com/sedrot/foo-123', true, 'foo', 'bar'))
+    .toBe('https://hebcal.com/s/foo-123?i=on&us=foo&um=bar');
+  expect(appendIsraelAndTracking('https://www.hebcal.com/sedrot/foo-345', false, 'foo', 'bar'))
+    .toBe('https://hebcal.com/s/foo-345?us=foo&um=bar');
+  expect(appendIsraelAndTracking('https://www.hebcal.com/sedrot/foo-345', false, 'foo', 'bar', 'hello'))
+    .toBe('https://hebcal.com/s/foo-345?us=foo&um=bar&uc=hello');
+  expect(appendIsraelAndTracking('https://www.hebcal.com/holidays/quux-678', true, 'foo', 'bar', 'ical-abc'))
+    .toBe('https://hebcal.com/h/quux-678?i=on&uc=ical-abc');
+  expect(appendIsraelAndTracking('https://www.hebcal.com/holidays/quux-987', false, 'foo', 'bar', 'pdf-abc'))
+    .toBe('https://hebcal.com/h/quux-987?uc=pdf-abc');
 });
 
-test('locationToPlainObj', (t) => {
+test('locationToPlainObj', () => {
   const location = Location.lookup('Paris');
   const actual = locationToPlainObj(location);
   const expected = {
@@ -269,10 +275,10 @@ test('locationToPlainObj', (t) => {
     country: 'France',
     elevation: 42,
   };
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('location-zip', (t) => {
+test('location-zip', () => {
   const location = new Location(41.83815, -71.393139, false, 'America/New_York', 'Providence, RI 02906', 'US');
   location.admin1 = location.state = 'RI';
   location.zip = '02906';
@@ -291,78 +297,91 @@ test('location-zip', (t) => {
     stateName: 'Rhode Island',
   };
   const actual = locationToPlainObj(location);
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('locationToPlainObj-none', (t) => {
+test('locationToPlainObj-none', () => {
   const expected = {geo: 'none'};
-  t.deepEqual(locationToPlainObj(null), expected);
-  t.deepEqual(locationToPlainObj(undefined), expected);
-  t.deepEqual(locationToPlainObj({}), expected);
+  expect(locationToPlainObj(null)).toEqual(expected);
+  expect(locationToPlainObj(undefined)).toEqual(expected);
+  expect(locationToPlainObj({})).toEqual(expected);
 });
 
-test('getHolidayDescription-firstSentence', (t) => {
+test('getHolidayDescription-firstSentence', () => {
   const ev = new HolidayEvent(new HDate(14, 'Nisan', 5784), 'Erev Pesach', flags.EREV);
-  t.is(getHolidayDescription(ev, true), 'Passover, the Feast of Unleavened Bread');
-  // eslint-disable-next-line max-len
-  t.is(getHolidayDescription(ev, false), 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah), it commemorates the Exodus and freedom of the Israelites from ancient Egypt');
+  expect(getHolidayDescription(ev, true))
+    .toBe('Passover, the Feast of Unleavened Bread');
+  expect(getHolidayDescription(ev, false))
+    .toBe('Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah), it commemorates the Exodus and freedom of the Israelites from ancient Egypt');
 });
 
-test('getHolidayDescription-ykk', (t) => {
+test('getHolidayDescription-ykk', () => {
   const ev = new HolidayEvent(new HDate(29, 'Tevet', 5784), 'Yom Kippur Katan', flags.MINOR_FAST);
   const s = getHolidayDescription(ev);
-  t.is(s, 'Minor day of atonement occurring monthly on the day preceeding each Rosh Chodesh');
+  expect(s).toBe('Minor day of atonement occurring monthly on the day preceeding each Rosh Chodesh');
 });
 
-test('getHolidayDescription Shabbat Mevarchim Chodesh', (t) => {
+test('getHolidayDescription Shabbat Mevarchim Chodesh', () => {
   const ev = new HolidayEvent(new HDate(25, 'Adar I', 5782),
       'Shabbat Mevarchim Chodesh Adar II', flags.SHABBAT_MEVARCHIM);
   const s = getHolidayDescription(ev);
-  t.is(s, 'Shabbat that precedes Rosh Chodesh. The congregation blesses the forthcoming new month');
+  expect(s).toBe('Shabbat that precedes Rosh Chodesh. The congregation blesses the forthcoming new month');
 });
 
-test('getHolidayDescription-notfound', (t) => {
+test('getHolidayDescription-notfound', () => {
   const ev = new Event(new HDate(3, 'Tevet', 5784), 'Foobar', flags.USER_EVENT);
   const s = getHolidayDescription(ev);
-  t.is(s, '');
+  expect(s).toBe('');
 });
 
-test('shouldRenderBrief', (t) => {
-  t.is(shouldRenderBrief(new HolidayEvent(new HDate(17, 'Tevet', 5784), 'Asara B\'Tevet', flags.MINOR_FAST)), false);
-  t.is(shouldRenderBrief(new HolidayEvent(new HDate(29, 'Tevet', 5784), 'Yom Kippur Katan', flags.MINOR_FAST)), true);
-  t.is(shouldRenderBrief(new HolidayEvent(new HDate(14, 'Nisan', 5784), 'Erev Pesach', flags.EREV)), false);
-  t.is(shouldRenderBrief(new HebrewDateEvent(new HDate(1, 'Nisan', 5784))), false);
-  t.is(shouldRenderBrief(new HebrewDateEvent(new HDate(2, 'Nisan', 5784))), true);
-  t.is(shouldRenderBrief(new Event(new HDate(new Date('1959-11-28')),
-      'Shabbat Mevarchim Chodesh Kislev', flags.SHABBAT_MEVARCHIM)), true);
-  t.is(shouldRenderBrief(new TimedEvent(new HDate(25, 'Sivan', 5782),
+test('shouldRenderBrief', () => {
+  expect(shouldRenderBrief(new HolidayEvent(new HDate(17, 'Tevet', 5784), 'Asara B\'Tevet', flags.MINOR_FAST)))
+    .toBe(false);
+  expect(shouldRenderBrief(new HolidayEvent(new HDate(29, 'Tevet', 5784), 'Yom Kippur Katan', flags.MINOR_FAST)))
+    .toBe(true);
+  expect(shouldRenderBrief(new HolidayEvent(new HDate(14, 'Nisan', 5784), 'Erev Pesach', flags.EREV)))
+    .toBe(false);
+  expect(shouldRenderBrief(new HebrewDateEvent(new HDate(1, 'Nisan', 5784))))
+    .toBe(false);
+  expect(shouldRenderBrief(new HebrewDateEvent(new HDate(2, 'Nisan', 5784))))
+    .toBe(true);
+  expect(shouldRenderBrief(new Event(new HDate(new Date('1959-11-28')),
+      'Shabbat Mevarchim Chodesh Kislev', flags.SHABBAT_MEVARCHIM)))
+    .toBe(true);
+  const hd = new HDate(25, 'Sivan', 5782);
+  expect(shouldRenderBrief(new TimedEvent(hd,
       'Candle lighting: 8:15pm', flags.LIGHT_CANDLES,
-      new Date(), Location.lookup('Boston'))), true);
-  t.is(shouldRenderBrief(new DafYomiEvent(new HDate(25, 'Sivan', 5782))), true);
-  t.is(shouldRenderBrief(new Event(new HDate(25, 'Sivan', 5782), 'Foo Bar', flags.DAILY_LEARNING)), true);
-  t.is(shouldRenderBrief(new Event(new HDate(25, 'Sivan', 5782), 'Foo Bar', flags.CHAG)), false);
-  t.is(shouldRenderBrief(new Event(new HDate(25, 'Sivan', 5782), 'Foo Bar', 0)), false);
+      new Date(), Location.lookup('Boston'))))
+    .toBe(true);
+  expect(shouldRenderBrief(new DafYomiEvent(hd)))
+    .toBe(true);
+  expect(shouldRenderBrief(new Event(hd, 'Foo Bar', flags.DAILY_LEARNING)))
+    .toBe(true);
+  expect(shouldRenderBrief(new Event(hd, 'Foo Bar', flags.CHAG)))
+    .toBe(false);
+  expect(shouldRenderBrief(new Event(hd, 'Foo Bar', 0)))
+    .toBe(false);
 });
 
-test('getDownloadFilename-nodate', (t) => {
-  t.is(getDownloadFilename({}), 'hebcal');
+test('getDownloadFilename-nodate', () => {
+  expect(getDownloadFilename({})).toBe('hebcal');
 });
 
-test('getDownloadFilename-year-month', (t) => {
-  t.is(getDownloadFilename({year: 1993, month: 6}), 'hebcal_1993_6');
+test('getDownloadFilename-year-month', () => {
+  expect(getDownloadFilename({year: 1993, month: 6})).toBe('hebcal_1993_6');
 });
 
-test('getDownloadFilename-start-end', (t) => {
-  t.is(getDownloadFilename({
+test('getDownloadFilename-start-end', () => {
+  expect(getDownloadFilename({
     start: new Date(1995, 10, 10),
     end: new Date(1996, 2, 2),
-  }), 'hebcal_1995_1996');
-  t.is(getDownloadFilename({
+  })).toBe('hebcal_1995_1996');
+  expect(getDownloadFilename({
     start: new Date(2022, 10, 10),
     end: new Date(2022, 11, 11),
-  }), 'hebcal_2022');
-  t.is(getDownloadFilename({
+  })).toBe('hebcal_2022');
+  expect(getDownloadFilename({
     start: new HDate(new Date(2021, 1, 13)),
     end: new HDate(new Date(2021, 11, 13)),
-  }), 'hebcal_2021');
+  })).toBe('hebcal_2021');
 });

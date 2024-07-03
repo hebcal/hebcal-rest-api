@@ -1,21 +1,16 @@
-import {appendIsraelAndTracking, getCalendarTitle,
-  getEventCategories, makeAnchor, makeMemo} from './common.js';
-import {Locale, HebrewCalendar, Zmanim} from '@hebcal/core';
+import { Event, HebrewCalendar, Locale, Zmanim } from '@hebcal/core';
+import {
+  RestApiOptions,
+  StringMap,
+  appendIsraelAndTracking, getCalendarTitle,
+  getEventCategories, makeAnchor, makeMemo
+} from './common';
 
-/**
- * @private
- * @param {Event} ev
- * @param {boolean} il
- * @param {string} tzid
- * @param {string} mainUrl
- * @param {string} utmSource
- * @param {string} utmMedium
- * @return {string[]}
- */
-function getLinkAndGuid(ev, il, tzid, mainUrl, utmSource, utmMedium) {
+function getLinkAndGuid(ev: Event, il: boolean, tzid: string, mainUrl: string, utmSource: string, utmMedium: string): string[] {
   let link;
   let guid;
-  const dt = ev.eventTime || ev.getDate().greg();
+  const eventTime: Date = (ev as any).eventTime;
+  const dt = eventTime || ev.getDate().greg();
   const isoDateTime = Zmanim.formatISOWithTimeZone(tzid, dt);
   const dtStr = isoDateTime.substring(0, isoDateTime.indexOf('T'));
   const dtAnchor = dtStr.replace(/-/g, '');
@@ -34,7 +29,7 @@ function getLinkAndGuid(ev, il, tzid, mainUrl, utmSource, utmMedium) {
   return [link, guid];
 }
 
-const localeToLg = {
+const localeToLg: StringMap = {
   's': 'en',
   'a': 'en',
   'he-x-NoNikud': 'he',
@@ -43,12 +38,7 @@ const localeToLg = {
   'sh': 'en',
 };
 
-/**
- * @param {Event[]} events
- * @param {CalOptions} options
- * @return {string}
- */
-export function eventsToRss2(events, options) {
+export function eventsToRss2(events: Event[], options: RestApiOptions): string {
   options.dayFormat = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: '2-digit',
@@ -56,7 +46,9 @@ export function eventsToRss2(events, options) {
     year: 'numeric',
   });
   const location = options.location;
-  const mainUrl = options.mainUrl;
+  if (!options.mainUrl || !options.selfUrl) {
+    throw new TypeError('mainUrl cannot be empty or blank');
+  }
   const buildDate = options.buildDate = options.buildDate || new Date();
   const thisYear = buildDate.getFullYear();
   const lastBuildDate = options.lastBuildDate = buildDate.toUTCString();
@@ -64,11 +56,11 @@ export function eventsToRss2(events, options) {
   const description = options.description || title;
   const utmSource = options.utmSource || 'shabbat1c';
   const utmMedium = options.utmMedium || 'rss';
-  const mainUrlEsc = appendIsraelAndTracking(mainUrl,
-      location?.getIsrael(),
+  const mainUrlEsc = appendIsraelAndTracking(options.mainUrl,
+      Boolean(location?.getIsrael()),
       utmSource, utmMedium, options.utmCampaign).replace(/&/g, '&amp;');
   const selfUrlEsc = options.selfUrl.replace(/&/g, '&amp;');
-  const lang = options.lang || localeToLg[options.locale] || options.locale || 'en-US';
+  const lang: string = options.lang || localeToLg[options.locale!] || options.locale || 'en-US';
   let str = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
@@ -87,17 +79,12 @@ export function eventsToRss2(events, options) {
   return str;
 }
 
-/**
- * @private
- * @param {Event} ev
- * @param {boolean} evPubDate
- * @param {Date} evDate
- * @param {string} lastBuildDate
- * @return {string}
- */
-function getPubDate(ev, evPubDate, evDate, lastBuildDate) {
+function getPubDate(ev: Event,
+  evPubDate: boolean | undefined,
+  evDate: Date,
+  lastBuildDate?: string): string | undefined {
   if (evPubDate) {
-    const dt = ev.eventTime;
+    const dt = (ev as any).eventTime as Date;
     if (dt) {
       return dt.toUTCString();
     }
@@ -106,12 +93,7 @@ function getPubDate(ev, evPubDate, evDate, lastBuildDate) {
   return lastBuildDate;
 }
 
-/**
- * @param {Event} ev
- * @param {CalOptions} options
- * @return {string}
- */
-export function eventToRssItem2(ev, options) {
+export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
   let subj = ev.render();
   const evDate = ev.getDate().greg();
   const pubDate = getPubDate(ev, options.evPubDate, evDate, options.lastBuildDate);
@@ -120,7 +102,8 @@ export function eventToRssItem2(ev, options) {
   const tzid = location ? location.getTzid() : 'UTC';
   const utmSource = options.utmSource || 'shabbat1c';
   const utmMedium = options.utmMedium || 'rss';
-  const linkGuid = getLinkAndGuid(ev, il, tzid, options.mainUrl, utmSource, utmMedium);
+  const mainUrl = options.mainUrl || '';
+  const linkGuid = getLinkAndGuid(ev, il, tzid, mainUrl, utmSource, utmMedium);
   const link = linkGuid[0];
   const guid = linkGuid[1];
   const categories = getEventCategories(ev);
@@ -132,17 +115,17 @@ export function eventToRssItem2(ev, options) {
     const colon = subj.indexOf(': ');
     if (colon != -1) {
       const options = {location, il, locale: Locale.getLocaleName()};
-      const time = HebrewCalendar.reformatTimeStr(ev.eventTimeStr, 'pm', options);
+      const time = HebrewCalendar.reformatTimeStr((ev as any).eventTimeStr, 'pm', options);
       subj = subj.substring(0, colon) + ': ' + time;
     }
   } else {
     memo = makeMemo(ev, il);
   }
-  const dayFormat = options.dayFormat;
+  const dayFormat = options.dayFormat!;
   const description0 = memo || dayFormat.format(evDate);
   const description = description0.indexOf('<') === -1 ? description0 : `<![CDATA[${description0}]]>`;
   const geoTags = (cat0 == 'candles') ?
-    `<geo:lat>${location.getLatitude()}</geo:lat>\n<geo:long>${location.getLongitude()}</geo:long>\n` :
+    `<geo:lat>${location!.getLatitude()}</geo:lat>\n<geo:long>${location!.getLongitude()}</geo:long>\n` :
     '';
   return `<item>
 <title>${subj}</title>

@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
-import test from 'ava';
 import {HebrewCalendar, Location, HDate, Event, flags} from '@hebcal/core';
-import {eventToRssItem2, eventsToRss2} from './rss.js';
+import {eventToRssItem2, eventsToRss2} from '../src/rss';
 
 const dayFormat = new Intl.DateTimeFormat('en-US', {
   weekday: 'long',
@@ -10,7 +9,7 @@ const dayFormat = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 });
 
-test('eventsToRss2', (t) => {
+test('eventsToRss2', () => {
   const location = new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398);
   const options = {
     year: 1990,
@@ -63,11 +62,10 @@ test('eventsToRss2', (t) => {
     '</rss>',
     '',
   ];
-  t.deepEqual(rss, expected);
+  expect(rss).toEqual(expected);
 });
 
-
-test('eventToRssItem2', (t) => {
+test('eventToRssItem2', () => {
   const location = Location.lookup('Eilat');
   const options = {
     year: 1990,
@@ -113,10 +111,10 @@ test('eventToRssItem2', (t) => {
     '<pubDate>Mon, 09 Apr 1990 00:00:00 GMT</pubDate>\n' +
     '</item>\n',
   ];
-  t.deepEqual(items, expected);
+  expect(items).toEqual(expected);
 });
 
-test('parsha', (t) => {
+test('parsha', () => {
   const events = HebrewCalendar.calendar({
     start: new Date(2020, 10, 28),
     end: new Date(2020, 10, 28),
@@ -142,10 +140,10 @@ test('parsha', (t) => {
     '<category>parashat</category>\n' +
     '<pubDate>Sat, 28 Nov 2020 00:00:00 GMT</pubDate>\n' +
     '</item>\n';
-  t.is(item, expected);
+  expect(item).toEqual(expected);
 });
 
-test('parsha-il', (t) => {
+test('parsha-il', () => {
   const events = HebrewCalendar.calendar({
     start: new Date(2020, 10, 28),
     end: new Date(2020, 10, 28),
@@ -171,10 +169,10 @@ test('parsha-il', (t) => {
     '<category>parashat</category>\n' +
     '<pubDate>Sat, 28 Nov 2020 00:00:00 GMT</pubDate>\n' +
     '</item>\n';
-  t.is(item, expected);
+  expect(item).toEqual(expected);
 });
 
-test('fastStartEnd', (t) => {
+test('fastStartEnd', () => {
   const location = Location.lookup('Tel Aviv');
   const options = {
     start: new Date(2021, 5, 27),
@@ -215,7 +213,7 @@ test('fastStartEnd', (t) => {
       '<pubDate>Sun, 27 Jun 2021 17:25:00 GMT</pubDate>\n' +
       '</item>\n',
   ];
-  t.deepEqual(items, expected);
+  expect(items).toEqual(expected);
 });
 
 // eslint-disable-next-line require-jsdoc
@@ -231,7 +229,7 @@ class MemoEvent extends Event {
   }
 }
 
-test('CDATA', (t) => {
+test('CDATA', () => {
   const hd = new HDate(new Date(2021, 1, 13));
   const ev = new MemoEvent(hd, 'Hello World', 'Foo Bar');
   const options = {
@@ -240,7 +238,7 @@ test('CDATA', (t) => {
     lastBuildDate: '',
   };
   const str = eventToRssItem2(ev, options);
-  t.is(str, `<item>
+  expect(str).toBe(`<item>
 <title>Hello World</title>
 <link>http://localhost/?utm_source=hebcal.com&amp;utm_medium=rss</link>
 <guid isPermaLink="false">http://localhost/#20210213-hello-world</guid>
@@ -252,7 +250,7 @@ test('CDATA', (t) => {
 
   const ev2 = new MemoEvent(hd, 'Hello Two', '<p>Baaz Quux</p>');
   const str2 = eventToRssItem2(ev2, options);
-  t.is(str2, `<item>
+  expect(str2).toBe(`<item>
 <title>Hello Two</title>
 <link>http://localhost/?utm_source=hebcal.com&amp;utm_medium=rss</link>
 <guid isPermaLink="false">http://localhost/#20210213-hello-two</guid>

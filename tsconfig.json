@@ -1,0 +1,18 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "module": "es6",
+    "declaration": true,
+    "rootDir": "./src",
+    "target": "ES2017",
+    "sourceMap": false,
+    "outDir": "dist",
+    "lib": ["ESNext"],
+    "moduleResolution": "Node",
+    "strict": true,
+    "paths": {
+      "*": ["./types/*"]
+    }
+  },
+  "exclude": ["dist"]
+}

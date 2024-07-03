@@ -1,26 +1,26 @@
-import {Locale, flags, Zmanim} from '@hebcal/core';
-import {appendIsraelAndTracking, getEventCategories, makeMemo,
-  shouldRenderBrief, toISOString} from './common.js';
+import { Event, Locale, Zmanim, flags } from '@hebcal/core';
+import { isoDateString } from '@hebcal/hdate';
+import {
+  appendIsraelAndTracking, getEventCategories, makeMemo,
+  shouldRenderBrief
+} from './common';
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object
- * @param {Event} ev
- * @param {string} tzid timeZone identifier
- * @param {boolean} il true if Israel
- * @return {Object}
  */
-export function eventToFullCalendar(ev, tzid, il) {
+export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any {
   const classes = getEventCategories(ev);
   const mask = ev.getFlags();
   if (classes[0] == 'holiday' && mask & flags.CHAG) {
     classes.push('yomtov');
   }
-  const timed = Boolean(ev.eventTime);
+  const eventTime: Date = (ev as any).eventTime;
+  const timed = Boolean(eventTime);
   const title = shouldRenderBrief(ev) ? ev.renderBrief() : ev.render();
   const start = timed ?
-    Zmanim.formatISOWithTimeZone(tzid, ev.eventTime) :
-    toISOString(ev.getDate().greg());
-  const result = {
+    Zmanim.formatISOWithTimeZone(tzid, eventTime) :
+    isoDateString(ev.getDate().greg());
+  const result: any = {
     title,
     start,
     allDay: !timed,
@@ -40,8 +40,8 @@ export function eventToFullCalendar(ev, tzid, il) {
     const memo = makeMemo(ev, il);
     if (memo) {
       result.description = memo;
-    } else if (typeof ev.linkedEvent !== 'undefined') {
-      result.description = ev.linkedEvent.render();
+    } else if (typeof (ev as any).linkedEvent !== 'undefined') {
+      result.description = (ev as any).linkedEvent.render();
     }
   }
   return result;

@@ -1,10 +1,14 @@
-import {HebrewCalendar, flags} from '@hebcal/core';
-import {getHolidayDescription, getEventCategories, shouldRenderBrief} from './common.js';
+import { Event, HebrewCalendar, flags } from '@hebcal/core';
+import {
+  RestApiOptions, StringMap,
+  getEventCategories, getHolidayDescription,
+  shouldRenderBrief
+} from './common';
 
 // eslint-disable-next-line max-len
 const csvHeader = '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
 
-const CATEGORY = {
+const CATEGORY: StringMap = {
   dafyomi: 'Daf Yomi',
   mishnayomi: 'Mishna Yomi',
   nachyomi: 'Nach Yomi',
@@ -22,12 +26,9 @@ const CATEGORY = {
 
 /**
  * Renders an Event as a string
- * @param {Event} e
- * @param {CalOptions} options
- * @return {string}
  */
-export function eventToCsv(e, options) {
-  const d = e.getDate().greg();
+export function eventToCsv(ev: Event, options: RestApiOptions): string {
+  const d = ev.getDate().greg();
   const mday = d.getDate();
   const mon = d.getMonth() + 1;
   const year = String(d.getFullYear()).padStart(4, '0');
@@ -38,23 +39,23 @@ export function eventToCsv(e, options) {
   let endDate = '';
   let allDay = '"true"';
 
-  const timed = Boolean(e.eventTime);
-  let subj = shouldRenderBrief(e) ? e.renderBrief(options.locale) : e.render(options.locale);
-  if (e.eventTime) {
-    const timeStr = HebrewCalendar.reformatTimeStr(e.eventTimeStr, ' PM', options);
+  const timed = Boolean((ev as any).eventTime);
+  let subj = shouldRenderBrief(ev) ? ev.renderBrief(options.locale) : ev.render(options.locale);
+  if (timed) {
+    const timeStr = HebrewCalendar.reformatTimeStr((ev as any).eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;
     endDate = date;
     allDay = '"false"';
   }
 
   let loc = 'Jewish Holidays';
-  const mask = e.getFlags();
+  const mask = ev.getFlags();
   if (timed && typeof options.location === 'object') {
-    const locationName = options.location.getShortName();
+    const locationName = options.location.getShortName()!;
     const comma = locationName.indexOf(',');
     loc = (comma === -1) ? locationName : locationName.substring(0, comma);
   } else {
-    const category = CATEGORY[getEventCategories(e)[0]];
+    const category = CATEGORY[getEventCategories(ev)[0]];
     if (typeof category === 'string') {
       loc = category;
     }
@@ -63,15 +64,15 @@ export function eventToCsv(e, options) {
   subj = subj.replace(/,/g, '').replace(/"/g, '\'\'');
 
   if (options.appendHebrewToSubject) {
-    const hebrew = e.renderBrief('he');
+    const hebrew = ev.renderBrief('he');
     if (hebrew) {
       subj += ` / ${hebrew}`;
     }
   }
 
-  let memo0 = e.memo || getHolidayDescription(e, true);
-  if (!memo0 && typeof e.linkedEvent !== 'undefined') {
-    memo0 = e.linkedEvent.render(options.locale);
+  let memo0 = ev.memo || getHolidayDescription(ev, true);
+  if (!memo0 && typeof (ev as any).linkedEvent !== 'undefined') {
+    memo0 = (ev as any).linkedEvent.render(options.locale);
   }
   const memo = memo0.replace(/,/g, ';').replace(/"/g, '\'\'').replace(/\n/g, ' / ');
 
@@ -79,11 +80,6 @@ export function eventToCsv(e, options) {
   return `"${subj}",${date},${startTime},${endDate},${endTime},${allDay},"${memo}","${showTimeAs}","${loc}"`;
 }
 
-/**
- * @param {Event[]} events
- * @param {HebcalOptions} options
- * @return {string}
- */
-export function eventsToCsv(events, options) {
-  return [csvHeader].concat(events.map((e) => eventToCsv(e, options))).join('\r\n') + '\r\n';
+export function eventsToCsv(events: Event[], options: RestApiOptions): string {
+  return [csvHeader].concat(events.map((ev) => eventToCsv(ev, options))).join('\r\n') + '\r\n';
 }

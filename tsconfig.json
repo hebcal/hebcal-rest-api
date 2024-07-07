@@ -14,5 +14,5 @@
       "*": ["./types/*"]
     }
   },
-  "exclude": ["dist"]
+  "exclude": ["node_modules", "dist", "docs"]
 }

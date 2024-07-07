@@ -39,7 +39,7 @@
     "build": "npm run build:json2js && npm run build:rollup",
     "prepublish": "npm run build",
     "pretest": "npm run build",
-    "readme": "npx jsdoc2md dist/index.js",
+    "docs": "typedoc",
     "test": "jest"
   },
   "license": "BSD-2-Clause",
@@ -55,10 +55,9 @@
     "@types/jest": "^29.5.12",
     "gts": "^5.3.1",
     "jest": "^29.7.0",
-    "jsdoc": "^4.0.3",
-    "jsdoc-to-markdown": "^8.0.1",
     "rollup": "^4.18.0",
     "ts-jest": "^29.1.5",
+    "typedoc": "^0.26.3",
     "typescript": "^5.5.3"
   }
 }

@@ -13,6 +13,7 @@ import { isoDateString } from '@hebcal/hdate';
 import {
   AliyotMap,
   Leyning,
+  StringMap,
   formatAliyahWithBook, getLeyningForHoliday,
   getLeyningForParshaHaShavua
 } from '@hebcal/leyning';
@@ -103,9 +104,9 @@ export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyn
       if (reading) {
         result.leyning = formatLeyningResult(reading);
         const hyear = hd.getFullYear();
-        if (isParsha && !il && hyear >= 5745) {
-          const triReading = getTriennialForParshaHaShavua(ev);
-          if (triReading) {
+        if (isParsha && hyear >= 5745) {
+          const triReading = getTriennialForParshaHaShavua(ev, il);
+          if (triReading?.aliyot) {
             result.leyning.triennial = formatAliyot({}, triReading.aliyot);
           }
         }
@@ -170,7 +171,7 @@ export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyn
   return result;
 }
 
-function formatAliyot(result: any, aliyot: AliyotMap): any {
+function formatAliyot(result: StringMap, aliyot: AliyotMap): StringMap {
   for (const [num, aliyah] of Object.entries(aliyot)) {
     if (typeof aliyah !== 'undefined') {
       const k = num == 'M' ? 'maftir' : num;
@@ -180,8 +181,21 @@ function formatAliyot(result: any, aliyot: AliyotMap): any {
   return result;
 }
 
-function formatLeyningResult(reading: Leyning): any {
-  const result: any = {};
+function formatReasons(result: StringMap, reason: StringMap): StringMap {
+  for (const num of ['7', '8', 'M']) {
+    if (reason[num]) {
+      const k = num == 'M' ? 'maftir' : num;
+      result[k] += ' | ' + reason[num];
+    }
+  }
+  if (reason.haftara) {
+    result.haftarah += ' | ' + reason.haftara;
+  }
+  return result;
+}
+
+function formatLeyningResult(reading: Leyning): StringMap {
+  const result: StringMap = {};
   if (reading.summary) {
     result.torah = reading.summary;
   }
@@ -195,15 +209,7 @@ function formatLeyningResult(reading: Leyning): any {
     formatAliyot(result, reading.fullkriyah);
   }
   if (reading.reason) {
-    for (const num of ['7', '8', 'M']) {
-      if (reading.reason[num]) {
-        const k = num == 'M' ? 'maftir' : num;
-        result[k] += ' | ' + reading.reason[num];
-      }
-    }
-    if (reading.reason.haftara) {
-      result.haftarah += ' | ' + reading.reason.haftara;
-    }
+    formatReasons(result, reading.reason);
   }
   return result;
 }

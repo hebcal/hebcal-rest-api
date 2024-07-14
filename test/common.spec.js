@@ -88,6 +88,20 @@ test('getCalendarTitle2', () => {
   expect(getCalendarTitle(evts3, opts3)).toBe('Hebcal Diaspora 5780');
 });
 
+test('getCalendarTitle asciiname', () => {
+  const loc = new Location(28.25375, -105.51922, false,
+    'America/Chihuahua',
+    'Congregación Ortíz, Chihuahua, Mexico',
+    'MX', 4012985, 1150);
+  loc.asciiname = 'Congregacion Ortiz';
+  loc.admin1 = 'Chihuahua';
+  loc.population = 2620;
+  const options = {location: loc, year: 2021};
+  expect(getCalendarTitle([], options)).toBe('Hebcal Congregación Ortíz 2021');
+  options.preferAsciiName = true;
+  expect(getCalendarTitle([], options)).toBe('Hebcal Congregacion Ortiz 2021');
+});
+
 test('makeTorahMemoText', () => {
   const events = HebrewCalendar.calendar({
     noHolidays: true,

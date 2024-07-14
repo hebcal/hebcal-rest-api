@@ -27,6 +27,7 @@ export type RestApiEventOptions = {
   lastBuildDate?: string;
   evPubDate?: boolean;
   lang?: string;
+  preferAsciiName?: boolean;
 };
 
 export type RestApiOptions = CalOptions & RestApiEventOptions;
@@ -155,19 +156,30 @@ export function renderTitleWithoutTime(ev: Event): string {
   return typeof (ev as any).eventTime === 'undefined' ? ev.render() : ev.renderBrief();
 }
 
+function shortLocationName(options: RestApiOptions): string | null {
+  const loc = options.location;
+  if (!loc) {
+    return null;
+  }
+  if (options.preferAsciiName) {
+    const asciiname = (loc as any).asciiname;
+    if (typeof asciiname === 'string') {
+      return asciiname;
+    }
+  }
+  return loc.getShortName();
+}
+
 /**
  * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
  */
 export function getCalendarTitle(events: Event[], options: RestApiOptions): string {
   let title = 'Hebcal';
-  const location = options.location;
-  const locationName = location?.getName();
+  const locationName = shortLocationName(options);
   if (options.yahrzeit) {
     title += ' Yahrzeits and Anniversaries';
   } else if (locationName) {
-    const comma = locationName.indexOf(',');
-    const name = (comma == -1) ? locationName : locationName.substring(0, comma);
-    title += ' ' + name;
+    title += ' ' + locationName;
   } else if (options.il) {
     title += ' Israel';
   } else {

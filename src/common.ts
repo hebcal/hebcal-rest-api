@@ -54,9 +54,8 @@ export type LocationPlainObj = {
 
 const LOC_FIELDS = ['elevation', 'admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'];
 
-
 export const holidayDescription: StringMap = holidayDescription0 as StringMap;
-export const countryNames: StringMap = countryNames0 as StringMap
+export const countryNames: StringMap = countryNames0 as StringMap;
 
 /**
  * Converts a @hebcal/core `Location` to a plain JS object.

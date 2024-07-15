@@ -52,8 +52,9 @@ export function eventToCsv(ev: Event, options: RestApiOptions): string {
   const mask = ev.getFlags();
   if (timed && typeof options.location === 'object') {
     const locationName = options.location.getShortName()!;
-    const comma = locationName.indexOf(',');
-    loc = (comma === -1) ? locationName : locationName.substring(0, comma);
+    if (locationName) {
+      loc = locationName;
+    }
   } else {
     const category = CATEGORY[getEventCategories(ev)[0]];
     if (typeof category === 'string') {

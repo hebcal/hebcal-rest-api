@@ -29,7 +29,7 @@
     "url": "https://github.com/hebcal/hebcal-rest-api/issues"
   },
   "dependencies": {
-    "@hebcal/core": "^5.4.9",
+    "@hebcal/core": "^5.4.10",
     "@hebcal/leyning": "^8.2.2",
     "@hebcal/triennial": "^5.1.1"
   },

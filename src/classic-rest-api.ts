@@ -23,7 +23,7 @@ import {
   appendIsraelAndTracking,
   getCalendarTitle,
   getEventCategories,
-  holidayDescription,
+  getHolidayDescription,
   locationToPlainObj,
   shouldRenderBrief,
 } from './common';
@@ -159,7 +159,7 @@ export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyn
       d: gematriya(dd),
     };
   }
-  const memo = ev.memo || holidayDescription[ev.basename()];
+  const memo = ev.memo || getHolidayDescription(ev);
   if (typeof memo === 'string' && memo.length !== 0) {
     result.memo = memo.normalize();
   } else if (typeof (ev as any).linkedEvent !== 'undefined') {

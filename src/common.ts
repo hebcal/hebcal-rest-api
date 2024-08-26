@@ -270,7 +270,10 @@ export function makeMemo(ev: Event, il: boolean): string {
       // fallthru
     }
   }
-  return ev.memo || holidayDescription[ev.basename()];
+  if (ev.memo) {
+    return ev.memo;
+  }
+  return getHolidayDescription(ev);
 }
 
 /**

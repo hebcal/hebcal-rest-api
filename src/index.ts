@@ -1,4 +1,5 @@
 export * from './csv';
+export * from './makeAnchor';
 export * from './common';
 export * from './classic-rest-api';
 export * from './rss';

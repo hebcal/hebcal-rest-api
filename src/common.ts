@@ -3,6 +3,8 @@ import { isoDateString } from '@hebcal/hdate';
 import { getLeyningForHoliday, getLeyningForParshaHaShavua } from '@hebcal/leyning';
 import countryNames0 from './countryNames.json';
 import holidayDescription0 from './holidays.json';
+import { shortenSedrotUrl } from './shorten';
+import { makeAnchor } from './makeAnchor';
 
 export interface StringMap {
   [key: string]: string;
@@ -82,21 +84,6 @@ export function locationToPlainObj(location: Location | undefined): LocationPlai
   } else {
     return {geo: 'none'};
   }
-}
-
-/**
- * Helper function to transform a string to make it more usable in a URL or filename.
- * Converts to lowercase and replaces non-word characters with hyphen ('-').
- * @example
- * makeAnchor('Rosh Chodesh Adar II') // 'rosh-chodesh-adar-ii'
- */
-export function makeAnchor(s: string): string {
-  return s.toLowerCase()
-      .replace(/'/g, '')
-      .replace(/[^\w]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-/g, '')
-      .replace(/-$/g, '');
 }
 
 export function getDownloadFilename(options: RestApiOptions): string {
@@ -296,7 +283,7 @@ export function appendIsraelAndTracking(url: string, il: boolean,
       if (isHolidays) {
         u.pathname = '/h/' + path.substring(10);
       } else if (isSedrot) {
-        u.pathname = '/s/' + path.substring(8);
+        shortenSedrotUrl(u);
       } else { // isOmer
         u.pathname = '/o/' + path.substring(6);
       }

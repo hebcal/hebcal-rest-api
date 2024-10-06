@@ -54,7 +54,7 @@ test('eventToClassicApiObject', () => {
         'maftir': 'Numbers 1:52-1:54',
       },
     },
-    link: 'https://hebcal.com/s/bamidbar-20200523?us=js&um=api',
+    link: 'https://hebcal.com/s/5780/34?us=js&um=api',
   };
   expect(bamidbarActual).toEqual(bamidbarExpected);
   const shavuotActual = apiObjs[7];
@@ -259,7 +259,7 @@ test('no-leyning', () => {
     hdate: '29 Iyyar 5780',
     category: 'parashat',
     hebrew: 'פרשת במדבר',
-    link: 'https://hebcal.com/s/bamidbar-20200523?i=on&us=js&um=api',
+    link: 'https://hebcal.com/s/5780i/34?us=js&um=api',
   };
   expect(bamidbarActual).toEqual(bamidbarExpected);
 });

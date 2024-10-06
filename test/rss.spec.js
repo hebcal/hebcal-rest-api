@@ -132,7 +132,7 @@ test('parsha', () => {
   const item = eventToRssItem2(events[0], options);
   const expected = '<item>\n' +
     '<title>Parashat Vayetzei</title>\n' +
-    '<link>https://hebcal.com/s/vayetzei-20201128?us=shabbat1c&amp;um=rss</link>\n' +
+    '<link>https://hebcal.com/s/5781/7?us=shabbat1c&amp;um=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/sedrot/vayetzei-20201128#20201128-parashat-vayetzei</guid>\n' +
     '<description>Torah: Genesis 28:10-32:3\n' +
       'Haftarah: Hosea 12:13-14:10\n' +
@@ -161,7 +161,7 @@ test('parsha-il', () => {
   const item = eventToRssItem2(events[0], options);
   const expected = '<item>\n' +
     '<title>Parashat Vayetzei</title>\n' +
-    '<link>https://hebcal.com/s/vayetzei-20201128?i=on&amp;us=shabbat1c&amp;um=rss</link>\n' +
+    '<link>https://hebcal.com/s/5781i/7?us=shabbat1c&amp;um=rss</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/sedrot/vayetzei-20201128#20201128-parashat-vayetzei</guid>\n' +
     '<description>Torah: Genesis 28:10-32:3\n' +
       'Haftarah: Hosea 12:13-14:10\n' +

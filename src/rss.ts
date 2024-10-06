@@ -3,8 +3,9 @@ import {
   RestApiOptions,
   StringMap,
   appendIsraelAndTracking, getCalendarTitle,
-  getEventCategories, makeAnchor, makeMemo
+  getEventCategories, makeMemo
 } from './common';
+import { makeAnchor } from './makeAnchor';
 
 function getLinkAndGuid(ev: Event, il: boolean, tzid: string, mainUrl: string, utmSource: string, utmMedium: string): string[] {
   let link;

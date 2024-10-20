@@ -1,16 +1,25 @@
-import { Event, HebrewCalendar, Locale, Zmanim } from '@hebcal/core';
+import {Event, HebrewCalendar, Locale, TimedEvent, Zmanim} from '@hebcal/core';
 import {
   RestApiOptions,
   StringMap,
-  appendIsraelAndTracking, getCalendarTitle,
-  getEventCategories, makeMemo
+  appendIsraelAndTracking,
+  getCalendarTitle,
+  getEventCategories,
+  makeMemo,
 } from './common';
-import { makeAnchor } from './makeAnchor';
+import {makeAnchor} from './makeAnchor';
 
-function getLinkAndGuid(ev: Event, il: boolean, tzid: string, mainUrl: string, utmSource: string, utmMedium: string): string[] {
+function getLinkAndGuid(
+  ev: Event,
+  il: boolean,
+  tzid: string,
+  mainUrl: string,
+  utmSource: string,
+  utmMedium: string
+): string[] {
   let link;
   let guid;
-  const eventTime: Date = (ev as any).eventTime;
+  const eventTime: Date = (ev as TimedEvent).eventTime;
   const dt = eventTime || ev.getDate().greg();
   const isoDateTime = Zmanim.formatISOWithTimeZone(tzid, dt);
   const dtStr = isoDateTime.substring(0, isoDateTime.indexOf('T'));
@@ -19,11 +28,17 @@ function getLinkAndGuid(ev: Event, il: boolean, tzid: string, mainUrl: string, u
   const anchor = `${dtAnchor}-${descAnchor}`;
   const url0 = ev.url();
   if (url0) {
-    link = appendIsraelAndTracking(url0, il, utmSource, utmMedium).replace(/&/g, '&amp;');
+    link = appendIsraelAndTracking(url0, il, utmSource, utmMedium).replace(
+      /&/g,
+      '&amp;'
+    );
     guid = `${url0}#${anchor}`;
   } else {
     const url1 = `${mainUrl}&dt=${dtStr}`;
-    const url = appendIsraelAndTracking(url1, il, utmSource, utmMedium).replace(/&/g, '&amp;');
+    const url = appendIsraelAndTracking(url1, il, utmSource, utmMedium).replace(
+      /&/g,
+      '&amp;'
+    );
     guid = url1.replace(/&/g, '&amp;') + `#${anchor}`;
     link = `${url}#${anchor}`;
   }
@@ -31,12 +46,12 @@ function getLinkAndGuid(ev: Event, il: boolean, tzid: string, mainUrl: string, u
 }
 
 const localeToLg: StringMap = {
-  's': 'en',
-  'a': 'en',
+  s: 'en',
+  a: 'en',
   'he-x-NoNikud': 'he',
-  'h': 'he',
-  'ah': 'en',
-  'sh': 'en',
+  h: 'he',
+  ah: 'en',
+  sh: 'en',
 };
 
 export function eventsToRss2(events: Event[], options: RestApiOptions): string {
@@ -50,18 +65,23 @@ export function eventsToRss2(events: Event[], options: RestApiOptions): string {
   if (!options.mainUrl || !options.selfUrl) {
     throw new TypeError('mainUrl cannot be empty or blank');
   }
-  const buildDate = options.buildDate = options.buildDate || new Date();
+  const buildDate = (options.buildDate = options.buildDate || new Date());
   const thisYear = buildDate.getFullYear();
-  const lastBuildDate = options.lastBuildDate = buildDate.toUTCString();
+  const lastBuildDate = (options.lastBuildDate = buildDate.toUTCString());
   const title = options.title || getCalendarTitle(events, options);
   const description = options.description || title;
   const utmSource = options.utmSource || 'shabbat1c';
   const utmMedium = options.utmMedium || 'rss';
-  const mainUrlEsc = appendIsraelAndTracking(options.mainUrl,
-      Boolean(location?.getIsrael()),
-      utmSource, utmMedium, options.utmCampaign).replace(/&/g, '&amp;');
+  const mainUrlEsc = appendIsraelAndTracking(
+    options.mainUrl,
+    Boolean(location?.getIsrael()),
+    utmSource,
+    utmMedium,
+    options.utmCampaign
+  ).replace(/&/g, '&amp;');
   const selfUrlEsc = options.selfUrl.replace(/&/g, '&amp;');
-  const lang: string = options.lang || localeToLg[options.locale!] || options.locale || 'en-US';
+  const lang: string =
+    options.lang || localeToLg[options.locale!] || options.locale || 'en-US';
   let str = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
@@ -80,12 +100,14 @@ export function eventsToRss2(events: Event[], options: RestApiOptions): string {
   return str;
 }
 
-function getPubDate(ev: Event,
+function getPubDate(
+  ev: Event,
   evPubDate: boolean | undefined,
   evDate: Date,
-  lastBuildDate?: string): string | undefined {
+  lastBuildDate?: string
+): string | undefined {
   if (evPubDate) {
-    const dt = (ev as any).eventTime as Date;
+    const dt = (ev as TimedEvent).eventTime as Date;
     if (dt) {
       return dt.toUTCString();
     }
@@ -97,7 +119,12 @@ function getPubDate(ev: Event,
 export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
   let subj = ev.render();
   const evDate = ev.getDate().greg();
-  const pubDate = getPubDate(ev, options.evPubDate, evDate, options.lastBuildDate);
+  const pubDate = getPubDate(
+    ev,
+    options.evPubDate,
+    evDate,
+    options.lastBuildDate
+  );
   const location = options.location;
   const il = location ? location.getIsrael() : false;
   const tzid = location ? location.getTzid() : 'UTC';
@@ -114,20 +141,25 @@ export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
   let memo;
   if (candles) {
     const colon = subj.indexOf(': ');
-    if (colon != -1) {
+    if (colon !== -1) {
       const options = {location, il, locale: Locale.getLocaleName()};
-      const time = HebrewCalendar.reformatTimeStr((ev as any).eventTimeStr, 'pm', options);
+      const time = HebrewCalendar.reformatTimeStr(
+        (ev as TimedEvent).eventTimeStr,
+        'pm',
+        options
+      );
       subj = subj.substring(0, colon) + ': ' + time;
     }
   } else {
     memo = makeMemo(ev, il);
   }
   const dayFormat = options.dayFormat!;
-  const description0 = memo || dayFormat.format(evDate);
-  const description = description0.indexOf('<') === -1 ? description0 : `<![CDATA[${description0}]]>`;
-  const geoTags = (cat0 == 'candles') ?
-    `<geo:lat>${location!.getLatitude()}</geo:lat>\n<geo:long>${location!.getLongitude()}</geo:long>\n` :
-    '';
+  const tmp = memo || dayFormat.format(evDate);
+  const description = tmp.indexOf('<') === -1 ? tmp : `<![CDATA[${tmp}]]>`;
+  const geoTags =
+    cat0 === 'candles'
+      ? `<geo:lat>${location!.getLatitude()}</geo:lat>\n<geo:long>${location!.getLongitude()}</geo:long>\n`
+      : '';
   return `<item>
 <title>${subj}</title>
 <link>${link}</link>

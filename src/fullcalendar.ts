@@ -1,8 +1,10 @@
-import { Event, Locale, Zmanim, flags } from '@hebcal/core';
-import { isoDateString } from '@hebcal/hdate';
+import {Event, Locale, TimedEvent, Zmanim, flags} from '@hebcal/core';
+import {isoDateString} from '@hebcal/hdate';
 import {
-  appendIsraelAndTracking, getEventCategories, makeMemo,
-  shouldRenderBrief
+  appendIsraelAndTracking,
+  getEventCategories,
+  makeMemo,
+  shouldRenderBrief,
 } from './common';
 
 /**
@@ -11,15 +13,16 @@ import {
 export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any {
   const classes = getEventCategories(ev);
   const mask = ev.getFlags();
-  if (classes[0] == 'holiday' && mask & flags.CHAG) {
+  if (classes[0] === 'holiday' && mask & flags.CHAG) {
     classes.push('yomtov');
   }
-  const eventTime: Date = (ev as any).eventTime;
+  const timedEv = ev as TimedEvent;
+  const eventTime: Date = timedEv.eventTime;
   const timed = Boolean(eventTime);
   const title = shouldRenderBrief(ev) ? ev.renderBrief() : ev.render();
-  const start = timed ?
-    Zmanim.formatISOWithTimeZone(tzid, eventTime) :
-    isoDateString(ev.getDate().greg());
+  const start = timed
+    ? Zmanim.formatISOWithTimeZone(tzid, eventTime)
+    : isoDateString(ev.getDate().greg());
   const result: any = {
     title,
     start,
@@ -40,8 +43,8 @@ export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any {
     const memo = makeMemo(ev, il);
     if (memo) {
       result.description = memo;
-    } else if (typeof (ev as any).linkedEvent !== 'undefined') {
-      result.description = (ev as any).linkedEvent.render();
+    } else if (typeof timedEv.linkedEvent !== 'undefined') {
+      result.description = timedEv.linkedEvent!.render();
     }
   }
   return result;

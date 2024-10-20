@@ -1,5 +1,5 @@
-import { HDate, parshiot } from "@hebcal/core";
-import { makeAnchor } from './makeAnchor';
+import {HDate, parshiot} from '@hebcal/core';
+import {makeAnchor} from './makeAnchor';
 
 const parsha2id = new Map<string, number>();
 for (let id = 0; id < parshiot.length; id++) {
@@ -21,7 +21,7 @@ const doubled = new Set<string>();
 for (const name of doubledParshiyot) {
   const anchor = makeAnchor(name);
   doubled.add(anchor);
-  const [p1, p2] = anchor.split('-');
+  const [p1] = anchor.split('-');
   const id = parsha2id.get(p1);
   parsha2id.set(anchor, id!);
 }

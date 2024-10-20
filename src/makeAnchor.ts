@@ -5,7 +5,8 @@
  * makeAnchor('Rosh Chodesh Adar II') // 'rosh-chodesh-adar-ii'
  */
 export function makeAnchor(s: string): string {
-  return s.toLowerCase()
+  return s
+    .toLowerCase()
     .replace(/'/g, '')
     .replace(/[^\w]/g, '-')
     .replace(/-+/g, '-')

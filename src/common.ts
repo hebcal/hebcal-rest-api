@@ -1,10 +1,20 @@
-import { CalOptions, Event, HDate, Location, flags } from '@hebcal/core';
-import { isoDateString } from '@hebcal/hdate';
-import { getLeyningForHoliday, getLeyningForParshaHaShavua } from '@hebcal/leyning';
+import {
+  CalOptions,
+  Event,
+  HDate,
+  Location,
+  TimedEvent,
+  flags,
+} from '@hebcal/core';
+import {isoDateString} from '@hebcal/hdate';
+import {
+  getLeyningForHoliday,
+  getLeyningForParshaHaShavua,
+} from '@hebcal/leyning';
 import countryNames0 from './countryNames.json';
 import holidayDescription0 from './holidays.json';
-import { shortenSedrotUrl } from './shorten';
-import { makeAnchor } from './makeAnchor';
+import {shortenSedrotUrl} from './shorten';
+import {makeAnchor} from './makeAnchor';
 
 export interface StringMap {
   [key: string]: string;
@@ -16,7 +26,7 @@ export type RestApiEventOptions = {
   utmCampaign?: string;
   appendHebrewToSubject?: boolean;
   yahrzeit?: boolean;
-  subscribe?: string | boolean;
+  subscribe?: string | number | boolean;
   heDateParts?: boolean;
   includeEvent?: boolean;
   euro?: boolean;
@@ -54,7 +64,16 @@ export type LocationPlainObj = {
   geonameid?: number;
 };
 
-const LOC_FIELDS = ['elevation', 'admin1', 'asciiname', 'geo', 'zip', 'state', 'stateName', 'geonameid'];
+const LOC_FIELDS = [
+  'elevation',
+  'admin1',
+  'asciiname',
+  'geo',
+  'zip',
+  'state',
+  'stateName',
+  'geonameid',
+];
 
 export const holidayDescription: StringMap = holidayDescription0 as StringMap;
 export const countryNames: StringMap = countryNames0 as StringMap;
@@ -62,8 +81,14 @@ export const countryNames: StringMap = countryNames0 as StringMap;
 /**
  * Converts a @hebcal/core `Location` to a plain JS object.
  */
-export function locationToPlainObj(location: Location | undefined): LocationPlainObj {
-  if (typeof location === 'object' && location !== null && typeof location.getLatitude === 'function') {
+export function locationToPlainObj(
+  location: Location | undefined
+): LocationPlainObj {
+  if (
+    typeof location === 'object' &&
+    location !== null &&
+    typeof location.getLatitude === 'function'
+  ) {
     const cc: string = location.getCountryCode()!;
     const o: LocationPlainObj = {
       title: location.getName(),
@@ -96,7 +121,10 @@ export function getDownloadFilename(options: RestApiOptions): string {
     if (options.month) {
       fileName += '_' + options.month;
     }
-  } else if (typeof options.start === 'object' && typeof options.end === 'object') {
+  } else if (
+    typeof options.start === 'object' &&
+    typeof options.end === 'object'
+  ) {
     const start = new HDate(options.start);
     const end = new HDate(options.end);
     const y1 = start.greg().getFullYear();
@@ -139,7 +167,9 @@ export function getEventCategories(ev: Event): string[] {
  * Renders the event title in default locale, but strips off time
  */
 export function renderTitleWithoutTime(ev: Event): string {
-  return typeof (ev as any).eventTime === 'undefined' ? ev.render() : ev.renderBrief();
+  return typeof (ev as TimedEvent).eventTime === 'undefined'
+    ? ev.render()
+    : ev.renderBrief();
 }
 
 function shortLocationName(options: RestApiOptions): string | null {
@@ -159,7 +189,10 @@ function shortLocationName(options: RestApiOptions): string | null {
 /**
  * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
  */
-export function getCalendarTitle(events: Event[], options: RestApiOptions): string {
+export function getCalendarTitle(
+  events: Event[],
+  options: RestApiOptions
+): string {
   let title = 'Hebcal';
   const locationName = shortLocationName(options);
   if (options.yahrzeit) {
@@ -171,17 +204,18 @@ export function getCalendarTitle(events: Event[], options: RestApiOptions): stri
   } else {
     title += ' Diaspora';
   }
-  if (options.subscribe == '1') {
+  const sub = options.subscribe;
+  if (sub === '1' || sub === 1 || sub === true) {
     return title;
   }
-  if (options.year && (options.isHebrewYear || events.length == 0)) {
+  if (options.year && (options.isHebrewYear || events.length === 0)) {
     title += ' ' + options.year;
   } else if (events.length) {
     const start = events[0].getDate().greg();
     const end = events[events.length - 1].getDate().greg();
-    if (start.getFullYear() != end.getFullYear()) {
+    if (start.getFullYear() !== end.getFullYear()) {
       title += ' ' + start.getFullYear() + '-' + end.getFullYear();
-    } else if (start.getMonth() == end.getMonth()) {
+    } else if (start.getMonth() === end.getMonth()) {
       const monthFormat = new Intl.DateTimeFormat('en-US', {month: 'long'});
       const startMonth = monthFormat.format(start);
       title += ' ' + startMonth + ' ' + start.getFullYear();
@@ -195,36 +229,52 @@ export function getCalendarTitle(events: Event[], options: RestApiOptions): stri
 /**
  * Returns an English language description of the holiday
  */
-export function getHolidayDescription(ev: Event, firstSentence: boolean=false): string {
-  const str0 = ev.getFlags() & flags.SHABBAT_MEVARCHIM ?
-    holidayDescription['Shabbat Mevarchim Chodesh'] :
-    holidayDescription[ev.getDesc()] || holidayDescription[ev.basename()] || '';
+export function getHolidayDescription(
+  ev: Event,
+  firstSentence = false
+): string {
+  const str0 =
+    ev.getFlags() & flags.SHABBAT_MEVARCHIM
+      ? holidayDescription['Shabbat Mevarchim Chodesh']
+      : holidayDescription[ev.getDesc()] ||
+        holidayDescription[ev.basename()] ||
+        '';
   const str = str0.normalize();
   if (firstSentence && str) {
     const dot = str.indexOf('.');
-    if (dot != -1) {
+    if (dot !== -1) {
       return str.substring(0, dot);
     }
   }
   return str;
 }
 
-const HOLIDAY_IGNORE_MASK = flags.DAF_YOMI | flags.OMER_COUNT |
-  flags.SHABBAT_MEVARCHIM | flags.MOLAD | flags.USER_EVENT |
-  flags.NACH_YOMI | flags.DAILY_LEARNING |
-  flags.HEBREW_DATE | flags.YERUSHALMI_YOMI;
+const HOLIDAY_IGNORE_MASK =
+  flags.DAF_YOMI |
+  flags.OMER_COUNT |
+  flags.SHABBAT_MEVARCHIM |
+  flags.MOLAD |
+  flags.USER_EVENT |
+  flags.NACH_YOMI |
+  flags.DAILY_LEARNING |
+  flags.HEBREW_DATE |
+  flags.YERUSHALMI_YOMI;
 
 /**
  * Makes mulit-line text that summarizes Torah & Haftarah
  */
 export function makeTorahMemoText(ev: Event, il: boolean): string {
   const mask = ev.getFlags();
-  if ((mask & HOLIDAY_IGNORE_MASK) || (typeof (ev as any).eventTime !== 'undefined')) {
+  if (
+    mask & HOLIDAY_IGNORE_MASK ||
+    typeof (ev as TimedEvent).eventTime !== 'undefined'
+  ) {
     return '';
   }
-  const reading = (mask & flags.PARSHA_HASHAVUA) ?
-    getLeyningForParshaHaShavua(ev, il) :
-    getLeyningForHoliday(ev, il);
+  const reading =
+    mask & flags.PARSHA_HASHAVUA
+      ? getLeyningForParshaHaShavua(ev, il)
+      : getLeyningForHoliday(ev, il);
   let memo = '';
   if (reading && (reading.summary || reading.haftara)) {
     if (reading.summary) {
@@ -266,8 +316,13 @@ export function makeMemo(ev: Event, il: boolean): string {
 /**
  * Appends utm_source and utm_medium parameters to a URL
  */
-export function appendIsraelAndTracking(url: string, il: boolean,
-  utmSource: string, utmMedium: string, utmCampaign?: string): string {
+export function appendIsraelAndTracking(
+  url: string,
+  il: boolean,
+  utmSource: string,
+  utmMedium: string,
+  utmCampaign?: string
+): string {
   const u = new URL(url);
   const isHebcal = u.host === 'www.hebcal.com';
   if (isHebcal) {
@@ -284,10 +339,14 @@ export function appendIsraelAndTracking(url: string, il: boolean,
         u.pathname = '/h/' + path.substring(10);
       } else if (isSedrot) {
         shortenSedrotUrl(u);
-      } else { // isOmer
+      } else {
+        // isOmer
         u.pathname = '/o/' + path.substring(6);
       }
-      if (!utmCampaign || !(utmCampaign.startsWith('ical-') || utmCampaign.startsWith('pdf-'))) {
+      if (
+        !utmCampaign ||
+        !(utmCampaign.startsWith('ical-') || utmCampaign.startsWith('pdf-'))
+      ) {
         if (utmSource) {
           u.searchParams.set('us', utmSource);
         }
@@ -315,16 +374,22 @@ export function appendIsraelAndTracking(url: string, il: boolean,
 }
 
 export function shouldRenderBrief(ev: Event): boolean {
-  if (typeof (ev as any).eventTime !== 'undefined') {
+  if (typeof (ev as TimedEvent).eventTime !== 'undefined') {
     return true;
   }
   const mask = ev.getFlags();
   if (mask & flags.HEBREW_DATE) {
     const hd = ev.getDate();
-    return (hd.getDate() === 1) ? false : true;
-  } else if (mask & (flags.DAILY_LEARNING | flags.DAF_YOMI | flags.YERUSHALMI_YOMI)) {
+    return hd.getDate() === 1 ? false : true;
+  } else if (
+    mask &
+    (flags.DAILY_LEARNING | flags.DAF_YOMI | flags.YERUSHALMI_YOMI)
+  ) {
     return true;
-  } else if (mask & flags.MINOR_FAST && ev.getDesc().substring(0, 16) === 'Yom Kippur Katan') {
+  } else if (
+    mask & flags.MINOR_FAST &&
+    ev.getDesc().substring(0, 16) === 'Yom Kippur Katan'
+  ) {
     return true;
   } else if (mask & flags.SHABBAT_MEVARCHIM) {
     return true;

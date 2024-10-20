@@ -5,19 +5,21 @@ import {
   Locale,
   MoladEvent,
   OmerEvent,
+  TimedEvent,
   Zmanim,
   flags,
-  gematriya
+  gematriya,
 } from '@hebcal/core';
-import { isoDateString } from '@hebcal/hdate';
+import {isoDateString} from '@hebcal/hdate';
 import {
   AliyotMap,
   Leyning,
   StringMap,
-  formatAliyahWithBook, getLeyningForHoliday,
-  getLeyningForParshaHaShavua
+  formatAliyahWithBook,
+  getLeyningForHoliday,
+  getLeyningForParshaHaShavua,
 } from '@hebcal/leyning';
-import { getTriennialForParshaHaShavua } from '@hebcal/triennial';
+import {getTriennialForParshaHaShavua} from '@hebcal/triennial';
 import {
   RestApiOptions,
   appendIsraelAndTracking,
@@ -28,7 +30,6 @@ import {
   shouldRenderBrief,
 } from './common';
 
-
 function eventIsoDate(ev: Event): string {
   return isoDateString(ev.getDate().greg());
 }
@@ -36,7 +37,11 @@ function eventIsoDate(ev: Event): string {
 /**
  * Formats a list events for the classic Hebcal.com JSON API response
  */
-export function eventsToClassicApi(events: Event[], options: RestApiOptions, leyning: boolean=true): any {
+export function eventsToClassicApi(
+  events: Event[],
+  options: RestApiOptions,
+  leyning = true
+): any {
   const result: any = {
     title: getCalendarTitle(events, options),
     date: new Date().toISOString(),
@@ -48,29 +53,43 @@ export function eventsToClassicApi(events: Event[], options: RestApiOptions, ley
       end: eventIsoDate(events[events.length - 1]),
     };
   }
-  result.items = events.map((ev) => eventToClassicApiObject(ev, options, leyning));
+  result.items = events.map(ev =>
+    eventToClassicApiObject(ev, options, leyning)
+  );
   return result;
 }
 
 /**
  * Converts a Hebcal event to a classic Hebcal.com JSON API object
  */
-export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyning: boolean=true): any {
-  const eventTime: Date = (ev as any).eventTime;
+export function eventToClassicApiObject(
+  ev: Event,
+  options: RestApiOptions,
+  leyning = true
+): any {
+  const timedEv = ev as TimedEvent;
+  const eventTime: Date = timedEv.eventTime;
   const timed = Boolean(eventTime);
   const hd = ev.getDate();
   const dt = hd.greg();
-  const tzid = typeof options.location === 'object' ? options.location.getTzid() : 'UTC';
-  const date = timed ?
-    Zmanim.formatISOWithTimeZone(tzid, eventTime) :
-    isoDateString(dt);
+  const tzid =
+    typeof options.location === 'object' ? options.location.getTzid() : 'UTC';
+  const date = timed
+    ? Zmanim.formatISOWithTimeZone(tzid, eventTime)
+    : isoDateString(dt);
   const categories = getEventCategories(ev);
   const mask = ev.getFlags();
-  let title = shouldRenderBrief(ev) ? ev.renderBrief(options.locale) : ev.render(options.locale);
+  let title = shouldRenderBrief(ev)
+    ? ev.renderBrief(options.locale)
+    : ev.render(options.locale);
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';
   if (candles) {
-    const time = HebrewCalendar.reformatTimeStr((ev as any).eventTimeStr, 'pm', options);
+    const time = HebrewCalendar.reformatTimeStr(
+      timedEv.eventTimeStr,
+      'pm',
+      options
+    );
     title += ': ' + time;
   }
   const result: any = {
@@ -84,10 +103,10 @@ export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyn
   if (categories.length > 1) {
     result.subcat = categories[1];
   }
-  if (categories[0] === 'holiday' && (mask & flags.CHAG)) {
+  if (categories[0] === 'holiday' && mask & flags.CHAG) {
     result.yomtov = true;
   }
-  if (title != desc) {
+  if (title !== desc) {
     result.title_orig = desc;
   }
   const hebrew = ev.renderBrief('he');
@@ -97,10 +116,10 @@ export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyn
   if (!candles) {
     if (leyning) {
       const il = options.il;
-      const isParsha = (mask === flags.PARSHA_HASHAVUA);
-      const reading = isParsha ?
-        getLeyningForParshaHaShavua(ev, il) :
-        getLeyningForHoliday(ev, il);
+      const isParsha = mask === flags.PARSHA_HASHAVUA;
+      const reading = isParsha
+        ? getLeyningForParshaHaShavua(ev, il)
+        : getLeyningForHoliday(ev, il);
       if (reading) {
         result.leyning = formatLeyningResult(reading);
         const hyear = hd.getFullYear();
@@ -117,8 +136,13 @@ export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyn
       const utmSource = options.utmSource || 'js';
       const utmMedium = options.utmMedium || 'api';
       const utmCampaign = options.utmCampaign;
-      result.link = appendIsraelAndTracking(url, Boolean(options.il),
-          utmSource, utmMedium, utmCampaign);
+      result.link = appendIsraelAndTracking(
+        url,
+        Boolean(options.il),
+        utmSource,
+        utmMedium,
+        utmCampaign
+      );
     }
   }
   if (mask & flags.OMER_COUNT) {
@@ -149,7 +173,7 @@ export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyn
     };
     delete result.hebrew;
   }
-  if ((options.heDateParts && !timed) || (mask & flags.HEBREW_DATE)) {
+  if ((options.heDateParts && !timed) || mask & flags.HEBREW_DATE) {
     const yy = hd.getFullYear();
     const mm = hd.getMonthName();
     const dd = hd.getDate();
@@ -162,8 +186,8 @@ export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyn
   const memo = ev.memo || getHolidayDescription(ev);
   if (typeof memo === 'string' && memo.length !== 0) {
     result.memo = memo.normalize();
-  } else if (typeof (ev as any).linkedEvent !== 'undefined') {
-    result.memo = (ev as any).linkedEvent.render(options.locale);
+  } else if (typeof timedEv.linkedEvent !== 'undefined') {
+    result.memo = timedEv.linkedEvent!.render(options.locale);
   }
   if (options.includeEvent) {
     result.ev = ev;
@@ -174,7 +198,7 @@ export function eventToClassicApiObject(ev: Event, options: RestApiOptions, leyn
 function formatAliyot(result: StringMap, aliyot: AliyotMap): StringMap {
   for (const [num, aliyah] of Object.entries(aliyot)) {
     if (typeof aliyah !== 'undefined') {
-      const k = num == 'M' ? 'maftir' : num;
+      const k = num === 'M' ? 'maftir' : num;
       result[k] = formatAliyahWithBook(aliyah);
     }
   }
@@ -184,7 +208,7 @@ function formatAliyot(result: StringMap, aliyot: AliyotMap): StringMap {
 function formatReasons(result: StringMap, reason: StringMap): StringMap {
   for (const num of ['7', '8', 'M']) {
     if (reason[num]) {
-      const k = num == 'M' ? 'maftir' : num;
+      const k = num === 'M' ? 'maftir' : num;
       result[k] += ' | ' + reason[num];
     }
   }

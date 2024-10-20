@@ -163,6 +163,7 @@ test('classic-api-no-sedra', () => {
   const events = HebrewCalendar.calendar(options);
   const apiResult = eventsToClassicApi(events, options);
   delete apiResult.date;
+  delete apiResult.version;
   for (const item of apiResult.items) {
     delete item.memo;
   }
@@ -463,6 +464,7 @@ test('location-zip', () => {
   const ev = new HebrewDateEvent(new HDate(new Date(2022, 2, 4)));
   const apiResult = eventsToClassicApi([ev], {location});
   delete apiResult.date;
+  delete apiResult.version;
   const expected = {
     title: 'Hebcal Providence March 2022',
     location: {
@@ -530,6 +532,7 @@ test('omer', () => {
 test('classic-api-empty', () => {
   const apiResult = eventsToClassicApi([], {}, false);
   delete apiResult.date;
+  delete apiResult.version;
   const expected = {
     title: 'Hebcal Diaspora',
     location: {geo: 'none'},

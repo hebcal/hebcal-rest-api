@@ -9,6 +9,7 @@ import {
   Zmanim,
   flags,
   gematriya,
+  version,
 } from '@hebcal/core';
 import {isoDateString} from '@hebcal/hdate';
 import {
@@ -45,6 +46,7 @@ export function eventsToClassicApi(
   const result: any = {
     title: getCalendarTitle(events, options),
     date: new Date().toISOString(),
+    version,
   };
   result.location = locationToPlainObj(options.location);
   if (events.length) {

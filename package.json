@@ -31,7 +31,7 @@
   "dependencies": {
     "@hebcal/core": "^5.7.1",
     "@hebcal/hdate": "^0.11.5",
-    "@hebcal/leyning": "^8.2.9",
+    "@hebcal/leyning": "^9.0.0",
     "@hebcal/triennial": "^5.1.3"
   },
   "scripts": {

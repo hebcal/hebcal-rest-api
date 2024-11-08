@@ -3,7 +3,6 @@ const commonjs = require('@rollup/plugin-commonjs');
 const json = require('@rollup/plugin-json');
 const terser = require('@rollup/plugin-terser');
 const typescript = require('@rollup/plugin-typescript');
-const {dts} = require('rollup-plugin-dts');
 const pkg = require('./package.json');
 
 const banner = '/*! ' + pkg.name + ' v' + pkg.version + ' */';
@@ -11,29 +10,19 @@ const banner = '/*! ' + pkg.name + ' v' + pkg.version + ' */';
 module.exports = [
   {
     input: 'src/index.ts',
-    output: [
-      {file: pkg.main, format: 'cjs', name: pkg.name, banner},
-    ],
+    output: [{file: pkg.module, format: 'es', name: pkg.name, banner}],
     plugins: [
       json({compact: true, preferConst: true}),
       typescript(),
       nodeResolve(),
       commonjs(),
     ],
-    external: ['@hebcal/core', '@hebcal/leyning', '@hebcal/triennial'],
-  },
-  {
-    input: 'src/index.ts',
-    output: [
-      {file: pkg.module, format: 'es', name: pkg.name, banner},
+    external: [
+      '@hebcal/core',
+      '@hebcal/hdate',
+      /@hebcal\/leyning/,
+      '@hebcal/triennial',
     ],
-    plugins: [
-      json({compact: true, preferConst: true}),
-      typescript(),
-      nodeResolve(),
-      commonjs(),
-    ],
-    external: ['@hebcal/core', '@hebcal/leyning', '@hebcal/triennial'],
   },
   {
     input: 'src/index.ts',
@@ -104,11 +93,5 @@ module.exports = [
       commonjs(),
     ],
     external: ['@hebcal/core', '@hebcal/leyning'],
-  },
-  {
-    input: 'dist/index.d.ts',
-    output: [{file: 'dist/module.d.ts', format: 'es'}],
-    external: ['node:fs'],
-    plugins: [dts()],
   },
 ];

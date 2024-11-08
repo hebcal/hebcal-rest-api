@@ -12,14 +12,10 @@ import {
   version,
 } from '@hebcal/core';
 import {isoDateString} from '@hebcal/hdate';
-import {
-  AliyotMap,
-  Leyning,
-  StringMap,
-  formatAliyahWithBook,
-  getLeyningForHoliday,
-  getLeyningForParshaHaShavua,
-} from '@hebcal/leyning';
+import {AliyotMap, Leyning, StringMap} from '@hebcal/leyning/dist/esm/types';
+import {formatAliyahWithBook} from '@hebcal/leyning/dist/esm/common';
+import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
+import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
 import {getTriennialForParshaHaShavua} from '@hebcal/triennial';
 import {
   RestApiOptions,

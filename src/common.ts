@@ -7,10 +7,8 @@ import {
   flags,
 } from '@hebcal/core';
 import {isoDateString} from '@hebcal/hdate';
-import {
-  getLeyningForHoliday,
-  getLeyningForParshaHaShavua,
-} from '@hebcal/leyning';
+import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
+import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
 import countryNames0 from './countryNames.json';
 import holidayDescription0 from './holidays.json';
 import {shortenSedrotUrl} from './shorten';

@@ -1,4 +1,5 @@
-import {getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
+import {RestApiOptions,
+  getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
   getHolidayDescription,
   appendIsraelAndTracking, locationToPlainObj, shouldRenderBrief} from '../src/common';
 import {HebrewCalendar, Location, Event, HDate, flags, HolidayEvent,
@@ -8,7 +9,7 @@ import {DafYomiEvent} from '@hebcal/learning';
 test('getDownloadFilename', () => {
   const location = new Location(38.672294, -90.533239, false, 'America/Chicago',
       'Chesterfield, MO 63017', 'US', '63017');
-  const options = {
+  const options: RestApiOptions = {
     year: 2018,
     sedrot: true,
     candlelighting: true,
@@ -50,7 +51,7 @@ test('getDownloadFilename', () => {
 test('getCalendarTitle', () => {
   const location = new Location(38.672294, -90.533239, false, 'America/Chicago',
       'Chesterfield, MO 63017', 'US', '63017');
-  let options = {
+  let options: RestApiOptions = {
     year: 2018,
     sedrot: true,
     candlelighting: true,
@@ -75,7 +76,7 @@ test('getCalendarTitle', () => {
 });
 
 test('getCalendarTitle2', () => {
-  const options = {year: 2017};
+  const options: RestApiOptions = {year: 2017};
   const events = HebrewCalendar.calendar(options);
   expect(getCalendarTitle(events, options)).toBe('Hebcal Diaspora 2017');
 
@@ -96,7 +97,7 @@ test('getCalendarTitle asciiname', () => {
   loc.asciiname = 'Congregacion Ortiz';
   loc.admin1 = 'Chihuahua';
   loc.population = 2620;
-  const options = {location: loc, year: 2021};
+  const options: RestApiOptions = {location: loc, year: 2021};
   expect(getCalendarTitle([], options)).toBe('Hebcal Congregación Ortíz 2021');
   options.preferAsciiName = true;
   expect(getCalendarTitle([], options)).toBe('Hebcal Congregacion Ortiz 2021');

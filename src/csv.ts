@@ -1,4 +1,6 @@
-import {Event, HebrewCalendar, TimedEvent, flags} from '@hebcal/core';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
+import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {
   RestApiOptions,
   StringMap,
@@ -50,11 +52,7 @@ export function eventToCsv(ev: Event, options: RestApiOptions): string {
     ? ev.renderBrief(options.locale)
     : ev.render(options.locale);
   if (timed) {
-    const timeStr = HebrewCalendar.reformatTimeStr(
-      timedEv.eventTimeStr,
-      ' PM',
-      options
-    );
+    const timeStr = reformatTimeStr(timedEv.eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;
     endDate = date;
     allDay = '"false"';

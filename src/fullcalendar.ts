@@ -1,5 +1,8 @@
-import {Event, Locale, TimedEvent, Zmanim, flags} from '@hebcal/core';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
+import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
 import {isoDateString} from '@hebcal/hdate';
+import {Locale} from '@hebcal/core/dist/esm/locale';
 import {
   appendIsraelAndTracking,
   getEventCategories,

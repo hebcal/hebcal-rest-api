@@ -1,22 +1,16 @@
-import {
-  Event,
-  HDate,
-  HebrewCalendar,
-  Locale,
-  MoladEvent,
-  OmerEvent,
-  TimedEvent,
-  Zmanim,
-  flags,
-  gematriya,
-  version,
-} from '@hebcal/core';
-import {isoDateString} from '@hebcal/hdate';
+import {HDate, gematriya, isoDateString} from '@hebcal/hdate';
+import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {version} from '@hebcal/core/dist/esm/pkgVersion';
+import {Locale} from '@hebcal/core/dist/esm/locale';
+import {MoladEvent} from '@hebcal/core/dist/esm/molad';
+import {OmerEvent} from '@hebcal/core/dist/esm/omer';
+import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
+import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
 import {AliyotMap, Leyning, StringMap} from '@hebcal/leyning/dist/esm/types';
 import {formatAliyahWithBook} from '@hebcal/leyning/dist/esm/common';
 import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
 import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
-import {getTriennialForParshaHaShavua} from '@hebcal/triennial';
 import {
   RestApiOptions,
   appendIsraelAndTracking,
@@ -39,6 +33,17 @@ export function eventsToClassicApi(
   options: RestApiOptions,
   leyning = true
 ): any {
+  const result: any = eventsToClassicApiHeader(events, options);
+  result.items = events.map(ev =>
+    eventToClassicApiObject(ev, options, leyning)
+  );
+  return result;
+}
+
+export function eventsToClassicApiHeader(
+  events: Event[],
+  options: RestApiOptions
+) {
   const result: any = {
     title: getCalendarTitle(events, options),
     date: new Date().toISOString(),
@@ -51,9 +56,6 @@ export function eventsToClassicApi(
       end: eventIsoDate(events[events.length - 1]),
     };
   }
-  result.items = events.map(ev =>
-    eventToClassicApiObject(ev, options, leyning)
-  );
   return result;
 }
 
@@ -83,11 +85,7 @@ export function eventToClassicApiObject(
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';
   if (candles) {
-    const time = HebrewCalendar.reformatTimeStr(
-      timedEv.eventTimeStr,
-      'pm',
-      options
-    );
+    const time = reformatTimeStr(timedEv.eventTimeStr, 'pm', options);
     title += ': ' + time;
   }
   const result: any = {
@@ -120,13 +118,6 @@ export function eventToClassicApiObject(
         : getLeyningForHoliday(ev, il);
       if (reading) {
         result.leyning = formatLeyningResult(reading);
-        const hyear = hd.getFullYear();
-        if (isParsha && hyear >= 5745) {
-          const triReading = getTriennialForParshaHaShavua(ev, il);
-          if (triReading?.aliyot) {
-            result.leyning.triennial = formatAliyot({}, triReading.aliyot);
-          }
-        }
       }
     }
     const url = ev.url();

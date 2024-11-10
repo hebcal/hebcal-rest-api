@@ -1,12 +1,8 @@
-import {
-  CalOptions,
-  Event,
-  HDate,
-  Location,
-  TimedEvent,
-  flags,
-} from '@hebcal/core';
-import {isoDateString} from '@hebcal/hdate';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
+import {Location} from '@hebcal/core/dist/esm/location';
+import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
+import {HDate, isoDateString} from '@hebcal/hdate';
 import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
 import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
 import countryNames0 from './countryNames.json';

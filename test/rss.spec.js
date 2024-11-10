@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
-import {HebrewCalendar, Location, HDate, Event, flags} from '@hebcal/core';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {HebrewCalendar, Location, HDate} from '@hebcal/core';
 import {eventToRssItem2, eventsToRss2} from '../src/rss';
 
 const dayFormat = new Intl.DateTimeFormat('en-US', {

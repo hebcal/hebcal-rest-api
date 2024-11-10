@@ -1,4 +1,5 @@
-import {HebrewCalendar, Location, HDate, HebrewDateEvent, OmerEvent} from '@hebcal/core';
+import {HDate} from '@hebcal/hdate';
+import {HebrewCalendar, Location, HebrewDateEvent, OmerEvent} from '@hebcal/core';
 import {DafYomiEvent, MishnaYomiEvent, YerushalmiYomiEvent} from '@hebcal/learning';
 import {eventsToClassicApi, eventToClassicApiObject} from '../src/classic-rest-api';
 
@@ -43,16 +44,6 @@ test('eventToClassicApiObject', () => {
       'torah': 'Numbers 1:1-4:20',
       'haftarah': 'I Samuel 20:18-42 | Shabbat Machar Chodesh',
       'maftir': 'Numbers 4:17-4:20',
-      'triennial': {
-        '1': 'Numbers 1:1-1:4',
-        '2': 'Numbers 1:5-1:16',
-        '3': 'Numbers 1:17-1:19',
-        '4': 'Numbers 1:20-1:27',
-        '5': 'Numbers 1:28-1:35',
-        '6': 'Numbers 1:36-1:43',
-        '7': 'Numbers 1:44-1:54',
-        'maftir': 'Numbers 1:52-1:54',
-      },
     },
     link: 'https://hebcal.com/s/5780/34?us=js&um=api',
   };

@@ -7,6 +7,29 @@ const pkg = require('./package.json');
 
 const banner = '/*! ' + pkg.name + ' v' + pkg.version + ' */';
 
+const iifeGlobals = {
+  '@hebcal/core': 'hebcal',
+  '@hebcal/core/dist/esm/locale': 'hebcal',
+  '@hebcal/core/dist/esm/holidays': 'hebcal',
+  '@hebcal/core/dist/esm/sedra': 'hebcal',
+  '@hebcal/core/dist/esm/event': 'hebcal',
+  '@hebcal/core/dist/esm/ParshaEvent': 'hebcal',
+  '@hebcal/core/dist/esm/reformatTimeStr': 'hebcal',
+  '@hebcal/core/dist/esm/pkgVersion': 'hebcal',
+  '@hebcal/core/dist/esm/zmanim': 'hebcal',
+  '@hebcal/hdate': 'hebcal',
+  '@hebcal/leyning': 'hebcal__leyning',
+  '@hebcal/leyning/dist/esm/leyning': 'hebcal__leyning',
+  '@hebcal/leyning/dist/esm/csv': 'hebcal__leyning',
+  '@hebcal/leyning/dist/esm/summary': 'hebcal__leyning',
+  '@hebcal/leyning/dist/esm/clone': 'hebcal__leyning',
+  '@hebcal/leyning/dist/esm/getLeyningKeyForEvent': 'hebcal__leyning',
+  '@hebcal/leyning/dist/esm/specialReadings': 'hebcal__leyning',
+  '@hebcal/leyning/dist/esm/common': 'hebcal__leyning',
+  '@hebcal/leyning/dist/esm/getLeyningForHoliday': 'hebcal__leyning',
+  '@hebcal/triennial': 'hebcal__triennial',
+};
+
 module.exports = [
   {
     input: 'src/index.ts',
@@ -17,12 +40,7 @@ module.exports = [
       nodeResolve(),
       commonjs(),
     ],
-    external: [
-      '@hebcal/core',
-      '@hebcal/hdate',
-      /@hebcal\/leyning/,
-      '@hebcal/triennial',
-    ],
+    external: [/@hebcal/],
   },
   {
     input: 'src/index.ts',
@@ -31,11 +49,7 @@ module.exports = [
         file: 'dist/bundle.js',
         format: 'iife',
         name: 'hebcal__rest_api',
-        globals: {
-          '@hebcal/core': 'hebcal',
-          '@hebcal/leyning': 'hebcal__leyning',
-          '@hebcal/triennial': 'hebcal__triennial',
-        },
+        globals: iifeGlobals,
         indent: false,
         banner,
       },
@@ -43,11 +57,7 @@ module.exports = [
         file: 'dist/bundle.min.js',
         format: 'iife',
         name: 'hebcal__rest_api',
-        globals: {
-          '@hebcal/core': 'hebcal',
-          '@hebcal/leyning': 'hebcal__leyning',
-          '@hebcal/triennial': 'hebcal__triennial',
-        },
+        globals: iifeGlobals,
         plugins: [terser()],
         banner,
       },
@@ -58,7 +68,7 @@ module.exports = [
       nodeResolve(),
       commonjs(),
     ],
-    external: ['@hebcal/core', '@hebcal/leyning', '@hebcal/triennial'],
+    external: [/@hebcal/],
   },
   {
     input: 'src/fullcalendar.ts',
@@ -67,10 +77,7 @@ module.exports = [
         file: 'dist/fullcalendar.js',
         format: 'iife',
         name: 'hebcalFullCalendar',
-        globals: {
-          '@hebcal/core': 'hebcal',
-          '@hebcal/leyning': 'hebcal__leyning',
-        },
+        globals: iifeGlobals,
         indent: false,
         banner,
       },
@@ -78,10 +85,7 @@ module.exports = [
         file: 'dist/fullcalendar.min.js',
         format: 'iife',
         name: 'hebcalFullCalendar',
-        globals: {
-          '@hebcal/core': 'hebcal',
-          '@hebcal/leyning': 'hebcal__leyning',
-        },
+        globals: iifeGlobals,
         plugins: [terser()],
         banner,
       },
@@ -92,6 +96,6 @@ module.exports = [
       nodeResolve(),
       commonjs(),
     ],
-    external: ['@hebcal/core', '@hebcal/leyning'],
+    external: [/@hebcal/],
   },
 ];

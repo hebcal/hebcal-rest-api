@@ -1,4 +1,8 @@
-import {Event, HebrewCalendar, Locale, TimedEvent, Zmanim} from '@hebcal/core';
+import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
+import {Event} from '@hebcal/core/dist/esm/event';
+import {Locale} from '@hebcal/core/dist/esm/locale';
+import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
+import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
 import {
   RestApiOptions,
   StringMap,
@@ -143,7 +147,7 @@ export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
     const colon = subj.indexOf(': ');
     if (colon !== -1) {
       const options = {location, il, locale: Locale.getLocaleName()};
-      const time = HebrewCalendar.reformatTimeStr(
+      const time = reformatTimeStr(
         (ev as TimedEvent).eventTimeStr,
         'pm',
         options

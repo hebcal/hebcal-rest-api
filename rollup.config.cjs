@@ -4,6 +4,7 @@ const json = require('@rollup/plugin-json');
 const terser = require('@rollup/plugin-terser');
 const typescript = require('@rollup/plugin-typescript');
 const pkg = require('./package.json');
+const {defineConfig} = require('rollup');
 
 const banner = '/*! ' + pkg.name + ' v' + pkg.version + ' */';
 
@@ -30,13 +31,23 @@ const iifeGlobals = {
   '@hebcal/triennial': 'hebcal__triennial',
 };
 
-module.exports = [
+const tsOptions = {rootDir: './src'};
+module.exports = defineConfig([
   {
     input: 'src/index.ts',
-    output: [{file: pkg.module, format: 'es', name: pkg.name, banner}],
+    output: [
+      {
+        dir: 'dist/esm',
+        format: 'es',
+        preserveModules: true,
+        preserveModulesRoot: 'src',
+        name: pkg.name,
+        banner,
+      },
+    ],
     plugins: [
       json({compact: true, preferConst: true}),
-      typescript(),
+      typescript({...tsOptions, outDir: 'dist/esm'}),
       nodeResolve(),
       commonjs(),
     ],
@@ -98,4 +109,4 @@ module.exports = [
     ],
     external: [/@hebcal/],
   },
-];
+]);

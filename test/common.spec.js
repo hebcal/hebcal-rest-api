@@ -1,4 +1,4 @@
-import {RestApiOptions,
+import {
   getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
   getHolidayDescription,
   appendIsraelAndTracking, locationToPlainObj, shouldRenderBrief} from '../src/common';

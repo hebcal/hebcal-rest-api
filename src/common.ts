@@ -376,7 +376,7 @@ export function shouldRenderBrief(ev: Event): boolean {
   const mask = ev.getFlags();
   if (mask & flags.HEBREW_DATE) {
     const hd = ev.getDate();
-    return hd.getDate() === 1 ? false : true;
+    return hd.getDate() !== 1;
   } else if (
     mask &
     (flags.DAILY_LEARNING | flags.DAF_YOMI | flags.YERUSHALMI_YOMI)

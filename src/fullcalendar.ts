@@ -16,7 +16,8 @@ import {
 export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any {
   const classes = getEventCategories(ev);
   const mask = ev.getFlags();
-  if (classes[0] === 'holiday' && mask & flags.CHAG) {
+  const isChag = Boolean(mask & flags.CHAG);
+  if (isChag && classes[0] === 'holiday') {
     classes.push('yomtov');
   }
   const timedEv = ev as TimedEvent;

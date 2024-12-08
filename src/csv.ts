@@ -90,7 +90,8 @@ export function eventToCsv(ev: Event, options: RestApiOptions): string {
     .replace(/"/g, "''")
     .replace(/\n/g, ' / ');
 
-  const showTimeAs = timed || mask & flags.CHAG ? 4 : 3;
+  const isChag = Boolean(mask & flags.CHAG);
+  const showTimeAs = timed || isChag ? 4 : 3;
   return `"${subj}",${date},${startTime},${endDate},${endTime},${allDay},"${memo}","${showTimeAs}","${loc}"`;
 }
 

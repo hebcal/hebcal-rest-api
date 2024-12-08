@@ -38,7 +38,9 @@ export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any {
   }
   const url = ev.url();
   if (url) {
-    result.url = appendIsraelAndTracking(url, il, 'js', 'fc');
+    const u = new URL(url);
+    const utmSource = u.host === 'www.hebcal.com' ? 'js' : undefined;
+    result.url = appendIsraelAndTracking(url, il, utmSource, 'fc');
   }
   const desc = ev.getDesc();
   const candles = desc === 'Havdalah' || desc === 'Candle lighting';

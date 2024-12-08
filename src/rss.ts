@@ -18,8 +18,8 @@ function getLinkAndGuid(
   il: boolean,
   tzid: string,
   mainUrl: string,
-  utmSource: string,
-  utmMedium: string
+  utmSource?: string,
+  utmMedium?: string
 ): string[] {
   let link;
   let guid;
@@ -132,7 +132,18 @@ export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
   const location = options.location;
   const il = location ? location.getIsrael() : false;
   const tzid = location ? location.getTzid() : 'UTC';
-  const utmSource = options.utmSource || 'shabbat1c';
+  let utmSource = options.utmSource;
+  if (!utmSource) {
+    const url = ev.url();
+    if (url) {
+      const u = new URL(url);
+      if (u.host === 'www.hebcal.com') {
+        utmSource = 'shabbat1c';
+      }
+    } else {
+      utmSource = 'shabbat1c';
+    }
+  }
   const utmMedium = options.utmMedium || 'rss';
   const mainUrl = options.mainUrl || '';
   const linkGuid = getLinkAndGuid(ev, il, tzid, mainUrl, utmSource, utmMedium);

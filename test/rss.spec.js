@@ -226,7 +226,7 @@ class MemoEvent extends Event {
   }
   // eslint-disable-next-line require-jsdoc
   url() {
-    return 'http://localhost/';
+    return 'https://example.com/foo';
   }
 }
 
@@ -241,8 +241,8 @@ test('CDATA', () => {
   const str = eventToRssItem2(ev, options);
   expect(str).toBe(`<item>
 <title>Hello World</title>
-<link>http://localhost/?utm_source=hebcal.com&amp;utm_medium=rss</link>
-<guid isPermaLink="false">http://localhost/#20210213-hello-world</guid>
+<link>https://example.com/foo?utm_source=hebcal.com&amp;utm_medium=rss</link>
+<guid isPermaLink="false">https://example.com/foo#20210213-hello-world</guid>
 <description>Foo Bar</description>
 <category>user</category>
 <pubDate>Sat, 13 Feb 2021 00:00:00 GMT</pubDate>
@@ -253,8 +253,20 @@ test('CDATA', () => {
   const str2 = eventToRssItem2(ev2, options);
   expect(str2).toBe(`<item>
 <title>Hello Two</title>
-<link>http://localhost/?utm_source=hebcal.com&amp;utm_medium=rss</link>
-<guid isPermaLink="false">http://localhost/#20210213-hello-two</guid>
+<link>https://example.com/foo?utm_source=hebcal.com&amp;utm_medium=rss</link>
+<guid isPermaLink="false">https://example.com/foo#20210213-hello-two</guid>
+<description><![CDATA[<p>Baaz Quux</p>]]></description>
+<category>user</category>
+<pubDate>Sat, 13 Feb 2021 00:00:00 GMT</pubDate>
+</item>
+`);
+
+  const opts3 = {...options, utmSource: 'SHALOM'};
+  const str3 = eventToRssItem2(ev2, opts3);
+  expect(str3).toBe(`<item>
+<title>Hello Two</title>
+<link>https://example.com/foo?utm_source=SHALOM&amp;utm_medium=rss</link>
+<guid isPermaLink="false">https://example.com/foo#20210213-hello-two</guid>
 <description><![CDATA[<p>Baaz Quux</p>]]></description>
 <category>user</category>
 <pubDate>Sat, 13 Feb 2021 00:00:00 GMT</pubDate>

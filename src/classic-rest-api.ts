@@ -122,7 +122,13 @@ export function eventToClassicApiObject(
     }
     const url = ev.url();
     if (url) {
-      const utmSource = options.utmSource || 'js';
+      let utmSource = options.utmSource;
+      if (!utmSource) {
+        const u = new URL(url);
+        if (u.host === 'www.hebcal.com') {
+          utmSource = 'js';
+        }
+      }
       const utmMedium = options.utmMedium || 'api';
       const utmCampaign = options.utmCampaign;
       result.link = appendIsraelAndTracking(

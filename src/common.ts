@@ -313,8 +313,8 @@ export function makeMemo(ev: Event, il: boolean): string {
 export function appendIsraelAndTracking(
   url: string,
   il: boolean,
-  utmSource: string,
-  utmMedium: string,
+  utmSource?: string,
+  utmMedium?: string,
   utmCampaign?: string
 ): string {
   const u = new URL(url);
@@ -354,7 +354,9 @@ export function appendIsraelAndTracking(
       return u.toString();
     }
   }
-  utmSource = isHebcal ? utmSource : 'hebcal.com';
+  if (!utmSource && !isHebcal) {
+    utmSource = 'hebcal.com'; // e.g. sefaria.org/foo?utm_source=hebcal.com
+  }
   if (utmSource) {
     u.searchParams.set('utm_source', utmSource);
   }

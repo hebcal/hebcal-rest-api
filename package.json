@@ -32,7 +32,7 @@
   "homepage": "https://hebcal.github.io/api/rest-api/",
   "dependencies": {
     "@hebcal/core": "^5.8.3",
-    "@hebcal/hdate": "^0.12.0",
+    "@hebcal/hdate": "^0.13.1",
     "@hebcal/leyning": "^9.0.2"
   },
   "scripts": {

@@ -45,8 +45,6 @@
   },
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "@babel/preset-env": "^7.26.0",
-    "@babel/preset-typescript": "^7.26.0",
     "@hebcal/learning": "^5.1.2",
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-json": "^6.1.0",

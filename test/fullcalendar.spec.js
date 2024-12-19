@@ -1,3 +1,4 @@
+import {expect, test} from 'vitest';
 import {HebrewCalendar, Location, HDate, HebrewDateEvent} from '@hebcal/core';
 import {DafYomiEvent} from '@hebcal/learning';
 import {eventToFullCalendar} from '../src/fullcalendar';

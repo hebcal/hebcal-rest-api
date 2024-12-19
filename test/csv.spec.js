@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import {expect, test} from 'vitest';
 import {HebrewCalendar, Location, HDate, HebrewDateEvent,
   OmerEvent} from '@hebcal/core';
 import {YerushalmiYomiEvent, DafYomiEvent, MishnaYomiEvent} from '@hebcal/learning';

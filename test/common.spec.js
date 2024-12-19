@@ -1,3 +1,4 @@
+import {expect, test} from 'vitest';
 import {
   getDownloadFilename, getCalendarTitle, makeTorahMemoText, getEventCategories,
   getHolidayDescription,

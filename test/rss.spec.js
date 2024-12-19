@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import {expect, test} from 'vitest';
 import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {HebrewCalendar, Location, HDate} from '@hebcal/core';
 import {eventToRssItem2, eventsToRss2} from '../src/rss';

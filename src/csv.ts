@@ -66,9 +66,13 @@ export function eventToCsv(ev: Event, options: RestApiOptions): string {
       loc = locationName;
     }
   } else {
-    const category = CATEGORY[getEventCategories(ev)[0]];
-    if (typeof category === 'string') {
-      loc = category;
+    const cats = getEventCategories(ev);
+    for (const cat of cats) {
+      const category = CATEGORY[cat];
+      if (typeof category === 'string') {
+        loc = category;
+        break;
+      }
     }
   }
 

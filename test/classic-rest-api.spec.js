@@ -544,14 +544,15 @@ test('options.heDateParts', () => {
 
 test('yerushalmi-yomi', () => {
   const hd = new HDate(new Date(2022, 10, 15));
-  const daf = {name: 'Berakhot', blatt: 2};
+  const daf = {name: 'Berakhot', blatt: 2, ed: 'foo'};
   const ev = new YerushalmiYomiEvent(hd, daf);
   const obj = eventToClassicApiObject(ev, {}, false);
   const expected = {
     title: 'Berakhot 2',
     date: '2022-11-15',
     hdate: '21 Cheshvan 5783',
-    category: 'yerushalmi',
+    category: 'yerushalmi-foo',
+    subcat: "yerushalmi",
     hebrew: 'ברכות דף ב׳',
   };
   expect(obj).toEqual(expected);

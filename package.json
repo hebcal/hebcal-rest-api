@@ -28,7 +28,7 @@
   },
   "homepage": "https://hebcal.github.io/api/rest-api/",
   "dependencies": {
-    "@hebcal/core": "^5.8.13",
+    "@hebcal/core": "^5.9.0",
     "@hebcal/hdate": "^0.13.5",
     "@hebcal/leyning": "^9.0.3"
   },
@@ -44,17 +44,17 @@
   },
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "@hebcal/learning": "^6.0.2",
+    "@hebcal/learning": "^6.1.0",
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.2",
-    "@types/node": "^22.10.6",
+    "@types/node": "^22.10.10",
     "gts": "^5.3.1",
-    "rollup": "^4.30.1",
+    "rollup": "^4.32.0",
     "typedoc": "^0.27.6",
     "typescript": "^5.7.3",
-    "vitest": "^2.1.8"
+    "vitest": "^3.0.4"
   }
 }

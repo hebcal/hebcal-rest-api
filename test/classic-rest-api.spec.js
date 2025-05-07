@@ -135,7 +135,7 @@ test('eventsToClassicApi', () => {
     link: 'https://hebcal.com/h/rosh-chodesh-iyyar-2022?us=js&um=api',
     title: 'Rosh Chodesh Iyyar',
     // eslint-disable-next-line max-len
-    memo: 'Start of month of Iyyar on the Hebrew calendar. אִיָיר (transliterated Iyyar or Iyar) is the 2nd month of the Hebrew year, has 29 days, and corresponds to April or May on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon',
+    memo: 'Start of month of Iyyar on the Hebrew calendar. אִיָיר (transliterated Iyyar or Iyar) is the 8th month of the civil Hebrew year (9th on leap years) and the 2nd month of the biblical Hebrew year. It has 29 days and corresponds to April or May on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon',
   };
   expect(roshChodesh).toEqual(roshChodeshExpected);
   const candleLighting = apiResult.items[4];
@@ -509,11 +509,11 @@ test('omer', () => {
     omer: {
       count: {
         en: 'Today is 46 days, which is 6 weeks and 4 days of the Omer',
-        he: 'הַיּוֹם שִׁשָּׁה וְאַרְבָּעִים יוֹם, שְׁהֵם שִׁשָּׁה שָׁבוּעוֹת וְאַרְבָּעָה יָמִים לָעֽוֹמֶר',
+        he: 'הַיּוֹם שִׁשָּׁה וְאַרְבָּעִים יוֹם, שֶׁהֵם שִׁשָּׁה שָׁבוּעוֹת וְאַרְבָּעָה יָמִים לָעֽוֹמֶר',
       },
       sefira: {
         en: 'Eternity within Majesty',
-        he: 'נֶּֽצַח שֶׁבְּמַּלְכוּת',
+        he: 'נֶּֽצַח שֶׁבְּמַלְכוּת',
         translit: 'Netzach sheb\'Malkhut',
       },
     },

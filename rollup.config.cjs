@@ -28,7 +28,6 @@ const iifeGlobals = {
   '@hebcal/leyning/dist/esm/specialReadings': 'hebcal__leyning',
   '@hebcal/leyning/dist/esm/common': 'hebcal__leyning',
   '@hebcal/leyning/dist/esm/getLeyningForHoliday': 'hebcal__leyning',
-  '@hebcal/triennial': 'hebcal__triennial',
 };
 
 const tsOptions = {rootDir: './src'};

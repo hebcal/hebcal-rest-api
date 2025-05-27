@@ -2,7 +2,6 @@ import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
 import {isoDateString} from '@hebcal/hdate';
-import {Locale} from '@hebcal/core/dist/esm/locale';
 import {
   appendIsraelAndTracking,
   getEventCategories,
@@ -33,9 +32,9 @@ export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any {
     allDay: !timed,
     className: classes.join(' '),
   };
-  const hebrew = ev.renderBrief('he');
+  const hebrew = ev.renderBrief('he-x-NoNikud');
   if (hebrew) {
-    result.hebrew = Locale.hebrewStripNikkud(hebrew);
+    result.hebrew = hebrew;
   }
   const url = ev.url();
   if (url) {

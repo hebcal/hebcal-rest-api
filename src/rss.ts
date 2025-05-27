@@ -157,11 +157,12 @@ export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
   if (candles) {
     const colon = subj.indexOf(': ');
     if (colon !== -1) {
-      const options = {location, il, locale: Locale.getLocaleName()};
+      const locale = options.locale || Locale.getLocaleName();
+      const opts = {location, il, locale};
       const time = reformatTimeStr(
         (ev as TimedEvent).eventTimeStr,
         'pm',
-        options
+        opts
       );
       subj = subj.substring(0, colon) + ': ' + time;
     }

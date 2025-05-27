@@ -105,9 +105,9 @@ export function eventToClassicApiObject(
   if (title !== desc) {
     result.title_orig = desc;
   }
-  const hebrew = ev.renderBrief('he');
+  const hebrew = ev.renderBrief('he-x-NoNikud');
   if (hebrew) {
-    result.hebrew = Locale.hebrewStripNikkud(hebrew);
+    result.hebrew = hebrew;
   }
   if (!candles) {
     if (leyning) {

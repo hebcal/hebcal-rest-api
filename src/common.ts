@@ -141,6 +141,7 @@ export function getDownloadFilename(options: RestApiOptions): string {
 
 /**
  * Returns just the date portion as YYYY-MM-DD
+ * @deprecated use `isoDateString` instead
  */
 export function toISOString(d: Date): string {
   return isoDateString(d);
@@ -159,11 +160,12 @@ export function getEventCategories(ev: Event): string[] {
 
 /**
  * Renders the event title in default locale, but strips off time
+ * @deprecated
  */
-export function renderTitleWithoutTime(ev: Event): string {
+export function renderTitleWithoutTime(ev: Event, locale?: string): string {
   return typeof (ev as TimedEvent).eventTime === 'undefined'
-    ? ev.render()
-    : ev.renderBrief();
+    ? ev.render(locale)
+    : ev.renderBrief(locale);
 }
 
 function shortLocationName(options: RestApiOptions): string | null {

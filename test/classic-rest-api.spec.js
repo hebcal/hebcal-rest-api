@@ -257,6 +257,20 @@ test('no-leyning', () => {
   expect(bamidbarActual).toEqual(bamidbarExpected);
 });
 
+test('Korach', () => {
+  const options = {
+    start: new Date(2025, 5, 28),
+    end: new Date(2025, 5, 28),
+    sedrot: true,
+    noHolidays: true,
+    il: false,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const apiObjs = events.map((ev) => eventToClassicApiObject(ev, options, false));
+  const actual = apiObjs[0];
+  expect(actual.hebrew).toEqual('פרשת קורח');
+});
+
 test('2-digit-year', () => {
   const options = {
     year: 23,

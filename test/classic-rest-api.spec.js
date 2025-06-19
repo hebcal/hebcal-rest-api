@@ -567,7 +567,7 @@ test('yerushalmi-yomi', () => {
     hdate: '21 Cheshvan 5783',
     category: 'yerushalmi',
     subcat: "foo",
-    hebrew: 'ברכות דף ב׳',
+    hebrew: 'ברכות דף ב',
   };
   expect(obj).toEqual(expected);
 });

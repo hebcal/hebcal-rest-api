@@ -378,7 +378,7 @@ test('fastStartEnd', () => {
       hdate: '17 Tamuz 5781',
       category: 'holiday',
       subcat: 'fast',
-      hebrew: 'צום תמוז',
+      hebrew: 'צום י״ז בתמוז',
       link: 'https://hebcal.com/h/tzom-tammuz-2021?us=js&um=api',
       memo: 'Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple',
     },

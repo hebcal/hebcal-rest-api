@@ -202,7 +202,7 @@ test('fastStartEnd', () => {
       start: '2021-06-27',
       allDay: true,
       className: 'holiday fast',
-      hebrew: 'צום תמוז',
+      hebrew: 'צום י״ז בתמוז',
       url: 'https://hebcal.com/h/tzom-tammuz-2021?us=js&um=fc',
       description: 'Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple',
     },

@@ -244,7 +244,7 @@ test('daf-yomi', () => {
     title: 'Avodah Zarah 68',
     start: '1995-12-17',
     allDay: true,
-    className: 'dafyomi',
+    className: 'dafyomi learning',
     hebrew: 'עבודה זרה דף ס״ח',
     url: 'https://www.sefaria.org/Avodah_Zarah.68a?lang=bi&utm_source=hebcal.com&utm_medium=fc',
   };

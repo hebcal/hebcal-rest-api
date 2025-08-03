@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "6.1.5",
+  "version": "6.1.6",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -30,7 +30,7 @@
   "dependencies": {
     "@hebcal/core": "^5.10.1",
     "@hebcal/hdate": "^0.14.3",
-    "@hebcal/leyning": "^9.2.3"
+    "@hebcal/leyning": "^9.2.4"
   },
   "scripts": {
     "build": "rollup -c",
@@ -51,9 +51,9 @@
     "@rollup/plugin-typescript": "^12.1.4",
     "@types/node": "^24.1.0",
     "gts": "^5.3.1",
-    "rollup": "^4.46.0",
-    "typedoc": "^0.28.7",
-    "typescript": "^5.8.3",
+    "rollup": "^4.46.2",
+    "typedoc": "^0.28.9",
+    "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }
 }

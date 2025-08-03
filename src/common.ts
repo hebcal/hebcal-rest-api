@@ -245,16 +245,20 @@ export function getHolidayDescription(
   return str;
 }
 
-const HOLIDAY_IGNORE_MASK =
+export const LEARNING_MASK =
   flags.DAF_YOMI |
+  flags.NACH_YOMI |
+  flags.MISHNA_YOMI |
+  flags.DAILY_LEARNING |
+  flags.YERUSHALMI_YOMI;
+
+const HOLIDAY_IGNORE_MASK =
   flags.OMER_COUNT |
   flags.SHABBAT_MEVARCHIM |
   flags.MOLAD |
   flags.USER_EVENT |
-  flags.NACH_YOMI |
-  flags.DAILY_LEARNING |
   flags.HEBREW_DATE |
-  flags.YERUSHALMI_YOMI;
+  LEARNING_MASK;
 
 /**
  * Makes mulit-line text that summarizes Torah & Haftarah

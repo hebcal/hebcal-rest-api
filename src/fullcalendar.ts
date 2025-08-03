@@ -3,6 +3,7 @@ import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
 import {isoDateString} from '@hebcal/hdate';
 import {
+  LEARNING_MASK,
   appendIsraelAndTracking,
   getEventCategories,
   makeMemo,
@@ -18,6 +19,9 @@ export function eventToFullCalendar(ev: Event, tzid: string, il: boolean): any {
   const isChag = Boolean(mask & flags.CHAG);
   if (isChag && classes[0] === 'holiday') {
     classes.push('yomtov');
+  }
+  if (mask & LEARNING_MASK) {
+    classes.push('learning');
   }
   const timedEv = ev as TimedEvent;
   const eventTime: Date = timedEv.eventTime;

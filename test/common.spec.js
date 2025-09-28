@@ -340,6 +340,12 @@ test('getHolidayDescription-ykk', () => {
   expect(s).toBe('Minor day of atonement occurring monthly on the day preceeding each Rosh Chodesh');
 });
 
+test('getHolidayDescription-erev-ykk', () => {
+  const ev = new HolidayEvent(new HDate(9, 'Tishrei', 5786), 'Erev Yom Kippur', flags.LIGHT_CANDLES | flags.EREV);
+  const s = getHolidayDescription(ev);
+  expect(s).toBe('Evening of Yom Kippur (Day of Atonement), which includes the Kol Nidre service');
+});
+
 test('getHolidayDescription Shabbat Mevarchim Chodesh', () => {
   const ev = new HolidayEvent(new HDate(25, 'Adar I', 5782),
       'Shabbat Mevarchim Chodesh Adar II', flags.SHABBAT_MEVARCHIM);

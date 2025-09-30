@@ -343,7 +343,7 @@ test('getHolidayDescription-ykk', () => {
 test('getHolidayDescription-erev-ykk', () => {
   const ev = new HolidayEvent(new HDate(9, 'Tishrei', 5786), 'Erev Yom Kippur', flags.LIGHT_CANDLES | flags.EREV);
   const s = getHolidayDescription(ev);
-  expect(s).toBe('Evening of Yom Kippur (Day of Atonement), which includes the Kol Nidre service');
+  expect(s).toBe('Evening of Yom Kippur (Day of Atonement), which includes the Kol Nidre service. The Yom Kippur fast begins at sundown and continues for 25 hours');
 });
 
 test('getHolidayDescription Shabbat Mevarchim Chodesh', () => {

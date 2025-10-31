@@ -36,7 +36,7 @@ export function eventToFullCalendar(
     : ev.render(options.locale);
   const start = timed
     ? Zmanim.formatISOWithTimeZone(tzid, eventTime)
-    : isoDateString(ev.getDate().greg());
+    : isoDateString(ev.greg());
   const result: any = {
     title,
     start,

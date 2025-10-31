@@ -24,7 +24,7 @@ function getLinkAndGuid(
   let link;
   let guid;
   const eventTime: Date = (ev as TimedEvent).eventTime;
-  const dt = eventTime || ev.getDate().greg();
+  const dt = eventTime || ev.greg();
   const isoDateTime = Zmanim.formatISOWithTimeZone(tzid, dt);
   const dtStr = isoDateTime.substring(0, isoDateTime.indexOf('T'));
   const dtAnchor = dtStr.replace(/-/g, '');
@@ -122,7 +122,7 @@ function getPubDate(
 
 export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
   let subj = ev.render(options.locale);
-  const evDate = ev.getDate().greg();
+  const evDate = ev.greg();
   const pubDate = getPubDate(
     ev,
     options.evPubDate,

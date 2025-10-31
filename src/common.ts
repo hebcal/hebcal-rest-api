@@ -207,8 +207,8 @@ export function getCalendarTitle(
   if (options.year && (options.isHebrewYear || events.length === 0)) {
     title += ' ' + options.year;
   } else if (events.length) {
-    const start = events[0].getDate().greg();
-    const end = events[events.length - 1].getDate().greg();
+    const start = events[0].greg();
+    const end = events[events.length - 1].greg();
     if (start.getFullYear() !== end.getFullYear()) {
       title += ' ' + start.getFullYear() + '-' + end.getFullYear();
     } else if (start.getMonth() === end.getMonth()) {

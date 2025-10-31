@@ -22,7 +22,7 @@ import {
 } from './common';
 
 function eventIsoDate(ev: Event): string {
-  return isoDateString(ev.getDate().greg());
+  return isoDateString(ev.greg());
 }
 
 /**

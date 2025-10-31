@@ -33,7 +33,7 @@ const CATEGORY: StringMap = {
  * Renders an Event as a string
  */
 export function eventToCsv(ev: Event, options: RestApiOptions): string {
-  const d = ev.getDate().greg();
+  const d = ev.greg();
   const mday = d.getDate();
   const mon = d.getMonth() + 1;
   const year = String(d.getFullYear()).padStart(4, '0');

@@ -577,7 +577,7 @@ test('molad', () => {
   const events = HebrewCalendar.calendar(options);
   const apiResult = eventsToClassicApi(events.slice(2, 5), options, false);
   const expected = [{
-    title: 'Molad Adar II: Thu, 51 minutes and 17 chalakim after 3:00',
+    title: 'Molad Adar II: Thursday, 3:51 and 17 chalakim',
     date: '2022-02-26',
     hdate: '25 Adar I 5782',
     category: 'molad',
@@ -591,7 +591,7 @@ test('molad', () => {
       chalakim: 17,
     },
   }, {
-    title: 'Molad Nisan: Fri, 36 minutes and 0 chalakim after 16:00',
+    title: 'Molad Nisan: Friday, 16:36',
     date: '2022-03-26',
     hdate: '23 Adar II 5782',
     category: 'molad',
@@ -605,7 +605,7 @@ test('molad', () => {
       chalakim: 0,
     },
   }, {
-    title: 'Molad Iyyar: Sun, 20 minutes and 1 chalakim after 5:00',
+    title: 'Molad Iyyar: Sunday, 5:20 and 1 chalakim',
     date: '2022-04-30',
     hdate: '29 Nisan 5782',
     category: 'molad',

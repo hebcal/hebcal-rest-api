@@ -121,7 +121,7 @@ function getPubDate(
 }
 
 export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
-  let subj = ev.render();
+  let subj = ev.render(options.locale);
   const evDate = ev.getDate().greg();
   const pubDate = getPubDate(
     ev,

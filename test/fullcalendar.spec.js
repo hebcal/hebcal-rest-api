@@ -16,7 +16,7 @@ test('eventToFullCalendar', () => {
   };
   const events = HebrewCalendar.calendar(options).slice(0, 10);
   const tzid = options.location.getTzid();
-  const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
+  const fc = events.map((ev) => eventToFullCalendar(ev, tzid, options));
   const pesachMemo = 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah),' +
     ' it commemorates the Exodus and freedom of the Israelites from ancient Egypt';
   const expectedUrl = 'https://hebcal.com/h/pesach-1990?us=js&um=fc';
@@ -114,7 +114,7 @@ test('chanukah-candles', () => {
   };
   const events = HebrewCalendar.calendar(options);
   const tzid = options.location.getTzid();
-  const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
+  const fc = events.map((ev) => eventToFullCalendar(ev, tzid, options));
   for (const item of fc) {
     delete item.description;
   }
@@ -152,7 +152,7 @@ test('chanukah-nocandles', () => {
     end: new Date(2020, 11, 11),
   };
   const events = HebrewCalendar.calendar(options);
-  const fc = events.map((ev) => eventToFullCalendar(ev, 'UTC'));
+  const fc = events.map((ev) => eventToFullCalendar(ev, 'UTC', options));
   for (const item of fc) {
     delete item.description;
   }
@@ -187,7 +187,7 @@ test('fastStartEnd', () => {
   };
   const events = HebrewCalendar.calendar(options);
   const tzid = options.location.getTzid();
-  const fc = events.map((ev) => eventToFullCalendar(ev, tzid));
+  const fc = events.map((ev) => eventToFullCalendar(ev, tzid, options));
   const expected = [
     {
       title: 'Fast begins',
@@ -225,7 +225,7 @@ test('bce', () => {
     il: false,
   };
   const ev = HebrewCalendar.calendar(options)[0];
-  const fc = eventToFullCalendar(ev);
+  const fc = eventToFullCalendar(ev, null, options);
   const expected = {
     title: 'Erev Shavuot',
     start: '-000001-05-06',
@@ -239,7 +239,7 @@ test('bce', () => {
 
 test('daf-yomi', () => {
   const ev = new DafYomiEvent(new HDate(new Date(1995, 11, 17)));
-  const fc = eventToFullCalendar(ev, null, false);
+  const fc = eventToFullCalendar(ev, null, {il: false});
   const expected = {
     title: 'Avodah Zarah 68',
     start: '1995-12-17',
@@ -253,7 +253,7 @@ test('daf-yomi', () => {
 
 test('hebdate', () => {
   const ev = new HebrewDateEvent(new HDate(new Date(1995, 11, 17)));
-  const fc = eventToFullCalendar(ev, null, false);
+  const fc = eventToFullCalendar(ev, null, {il: false});
   const expected = {
     title: '24th of Kislev',
     start: '1995-12-17',

@@ -141,7 +141,7 @@ a:focus.dafyomi .fc-event-title {
           addHebrewDates: true,
         };
         const events = hebcal.HebrewCalendar.calendar(options);
-        const fcEvents = events.map((ev) => hebcal__rest_api.eventToFullCalendar(ev, tzid));
+        const fcEvents = events.map((ev) => hebcal__rest_api.eventToFullCalendar(ev, tzid, options));
         successCallback(fcEvents);
       },
       eventDidMount: function(info) {

@@ -3,6 +3,7 @@ import {expect, test} from 'vitest';
 import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {HebrewCalendar, Location, HDate} from '@hebcal/core';
 import {eventToRssItem2, eventsToRss2} from '../src/rss';
+import '@hebcal/locales/ru';
 
 const dayFormat = new Intl.DateTimeFormat('en-US', {
   weekday: 'long',
@@ -273,4 +274,37 @@ test('CDATA', () => {
 <pubDate>Sat, 13 Feb 2021 00:00:00 GMT</pubDate>
 </item>
 `);
+});
+
+
+test('eventToRssItem2-ru', () => {
+  const location = Location.lookup('Moscow');
+  const options = {
+    candlelighting: true,
+    sedrot: true,
+    mask: 3729382,
+    havdalahDeg: 8.5,
+    locale: 'ru',
+    location,
+    start: new Date('2025-10-31T07:00:00.000Z'),
+    end: new Date('2025-11-05T08:00:00.000Z'),
+    mainUrl: 'https://www.hebcal.com/shabbat?geonameid=5128581&ue=off&M=on&lg=ru',
+    selfUrl: 'https://www.hebcal.com/shabbat?cfg=r&geonameid=5128581&ue=off&M=on&lg=ru&pubDate=0',
+    evPubDate: true,
+    dayFormat,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const item = eventToRssItem2(events[0], options);
+  const expected = `<item>
+<title>Зажигание свечей: 16:33</title>
+<link>https://www.hebcal.com/shabbat?geonameid=5128581&amp;ue=off&amp;M=on&amp;lg=ru&amp;dt=2025-10-31&amp;utm_source=shabbat1c&amp;utm_medium=rss#20251031-candle-lighting</link>
+<guid isPermaLink="false">https://www.hebcal.com/shabbat?geonameid=5128581&amp;ue=off&amp;M=on&amp;lg=ru&amp;dt=2025-10-31#20251031-candle-lighting</guid>
+<description>Friday, October 31, 2025</description>
+<category>candles</category>
+<pubDate>Fri, 31 Oct 2025 13:33:00 GMT</pubDate>
+<geo:lat>55.75222</geo:lat>
+<geo:long>37.61556</geo:long>
+</item>
+`;
+  expect(item).toEqual(expected);
 });

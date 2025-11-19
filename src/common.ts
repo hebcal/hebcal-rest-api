@@ -131,7 +131,7 @@ export function getDownloadFilename(options: RestApiOptions): string {
   }
   if (typeof options.location === 'object') {
     const loc = options.location as any;
-    const name = loc.zip || loc.asciiname || loc.getShortName();
+    const name = loc.zip || loc.asciiname || loc.getShortName() || '';
     if (name) {
       fileName += '_' + makeAnchor(name).replace(/[-]/g, '_');
     }

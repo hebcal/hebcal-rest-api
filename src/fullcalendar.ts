@@ -9,7 +9,7 @@ import {
   getEventCategories,
   shouldRenderBrief,
 } from './common';
-import {makeMemo} from './makeMemo';
+import {makeMemo} from './memo';
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object

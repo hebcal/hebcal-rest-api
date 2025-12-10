@@ -9,7 +9,7 @@ import {
   getCalendarTitle,
   getEventCategories,
 } from './common';
-import {makeMemo} from './makeMemo';
+import {makeMemo} from './memo';
 import {makeAnchor} from './makeAnchor';
 
 function getLinkAndGuid(

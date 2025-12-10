@@ -2,8 +2,6 @@ import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {HDate, isoDateString} from '@hebcal/hdate';
-import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
-import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
 import {shortenSedrotUrl} from './shorten';
 import {makeAnchor} from './makeAnchor';
 
@@ -160,53 +158,6 @@ export const LEARNING_MASK =
   flags.DAILY_LEARNING |
   flags.YERUSHALMI_YOMI;
 
-const SHABBAT_MEVARCHIM = flags.SHABBAT_MEVARCHIM;
-const HEBREW_DATE = flags.HEBREW_DATE;
-
-const HOLIDAY_IGNORE_MASK =
-  flags.OMER_COUNT |
-  SHABBAT_MEVARCHIM |
-  flags.MOLAD |
-  flags.USER_EVENT |
-  HEBREW_DATE |
-  LEARNING_MASK;
-
-/**
- * Makes mulit-line text that summarizes Torah & Haftarah
- */
-export function makeTorahMemoText(ev: Event, il: boolean): string {
-  const mask = ev.getFlags();
-  if (
-    mask & HOLIDAY_IGNORE_MASK ||
-    typeof (ev as TimedEvent).eventTime !== 'undefined'
-  ) {
-    return '';
-  }
-  const reading =
-    mask & flags.PARSHA_HASHAVUA
-      ? getLeyningForParshaHaShavua(ev, il)
-      : getLeyningForHoliday(ev, il);
-  let memo = '';
-  if (reading && (reading.summary || reading.haftara)) {
-    if (reading.summary) {
-      memo += `Torah: ${reading.summary}`;
-    }
-    if (reading.summary && reading.haftara) {
-      memo += '\n';
-    }
-    if (reading.haftara) {
-      memo += 'Haftarah: ' + reading.haftara;
-      if (reading.reason?.haftara) {
-        memo += ' | ' + reading.reason.haftara;
-      }
-    }
-  }
-  if (reading?.sephardic) {
-    memo += '\nHaftarah for Sephardim: ' + reading.sephardic;
-  }
-  return memo;
-}
-
 /**
  * Appends utm_source and utm_medium parameters to a URL
  */
@@ -274,10 +225,10 @@ export function shouldRenderBrief(ev: Event): boolean {
     return true;
   }
   const mask = ev.getFlags();
-  if (mask & HEBREW_DATE) {
+  if (mask & flags.HEBREW_DATE) {
     const hd = ev.getDate();
     return hd.getDate() !== 1;
-  } else if (mask & (LEARNING_MASK | SHABBAT_MEVARCHIM)) {
+  } else if (mask & (LEARNING_MASK | flags.SHABBAT_MEVARCHIM)) {
     return true;
   } else if (
     mask & flags.MINOR_FAST &&

@@ -1,6 +1,7 @@
 export * from './csv';
 export * from './makeAnchor';
 export * from './common';
+export {makeTorahMemoText} from './memo';
 export {getHolidayDescription} from './holiday';
 export * from './location';
 export * from './classic-rest-api';

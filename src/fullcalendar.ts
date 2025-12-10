@@ -7,9 +7,9 @@ import {
   LEARNING_MASK,
   appendIsraelAndTracking,
   getEventCategories,
-  makeMemo,
   shouldRenderBrief,
 } from './common';
+import {makeMemo} from './makeMemo';
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object

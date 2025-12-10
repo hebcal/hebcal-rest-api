@@ -5,9 +5,9 @@ import {
   RestApiOptions,
   StringMap,
   getEventCategories,
-  getHolidayDescription,
   shouldRenderBrief,
 } from './common';
+import {getHolidayDescription} from './getHolidayDescription';
 
 // eslint-disable-next-line max-len
 const csvHeader =
@@ -85,7 +85,7 @@ export function eventToCsv(ev: Event, options: RestApiOptions): string {
     }
   }
 
-  let memo0 = ev.memo || getHolidayDescription(ev, true);
+  let memo0 = ev.memo || getHolidayDescription(ev, true, options.locale);
   if (!memo0 && typeof timedEv.linkedEvent !== 'undefined') {
     memo0 = timedEv.linkedEvent!.render(options.locale);
   }

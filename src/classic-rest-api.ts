@@ -16,10 +16,10 @@ import {
   appendIsraelAndTracking,
   getCalendarTitle,
   getEventCategories,
-  getHolidayDescription,
   locationToPlainObj,
   shouldRenderBrief,
 } from './common';
+import {getHolidayDescription} from './getHolidayDescription';
 
 function eventIsoDate(ev: Event): string {
   return isoDateString(ev.greg());
@@ -178,7 +178,7 @@ export function eventToClassicApiObject(
       d: gematriya(dd),
     };
   }
-  const memo = ev.memo || getHolidayDescription(ev);
+  const memo = ev.memo || getHolidayDescription(ev, false, options.locale);
   if (typeof memo === 'string' && memo.length !== 0) {
     result.memo = memo.normalize();
   } else if (typeof timedEv.linkedEvent !== 'undefined') {

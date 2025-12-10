@@ -1,6 +1,7 @@
 export * from './csv';
 export * from './makeAnchor';
 export * from './common';
+export {getHolidayDescription} from './getHolidayDescription';
 export * from './classic-rest-api';
 export * from './rss';
 export * from './fullcalendar';

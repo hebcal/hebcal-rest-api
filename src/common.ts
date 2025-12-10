@@ -6,13 +6,10 @@ import {HDate, isoDateString} from '@hebcal/hdate';
 import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
 import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
 import countryNames0 from './countryNames.json';
-import holidayDescription0 from './holidays.json';
 import {shortenSedrotUrl} from './shorten';
 import {makeAnchor} from './makeAnchor';
 
-export interface StringMap {
-  [key: string]: string;
-}
+export type StringMap = Record<string, string>;
 
 export type RestApiEventOptions = {
   utmSource?: string;
@@ -69,7 +66,6 @@ const LOC_FIELDS = [
   'geonameid',
 ];
 
-export const holidayDescription: StringMap = holidayDescription0 as StringMap;
 export const countryNames: StringMap = countryNames0 as StringMap;
 
 /**
@@ -223,28 +219,8 @@ export function getCalendarTitle(
 }
 
 /**
- * Returns an English language description of the holiday
+ * Bitmask for learning events (Daf Yomi, Nach Yomi, Mishna Yomi, Daily Learning, Yerushalmi Yomi)
  */
-export function getHolidayDescription(
-  ev: Event,
-  firstSentence = false
-): string {
-  const str0 =
-    ev.getFlags() & flags.SHABBAT_MEVARCHIM
-      ? holidayDescription['Shabbat Mevarchim Chodesh']
-      : holidayDescription[ev.getDesc()] ||
-        holidayDescription[ev.basename()] ||
-        '';
-  const str = str0.normalize();
-  if (firstSentence && str) {
-    const dot = str.indexOf('.');
-    if (dot !== -1) {
-      return str.substring(0, dot);
-    }
-  }
-  return str;
-}
-
 export const LEARNING_MASK =
   flags.DAF_YOMI |
   flags.NACH_YOMI |
@@ -294,23 +270,6 @@ export function makeTorahMemoText(ev: Event, il: boolean): string {
     memo += '\nHaftarah for Sephardim: ' + reading.sephardic;
   }
   return memo;
-}
-
-export function makeMemo(ev: Event, il: boolean): string {
-  if (ev.getFlags() & flags.PARSHA_HASHAVUA) {
-    try {
-      const memo = makeTorahMemoText(ev, il);
-      if (memo) {
-        return memo;
-      }
-    } catch (err) {
-      // fallthru
-    }
-  }
-  if (ev.memo) {
-    return ev.memo;
-  }
-  return getHolidayDescription(ev);
 }
 
 /**

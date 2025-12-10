@@ -1,6 +1,5 @@
 import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
 import {Event} from '@hebcal/core/dist/esm/event';
-import {Locale} from '@hebcal/core/dist/esm/locale';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
 import {
@@ -9,8 +8,8 @@ import {
   appendIsraelAndTracking,
   getCalendarTitle,
   getEventCategories,
-  makeMemo,
 } from './common';
+import {makeMemo} from './makeMemo';
 import {makeAnchor} from './makeAnchor';
 
 function getLinkAndGuid(
@@ -159,11 +158,7 @@ export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
     if (colon !== -1) {
       const locale = options.locale || 'en';
       const opts = {location, il, locale};
-      const time = reformatTimeStr(
-        (ev as TimedEvent).eventTimeStr,
-        'pm',
-        opts
-      );
+      const time = reformatTimeStr((ev as TimedEvent).eventTimeStr, 'pm', opts);
       subj = subj.substring(0, colon) + ': ' + time;
     }
   } else {

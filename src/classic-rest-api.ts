@@ -13,11 +13,11 @@ import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
 import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
 import {
   RestApiOptions,
-  appendIsraelAndTracking,
   getCalendarTitle,
   getEventCategories,
   shouldRenderBrief,
 } from './common';
+import {appendIsraelAndTracking} from './url';
 import {locationToPlainObj} from './location';
 import {getHolidayDescription} from './holiday';
 

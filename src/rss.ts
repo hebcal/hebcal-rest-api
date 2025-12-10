@@ -5,10 +5,10 @@ import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
 import {
   RestApiOptions,
   StringMap,
-  appendIsraelAndTracking,
   getCalendarTitle,
   getEventCategories,
 } from './common';
+import {appendIsraelAndTracking} from './url';
 import {makeMemo} from './memo';
 import {makeAnchor} from './makeAnchor';
 

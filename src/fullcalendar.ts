@@ -3,12 +3,8 @@ import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
 import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
 import {isoDateString} from '@hebcal/hdate';
-import {
-  LEARNING_MASK,
-  appendIsraelAndTracking,
-  getEventCategories,
-  shouldRenderBrief,
-} from './common';
+import {LEARNING_MASK, getEventCategories, shouldRenderBrief} from './common';
+import {appendIsraelAndTracking} from './url';
 import {makeMemo} from './memo';
 
 /**

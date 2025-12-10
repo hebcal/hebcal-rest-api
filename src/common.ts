@@ -2,7 +2,6 @@ import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {HDate, isoDateString} from '@hebcal/hdate';
-import {shortenSedrotUrl} from './shorten';
 import {makeAnchor} from './makeAnchor';
 
 export type StringMap = Record<string, string>;
@@ -157,68 +156,6 @@ export const LEARNING_MASK =
   flags.MISHNA_YOMI |
   flags.DAILY_LEARNING |
   flags.YERUSHALMI_YOMI;
-
-/**
- * Appends utm_source and utm_medium parameters to a URL
- */
-export function appendIsraelAndTracking(
-  url: string,
-  il: boolean,
-  utmSource?: string,
-  utmMedium?: string,
-  utmCampaign?: string
-): string {
-  const u = new URL(url);
-  const isHebcal = u.host === 'www.hebcal.com';
-  if (isHebcal) {
-    if (il) {
-      u.searchParams.set('i', 'on');
-    }
-    const path = u.pathname;
-    const isHolidays = path.startsWith('/holidays/');
-    const isSedrot = path.startsWith('/sedrot/');
-    const isOmer = path.startsWith('/omer/');
-    if (isHolidays || isSedrot || isOmer) {
-      u.host = 'hebcal.com';
-      if (isHolidays) {
-        u.pathname = '/h/' + path.substring(10);
-      } else if (isSedrot) {
-        shortenSedrotUrl(u);
-      } else {
-        // isOmer
-        u.pathname = '/o/' + path.substring(6);
-      }
-      if (
-        !utmCampaign ||
-        !(utmCampaign.startsWith('ical-') || utmCampaign.startsWith('pdf-'))
-      ) {
-        if (utmSource) {
-          u.searchParams.set('us', utmSource);
-        }
-        if (utmMedium) {
-          u.searchParams.set('um', utmMedium);
-        }
-      }
-      if (utmCampaign) {
-        u.searchParams.set('uc', utmCampaign);
-      }
-      return u.toString();
-    }
-  }
-  if (!utmSource && !isHebcal) {
-    utmSource = 'hebcal.com'; // e.g. sefaria.org/foo?utm_source=hebcal.com
-  }
-  if (utmSource) {
-    u.searchParams.set('utm_source', utmSource);
-  }
-  if (utmMedium) {
-    u.searchParams.set('utm_medium', utmMedium);
-  }
-  if (utmCampaign) {
-    u.searchParams.set('utm_campaign', utmCampaign);
-  }
-  return u.toString();
-}
 
 export function shouldRenderBrief(ev: Event): boolean {
   if (typeof (ev as TimedEvent).eventTime !== 'undefined') {

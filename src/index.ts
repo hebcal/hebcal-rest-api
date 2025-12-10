@@ -3,6 +3,7 @@ export * from './makeAnchor';
 export * from './common';
 export {makeTorahMemoText} from './memo';
 export {getHolidayDescription} from './holiday';
+export {appendIsraelAndTracking} from './url';
 export * from './location';
 export * from './classic-rest-api';
 export * from './rss';

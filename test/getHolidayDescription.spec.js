@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 import {Event, flags, HDate, HolidayEvent} from '@hebcal/core';
-import {getHolidayDescription} from '../src/getHolidayDescription';
+import {getHolidayDescription} from '../src/holiday';
 
 test('getHolidayDescription-firstSentence', () => {
   const ev = new HolidayEvent(new HDate(14, 'Nisan', 5784), 'Erev Pesach', flags.EREV);

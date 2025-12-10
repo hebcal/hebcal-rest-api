@@ -16,10 +16,10 @@ import {
   appendIsraelAndTracking,
   getCalendarTitle,
   getEventCategories,
-  locationToPlainObj,
   shouldRenderBrief,
 } from './common';
-import {getHolidayDescription} from './getHolidayDescription';
+import {locationToPlainObj} from './location';
+import {getHolidayDescription} from './holiday';
 
 function eventIsoDate(ev: Event): string {
   return isoDateString(ev.greg());

@@ -1,4 +1,4 @@
-import {Event, flags} from '@hebcal/core';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
 import type {StringMap} from './common';
 import holidayDescription0 from './holidays.json';
 import holidayDescHe0 from './holidays-he.json';

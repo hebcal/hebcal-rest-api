@@ -7,7 +7,7 @@ import {
   getEventCategories,
   shouldRenderBrief,
 } from './common';
-import {getHolidayDescription} from './getHolidayDescription';
+import {getHolidayDescription} from './holiday';
 
 // eslint-disable-next-line max-len
 const csvHeader =

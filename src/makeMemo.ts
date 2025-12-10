@@ -1,6 +1,6 @@
-import {Event, flags} from '@hebcal/core';
+import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {makeTorahMemoText} from './common';
-import {getHolidayDescription} from './getHolidayDescription';
+import {getHolidayDescription} from './holiday';
 
 export function makeMemo(ev: Event, il: boolean): string {
   if (ev.getFlags() & flags.PARSHA_HASHAVUA) {

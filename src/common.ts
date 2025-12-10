@@ -1,11 +1,9 @@
 import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
-import {Location} from '@hebcal/core/dist/esm/location';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {HDate, isoDateString} from '@hebcal/hdate';
 import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
 import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
-import countryNames0 from './countryNames.json';
 import {shortenSedrotUrl} from './shorten';
 import {makeAnchor} from './makeAnchor';
 
@@ -34,72 +32,6 @@ export type RestApiEventOptions = {
 };
 
 export type RestApiOptions = CalOptions & RestApiEventOptions;
-
-/**
- * Location information
- */
-export type LocationPlainObj = {
-  title?: string | null;
-  city?: string | null;
-  tzid?: string;
-  latitude?: number;
-  longitude?: number;
-  cc?: string;
-  country?: string;
-  admin1?: string;
-  asciiname?: string;
-  geo?: string;
-  zip?: string;
-  state?: string;
-  stateName?: string;
-  geonameid?: number;
-};
-
-const LOC_FIELDS = [
-  'elevation',
-  'admin1',
-  'asciiname',
-  'geo',
-  'zip',
-  'state',
-  'stateName',
-  'geonameid',
-];
-
-export const countryNames: StringMap = countryNames0 as StringMap;
-
-/**
- * Converts a @hebcal/core `Location` to a plain JS object.
- */
-export function locationToPlainObj(
-  location: Location | undefined
-): LocationPlainObj {
-  if (
-    typeof location === 'object' &&
-    location !== null &&
-    typeof location.getLatitude === 'function'
-  ) {
-    const cc: string = location.getCountryCode()!;
-    const o: LocationPlainObj = {
-      title: location.getName(),
-      city: location.getShortName(),
-      tzid: location.getTzid(),
-      latitude: location.getLatitude(),
-      longitude: location.getLongitude(),
-      cc: cc,
-      country: countryNames[cc],
-    };
-    for (const k of LOC_FIELDS) {
-      const val = (location as any)[k];
-      if (val) {
-        (o as any)[k] = val;
-      }
-    }
-    return o;
-  } else {
-    return {geo: 'none'};
-  }
-}
 
 export function getDownloadFilename(options: RestApiOptions): string {
   let fileName = 'hebcal';
@@ -228,12 +160,15 @@ export const LEARNING_MASK =
   flags.DAILY_LEARNING |
   flags.YERUSHALMI_YOMI;
 
+const SHABBAT_MEVARCHIM = flags.SHABBAT_MEVARCHIM;
+const HEBREW_DATE = flags.HEBREW_DATE;
+
 const HOLIDAY_IGNORE_MASK =
   flags.OMER_COUNT |
-  flags.SHABBAT_MEVARCHIM |
+  SHABBAT_MEVARCHIM |
   flags.MOLAD |
   flags.USER_EVENT |
-  flags.HEBREW_DATE |
+  HEBREW_DATE |
   LEARNING_MASK;
 
 /**
@@ -339,20 +274,15 @@ export function shouldRenderBrief(ev: Event): boolean {
     return true;
   }
   const mask = ev.getFlags();
-  if (mask & flags.HEBREW_DATE) {
+  if (mask & HEBREW_DATE) {
     const hd = ev.getDate();
     return hd.getDate() !== 1;
-  } else if (
-    mask &
-    (flags.DAILY_LEARNING | flags.DAF_YOMI | flags.YERUSHALMI_YOMI)
-  ) {
+  } else if (mask & (LEARNING_MASK | SHABBAT_MEVARCHIM)) {
     return true;
   } else if (
     mask & flags.MINOR_FAST &&
     ev.getDesc().substring(0, 16) === 'Yom Kippur Katan'
   ) {
-    return true;
-  } else if (mask & flags.SHABBAT_MEVARCHIM) {
     return true;
   } else {
     return false;

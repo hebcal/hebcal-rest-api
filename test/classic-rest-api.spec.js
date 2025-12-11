@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 import {HDate} from '@hebcal/hdate';
-import {HebrewCalendar, Location, HebrewDateEvent, OmerEvent} from '@hebcal/core';
+import {HebrewCalendar, Location, HebrewDateEvent, OmerEvent, HolidayEvent, flags} from '@hebcal/core';
 import {DafYomiEvent, MishnaYomiEvent, YerushalmiYomiEvent} from '@hebcal/learning';
 import {eventsToClassicApi, eventToClassicApiObject} from '../src/classic-rest-api';
 
@@ -620,4 +620,24 @@ test('molad', () => {
     },
   }];
   expect(apiResult.items).toEqual(expected);
+});
+
+test('hebrew-memo', () => {
+  const ev = new HolidayEvent(new HDate(15, 'Shvat', 5782), 'Tu BiShvat', flags.MINOR_HOLIDAY);
+  const apiObj = eventToClassicApiObject(ev, {
+    locale: 'he',
+  }, false);
+  console.log(apiObj);
+  const expected = {
+    title: 'ט״וּ בִּשְׁבָט',
+    date: '2022-01-17',
+    hdate: "15 Sh'vat 5782",
+    category: 'holiday',
+    subcat: 'minor',
+    title_orig: 'Tu BiShvat',
+    hebrew: 'ט״ו בשבט',
+    link: 'https://hebcal.com/h/tu-bishvat-2022?us=js&um=api',
+    memo: 'ראש השנה לאילנות. ט״ו בשבט הוא אחד מארבעת “ראשי השנה” המוזכרים במשנה',
+  };
+  expect(apiObj).toEqual(expected);
 });

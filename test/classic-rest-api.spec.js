@@ -627,7 +627,6 @@ test('hebrew-memo', () => {
   const apiObj = eventToClassicApiObject(ev, {
     locale: 'he',
   }, false);
-  console.log(apiObj);
   const expected = {
     title: 'ט״וּ בִּשְׁבָט',
     date: '2022-01-17',

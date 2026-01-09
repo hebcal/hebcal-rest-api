@@ -12,9 +12,11 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "composite": false,
     "paths": {
       "*": ["./types/*"]
     }
   },
+  "include": ["src/**/*"],
   "exclude": ["dist"]
 }

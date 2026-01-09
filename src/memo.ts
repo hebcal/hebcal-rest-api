@@ -56,6 +56,7 @@ export function makeMemo(ev: Event, il: boolean): string {
       if (memo) {
         return memo;
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // fallthru
     }

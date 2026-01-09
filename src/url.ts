@@ -96,8 +96,10 @@ export function appendIsraelAndTracking(
         // isOmer
         u.pathname = '/o/' + path.substring(6);
       }
-      if (!utmCampaign ||
-        !(utmCampaign.startsWith('ical-') || utmCampaign.startsWith('pdf-'))) {
+      if (
+        !utmCampaign ||
+        !(utmCampaign.startsWith('ical-') || utmCampaign.startsWith('pdf-'))
+      ) {
         if (utmSource) {
           u.searchParams.set('us', utmSource);
         }

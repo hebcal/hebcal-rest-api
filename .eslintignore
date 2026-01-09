@@ -1,6 +1,0 @@
-build/
-test/
-docs/
-dist/
-src/*.po.ts
-src/*.json.ts

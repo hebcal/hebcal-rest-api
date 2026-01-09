@@ -9,7 +9,6 @@ import {
 } from './common';
 import {getHolidayDescription} from './holiday';
 
-// eslint-disable-next-line max-len
 const csvHeader =
   '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
 

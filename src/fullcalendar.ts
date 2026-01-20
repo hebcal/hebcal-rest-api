@@ -56,8 +56,8 @@ export function eventToFullCalendar(
     const memo = makeMemo(ev, il);
     if (memo) {
       result.description = memo;
-    } else if (typeof timedEv.linkedEvent !== 'undefined') {
-      result.description = timedEv.linkedEvent!.render(options.locale);
+    } else if (timedEv.linkedEvent !== undefined) {
+      result.description = timedEv.linkedEvent.render(options.locale);
     }
   }
   return result;

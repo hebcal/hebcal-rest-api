@@ -75,7 +75,7 @@ export function eventToCsv(ev: Event, options: RestApiOptions): string {
     }
   }
 
-  subj = subj.replace(/,/g, '').replace(/"/g, "''");
+  subj = subj.replaceAll(',', '').replaceAll('"', "''");
 
   if (options.appendHebrewToSubject) {
     const hebrew = ev.renderBrief('he');
@@ -85,13 +85,13 @@ export function eventToCsv(ev: Event, options: RestApiOptions): string {
   }
 
   let memo0 = ev.memo || getHolidayDescription(ev, true, options.locale);
-  if (!memo0 && typeof timedEv.linkedEvent !== 'undefined') {
-    memo0 = timedEv.linkedEvent!.render(options.locale);
+  if (!memo0 && timedEv.linkedEvent !== undefined) {
+    memo0 = timedEv.linkedEvent.render(options.locale);
   }
   const memo = memo0
-    .replace(/,/g, ';')
-    .replace(/"/g, "''")
-    .replace(/\n/g, ' / ');
+    .replaceAll(',', ';')
+    .replaceAll('"', "''")
+    .replaceAll('\n', ' / ');
 
   const isChag = Boolean(mask & flags.CHAG);
   const showTimeAs = timed || isChag ? 4 : 3;

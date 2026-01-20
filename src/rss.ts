@@ -26,23 +26,25 @@ function getLinkAndGuid(
   const dt = eventTime || ev.greg();
   const isoDateTime = Zmanim.formatISOWithTimeZone(tzid, dt);
   const dtStr = isoDateTime.substring(0, isoDateTime.indexOf('T'));
-  const dtAnchor = dtStr.replace(/-/g, '');
+  const dtAnchor = dtStr.replaceAll('-', '');
   const descAnchor = makeAnchor(ev.getDesc());
   const anchor = `${dtAnchor}-${descAnchor}`;
   const url0 = ev.url();
   if (url0) {
-    link = appendIsraelAndTracking(url0, il, utmSource, utmMedium).replace(
-      /&/g,
+    link = appendIsraelAndTracking(url0, il, utmSource, utmMedium).replaceAll(
+      '&',
       '&amp;'
     );
     guid = `${url0}#${anchor}`;
   } else {
     const url1 = `${mainUrl}&dt=${dtStr}`;
-    const url = appendIsraelAndTracking(url1, il, utmSource, utmMedium).replace(
-      /&/g,
-      '&amp;'
-    );
-    guid = url1.replace(/&/g, '&amp;') + `#${anchor}`;
+    const url = appendIsraelAndTracking(
+      url1,
+      il,
+      utmSource,
+      utmMedium
+    ).replaceAll('&', '&amp;');
+    guid = url1.replaceAll('&', '&amp;') + `#${anchor}`;
     link = `${url}#${anchor}`;
   }
   return [link, guid];
@@ -81,8 +83,8 @@ export function eventsToRss2(events: Event[], options: RestApiOptions): string {
     utmSource,
     utmMedium,
     options.utmCampaign
-  ).replace(/&/g, '&amp;');
-  const selfUrlEsc = options.selfUrl.replace(/&/g, '&amp;');
+  ).replaceAll('&', '&amp;');
+  const selfUrlEsc = options.selfUrl.replaceAll('&', '&amp;');
   const lang: string =
     options.lang || localeToLg[options.locale!] || options.locale || 'en-US';
   let str = `<?xml version="1.0" encoding="UTF-8"?>
@@ -110,7 +112,7 @@ function getPubDate(
   lastBuildDate?: string
 ): string | undefined {
   if (evPubDate) {
-    const dt = (ev as TimedEvent).eventTime as Date;
+    const dt = (ev as TimedEvent).eventTime;
     if (dt) {
       return dt.toUTCString();
     }

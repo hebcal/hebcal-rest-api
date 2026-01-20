@@ -58,7 +58,7 @@ export function getDownloadFilename(options: RestApiOptions): string {
     const loc = options.location as any;
     const name = loc.zip || loc.asciiname || loc.getShortName() || '';
     if (name) {
-      fileName += '_' + makeAnchor(name).replace(/[-]/g, '_');
+      fileName += '_' + makeAnchor(name).replaceAll(/[-]/g, '_');
     }
   }
   return fileName;
@@ -88,7 +88,7 @@ export function getEventCategories(ev: Event): string[] {
  * @deprecated
  */
 export function renderTitleWithoutTime(ev: Event, locale?: string): string {
-  return typeof (ev as TimedEvent).eventTime === 'undefined'
+  return (ev as TimedEvent).eventTime === undefined
     ? ev.render(locale)
     : ev.renderBrief(locale);
 }
@@ -158,7 +158,7 @@ export const LEARNING_MASK =
   flags.YERUSHALMI_YOMI;
 
 export function shouldRenderBrief(ev: Event): boolean {
-  if (typeof (ev as TimedEvent).eventTime !== 'undefined') {
+  if ((ev as TimedEvent).eventTime !== undefined) {
     return true;
   }
   const mask = ev.getFlags();
@@ -169,7 +169,7 @@ export function shouldRenderBrief(ev: Event): boolean {
     return true;
   } else if (
     mask & flags.MINOR_FAST &&
-    ev.getDesc().substring(0, 16) === 'Yom Kippur Katan'
+    ev.getDesc().startsWith('Yom Kippur Katan')
   ) {
     return true;
   } else {

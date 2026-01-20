@@ -7,9 +7,9 @@
 export function makeAnchor(s: string): string {
   return s
     .toLowerCase()
-    .replace(/'/g, '')
-    .replace(/[^\w]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-/g, '')
-    .replace(/-$/g, '');
+    .replaceAll("'", '')
+    .replaceAll(/[^\w]/g, '-')
+    .replaceAll(/-+/g, '-')
+    .replaceAll(/^-/g, '')
+    .replaceAll(/-$/g, '');
 }

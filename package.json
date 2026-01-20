@@ -30,7 +30,7 @@
   "dependencies": {
     "@hebcal/core": "^6.0.8",
     "@hebcal/hdate": "^0.21.1",
-    "@hebcal/leyning": "^9.3.0"
+    "@hebcal/leyning": "^9.4.0"
   },
   "scripts": {
     "build": "rollup -c",
@@ -44,7 +44,7 @@
   },
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "@hebcal/learning": "^6.6.0",
+    "@hebcal/learning": "^6.6.1",
     "@hebcal/locales": "^6.3.3",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
@@ -52,9 +52,9 @@
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^24.10.2",
     "gts": "^7.0.0",
-    "rollup": "^4.55.1",
-    "typedoc": "^0.28.15",
+    "rollup": "^4.55.2",
+    "typedoc": "^0.28.16",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.17"
   }
 }

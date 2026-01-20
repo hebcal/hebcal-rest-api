@@ -20,7 +20,7 @@ export function makeTorahMemoText(ev: Event, il: boolean): string {
   const mask = ev.getFlags();
   if (
     mask & HOLIDAY_IGNORE_MASK ||
-    typeof (ev as TimedEvent).eventTime !== 'undefined'
+    (ev as TimedEvent).eventTime !== undefined
   ) {
     return '';
   }
@@ -57,7 +57,7 @@ export function makeMemo(ev: Event, il: boolean): string {
         return memo;
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
+    } catch {
       // fallthru
     }
   }

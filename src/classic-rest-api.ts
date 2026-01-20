@@ -181,8 +181,8 @@ export function eventToClassicApiObject(
   const memo = ev.memo || getHolidayDescription(ev, false, options.locale);
   if (typeof memo === 'string' && memo.length !== 0) {
     result.memo = memo.normalize();
-  } else if (typeof timedEv.linkedEvent !== 'undefined') {
-    result.memo = timedEv.linkedEvent!.render(options.locale);
+  } else if (timedEv.linkedEvent) {
+    result.memo = timedEv.linkedEvent.render(options.locale);
   }
   if (options.includeEvent) {
     result.ev = ev;
@@ -192,7 +192,7 @@ export function eventToClassicApiObject(
 
 function formatAliyot(result: StringMap, aliyot: AliyotMap): StringMap {
   for (const [num, aliyah] of Object.entries(aliyot)) {
-    if (typeof aliyah !== 'undefined') {
+    if (aliyah) {
       const k = num === 'M' ? 'maftir' : num;
       result[k] = formatAliyahWithBook(aliyah);
     }

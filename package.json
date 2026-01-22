@@ -50,9 +50,9 @@
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.3.0",
-    "@types/node": "^24.10.2",
+    "@types/node": "^25.0.10",
     "gts": "^7.0.0",
-    "rollup": "^4.55.2",
+    "rollup": "^4.56.0",
     "typedoc": "^0.28.16",
     "typescript": "^5.9.3",
     "vitest": "^4.0.17"

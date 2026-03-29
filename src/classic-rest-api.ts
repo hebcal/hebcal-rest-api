@@ -10,6 +10,7 @@ import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
 import {AliyotMap, Leyning, StringMap} from '@hebcal/leyning/dist/esm/types';
 import {formatAliyahWithBook} from '@hebcal/leyning/dist/esm/common';
 import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
+import {makeSummaryFromParts} from '@hebcal/leyning/dist/esm/summary';
 import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
 import {
   RestApiOptions,
@@ -223,6 +224,9 @@ function formatLeyningResult(reading: Leyning): StringMap {
   }
   if (reading.sephardic) {
     result.haftarah_sephardic = reading.sephardic;
+  }
+  if (reading.chabad) {
+    result.haftarah_chabad = makeSummaryFromParts(reading.chabad);
   }
   if (reading.fullkriyah) {
     formatAliyot(result, reading.fullkriyah);

@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest';
 import {HDate} from '@hebcal/hdate';
-import {HebrewCalendar, Location, HebrewDateEvent, OmerEvent, HolidayEvent, flags} from '@hebcal/core';
+import {HebrewCalendar, Location, HebrewDateEvent, OmerEvent, HolidayEvent, ParshaEvent, flags} from '@hebcal/core';
 import {DafYomiEvent, MishnaYomiEvent, YerushalmiYomiEvent} from '@hebcal/learning';
 import {eventsToClassicApi, eventToClassicApiObject} from '../src/classic-rest-api';
 
@@ -639,4 +639,34 @@ test('hebrew-memo', () => {
     memo: 'ראש השנה לאילנות. ט״ו בשבט הוא אחד מארבעת “ראשי השנה” המוזכרים במשנה',
   };
   expect(apiObj).toEqual(expected);
+});
+
+test('chabad-leyning-vayera-follows-ashkenaz', () => {
+  const hd = new HDate(20, 'Cheshvan', 5787);
+  const ev = new ParshaEvent({
+    hdate: hd,
+    parsha: ['Vayera'],
+    num: 4,
+    chag: false,
+    il: false,
+  });
+  const obj = eventToClassicApiObject(ev, {sedrot: true, il: false});
+  expect(obj.leyning.haftarah).toBe('II Kings 4:1-37');
+  expect(obj.leyning.haftarah_sephardic).toBe('II Kings 4:1-23');
+  expect(obj.leyning.haftarah_chabad).toBe('II Kings 4:1-37');
+});
+
+test('chabad-leyning-tzav-differs-from-ashkenaz-and-sephardic', () => {
+  const hd = new HDate(16, 'Adar II', 5803);
+  const ev = new ParshaEvent({
+    hdate: hd,
+    parsha: ['Tzav'],
+    num: 25,
+    chag: false,
+    il: false,
+  });
+  const obj = eventToClassicApiObject(ev, {sedrot: true, il: false});
+  expect(obj.leyning.haftarah).toBe('Jeremiah 7:21-8:3, 9:22-23');
+  expect(obj.leyning.haftarah_sephardic).toBeUndefined();
+  expect(obj.leyning.haftarah_chabad).toBe('Jeremiah 7:21-28, 9:22-23');
 });

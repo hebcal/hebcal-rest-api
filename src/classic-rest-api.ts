@@ -211,6 +211,12 @@ function formatReasons(result: StringMap, reason: StringMap): StringMap {
   if (reason.haftara) {
     result.haftarah += ' | ' + reason.haftara;
   }
+  if (reason.sephardic) {
+    result.haftarah_sephardic += ' | ' + reason.sephardic;
+  }
+  if (reason.chabad) {
+    result.haftarah_chabad += ' | ' + reason.chabad;
+  }
   return result;
 }
 

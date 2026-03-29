@@ -670,3 +670,18 @@ test('chabad-leyning-tzav-differs-from-ashkenaz-and-sephardic', () => {
   expect(obj.leyning.haftarah_sephardic).toBeUndefined();
   expect(obj.leyning.haftarah_chabad).toBe('Jeremiah 7:21-28, 9:22-23');
 });
+
+
+test('chabad-leyning-special-reason', () => {
+  const hd = new HDate(11, 'Adar', 5786);
+  const ev = new ParshaEvent({
+    hdate: hd,
+    parsha: ['Tetzaveh'],
+    chag: false,
+    il: false,
+  });
+  const obj = eventToClassicApiObject(ev, {sedrot: true, il: false});
+  expect(obj.leyning.haftarah).toBe('I Samuel 15:2-34 | Shabbat Zachor');
+  expect(obj.leyning.haftarah_sephardic).toBe('I Samuel 15:1-34 | Shabbat Zachor');
+  expect(obj.leyning.haftarah_chabad).toBe('I Samuel 15:2-34 | Shabbat Zachor');
+});

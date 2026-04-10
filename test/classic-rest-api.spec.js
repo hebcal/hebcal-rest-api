@@ -522,7 +522,7 @@ test('omer', () => {
     link: 'https://hebcal.com/o/5770/46?us=js&um=api',
     omer: {
       count: {
-        en: 'Today is 46 days, which is 6 weeks and 4 days of the Omer',
+        en: 'Today is 46 days, which are 6 weeks and 4 days of the Omer',
         he: 'הַיּוֹם שִׁשָּׁה וְאַרְבָּעִים יוֹם, שֶׁהֵם שִׁשָּׁה שָׁבוּעוֹת וְאַרְבָּעָה יָמִים לָעֽוֹמֶר',
       },
       sefira: {

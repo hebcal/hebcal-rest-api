@@ -7,6 +7,16 @@ import {LEARNING_MASK, getEventCategories, shouldRenderBrief} from './common';
 import {appendIsraelAndTracking} from './url';
 import {makeMemo} from './memo';
 
+export type FullCalendarEvent = {
+  title: string;
+  start: string;
+  allDay: boolean;
+  className: string;
+  hebrew?: string;
+  url?: string;
+  description?: string;
+};
+
 /**
  * Converts a Hebcal event to a FullCalendar.io object
  */
@@ -14,8 +24,8 @@ export function eventToFullCalendar(
   ev: Event,
   tzid: string,
   options: CalOptions
-): any {
-  const classes = getEventCategories(ev);
+): FullCalendarEvent {
+  const classes = getEventCategories(ev).slice();
   const mask = ev.getFlags();
   const isChag = Boolean(mask & flags.CHAG);
   if (isChag && classes[0] === 'holiday') {
@@ -33,7 +43,7 @@ export function eventToFullCalendar(
   const start = timed
     ? Zmanim.formatISOWithTimeZone(tzid, eventTime)
     : isoDateString(ev.greg());
-  const result: any = {
+  const result: FullCalendarEvent = {
     title,
     start,
     allDay: !timed,

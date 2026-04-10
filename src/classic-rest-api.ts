@@ -3,7 +3,7 @@ import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
 import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {version} from '@hebcal/core/dist/esm/pkgVersion';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {MoladEvent} from '@hebcal/core/dist/esm/molad';
+import {MoladEvent, Molad} from '@hebcal/core/dist/esm/molad';
 import {OmerEvent} from '@hebcal/core/dist/esm/omer';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
@@ -20,7 +20,61 @@ import {
 } from './common';
 import {appendIsraelAndTracking} from './url';
 import {locationToPlainObj} from './location';
+import type {LocationPlainObj} from './location';
 import {getHolidayDescription} from './holiday';
+
+export type ClassicApiItem = {
+  title: string;
+  date: string;
+  hdate?: string;
+  category: string;
+  subcat?: string;
+  yomtov?: boolean;
+  title_orig?: string;
+  hebrew?: string;
+  leyning?: StringMap;
+  link?: string;
+  omer?: {
+    count: {
+      he: string;
+      en: string;
+    };
+    sefira: {
+      he: string;
+      translit: string;
+      en: string;
+    };
+  };
+  molad?: {
+    hy: number;
+    hm: string;
+    dow: number;
+    hour: number;
+    minutes: number;
+    chalakim: number;
+    hdate: string;
+    instant: string;
+  };
+  heDateParts?: {
+    y: string;
+    m: string;
+    d: string;
+  };
+  memo?: string;
+  ev?: Event;
+};
+
+export type ClassicApiResult = {
+  title: string;
+  date: string;
+  version: string;
+  location: LocationPlainObj;
+  range?: {
+    start: string;
+    end: string;
+  };
+  items?: ClassicApiItem[];
+};
 
 function eventIsoDate(ev: Event): string {
   return isoDateString(ev.greg());
@@ -33,8 +87,8 @@ export function eventsToClassicApi(
   events: Event[],
   options: RestApiOptions,
   leyning = true
-): any {
-  const result: any = eventsToClassicApiHeader(events, options);
+): ClassicApiResult {
+  const result = eventsToClassicApiHeader(events, options);
   result.items = events.map(ev =>
     eventToClassicApiObject(ev, options, leyning)
   );
@@ -44,13 +98,13 @@ export function eventsToClassicApi(
 export function eventsToClassicApiHeader(
   events: Event[],
   options: RestApiOptions
-) {
-  const result: any = {
+): ClassicApiResult {
+  const result: ClassicApiResult = {
     title: getCalendarTitle(events, options),
     date: new Date().toISOString(),
     version,
+    location: locationToPlainObj(options.location),
   };
-  result.location = locationToPlainObj(options.location);
   if (events.length) {
     result.range = {
       start: eventIsoDate(events[0]),
@@ -67,7 +121,7 @@ export function eventToClassicApiObject(
   ev: Event,
   options: RestApiOptions,
   leyning = true
-): any {
+): ClassicApiItem {
   const timedEv = ev as TimedEvent;
   const eventTime: Date = timedEv.eventTime;
   const timed = Boolean(eventTime);
@@ -89,7 +143,7 @@ export function eventToClassicApiObject(
     const time = reformatTimeStr(timedEv.eventTimeStr, 'pm', options);
     title += ': ' + time;
   }
-  const result: any = {
+  const result: Partial<ClassicApiItem> = {
     title: title,
     date: date,
   };
@@ -157,7 +211,7 @@ export function eventToClassicApiObject(
   }
   if (mask & flags.MOLAD) {
     const moladEv = ev as MoladEvent;
-    const m = moladEv.molad;
+    const m = moladEv.molad as Molad;
     const hy = m.getYear();
     result.molad = {
       hy,
@@ -166,6 +220,8 @@ export function eventToClassicApiObject(
       hour: m.getHour(),
       minutes: m.getMinutes(),
       chalakim: m.getChalakim(),
+      hdate: m.getMoladDate().toString(),
+      instant: m.getInstant().toInstant().toJSON(),
     };
     delete result.hebrew;
   }
@@ -188,7 +244,7 @@ export function eventToClassicApiObject(
   if (options.includeEvent) {
     result.ev = ev;
   }
-  return result;
+  return result as ClassicApiItem;
 }
 
 function formatAliyot(result: StringMap, aliyot: AliyotMap): StringMap {

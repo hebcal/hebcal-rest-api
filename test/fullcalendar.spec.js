@@ -36,6 +36,14 @@ test('eventToFullCalendar', () => {
       className: 'havdalah',
     },
     {
+      title: 'Biur Chametz',
+      start: '1990-04-09T11:47:00-05:00',
+      allDay: false,
+      hebrew: 'Biur Chametz',
+      className: 'zmanim biurChametz',
+      description: 'Erev Pesach',
+    },
+    {
       title: 'Erev Pesach',
       start: '1990-04-09',
       allDay: true,
@@ -92,16 +100,8 @@ test('eventToFullCalendar', () => {
       url: expectedUrl,
       description: pesachMemo,
     },
-    {
-      title: 'Pesach IV (CH’’M)',
-      start: '1990-04-13',
-      allDay: true,
-      hebrew: 'פסח ד׳ (חוה״מ)',
-      className: 'holiday major cholhamoed',
-      url: expectedUrl,
-      description: pesachMemo,
-    },
   ];
+
   expect(fc).toEqual(expected);
 });
 

@@ -44,6 +44,9 @@ export type ClassicApiItem = {
       translit: string;
       en: string;
     };
+    anaBekoachWord: string;
+    lamnatzeachWord: string;
+    lamnatzeachLetter: string;
   };
   molad?: {
     hy: number;
@@ -207,6 +210,9 @@ export function eventToClassicApiObject(
         translit: omerEv.sefira('translit'),
         en: omerEv.sefira('en'),
       },
+      anaBekoachWord: omerEv.getAnaBekoachWord(),
+      lamnatzeachWord: omerEv.getLamnatzeachWord(),
+      lamnatzeachLetter: omerEv.getLamnatzeachLetter(),
     };
   }
   if (mask & flags.MOLAD) {

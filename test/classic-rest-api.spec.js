@@ -530,6 +530,9 @@ test('omer', () => {
         he: 'נֶּֽצַח שֶׁבְּמַלְכוּת',
         translit: 'Netzach sheb\'Malkhut',
       },
+      anaBekoachWord: 'צַעֲקָתֵנוּ',
+      lamnatzeachWord: 'אוֹתוֹ',
+      lamnatzeachLetter: 'ם',
     },
   };
   expect(obj).toEqual(expected);

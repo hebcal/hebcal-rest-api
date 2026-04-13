@@ -19,9 +19,9 @@ test('eventToCsv', () => {
   const csv = events.map((e) => eventToCsv(e, options));
   expect(csv[0]).toBe(`"Candle lighting","4/6/1990","7:04 PM","4/6/1990","7:04 PM","false","","4","Chicago"`);
   expect(csv[1]).toBe(`"Havdalah","4/7/1990","8:06 PM","4/7/1990","8:06 PM","false","","4","Chicago"`);
-  expect(csv[2]).toBe(`"Erev Pesach","4/9/1990",,,,"true","Passover; the Feast of Unleavened Bread","3","Jewish Holidays"`);
-  expect(csv[3]).toBe(`"Candle lighting","4/9/1990","7:07 PM","4/9/1990","7:07 PM","false","Erev Pesach","4","Chicago"`);
-  expect(csv[4]).toBe(`"Pesach I","4/10/1990",,,,"true","Passover; the Feast of Unleavened Bread","4","Jewish Holidays"`);
+  expect(csv[2]).toBe(`"Biur Chametz","4/9/1990","11:47 AM","4/9/1990","11:47 AM","false","Erev Pesach","4","Chicago"`);
+  expect(csv[3]).toBe(`"Erev Pesach","4/9/1990",,,,"true","Passover; the Feast of Unleavened Bread","3","Jewish Holidays"`);
+  expect(csv[4]).toBe(`"Candle lighting","4/9/1990","7:07 PM","4/9/1990","7:07 PM","false","Erev Pesach","4","Chicago"`);
 });
 
 test('eventsToCsv', () => {

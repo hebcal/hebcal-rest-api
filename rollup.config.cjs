@@ -41,11 +41,12 @@ module.exports = defineConfig([
         preserveModulesRoot: 'src',
         name: pkg.name,
         banner,
+        sourcemap: true,
       },
     ],
     plugins: [
       json({compact: true, preferConst: true}),
-      typescript({...tsOptions, outDir: 'dist/esm'}),
+      typescript({...tsOptions, outDir: 'dist/esm', sourceMap: true}),
     ],
     external: [/@hebcal/],
   },
@@ -71,7 +72,7 @@ module.exports = defineConfig([
     ],
     plugins: [
       json({compact: true, preferConst: true}),
-      typescript(),
+      typescript({...tsOptions, declaration: false}),
       nodeResolve(),
     ],
     external: [/@hebcal/],
@@ -98,7 +99,7 @@ module.exports = defineConfig([
     ],
     plugins: [
       json({compact: true, preferConst: true}),
-      typescript(),
+      typescript({...tsOptions, declaration: false}),
       nodeResolve(),
     ],
     external: [/@hebcal/],

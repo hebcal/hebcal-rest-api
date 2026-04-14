@@ -3,7 +3,7 @@ import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
 import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {version} from '@hebcal/core/dist/esm/pkgVersion';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {MoladEvent, Molad} from '@hebcal/core/dist/esm/molad';
+import {MoladEvent} from '@hebcal/core/dist/esm/molad';
 import {OmerEvent} from '@hebcal/core/dist/esm/omer';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
@@ -55,7 +55,6 @@ export type ClassicApiItem = {
     hour: number;
     minutes: number;
     chalakim: number;
-    hdate: string;
     instant: string;
   };
   heDateParts?: {
@@ -217,7 +216,7 @@ export function eventToClassicApiObject(
   }
   if (mask & flags.MOLAD) {
     const moladEv = ev as MoladEvent;
-    const m = moladEv.molad as Molad;
+    const m = moladEv.molad;
     const hy = m.getYear();
     result.molad = {
       hy,
@@ -226,7 +225,6 @@ export function eventToClassicApiObject(
       hour: m.getHour(),
       minutes: m.getMinutes(),
       chalakim: m.getChalakim(),
-      hdate: m.getMoladDate().toString(),
       instant: m.getInstant().toInstant().toJSON(),
     };
     delete result.hebrew;

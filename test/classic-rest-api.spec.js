@@ -592,7 +592,6 @@ test('molad', () => {
       hour: 3,
       minutes: 51,
       chalakim: 17,
-      hdate: '30 Adar I 5782',
       instant: '2022-03-03T01:31:00.17Z',
     },
   }, {
@@ -608,7 +607,6 @@ test('molad', () => {
       hour: 16,
       minutes: 36,
       chalakim: 0,
-      hdate: '29 Adar II 5782',
       instant: '2022-04-01T14:15:03.504Z',
     },
   }, {
@@ -624,7 +622,6 @@ test('molad', () => {
       hour: 5,
       minutes: 20,
       chalakim: 1,
-      hdate: '30 Nisan 5782',
       instant: '2022-05-01T02:59:06.837Z',
     },
   }];

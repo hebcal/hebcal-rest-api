@@ -80,7 +80,7 @@ test('eventToRssItem2', () => {
     havdalahMins: 50,
     location: location,
   };
-  const events = HebrewCalendar.calendar(options).slice(0, 4);
+  const events = HebrewCalendar.calendar(options).slice(0, 5);
   options.evPubDate = true;
   options.lastBuildDate = 'Mon, 22 Jun 2020 20:03:18 GMT';
   options.mainUrl = 'https://www.hebcal.com/shabbat?city=Eilat';
@@ -106,10 +106,18 @@ test('eventToRssItem2', () => {
     '<pubDate>Sat, 07 Apr 1990 16:53:00 GMT</pubDate>\n' +
     '</item>\n',
     '<item>\n' +
+    '<title>Finish eating chametz: 10:35</title>\n' +
+    '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-09&amp;i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900409-finish-eating-chametz</link>\n' +
+    '<guid isPermaLink=\"false\">https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-09#19900409-finish-eating-chametz</guid>\n' +
+    '<description>Latest time of day to eat chametz on the day before Pesach</description>\n' +
+    '<category>zmanim</category>\n' +
+    '<pubDate>Mon, 09 Apr 1990 07:35:00 GMT</pubDate>\n' +
+    '</item>\n',
+    '<item>\n' +
     '<title>Biur Chametz: 11:38</title>\n' +
     '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-09&amp;i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900409-biur-chametz</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-09#19900409-biur-chametz</guid>\n' +
-    '<description>Monday, April 09, 1990</description>\n' +
+    '<description>Latest time of day to sell and burn chametz before Pesach</description>\n' +
     '<category>zmanim</category>\n' +
     '<pubDate>Mon, 09 Apr 1990 08:38:00 GMT</pubDate>\n' +
     '</item>\n',

@@ -1,5 +1,6 @@
 import {Event, flags} from '@hebcal/core/dist/esm/event';
 import type {StringMap} from './common';
+import {Locale} from '@hebcal/hdate';
 import holidayDescription0 from './holidays.json';
 import holidayDescHe0 from './holidays-he.json';
 
@@ -15,7 +16,7 @@ export function getHolidayDescription(
   firstSentence = false,
   locale?: string
 ): string {
-  const he = locale === 'h' || locale === 'he' || locale === 'he-x-NoNikud';
+  const he = Locale.isHebrewLocale(locale);
   const strs = he ? holidayDescriptionHe : holidayDescription;
   const str0 =
     ev.getFlags() & flags.SHABBAT_MEVARCHIM

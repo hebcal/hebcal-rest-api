@@ -14,7 +14,7 @@ test('eventToFullCalendar', () => {
     havdalahMins: 50,
     location: new Location(41.85003, -87.65005, false, 'America/Chicago', 'Chicago', 'US', 4887398),
   };
-  const events = HebrewCalendar.calendar(options).slice(0, 10);
+  const events = HebrewCalendar.calendar(options).slice(0, 11);
   const tzid = options.location.getTzid();
   const fc = events.map((ev) => eventToFullCalendar(ev, tzid, options));
   const pesachMemo = 'Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah),' +
@@ -36,12 +36,20 @@ test('eventToFullCalendar', () => {
       className: 'havdalah',
     },
     {
+      title: 'Finish eating chametz',
+      start: '1990-04-09T10:41:00-05:00',
+      allDay: false,
+      hebrew: 'סוף זמן אכילת חמץ',
+      className: 'zmanim achilasChametz',
+      description: 'Latest time of day to eat chametz on the day before Pesach',
+    },
+    {
       title: 'Biur Chametz',
       start: '1990-04-09T11:47:00-05:00',
       allDay: false,
-      hebrew: 'Biur Chametz',
+      hebrew: 'בעור חמץ',
       className: 'zmanim biurChametz',
-      description: 'Erev Pesach',
+      description: 'Latest time of day to sell and burn chametz before Pesach',
     },
     {
       title: 'Erev Pesach',

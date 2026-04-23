@@ -22,6 +22,7 @@ import {appendIsraelAndTracking} from './url';
 import {locationToPlainObj} from './location';
 import type {LocationPlainObj} from './location';
 import {getHolidayDescription} from './holiday';
+import {holidayDesc as hdesc} from '@hebcal/core/dist/esm/staticHolidays';
 
 export type ClassicApiItem = {
   title: string;
@@ -140,7 +141,7 @@ export function eventToClassicApiObject(
     ? ev.renderBrief(options.locale)
     : ev.render(options.locale);
   const desc = ev.getDesc();
-  const candles = desc === 'Havdalah' || desc === 'Candle lighting';
+  const candles = desc === hdesc.HAVDALAH || desc === hdesc.CANDLE_LIGHTING;
   if (candles) {
     const time = reformatTimeStr(timedEv.eventTimeStr, 'pm', options);
     title += ': ' + time;

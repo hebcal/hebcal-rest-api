@@ -11,6 +11,7 @@ const iifeGlobals = {
   '@hebcal/core': 'hebcal',
   '@hebcal/core/dist/esm/locale': 'hebcal',
   '@hebcal/core/dist/esm/holidays': 'hebcal',
+  '@hebcal/core/dist/esm/staticHolidays': 'hebcal',
   '@hebcal/core/dist/esm/sedra': 'hebcal',
   '@hebcal/core/dist/esm/event': 'hebcal',
   '@hebcal/core/dist/esm/ParshaEvent': 'hebcal',

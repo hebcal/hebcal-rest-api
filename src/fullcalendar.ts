@@ -6,6 +6,7 @@ import {isoDateString} from '@hebcal/hdate';
 import {LEARNING_MASK, getEventCategories, shouldRenderBrief} from './common';
 import {appendIsraelAndTracking} from './url';
 import {makeMemo} from './memo';
+import {holidayDesc as hdesc} from '@hebcal/core/dist/esm/staticHolidays';
 
 export type FullCalendarEvent = {
   title: string;
@@ -61,7 +62,7 @@ export function eventToFullCalendar(
     result.url = appendIsraelAndTracking(url, il, utmSource, 'fc');
   }
   const desc = ev.getDesc();
-  const candles = desc === 'Havdalah' || desc === 'Candle lighting';
+  const candles = desc === hdesc.HAVDALAH || desc === hdesc.CANDLE_LIGHTING;
   if (!candles) {
     const memo = makeMemo(ev, il);
     if (memo) {

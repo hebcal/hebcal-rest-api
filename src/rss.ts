@@ -11,6 +11,7 @@ import {
 import {appendIsraelAndTracking} from './url';
 import {makeMemo} from './memo';
 import {makeAnchor} from './makeAnchor';
+import {holidayDesc as hdesc} from '@hebcal/core/dist/esm/staticHolidays';
 
 function getLinkAndGuid(
   ev: Event,
@@ -153,7 +154,7 @@ export function eventToRssItem2(ev: Event, options: RestApiOptions): string {
   const categories = getEventCategories(ev);
   const cat0 = categories[0];
   const desc = ev.getDesc();
-  const candles = desc === 'Havdalah' || desc === 'Candle lighting';
+  const candles = desc === hdesc.HAVDALAH || desc === hdesc.CANDLE_LIGHTING;
   let memo;
   if (candles) {
     const colon = subj.indexOf(': ');

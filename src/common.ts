@@ -76,8 +76,8 @@ export function toISOString(d: Date): string {
  * Returns a category and subcategory name
  */
 export function getEventCategories(ev: Event): string[] {
-  const desc = ev.getDesc();
-  if (desc === 'Purim' || desc === 'Erev Purim') {
+  const s = ev.getDesc();
+  if (s === 'Purim' || s === 'Erev Purim' || s.startsWith('Chanukah: ')) {
     return ['holiday', 'major'];
   }
   return ev.getCategories();

@@ -10,6 +10,7 @@ export type RestApiEventOptions = {
   utmSource?: string;
   utmMedium?: string;
   utmCampaign?: string;
+  tachanun?: boolean;
   appendHebrewToSubject?: boolean;
   yahrzeit?: boolean;
   subscribe?: string | number | boolean;

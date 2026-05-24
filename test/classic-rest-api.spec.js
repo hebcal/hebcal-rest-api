@@ -150,6 +150,21 @@ test('eventsToClassicApi', () => {
   expect(candleLighting).toEqual(candleLightingExpected);
 });
 
+test('eventsToClassicApi tachanun', () => {
+  const options = {
+    start: new Date(2026, 4, 21),
+    end: new Date(2026, 4, 21),
+    tachanun: true,
+  };
+  const events = HebrewCalendar.calendar(options);
+  const apiResult = eventsToClassicApi(events, options);
+  expect(apiResult.tachanun).toEqual({
+    shacharit: false,
+    mincha: false,
+    allCongs: false,
+  });
+});
+
 test('classic-api-no-sedra', () => {
   const options = {start: new Date(2022, 4, 15), end: new Date(2022, 5, 1), il: true};
   const events = HebrewCalendar.calendar(options);

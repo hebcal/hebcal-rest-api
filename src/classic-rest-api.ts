@@ -5,8 +5,10 @@ import {version} from '@hebcal/core/dist/esm/pkgVersion';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {MoladEvent} from '@hebcal/core/dist/esm/molad';
 import {OmerEvent} from '@hebcal/core/dist/esm/omer';
+import {TachanunResult} from '@hebcal/core/dist/esm/tachanun';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
+import {HebrewCalendar} from '@hebcal/core';
 import {AliyotMap, Leyning, StringMap} from '@hebcal/leyning/dist/esm/types';
 import {formatAliyahWithBook} from '@hebcal/leyning/dist/esm/common';
 import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
@@ -72,6 +74,7 @@ export type ClassicApiResult = {
   date: string;
   version: string;
   location: LocationPlainObj;
+  tachanun?: TachanunResult;
   range?: {
     start: string;
     end: string;
@@ -113,6 +116,12 @@ export function eventsToClassicApiHeader(
       start: eventIsoDate(events[0]),
       end: eventIsoDate(events[events.length - 1]),
     };
+    if (options.tachanun && result.range.start === result.range.end) {
+      result.tachanun = HebrewCalendar.tachanun(
+        events[0].getDate(),
+        Boolean(options.il)
+      );
+    }
   }
   return result;
 }

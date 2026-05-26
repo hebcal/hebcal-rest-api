@@ -17,6 +17,7 @@ const iifeGlobals = {
   '@hebcal/core/dist/esm/ParshaEvent': 'hebcal',
   '@hebcal/core/dist/esm/reformatTimeStr': 'hebcal',
   '@hebcal/core/dist/esm/pkgVersion': 'hebcal',
+  '@hebcal/core/dist/esm/tachanun': 'hebcal',
   '@hebcal/core/dist/esm/zmanim': 'hebcal',
   '@hebcal/hdate': 'hebcal',
   '@hebcal/leyning': 'hebcal__leyning',

@@ -7,29 +7,10 @@ const {defineConfig} = require('rollup');
 
 const banner = '/*! ' + pkg.name + ' v' + pkg.version + ' */';
 
-const iifeGlobals = {
-  '@hebcal/core': 'hebcal',
-  '@hebcal/core/dist/esm/locale': 'hebcal',
-  '@hebcal/core/dist/esm/holidays': 'hebcal',
-  '@hebcal/core/dist/esm/staticHolidays': 'hebcal',
-  '@hebcal/core/dist/esm/sedra': 'hebcal',
-  '@hebcal/core/dist/esm/event': 'hebcal',
-  '@hebcal/core/dist/esm/ParshaEvent': 'hebcal',
-  '@hebcal/core/dist/esm/reformatTimeStr': 'hebcal',
-  '@hebcal/core/dist/esm/pkgVersion': 'hebcal',
-  '@hebcal/core/dist/esm/tachanun': 'hebcal',
-  '@hebcal/core/dist/esm/zmanim': 'hebcal',
-  '@hebcal/hdate': 'hebcal',
-  '@hebcal/leyning': 'hebcal__leyning',
-  '@hebcal/leyning/dist/esm/leyning': 'hebcal__leyning',
-  '@hebcal/leyning/dist/esm/csv': 'hebcal__leyning',
-  '@hebcal/leyning/dist/esm/summary': 'hebcal__leyning',
-  '@hebcal/leyning/dist/esm/clone': 'hebcal__leyning',
-  '@hebcal/leyning/dist/esm/getLeyningKeyForEvent': 'hebcal__leyning',
-  '@hebcal/leyning/dist/esm/specialReadings': 'hebcal__leyning',
-  '@hebcal/leyning/dist/esm/common': 'hebcal__leyning',
-  '@hebcal/leyning/dist/esm/getLeyningForHoliday': 'hebcal__leyning',
-};
+// All @hebcal/leyning submodules are exposed under the hebcal__leyning global;
+// everything else (@hebcal/core/*, @hebcal/hdate) lives under the hebcal global.
+const iifeGlobals = id =>
+  id.includes('@hebcal/leyning') ? 'hebcal__leyning' : 'hebcal';
 
 const tsOptions = {rootDir: './src'};
 module.exports = defineConfig([

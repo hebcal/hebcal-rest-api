@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "types": ["node"],
+    "types": [],
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
     "target": "es2023",
     "module": "esnext",
     "moduleResolution": "bundler",

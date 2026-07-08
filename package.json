@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "6.5.0",
+  "version": "6.5.1",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -16,9 +16,7 @@
     ".": "./dist/esm/index.js",
     "./dist/esm/*": "./dist/esm/*.js"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist", "po"],
   "repository": {
     "type": "git",
     "url": "https://github.com/hebcal/hebcal-rest-api.git"

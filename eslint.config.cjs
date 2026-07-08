@@ -13,6 +13,7 @@ module.exports = defineConfig([
       'docs/',
       'dist/',
       'src/*.po.ts',
+      'src/*.po.js',
       'src/*.json.ts',
     ],
   },
@@ -46,6 +47,13 @@ module.exports = defineConfig([
     files: ['**/.prettierrc.js', '**/eslint.config.js', '**/eslint.config.cjs', '**/eslint.ignores.js'],
     languageOptions: {
       sourceType: 'commonjs',
+      globals: globals.node,
+    },
+  },
+  {
+    files: ['**/po2json.js'],
+    languageOptions: {
+      sourceType: 'module',
       globals: globals.node,
     },
   },

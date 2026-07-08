@@ -1,0 +1,219 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: @hebcal/rest-api\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "MEMO:Asara B'Tevet"
+msgstr "Fast commemorating the siege of Jerusalem"
+
+msgid "MEMO:Ben-Gurion Day"
+msgstr "Commemorates the life and vision of Israel’s first Prime Minister David Ben-Gurion"
+
+msgid "MEMO:Birkat Hachamah"
+msgstr "A rare Jewish blessing recited once every 28 years thanking G-d for creating the sun"
+
+msgid "MEMO:Biur Chametz"
+msgstr "Latest time of day to sell and burn chametz before Pesach"
+
+msgid "MEMO:Chag HaBanot"
+msgstr "North African Chanukah festival of daughters. Called Eid al-Banat in Arabic, the holiday was most preserved in Tunisia"
+
+msgid "MEMO:Chanukah"
+msgstr "Hanukkah, the Jewish festival of rededication. Also known as the Festival of Lights, the eight-day festival is observed by lighting the candles of a hanukkiah (menorah)"
+
+msgid "MEMO:Days of the Omer"
+msgstr "7 weeks from the second night of Pesach to the day before Shavuot. Also called Sefirat HaOmer, it is a practice that consists of a verbal counting of each of the forty-nine days between the two holidays"
+
+msgid "MEMO:Erev Yom Kippur"
+msgstr "Evening of Yom Kippur (Day of Atonement), which includes the Kol Nidre service. The Yom Kippur fast begins at sundown and continues for 25 hours"
+
+msgid "MEMO:Family Day"
+msgstr "Yom HaMishpacha, a day to honor the family unit"
+
+msgid "MEMO:Finish eating chametz"
+msgstr "Latest time of day to eat chametz on the day before Pesach"
+
+msgid "MEMO:Hebrew Language Day"
+msgstr "Promotes the Hebrew language in Israel and around the world. Occurs on the birthday of Eliezer Ben Yehuda, the father of modern spoken Hebrew"
+
+msgid "MEMO:Herzl Day"
+msgstr "Commemorates the life and vision of Zionist leader Theodor Herzl"
+
+msgid "MEMO:Jabotinsky Day"
+msgstr "Commemorates the life and vision of Zionist leader Ze’ev Jabotinsky"
+
+msgid "MEMO:Lag BaOmer"
+msgstr "33rd day of counting the Omer. The holiday is a temporary break from the semi-mourning period the counting of the Omer. Practices include lighting bonfires, getting haircuts, and Jewish weddings"
+
+msgid "MEMO:Leil Selichot"
+msgstr "Prayers for forgiveness in preparation for the High Holidays"
+
+msgid "MEMO:Pesach Sheni"
+msgstr "Second Passover, one month after Passover"
+
+msgid "MEMO:Pesach"
+msgstr "Passover, the Feast of Unleavened Bread. Also called Chag HaMatzot (the Festival of Matzah), it commemorates the Exodus and freedom of the Israelites from ancient Egypt"
+
+msgid "MEMO:Purim Katan"
+msgstr "Minor Purim celebration during Adar I on leap years"
+
+msgid "MEMO:Purim"
+msgstr "Celebration of Jewish deliverance as told by Megilat Esther. It commemorates a time when the Jewish people living in Persia were saved from extermination"
+
+msgid "MEMO:Purim Meshulash"
+msgstr "Triple Purim, spanning 3 days in Jerusalem and walled cities. It occurs when the 15th of Adar coincides with Shabbat"
+
+msgid "MEMO:Rosh Chodesh Nisan"
+msgstr "Start of month of Nisan on the Hebrew calendar. נִיסָן (transliterated Nisan or Nissan) is the 7th month of the civil Hebrew year (8th on leap years) and the 1st month of the biblical Hebrew year. It has 30 days and corresponds to March or April on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Iyyar"
+msgstr "Start of month of Iyyar on the Hebrew calendar. אִיָּיר (transliterated Iyyar or Iyar) is the 8th month of the civil Hebrew year (9th on leap years) and the 2nd month of the biblical Hebrew year. It has 29 days and corresponds to April or May on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Sivan"
+msgstr "Start of month of Sivan on the Hebrew calendar. Sivan (סִיוָן) is the 9th month of the civil Hebrew year (10th on leap years) and the 3rd month of the biblical Hebrew year. It has 30 days and corresponds to May or June on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Tamuz"
+msgstr "Start of month of Tammuz on the Hebrew calendar. תַּמּוּז (transliterated Tamuz or Tammuz) is the 10th month of the civil Hebrew year (11th on leap years) and the 4th month of the biblical Hebrew year. It has 29 days and corresponds to June or July on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Av"
+msgstr "Start of month of Av on the Hebrew calendar. Av (אָב) is the 11th month of the civil Hebrew year (12th on leap years) and the 5th month of the biblical Hebrew year. It has 30 days and corresponds to July or August on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Elul"
+msgstr "Start of month of Elul on the Hebrew calendar. Elul (אֱלוּל) is the 12th month of the civil Hebrew year (13th on leap years) and the 6th month of the biblical Hebrew year. It has 29 days and corresponds to August or September on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Cheshvan"
+msgstr "Start of month of Cheshvan on the Hebrew calendar. חֶשְׁוָן (transliterated Cheshvan or Heshvan) is the 2nd month of the civil Hebrew year and the 8th month of the biblical Hebrew year. It has 29 or 30 days and corresponds to October or November on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Kislev"
+msgstr "Start of month of Kislev on the Hebrew calendar. Kislev (כִּסְלֵו) is the 3rd month of the civil Hebrew year and the 9th month of the biblical Hebrew year. It has 30 or 29 days and corresponds to November or December on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Tevet"
+msgstr "Start of month of Tevet on the Hebrew calendar. Tevet (טֵבֵת) is the 4th month of the civil Hebrew year and the 10th month of the biblical Hebrew year. It has 29 days and corresponds to December or January on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Sh'vat"
+msgstr "Start of month of Sh’vat on the Hebrew calendar. שְׁבָט (transliterated Sh’vat or Shevat) is the 5th month of the civil Hebrew year and the 11th month of the biblical Hebrew year. It has 30 days and corresponds to January or February on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Adar"
+msgstr "Start of month of Adar on the Hebrew calendar. Adar (אֲדָר) is the 6th month of the civil Hebrew year and the 12th month of the biblical Hebrew year. It has 29 days and corresponds to February or March on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Adar I"
+msgstr "Start of month of Adar I (on leap years) on the Hebrew calendar. Adar I (אֲדָר א׳) is the 6th month of the civil Hebrew year and the 12th month of the biblical Hebrew year. It has 30 days, occurs only on leap years, and corresponds to February or March on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Chodesh Adar II"
+msgstr "Start of month of Adar II (on leap years) on the Hebrew calendar. Adar II (אֲדָר ב׳), sometimes “Adar Bet” or “Adar Sheni”, is the 7th month of the civil Hebrew year and the 13th month of the Hebrew year. It has 29 days, occurs only on leap years, and corresponds to February or March on the Gregorian calendar. רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+
+msgid "MEMO:Rosh Hashana"
+msgstr "The Jewish New Year. Also spelled Rosh Hashanah"
+
+msgid "MEMO:Rosh Hashana LaBehemot"
+msgstr "New Year for Tithing Animals"
+
+msgid "MEMO:Shabbat Chazon"
+msgstr "Shabbat of Prophecy/Shabbat of Vision. Shabbat before Tish’a B’Av"
+
+msgid "MEMO:Shabbat HaChodesh"
+msgstr "Shabbat before Rosh Chodesh Nissan. Read in preparation for Passover"
+
+msgid "MEMO:Shabbat HaGadol"
+msgstr "Shabbat before Pesach (The Great Shabbat)"
+
+msgid "MEMO:Shabbat Machar Chodesh"
+msgstr "When Shabbat falls the day before Rosh Chodesh"
+
+msgid "MEMO:Shabbat Mevarchim Chodesh"
+msgstr "Shabbat that precedes Rosh Chodesh. The congregation blesses the forthcoming new month"
+
+msgid "MEMO:Shabbat Nachamu"
+msgstr "Shabbat after Tish’a B’Av (Shabbat of Consolation). The first of seven Shabbatot leading up to Rosh Hashanah. Named after the Haftarah (from Isaiah 40) which begins with the verse נַחֲמוּ נַחֲמוּ, עַמִּי (“Comfort, oh comfort my people”)"
+
+msgid "MEMO:Shabbat Parah"
+msgstr "Shabbat of the Red Heifer. Shabbat before Shabbat HaChodesh, in preparation for Passover"
+
+msgid "MEMO:Shabbat Rosh Chodesh"
+msgstr "When Shabbat falls on Rosh Chodesh"
+
+msgid "MEMO:Shabbat Shekalim"
+msgstr "Shabbat before Rosh Chodesh Adar. Read in preparation for Purim"
+
+msgid "MEMO:Shabbat Shirah"
+msgstr "Shabbat of Song. Shabbat that includes Parashat Beshalach"
+
+msgid "MEMO:Shabbat Shuva"
+msgstr "Shabbat of Returning. Shabbat that occurs during the Ten Days of Repentance between Rosh Hashanah and Yom Kippur"
+
+msgid "MEMO:Shabbat Zachor"
+msgstr "Shabbat of Remembrance. Shabbat before Purim"
+
+msgid "MEMO:Shavuot"
+msgstr "Festival of Weeks. Commemorates the giving of the Torah at Mount Sinai"
+
+msgid "MEMO:Shmini Atzeret"
+msgstr "Eighth Day of Assembly. Immediately following Sukkot, it is observed as a separate holiday in the Diaspora and is combined with Simchat Torah in Israel"
+
+msgid "MEMO:Shushan Purim"
+msgstr "Purim celebrated in Jerusalem and walled cities"
+
+msgid "MEMO:Shushan Purim Katan"
+msgstr "Minor Purim celebration during Adar I on leap years in Jerusalem and walled cities"
+
+msgid "MEMO:Sigd"
+msgstr "Ethiopian Jewish holiday occurring 50 days after Yom Kippur"
+
+msgid "MEMO:Simchat Torah"
+msgstr "Day of Celebrating the Torah. Celebration marking the conclusion of the annual cycle of public Torah readings, and the beginning of a new cycle"
+
+msgid "MEMO:Sukkot"
+msgstr "Feast of Booths. Also called the Feast of Tabernacles, the seven-day holiday is one of the Three Pilgrimage Festivals (Hebrew: שלוש רגלים, shalosh regalim)"
+
+msgid "MEMO:Ta'anit Bechorot"
+msgstr "Fast of the First Born"
+
+msgid "MEMO:Ta'anit Esther"
+msgstr "Fast of Esther"
+
+msgid "MEMO:Tish'a B'Av"
+msgstr "The Ninth of Av. Fast commemorating the destruction of the two Temples"
+
+msgid "MEMO:Tu B'Av"
+msgstr "Minor Jewish holiday of love. Observed on the 15th day of the Hebrew month of Av"
+
+msgid "MEMO:Tu BiShvat"
+msgstr "New Year for Trees. Tu BiShvat is one of four “New Years” mentioned in the Mishnah"
+
+msgid "MEMO:Tzom Gedaliah"
+msgstr "Fast of the Seventh Month. Commemorates the assassination of the Jewish governor of Judah"
+
+msgid "MEMO:Tzom Tammuz"
+msgstr "Fast commemorating breaching of the walls of Jerusalem before the destruction of the Second Temple"
+
+msgid "MEMO:Yitzhak Rabin Memorial Day"
+msgstr "Commemorates the life of Israeli Prime Minister Yitzhak Rabin"
+
+msgid "MEMO:Yom HaAliyah"
+msgstr "Recognizes Aliyah, immigration to the Jewish State of Israel"
+
+msgid "MEMO:Yom HaAliyah School Observance"
+msgstr "Aliyah Day observed in Israeli schools"
+
+msgid "MEMO:Yom HaAtzma'ut"
+msgstr "Israeli Independence Day. Commemorates the declaration of independence of Israel in 1948. Although Yom HaAtzma’ut is normally observed on the 5th of Iyyar, it may be moved earlier or postponed if observance of the holiday (or Yom HaZikaron, which always precedes it) would conflict with Shabbat"
+
+msgid "MEMO:Yom HaShoah"
+msgstr "Holocaust Memorial Day"
+
+msgid "MEMO:Yom HaZikaron"
+msgstr "Israeli Memorial Day. Remembers those who died in the War of Independence and other wars in Israel. The full name of the holiday is Yom HaZikaron LeHalalei Ma’arakhot Yisrael ul’Nifge’ei Pe’ulot HaEivah (Hebrew: יוֹם הזִּכָּרוֹן לְחַלְלֵי מַעֲרָכוֹת יִשְׂרָאֵל וּלְנִפְגְעֵי פְּעֻלּוֹת הָאֵיבָה), Memorial Day for the Fallen Soldiers of the Wars of Israel and Victims of Actions of Terrorism. Although Yom Hazikaron is normally observed on the 4th of Iyyar, it may be moved earlier or postponed if observance of the holiday (or Yom HaAtzma’ut, which always follows it) would conflict with Shabbat"
+
+msgid "MEMO:Yom Kippur"
+msgstr "Day of Atonement. The holiest day of the year in Judaism, traditionally observed with a 25-hour period of fasting and intensive prayer"
+
+msgid "MEMO:Yom Kippur Katan"
+msgstr "Minor day of atonement occurring monthly on the day preceeding each Rosh Chodesh"
+
+msgid "MEMO:Yom Yerushalayim"
+msgstr "Jerusalem Day. Commemorates the re-unification of Jerusalem in 1967"

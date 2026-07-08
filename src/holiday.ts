@@ -1,14 +1,19 @@
 import {Event, flags} from '@hebcal/core/dist/esm/event';
-import type {StringMap} from './common';
 import {Locale} from '@hebcal/hdate';
-import holidayDescription0 from './holidays.json';
-import holidayDescHe0 from './holidays-he.json';
+import poEn from './en.po.js';
+import poHe from './he.po.js';
 
-const holidayDescription: StringMap = holidayDescription0 as StringMap;
-const holidayDescriptionHe: StringMap = holidayDescHe0 as StringMap;
+// Holiday descriptions are stored as gettext translations. The msgid
+// strings are prefixed with `MEMO:` to avoid colliding with the actual
+// holiday names already translated by `@hebcal/core`.
+const MEMO_PREFIX = 'MEMO:';
+
+Locale.addTranslations('en', poEn);
+Locale.addTranslations('he', poHe);
 
 /**
- * Returns an English language description of the holiday
+ * Returns a description of the holiday. Uses the English description by
+ * default, or the Hebrew description when `locale` is a Hebrew locale.
  */
 
 export function getHolidayDescription(
@@ -16,12 +21,15 @@ export function getHolidayDescription(
   firstSentence = false,
   locale?: string
 ): string {
-  const he = Locale.isHebrewLocale(locale);
-  const strs = he ? holidayDescriptionHe : holidayDescription;
-  const str0 =
+  const localeName = Locale.isHebrewLocale(locale) ? 'he' : 'en';
+  const key =
     ev.getFlags() & flags.SHABBAT_MEVARCHIM
-      ? strs['Shabbat Mevarchim Chodesh']
-      : strs[ev.getDesc()] || strs[ev.basename()] || '';
+      ? 'Shabbat Mevarchim Chodesh'
+      : ev.getDesc();
+  const str0 =
+    Locale.lookupTranslation(MEMO_PREFIX + key, localeName) ??
+    Locale.lookupTranslation(MEMO_PREFIX + ev.basename(), localeName) ??
+    '';
   const str = str0.normalize();
   if (firstSentence && str) {
     const dot = str.indexOf('.');

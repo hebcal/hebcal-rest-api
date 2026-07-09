@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript"],
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": [
+    "build/",
+    "test/",
+    "docs/",
+    "dist/",
+    "src/*.po.ts",
+    "src/*.po.js",
+    "src/*.json.ts"
+  ],
+  "rules": {
+    "block-scoped-var": "error",
+    "eqeqeq": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-arrow-callback": "error",
+    "typescript/ban-ts-comment": "warn",
+    "typescript/no-explicit-any": "warn",
+    "typescript/no-require-imports": "off",
+    "typescript/no-empty-object-type": "off"
+  }
+}

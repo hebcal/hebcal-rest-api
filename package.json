@@ -36,9 +36,9 @@
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "docs": "typedoc",
-    "lint": "gts lint",
-    "clean": "gts clean",
-    "fix": "gts fix",
+    "lint": "oxlint && prettier --check \"src/**/*.ts\" \"*.{js,cjs}\"",
+    "clean": "rm -rf ./dist",
+    "fix": "oxlint --fix && prettier --write \"src/**/*.ts\" \"*.{js,cjs}\"",
     "test": "vitest"
   },
   "license": "BSD-2-Clause",
@@ -51,13 +51,11 @@
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^26.1.0",
     "gettext-parser": "^9.1.1",
-    "gts": "^7.0.0",
+    "oxlint": "^1.73.0",
+    "prettier": "^3.9.5",
     "rollup": "^4.62.2",
     "typedoc": "^0.28.20",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"
-  },
-  "overrides": {
-    "tmp": "^0.2.6"
   }
 }

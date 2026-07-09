@@ -1,0 +1,12 @@
+dist
+docs
+build
+node_modules
+po
+zoneinfo
+test
+package-lock.json
+src/countryNames.json
+src/*.po.js
+src/*.po.ts
+src/*.json.ts

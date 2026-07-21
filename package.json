@@ -29,9 +29,9 @@
   },
   "homepage": "https://hebcal.github.io/api/rest-api/",
   "dependencies": {
-    "@hebcal/core": "^6.6.0",
+    "@hebcal/core": "^6.8.2",
     "@hebcal/hdate": "^0.22.5",
-    "@hebcal/leyning": "^9.5.5"
+    "@hebcal/leyning": "^9.5.6"
   },
   "scripts": {
     "po2json": "node ./po2json.js po/en.po po/he.po",
@@ -54,8 +54,8 @@
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^26.1.1",
     "gettext-parser": "^9.1.1",
-    "oxlint": "^1.73.0",
-    "prettier": "^3.9.5",
+    "oxlint": "^1.74.0",
+    "prettier": "^3.9.6",
     "rollup": "^4.62.2",
     "tslib": "^2.8.1",
     "typedoc": "^0.28.20",

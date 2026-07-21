@@ -88,12 +88,12 @@ test('eventToRssItem2', () => {
   const items = events.map((ev) => eventToRssItem2(ev, options));
   const expected = [
     '<item>\n' +
-    '<title>Candle lighting: 18:43</title>\n' +
+    '<title>Candle lighting: 18:41</title>\n' +
     '<link>https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-06&amp;i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss#19900406-candle-lighting</link>\n' +
     '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Eilat&amp;dt=1990-04-06#19900406-candle-lighting</guid>\n' +
     '<description>Friday, April 06, 1990</description>\n' +
     '<category>candles</category>\n' +
-    '<pubDate>Fri, 06 Apr 1990 15:43:00 GMT</pubDate>\n' +
+    '<pubDate>Fri, 06 Apr 1990 15:41:00 GMT</pubDate>\n' +
     '<geo:lat>29.55805</geo:lat>\n' +
     '<geo:long>34.94821</geo:long>\n' +
     '</item>\n',
@@ -224,12 +224,12 @@ test('fastStartEnd', () => {
       '<pubDate>Sun, 27 Jun 2021 00:00:00 GMT</pubDate>\n' +
       '</item>\n',
     '<item>\n' +
-      '<title>Fast ends: 20:25</title>\n' +
+      '<title>Fast ends: 20:06</title>\n' +
       '<link>https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27&amp;i=on&amp;utm_source=shabbat1c&amp;utm_medium=rss#20210627-fast-ends</link>\n' +
       '<guid isPermaLink="false">https://www.hebcal.com/shabbat?city=Tel+Aviv&amp;lg=s&amp;dt=2021-06-27#20210627-fast-ends</guid>\n' +
       '<description>Sunday, June 27, 2021</description>\n' +
       '<category>zmanim</category>\n' +
-      '<pubDate>Sun, 27 Jun 2021 17:25:00 GMT</pubDate>\n' +
+      '<pubDate>Sun, 27 Jun 2021 17:06:00 GMT</pubDate>\n' +
       '</item>\n',
   ];
   expect(items).toEqual(expected);

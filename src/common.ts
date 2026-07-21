@@ -3,6 +3,7 @@ import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {HDate, isoDateString} from '@hebcal/hdate';
 import {makeAnchor} from './makeAnchor';
+import {Location} from '@hebcal/core/dist/esm/location';
 
 export type StringMap = Record<string, string>;
 
@@ -56,7 +57,7 @@ export function getDownloadFilename(options: RestApiOptions): string {
     }
   }
   if (typeof options.location === 'object') {
-    const loc = options.location as any;
+    const loc = options.location as Location;
     const name = loc.zip || loc.asciiname || loc.getShortName() || '';
     if (name) {
       fileName += '_' + makeAnchor(name).replaceAll(/[-]/g, '_');
@@ -95,12 +96,12 @@ export function renderTitleWithoutTime(ev: Event, locale?: string): string {
 }
 
 function shortLocationName(options: RestApiOptions): string | null {
-  const loc = options.location;
+  const loc = options.location as Location;
   if (!loc) {
     return null;
   }
   if (options.preferAsciiName) {
-    const asciiname = (loc as any).asciiname;
+    const asciiname = loc.asciiname;
     if (typeof asciiname === 'string') {
       return asciiname;
     }

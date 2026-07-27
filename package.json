@@ -31,7 +31,7 @@
   "dependencies": {
     "@hebcal/core": "^6.8.2",
     "@hebcal/hdate": "^0.22.5",
-    "@hebcal/leyning": "^9.5.6"
+    "@hebcal/leyning": "^9.6.0"
   },
   "scripts": {
     "po2json": "node ./po2json.js po/en.po po/he.po",
@@ -51,7 +51,7 @@
     "@hebcal/locales": "^6.5.1",
     "@types/node": "^26.1.1",
     "gettext-parser": "^9.1.1",
-    "oxlint": "^1.74.0",
+    "oxlint": "^1.76.0",
     "prettier": "^3.9.6",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"

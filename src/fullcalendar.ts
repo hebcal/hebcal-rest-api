@@ -5,7 +5,7 @@ import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
 import {isoDateString} from '@hebcal/hdate';
 import {LEARNING_MASK, getEventCategories, shouldRenderBrief} from './common';
 import {appendIsraelAndTracking} from './url';
-import {makeMemo} from './memo';
+import {getHolidayDescription} from './holiday';
 import {holidayDesc as hdesc} from '@hebcal/core/dist/esm/staticHolidays';
 
 export type FullCalendarEvent = {
@@ -64,7 +64,7 @@ export function eventToFullCalendar(
   const desc = ev.getDesc();
   const candles = desc === hdesc.HAVDALAH || desc === hdesc.CANDLE_LIGHTING;
   if (!candles) {
-    const memo = makeMemo(ev, il);
+    const memo = ev.memo || getHolidayDescription(ev, false, 'en');
     if (memo) {
       result.description = memo;
     } else if (timedEv.linkedEvent !== undefined) {

@@ -20,13 +20,6 @@ export type RestApiEventOptions = {
   euro?: boolean;
   title?: string;
   description?: string;
-  dayFormat?: Intl.DateTimeFormat;
-  mainUrl?: string;
-  selfUrl?: string;
-  buildDate?: Date;
-  lastBuildDate?: string;
-  evPubDate?: boolean;
-  lang?: string;
   preferAsciiName?: boolean;
 };
 

@@ -20,11 +20,13 @@ export type FullCalendarEvent = {
 
 /**
  * Converts a Hebcal event to a FullCalendar.io object
+ * @param memo text for the `description` field, overriding `ev.memo`
  */
 export function eventToFullCalendar(
   ev: Event,
   tzid: string,
-  options: CalOptions
+  options: CalOptions,
+  memo?: string
 ): FullCalendarEvent {
   const classes = getEventCategories(ev).slice();
   const mask = ev.getFlags();
@@ -64,9 +66,10 @@ export function eventToFullCalendar(
   const desc = ev.getDesc();
   const candles = desc === hdesc.HAVDALAH || desc === hdesc.CANDLE_LIGHTING;
   if (!candles) {
-    const memo = ev.memo || getHolidayDescription(ev, false, 'en');
-    if (memo) {
-      result.description = memo;
+    const description =
+      memo ?? ev.memo ?? getHolidayDescription(ev, false, 'en');
+    if (description) {
+      result.description = description;
     } else if (timedEv.linkedEvent !== undefined) {
       result.description = timedEv.linkedEvent.render(options.locale);
     }

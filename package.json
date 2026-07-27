@@ -38,7 +38,7 @@
     "build": "npm run po2json && npm run json2ts && tsc",
     "prepublish": "npm run build",
     "pretest": "npm run build",
-    "docs": "typedoc",
+    "docs": "npx -y typedoc@^0.28.20",
     "lint": "oxlint && prettier --check \"src/**/*.ts\" \"*.js\"",
     "clean": "rm -rf ./dist",
     "fix": "oxlint --fix && prettier --write \"src/**/*.ts\" \"*.js\"",
@@ -53,7 +53,6 @@
     "gettext-parser": "^9.1.1",
     "oxlint": "^1.74.0",
     "prettier": "^3.9.6",
-    "typedoc": "^0.28.20",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"
   }

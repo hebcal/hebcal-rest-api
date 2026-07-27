@@ -60,31 +60,4 @@ module.exports = defineConfig([
     ],
     external: [/@hebcal/],
   },
-  {
-    input: 'src/fullcalendar.ts',
-    output: [
-      {
-        file: 'dist/fullcalendar.js',
-        format: 'iife',
-        name: 'hebcalFullCalendar',
-        globals: iifeGlobals,
-        indent: false,
-        banner,
-      },
-      {
-        file: 'dist/fullcalendar.min.js',
-        format: 'iife',
-        name: 'hebcalFullCalendar',
-        globals: iifeGlobals,
-        plugins: [terser()],
-        banner,
-      },
-    ],
-    plugins: [
-      json({compact: true, preferConst: true}),
-      typescript({...tsOptions, declaration: false}),
-      nodeResolve(),
-    ],
-    external: [/@hebcal/],
-  },
 ]);

@@ -1,6 +1,6 @@
 import {Location} from '@hebcal/core/dist/esm/location';
-import type {StringMap} from './common';
-import countryNames0 from './countryNames.json';
+import type {StringMap} from './common.js';
+import countryNames0 from './countryNames.json.js';
 
 export const countryNames: StringMap = countryNames0 as StringMap;
 

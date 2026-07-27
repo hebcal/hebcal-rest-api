@@ -35,31 +35,26 @@
   },
   "scripts": {
     "po2json": "node ./po2json.js po/en.po po/he.po",
-    "build": "npm run po2json && rollup -c",
+    "build": "npm run po2json && npm run json2ts && tsc",
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "docs": "typedoc",
-    "lint": "oxlint && prettier --check \"src/**/*.ts\" \"*.{js,cjs}\"",
+    "lint": "oxlint && prettier --check \"src/**/*.ts\" \"*.js\"",
     "clean": "rm -rf ./dist",
-    "fix": "oxlint --fix && prettier --write \"src/**/*.ts\" \"*.{js,cjs}\"",
-    "test": "vitest"
+    "fix": "oxlint --fix && prettier --write \"src/**/*.ts\" \"*.js\"",
+    "test": "vitest",
+    "json2ts": "node ./json2ts.js src/countryNames.json"
   },
   "license": "BSD-2-Clause",
   "devDependencies": {
     "@hebcal/learning": "^6.9.5",
     "@hebcal/locales": "^6.5.1",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-terser": "^1.0.0",
-    "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^26.1.1",
     "gettext-parser": "^9.1.1",
     "oxlint": "^1.74.0",
     "prettier": "^3.9.6",
-    "rollup": "^4.62.2",
-    "tslib": "^2.8.1",
     "typedoc": "^0.28.20",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.10"
   }
 }

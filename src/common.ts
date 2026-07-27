@@ -2,7 +2,7 @@ import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {HDate, isoDateString} from '@hebcal/hdate';
-import {makeAnchor} from './makeAnchor';
+import {makeAnchor} from './makeAnchor.js';
 import {Location} from '@hebcal/core/dist/esm/location';
 
 export type StringMap = Record<string, string>;

@@ -1,5 +1,5 @@
 src/*.json.ts
-src/*.po.js
+src/*.po.ts
 
 # Logs
 logs

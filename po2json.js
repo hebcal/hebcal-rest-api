@@ -3,7 +3,7 @@ import path from 'node:path';
 import {po} from 'gettext-parser';
 
 for (const arg of process.argv.slice(2)) {
-  const outpath = './src/' + path.basename(arg) + '.js';
+  const outpath = './src/' + path.basename(arg) + '.ts';
   console.log(`${arg} => ${outpath}`);
   writePoFile(arg, outpath);
 }
@@ -38,7 +38,11 @@ function writePoFile(inpath, outpath) {
     contexts: {'': dict},
   };
   const outstream = fs.createWriteStream(outpath, {flags: 'w'});
-  outstream.write('export default ');
+  // No `LocaleData` annotation: the compact .po carries a `language` header
+  // that `Headers` does not declare. The inferred type is still assignable to
+  // `LocaleData` where `Locale.addTranslations()` consumes it.
+  outstream.write('const data = ');
   outstream.write(JSON.stringify(compactPo, null, 0));
+  outstream.write(';\nexport default data;\n');
   outstream.end();
 }

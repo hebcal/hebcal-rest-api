@@ -1,6 +1,6 @@
 import {HDate} from '@hebcal/hdate';
 import {parshiot} from '@hebcal/core/dist/esm/sedra';
-import {makeAnchor} from './makeAnchor';
+import {makeAnchor} from './makeAnchor.js';
 
 const parsha2id = new Map<string, number>();
 for (let id = 0; id < parshiot.length; id++) {

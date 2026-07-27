@@ -19,11 +19,11 @@ import {
   getCalendarTitle,
   getEventCategories,
   shouldRenderBrief,
-} from './common';
-import {appendIsraelAndTracking} from './url';
-import {locationToPlainObj} from './location';
-import type {LocationPlainObj} from './location';
-import {getHolidayDescription} from './holiday';
+} from './common.js';
+import {appendIsraelAndTracking} from './url.js';
+import {locationToPlainObj} from './location.js';
+import type {LocationPlainObj} from './location.js';
+import {getHolidayDescription} from './holiday.js';
 import {holidayDesc as hdesc} from '@hebcal/core/dist/esm/staticHolidays';
 
 export type ClassicApiItem = {

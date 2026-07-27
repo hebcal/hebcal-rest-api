@@ -6,8 +6,8 @@ import {
   StringMap,
   getEventCategories,
   shouldRenderBrief,
-} from './common';
-import {getHolidayDescription} from './holiday';
+} from './common.js';
+import {getHolidayDescription} from './holiday.js';
 
 const csvHeader =
   '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';

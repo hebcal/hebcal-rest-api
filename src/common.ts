@@ -1,7 +1,7 @@
 import {Event, flags} from '@hebcal/core/dist/esm/event';
 import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
-import {HDate, isoDateString} from '@hebcal/hdate';
+import {HDate} from '@hebcal/hdate';
 import {makeAnchor} from './makeAnchor.js';
 import {Location} from '@hebcal/core/dist/esm/location';
 
@@ -18,8 +18,6 @@ export type RestApiEventOptions = {
   heDateParts?: boolean;
   includeEvent?: boolean;
   euro?: boolean;
-  title?: string;
-  description?: string;
   preferAsciiName?: boolean;
 };
 
@@ -60,14 +58,6 @@ export function getDownloadFilename(options: RestApiOptions): string {
 }
 
 /**
- * Returns just the date portion as YYYY-MM-DD
- * @deprecated use `isoDateString` instead
- */
-export function toISOString(d: Date): string {
-  return isoDateString(d);
-}
-
-/**
  * Returns a category and subcategory name
  */
 export function getEventCategories(ev: Event): string[] {
@@ -76,16 +66,6 @@ export function getEventCategories(ev: Event): string[] {
     return ['holiday', 'major'];
   }
   return ev.getCategories();
-}
-
-/**
- * Renders the event title in default locale, but strips off time
- * @deprecated
- */
-export function renderTitleWithoutTime(ev: Event, locale?: string): string {
-  return (ev as TimedEvent).eventTime === undefined
-    ? ev.render(locale)
-    : ev.renderBrief(locale);
 }
 
 function shortLocationName(options: RestApiOptions): string | null {

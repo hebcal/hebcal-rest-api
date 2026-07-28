@@ -15,6 +15,7 @@ export type LocationPlainObj = {
   longitude?: number;
   cc?: string;
   country?: string;
+  elevation?: number;
   admin1?: string;
   asciiname?: string;
   geo?: string;

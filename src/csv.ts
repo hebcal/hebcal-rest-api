@@ -29,7 +29,13 @@ const CATEGORY: StringMap = {
 };
 
 /**
- * Renders an Event as a string
+ * Renders a single event as one line of Outlook-compatible CSV
+ * (no trailing newline).
+ * @param ev - the event to render
+ * @param options - controls locale, date format (`euro`), and whether to
+ *   append the Hebrew title (`appendHebrewToSubject`)
+ * @returns a CSV row: subject, start/end date/time, all-day flag,
+ *   description, "show time as", and location
  */
 export function eventToCsv(ev: Event, options: RestApiOptions): string {
   const d = ev.greg();
@@ -98,6 +104,13 @@ export function eventToCsv(ev: Event, options: RestApiOptions): string {
   return `"${subj}",${date},${startTime},${endDate},${endTime},${allDay},"${memo}","${showTimeAs}","${loc}"`;
 }
 
+/**
+ * Renders a list of events as an Outlook-compatible CSV document, including
+ * the header row and a trailing CRLF.
+ * @param events - the events to render
+ * @param options - see `eventToCsv()`
+ * @returns the full CSV document, using CRLF line endings
+ */
 export function eventsToCsv(events: Event[], options: RestApiOptions): string {
   return (
     [csvHeader].concat(events.map(ev => eventToCsv(ev, options))).join('\r\n') +

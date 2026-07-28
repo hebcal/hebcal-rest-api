@@ -41,6 +41,14 @@ function parse8digitDateStr(date: string): Date {
   return dt;
 }
 
+/**
+ * Rewrites a long-form `hebcal.com/sedrot/<parsha>-<YYYYMMDD>` URL in place
+ * to the short `hebcal.com/s/<year>[i]/<parsha-id>[d]` form, e.g.
+ * `/sedrot/bereshit-20201017` becomes `/s/5781/1`. Falls back to trimming
+ * the `/sedrot/` prefix to `/s/` if the path doesn't match the expected
+ * `<parsha>-<8-digit-date>` shape.
+ * @param u - the URL to rewrite; mutated in place via `u.pathname`
+ */
 export function shortenSedrotUrl(u: URL) {
   const path = u.pathname;
   const dash = path.lastIndexOf('-');
@@ -67,7 +75,22 @@ export function shortenSedrotUrl(u: URL) {
 }
 
 /**
- * Appends utm_source and utm_medium parameters to a URL
+ * Adjusts a Hebcal.com event link for Israel/Diaspora and appends UTM
+ * tracking parameters. For `www.hebcal.com` holiday/sedrot/omer links, this
+ * also sets `i=on` when `il` is true, rewrites the host to the shorter
+ * `hebcal.com` and shortens the path (see `shortenSedrotUrl()` for sedrot),
+ * and uses the abbreviated `us`/`um`/`uc` parameter names instead of the
+ * full `utm_source`/`utm_medium`/`utm_campaign` (the `us`/`um` params are
+ * omitted when `utmCampaign` starts with `'ical-'` or `'pdf-'`, since those
+ * campaigns are tracked by `uc` alone). For all other URLs, the standard
+ * `utm_source`/`utm_medium`/`utm_campaign` parameters are appended, and
+ * `utm_source` defaults to `'hebcal.com'` when not otherwise specified.
+ * @param url - the event URL to rewrite
+ * @param il - `true` to mark the link as using the Israel holiday schedule
+ * @param utmSource - tracking source, e.g. `'js'`
+ * @param utmMedium - tracking medium, e.g. `'api'`
+ * @param utmCampaign - tracking campaign, e.g. `'ical-foo'`
+ * @returns the rewritten URL as a string
  */
 export function appendIsraelAndTracking(
   url: string,

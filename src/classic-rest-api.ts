@@ -26,17 +26,32 @@ import type {LocationPlainObj} from './location.js';
 import {getHolidayDescription} from './holiday.js';
 import {holidayDesc as hdesc} from '@hebcal/core/dist/esm/staticHolidays';
 
+/**
+ * A single event as rendered for the classic Hebcal.com JSON API, as
+ * produced by `eventToClassicApiObject()`
+ */
 export type ClassicApiItem = {
+  /** rendered event title, e.g. `'Rosh Hashana'` or `'Candle lighting: 7:14pm'` */
   title: string;
+  /** ISO 8601 date (or date+time, for timed events) */
   date: string;
+  /** Hebrew date rendered as a string, omitted for timed events */
   hdate?: string;
+  /** category, e.g. `'holiday'`, `'roshchodesh'`, `'candles'` (see `getEventCategories()`) */
   category: string;
+  /** subcategory, e.g. `'major'`, `'minor'` */
   subcat?: string;
+  /** `true` if this is a Yom Tov holiday */
   yomtov?: boolean;
+  /** original (non-brief) event description, present when it differs from `title` */
   title_orig?: string;
+  /** Hebrew rendering of the title (`he-x-NoNikud` locale, no vowel points) */
   hebrew?: string;
+  /** Torah/Haftarah readings, when applicable */
   leyning?: StringMap;
+  /** URL with tracking parameters appended, for events that have one (see `appendIsraelAndTracking()`) */
   link?: string;
+  /** Sefirat HaOmer count details, present only for Omer-count events */
   omer?: {
     count: {
       he: string;
@@ -51,6 +66,7 @@ export type ClassicApiItem = {
     lamnatzeachWord: string;
     lamnatzeachLetter: string;
   };
+  /** Molad (new moon) details, present only for Molad announcement events */
   molad?: {
     hy: number;
     hm: string;
@@ -60,25 +76,42 @@ export type ClassicApiItem = {
     chalakim: number;
     instant: string;
   };
+  /**
+   * Hebrew date broken into gematriya-rendered parts, present when
+   * `RestApiEventOptions.heDateParts` is set (or the event itself is a
+   * Hebrew-date event)
+   */
   heDateParts?: {
     y: string;
     m: string;
     d: string;
   };
+  /** holiday description or linked-event text, when available */
   memo?: string;
+  /** the underlying `Event` object, present only when `RestApiEventOptions.includeEvent` is set */
   ev?: Event;
 };
 
+/**
+ * The classic Hebcal.com JSON API response envelope, as produced by
+ * `eventsToClassicApiHeader()` and `eventsToClassicApi()`
+ */
 export type ClassicApiResult = {
+  /** calendar title, see `getCalendarTitle()` */
   title: string;
+  /** ISO 8601 timestamp of when this response was generated */
   date: string;
+  /** `@hebcal/core` package version */
   version: string;
   location: LocationPlainObj;
+  /** whether Tachanun is recited, present when `RestApiEventOptions.tachanun` is set and the range is a single day */
   tachanun?: TachanunResult;
+  /** ISO 8601 start/end dates spanned by `items` */
   range?: {
     start: string;
     end: string;
   };
+  /** the events, present when generated via `eventsToClassicApi()` */
   items?: ClassicApiItem[];
 };
 
@@ -87,7 +120,12 @@ function eventIsoDate(ev: Event): string {
 }
 
 /**
- * Formats a list events for the classic Hebcal.com JSON API response
+ * Formats a list of events for the classic Hebcal.com JSON API response,
+ * including both the header fields and the `items` array.
+ * @param events - the events to render
+ * @param options - controls title, location, tracking, and per-item rendering
+ * @param leyning - `false` to omit Torah/Haftarah readings from each item
+ * @returns the full classic API response object
  */
 export function eventsToClassicApi(
   events: Event[],
@@ -101,6 +139,14 @@ export function eventsToClassicApi(
   return result;
 }
 
+/**
+ * Builds just the header fields (title, date, version, location, range,
+ * tachanun) of the classic Hebcal.com JSON API response, without the
+ * `items` array.
+ * @param events - the events used to determine title and date range
+ * @param options - controls title, location, and tachanun rendering
+ * @returns the classic API response object, without `items`
+ */
 export function eventsToClassicApiHeader(
   events: Event[],
   options: RestApiOptions
@@ -124,7 +170,12 @@ export function eventsToClassicApiHeader(
 }
 
 /**
- * Converts a Hebcal event to a classic Hebcal.com JSON API object
+ * Converts a single Hebcal event to a classic Hebcal.com JSON API object
+ * @param ev - the event to convert
+ * @param options - controls locale, tracking parameters, and which optional
+ *   fields (`heDateParts`, `ev`) are included
+ * @param leyning - `false` to omit Torah/Haftarah readings
+ * @returns the rendered API item
  */
 export function eventToClassicApiObject(
   ev: Event,

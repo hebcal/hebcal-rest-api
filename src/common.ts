@@ -5,24 +5,88 @@ import {HDate} from '@hebcal/hdate';
 import {makeAnchor} from './makeAnchor.js';
 import {Location} from '@hebcal/core/dist/esm/location';
 
+/**
+ * A simple string-to-string dictionary
+ */
 export type StringMap = Record<string, string>;
 
+/**
+ * Options specific to rendering events for the REST API, as opposed to
+ * options in `CalOptions` that control which events are generated
+ */
 export type RestApiEventOptions = {
+  /**
+   * value for the `utm_source` (or hebcal.com-internal `us`) tracking
+   * parameter appended to event links
+   */
   utmSource?: string;
+  /**
+   * value for the `utm_medium` (or hebcal.com-internal `um`) tracking
+   * parameter appended to event links (default `'api'`)
+   */
   utmMedium?: string;
+  /**
+   * value for the `utm_campaign` (or hebcal.com-internal `uc`) tracking
+   * parameter appended to event links
+   */
   utmCampaign?: string;
+  /**
+   * include a `tachanun` field in the classic API response describing
+   * whether Tachanun is recited (only applies when the result covers a
+   * single day)
+   */
   tachanun?: boolean;
+  /**
+   * append the Hebrew rendering of the event title to the CSV subject line
+   */
   appendHebrewToSubject?: boolean;
+  /**
+   * `true` if this calendar is a Yahrzeit/Anniversary calendar; changes the
+   * generated calendar title
+   */
   yahrzeit?: boolean;
+  /**
+   * `true`, `'1'`, or `1` marks this calendar as a recurring subscription
+   * (e.g. a webcal feed); suppresses the year from the generated calendar
+   * title since the feed is perpetually up to date
+   */
   subscribe?: string | number | boolean;
+  /**
+   * include a `heDateParts` field (Hebrew year/month/day rendered with
+   * `gematriya`) on each classic API event
+   */
   heDateParts?: boolean;
+  /**
+   * include the underlying `Event` object as the `ev` field on each
+   * classic API event
+   */
   includeEvent?: boolean;
+  /**
+   * render CSV dates as `DD/MM/YYYY` (European order) instead of the
+   * default `MM/DD/YYYY`
+   */
   euro?: boolean;
+  /**
+   * prefer a location's ASCII name over its short display name when
+   * generating a calendar title or download filename
+   */
   preferAsciiName?: boolean;
 };
 
+/**
+ * Combines `@hebcal/core`'s `CalOptions` (which control which events are
+ * generated) with `RestApiEventOptions` (which control how events are
+ * rendered by this package)
+ */
 export type RestApiOptions = CalOptions & RestApiEventOptions;
 
+/**
+ * Generates a base filename (without extension) for a calendar download,
+ * incorporating the year, date range, and/or location as available.
+ * @param options - the year/date-range/location used to construct the
+ *   filename; typically the same options passed to the calendar generator
+ * @returns a filename like `hebcal_2020` or `hebcal_1993_providence`
+ */
 export function getDownloadFilename(options: RestApiOptions): string {
   let fileName = 'hebcal';
   if (options.year) {
@@ -58,7 +122,10 @@ export function getDownloadFilename(options: RestApiOptions): string {
 }
 
 /**
- * Returns a category and subcategory name
+ * Returns a category and subcategory name for an event, e.g.
+ * `['holiday', 'major']` or `['roshchodesh']`.
+ * @param ev - the event to categorize
+ * @returns an array of 1 or 2 category strings
  */
 export function getEventCategories(ev: Event): string[] {
   const s = ev.getDesc();
@@ -84,6 +151,11 @@ function shortLocationName(options: RestApiOptions): string | null {
 
 /**
  * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
+ * @param events - the events in the calendar, used to determine the date
+ *   range shown in the title
+ * @param options - controls location name, `il`/Diaspora, and whether this
+ *   is a Yahrzeit calendar or a subscription (see `RestApiEventOptions`)
+ * @returns the generated calendar title
  */
 export function getCalendarTitle(
   events: Event[],
@@ -132,6 +204,14 @@ export const LEARNING_MASK =
   flags.DAILY_LEARNING |
   flags.YERUSHALMI_YOMI;
 
+/**
+ * Determines whether an event's title should be rendered with `Event.renderBrief()`
+ * instead of `Event.render()` — for example timed events, non-1st-of-month
+ * Hebrew date events, learning-schedule events, Shabbat Mevarchim, and Yom
+ * Kippur Katan.
+ * @param ev - the event to check
+ * @returns `true` if the brief rendering should be used
+ */
 export function shouldRenderBrief(ev: Event): boolean {
   if ((ev as TimedEvent).eventTime !== undefined) {
     return true;

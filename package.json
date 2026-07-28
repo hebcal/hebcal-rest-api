@@ -1,6 +1,6 @@
 {
   "name": "@hebcal/rest-api",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "author": "Michael J. Radwin (https://github.com/mjradwin)",
   "keywords": [
     "hebcal"
@@ -49,7 +49,7 @@
   "devDependencies": {
     "@hebcal/learning": "^6.9.5",
     "@hebcal/locales": "^6.5.1",
-    "@types/node": "^26.1.1",
+    "@types/node": "^26.1.2",
     "gettext-parser": "^9.1.1",
     "oxlint": "^1.76.0",
     "prettier": "^3.9.6",

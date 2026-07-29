@@ -9,7 +9,10 @@ import {
 } from './common.js';
 import {getHolidayDescription} from './holiday.js';
 
-const csvHeader =
+/**
+ * The header row for an Outlook-compatible CSV document.
+ */
+export const CSV_HEADER =
   '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
 
 const CATEGORY: StringMap = {
@@ -121,7 +124,7 @@ export function eventToCsv(ev: Event, options: EventToCsvOptions): string {
  */
 export function eventsToCsv(events: Event[], options: RestApiOptions): string {
   return (
-    [csvHeader].concat(events.map(ev => eventToCsv(ev, options))).join('\r\n') +
+    [CSV_HEADER].concat(events.map(ev => eventToCsv(ev, options))).join('\r\n') +
     '\r\n'
   );
 }

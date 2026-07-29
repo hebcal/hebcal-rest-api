@@ -109,6 +109,19 @@ test('newline', () => {
   expect(actual).toBe('"2nd of Sivan","5/15/2010",,,,"true","foo / bar / baaz","3","Hebrew Date"');
 });
 
+test('options.memo overrides ev.memo', () => {
+  const ev = new HebrewDateEvent(new HDate(2, 'Sivan', 5770));
+  ev.memo = 'foo\nbar\nbaaz';
+  const actual = eventToCsv(ev, {locale: 'en', memo: 'custom memo text'});
+  expect(actual).toBe('"2nd of Sivan","5/15/2010",,,,"true","custom memo text","3","Hebrew Date"');
+});
+
+test('options.memo used when ev.memo is empty', () => {
+  const ev = new HebrewDateEvent(new HDate(new Date(1995, 11, 17)));
+  const actual = eventToCsv(ev, {locale: 'en', memo: 'from options'});
+  expect(actual).toBe('"24th of Kislev","12/17/1995",,,,"true","from options","3","Hebrew Date"');
+});
+
 test('CSV Location', () => {
   const hd = new HDate(new Date(2022, 10, 15));
   const toTest = [

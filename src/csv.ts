@@ -28,16 +28,23 @@ const CATEGORY: StringMap = {
   zmanim: '',
 };
 
+/** Options for `eventToCsv()`, extending `RestApiOptions` with an override for the memo/description field. */
+export type EventToCsvOptions = RestApiOptions & {
+  /** if specified, takes precedence over `ev.memo` */
+  memo?: string;
+};
+
 /**
  * Renders a single event as one line of Outlook-compatible CSV
  * (no trailing newline).
  * @param ev - the event to render
- * @param options - controls locale, date format (`euro`), and whether to
- *   append the Hebrew title (`appendHebrewToSubject`)
+ * @param options - controls locale, date format (`euro`), whether to
+ *   append the Hebrew title (`appendHebrewToSubject`), and an optional
+ *   `memo` that takes precedence over `ev.memo`
  * @returns a CSV row: subject, start/end date/time, all-day flag,
  *   description, "show time as", and location
  */
-export function eventToCsv(ev: Event, options: RestApiOptions): string {
+export function eventToCsv(ev: Event, options: EventToCsvOptions): string {
   const d = ev.greg();
   const mday = d.getDate();
   const mon = d.getMonth() + 1;
@@ -90,7 +97,8 @@ export function eventToCsv(ev: Event, options: RestApiOptions): string {
     }
   }
 
-  let memo0 = ev.memo || getHolidayDescription(ev, true, options.locale);
+  let memo0 =
+    options.memo || ev.memo || getHolidayDescription(ev, true, options.locale);
   if (!memo0 && timedEv.linkedEvent !== undefined) {
     memo0 = timedEv.linkedEvent.render(options.locale);
   }

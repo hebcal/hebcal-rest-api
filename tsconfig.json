@@ -3,10 +3,12 @@
     "types": [],
     "esModuleInterop": true,
     "target": "es2023",
+    // `dom` supplies URL; `esnext.temporal` supplies the Temporal namespace
+    // that the @hebcal/core and @hebcal/noaa declarations reference.
+    "lib": ["es2023", "dom", "esnext.temporal"],
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "strict": true,
-    "skipLibCheck": true,
     "declaration": true,
     "sourceMap": true,
     "rootDir": "./src",

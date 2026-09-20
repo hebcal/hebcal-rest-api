@@ -5,10 +5,9 @@ import {version} from '@hebcal/core/dist/esm/pkgVersion';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {MoladEvent} from '@hebcal/core/dist/esm/molad';
 import {OmerEvent} from '@hebcal/core/dist/esm/omer';
-import {TachanunResult} from '@hebcal/core/dist/esm/tachanun';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
-import {tachanun} from '@hebcal/core/dist/esm/tachanun';
+import {TachanunResult, tachanun} from '@hebcal/core/dist/esm/tachanun';
 import {AliyotMap, Leyning, StringMap} from '@hebcal/leyning/dist/esm/types';
 import {formatAliyahWithBook} from '@hebcal/leyning/dist/esm/common';
 import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
@@ -309,7 +308,14 @@ export function eventToClassicApiObject(
   return result as ClassicApiItem;
 }
 
-function formatAliyot(result: StringMap, aliyot: AliyotMap): StringMap {
+/**
+ * Adds each aliyah to `result`, keying the maftir under `maftir` and the
+ * numbered aliyot under their number.
+ * @param result destination map that aliyah strings are written into
+ * @param aliyot map of aliyah number (or `M` for maftir) to aliyah
+ * @returns the same `result` map, now populated with the aliyot
+ */
+export function formatAliyot(result: StringMap, aliyot: AliyotMap): StringMap {
   for (const [num, aliyah] of Object.entries(aliyot)) {
     if (aliyah) {
       const k = num === 'M' ? 'maftir' : num;
@@ -319,7 +325,14 @@ function formatAliyot(result: StringMap, aliyot: AliyotMap): StringMap {
   return result;
 }
 
-function formatReasons(result: StringMap, reason: StringMap): StringMap {
+/**
+ * Appends the reason text for special readings (aliyot, maftir, and the
+ * various haftarah traditions) onto the corresponding entries in `result`.
+ * @param result destination map whose entries are annotated with reasons
+ * @param reason map of reading key to its reason text
+ * @returns the same `result` map, now annotated with reasons
+ */
+export function formatReasons(result: StringMap, reason: StringMap): StringMap {
   for (const num of ['7', '8', 'M']) {
     if (reason[num]) {
       const k = num === 'M' ? 'maftir' : num;
@@ -338,7 +351,13 @@ function formatReasons(result: StringMap, reason: StringMap): StringMap {
   return result;
 }
 
-function formatLeyningResult(reading: Leyning): StringMap {
+/**
+ * Formats a Torah reading into a flat map of Torah, haftarah, and aliyah
+ * strings suitable for the classic REST API response.
+ * @param reading the leyning to format
+ * @returns a map of reading keys to their formatted display strings
+ */
+export function formatLeyningResult(reading: Leyning): StringMap {
   const result: StringMap = {};
   if (reading.summary) {
     result.torah = reading.summary;

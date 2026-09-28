@@ -1,4 +1,4 @@
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {Event} from '@hebcal/core/dist/esm/event';
 import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
 import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {
@@ -74,7 +74,6 @@ export function eventToCsv(ev: Event, options: EventToCsvOptions): string {
   }
 
   let loc = 'Jewish Holidays';
-  const mask = ev.getFlags();
   if (timed && typeof options.location === 'object') {
     const locationName = options.location.getShortName()!;
     if (locationName) {
@@ -110,7 +109,7 @@ export function eventToCsv(ev: Event, options: EventToCsvOptions): string {
     .replaceAll('"', "''")
     .replaceAll('\n', ' / ');
 
-  const isChag = Boolean(mask & flags.CHAG);
+  const isChag = ev.hasFlag('CHAG');
   const showTimeAs = timed || isChag ? 4 : 3;
   return `"${subj}",${date},${startTime},${endDate},${endTime},${allDay},"${memo}","${showTimeAs}","${loc}"`;
 }
@@ -124,7 +123,8 @@ export function eventToCsv(ev: Event, options: EventToCsvOptions): string {
  */
 export function eventsToCsv(events: Event[], options: RestApiOptions): string {
   return (
-    [CSV_HEADER].concat(events.map(ev => eventToCsv(ev, options))).join('\r\n') +
-    '\r\n'
+    [CSV_HEADER]
+      .concat(events.map(ev => eventToCsv(ev, options)))
+      .join('\r\n') + '\r\n'
   );
 }

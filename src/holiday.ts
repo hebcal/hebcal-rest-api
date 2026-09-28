@@ -1,4 +1,4 @@
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {Event} from '@hebcal/core/dist/esm/event';
 import {Locale} from '@hebcal/hdate';
 import poEn from './en.po.js';
 import poHe from './he.po.js';
@@ -28,10 +28,9 @@ export function getHolidayDescription(
   locale?: string
 ): string {
   const localeName = Locale.isHebrewLocale(locale) ? 'he' : 'en';
-  const key =
-    ev.getFlags() & flags.SHABBAT_MEVARCHIM
-      ? 'Shabbat Mevarchim Chodesh'
-      : ev.getDesc();
+  const key = ev.hasFlag('SHABBAT_MEVARCHIM')
+    ? 'Shabbat Mevarchim Chodesh'
+    : ev.getDesc();
   const str0 =
     Locale.lookupTranslation(MEMO_PREFIX + key, localeName) ??
     Locale.lookupTranslation(MEMO_PREFIX + ev.basename(), localeName) ??

@@ -1,6 +1,6 @@
 import {HDate, gematriya, isoDateString} from '@hebcal/hdate';
 import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
-import {Event, flags} from '@hebcal/core/dist/esm/event';
+import {Event} from '@hebcal/core/dist/esm/event';
 import {version} from '@hebcal/core/dist/esm/pkgVersion';
 import {Locale} from '@hebcal/core/dist/esm/locale';
 import {MoladEvent} from '@hebcal/core/dist/esm/molad';
@@ -192,7 +192,6 @@ export function eventToClassicApiObject(
     ? Zmanim.formatISOWithTimeZone(tzid, eventTime)
     : isoDateString(dt);
   const categories = getEventCategories(ev);
-  const mask = ev.getFlags();
   let title = shouldRenderBrief(ev)
     ? ev.renderBrief(options.locale)
     : ev.render(options.locale);
@@ -213,7 +212,7 @@ export function eventToClassicApiObject(
   if (categories.length > 1) {
     result.subcat = categories[1];
   }
-  if (categories[0] === 'holiday' && mask & flags.CHAG) {
+  if (categories[0] === 'holiday' && ev.hasFlag('CHAG')) {
     result.yomtov = true;
   }
   if (title !== desc) {
@@ -226,7 +225,7 @@ export function eventToClassicApiObject(
   if (!candles) {
     if (leyning) {
       const il = options.il;
-      const isParsha = mask === flags.PARSHA_HASHAVUA;
+      const isParsha = ev.hasFlag('PARSHA_HASHAVUA');
       const reading = isParsha
         ? getLeyningForParshaHaShavua(ev, il)
         : getLeyningForHoliday(ev, il);
@@ -254,7 +253,7 @@ export function eventToClassicApiObject(
       );
     }
   }
-  if (mask & flags.OMER_COUNT) {
+  if (ev.hasFlag('OMER_COUNT')) {
     const omerEv = ev as OmerEvent;
     result.omer = {
       count: {
@@ -271,7 +270,7 @@ export function eventToClassicApiObject(
       lamnatzeachLetter: omerEv.getLamnatzeachLetter(),
     };
   }
-  if (mask & flags.MOLAD) {
+  if (ev.hasFlag('MOLAD')) {
     const moladEv = ev as MoladEvent;
     const m = moladEv.molad;
     const hy = m.getYear();
@@ -286,7 +285,7 @@ export function eventToClassicApiObject(
     };
     delete result.hebrew;
   }
-  if ((options.heDateParts && !timed) || mask & flags.HEBREW_DATE) {
+  if ((options.heDateParts && !timed) || ev.hasFlag('HEBREW_DATE')) {
     const yy = hd.getFullYear();
     const mm = hd.getMonthName();
     const dd = hd.getDate();

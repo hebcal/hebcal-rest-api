@@ -216,14 +216,22 @@ export function shouldRenderBrief(ev: Event): boolean {
   if ((ev as TimedEvent).eventTime !== undefined) {
     return true;
   }
-  const mask = ev.getFlags();
-  if (mask & flags.HEBREW_DATE) {
+  if (ev.hasFlag('HEBREW_DATE')) {
     const hd = ev.getDate();
     return hd.getDate() !== 1;
-  } else if (mask & (LEARNING_MASK | flags.SHABBAT_MEVARCHIM)) {
+  } else if (
+    ev.hasAnyFlag(
+      'DAF_YOMI',
+      'NACH_YOMI',
+      'MISHNA_YOMI',
+      'DAILY_LEARNING',
+      'YERUSHALMI_YOMI',
+      'SHABBAT_MEVARCHIM'
+    )
+  ) {
     return true;
   } else if (
-    mask & flags.MINOR_FAST &&
+    ev.hasFlag('MINOR_FAST') &&
     ev.getDesc().startsWith('Yom Kippur Katan')
   ) {
     return true;

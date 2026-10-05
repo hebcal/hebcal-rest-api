@@ -706,3 +706,21 @@ test('chabad-leyning-special-reason', () => {
   expect(obj.leyning.haftarah_sephardic).toBe('I Samuel 15:1-34 | Shabbat Zachor');
   expect(obj.leyning.haftarah_chabad).toBe('I Samuel 15:2-34 | Shabbat Zachor');
 });
+
+test('swords-of-iron-war-memorial-day', () => {
+  const options = {year: 5787, isHebrewYear: true, il: true};
+  const events = HebrewCalendar.calendar(options);
+  const ev = events.find((ev) => ev.getDesc() === 'Swords of Iron War Memorial Day');
+  const apiObj = eventToClassicApiObject(ev, options);
+  const expected = {
+    title: 'Swords of Iron War Memorial Day',
+    date: '2026-10-05',
+    hdate: '24 Tishrei 5787',
+    category: 'holiday',
+    subcat: 'modern',
+    hebrew: 'יום הזיכרון לחללי מלחמת חרבות ברזל',
+    link: 'https://hebcal.com/h/swords-of-iron-war-memorial-day-2026?i=on&us=js&um=api',
+    memo: 'Israeli national memorial day commemorating the fallen victims of the October 7 attacks, and the soldiers of the Israel Defense Forces',
+  };
+  expect(apiObj).toEqual(expected);
+});

@@ -3,12 +3,11 @@ import {parshiot} from '@hebcal/core/dist/esm/sedra';
 import {makeAnchor} from './makeAnchor.js';
 
 const parsha2id = new Map<string, number>();
-for (let id = 0; id < parshiot.length; id++) {
-  const name = parshiot[id];
-  parsha2id.set(makeAnchor(name), id + 1);
+for (const [idx, name] of parshiot.entries()) {
+  parsha2id.set(makeAnchor(name), idx + 1);
 }
 
-const doubledParshiyot: string[] = [
+const doubledParshiyot = [
   'Vayakhel-Pekudei',
   'Tazria-Metzora',
   'Achrei Mot-Kedoshim',
@@ -49,7 +48,7 @@ function parse8digitDateStr(date: string): Date {
  * `<parsha>-<8-digit-date>` shape.
  * @param u - the URL to rewrite; mutated in place via `u.pathname`
  */
-export function shortenSedrotUrl(u: URL) {
+export function shortenSedrotUrl(u: URL): void {
   const path = u.pathname;
   const dash = path.lastIndexOf('-');
   const dateStr = path.substring(dash + 1);
@@ -63,7 +62,6 @@ export function shortenSedrotUrl(u: URL) {
       p += 'i';
       u.searchParams.delete('i');
     }
-    const id = parsha2id.get(name);
     p += '/' + id;
     if (doubled.has(name)) {
       p += 'd';

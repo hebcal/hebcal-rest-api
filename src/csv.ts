@@ -1,13 +1,10 @@
-import {Event} from '@hebcal/core/dist/esm/event';
+import type {Event} from '@hebcal/core/dist/esm/event';
 import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
-import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
-import {
-  RestApiOptions,
-  StringMap,
-  getEventCategories,
-  shouldRenderBrief,
-} from './common.js';
+import type {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
+import type {RestApiOptions} from './common.js';
+import {getEventCategories, shouldRenderBrief} from './common.js';
 import {getHolidayDescription} from './holiday.js';
+import {isTimedEvent} from './isTimedEvent.js';
 
 /**
  * The header row for an Outlook-compatible CSV document.
@@ -15,7 +12,7 @@ import {getHolidayDescription} from './holiday.js';
 export const CSV_HEADER =
   '"Subject","Start Date","Start Time","End Date","End Time","All day event","Description","Show time as","Location"';
 
-const CATEGORY: StringMap = {
+const CATEGORY: Readonly<Record<string, string>> = {
   dafyomi: 'Daf Yomi',
   mishnayomi: 'Mishna Yomi',
   nachyomi: 'Nach Yomi',
@@ -61,13 +58,12 @@ export function eventToCsv(ev: Event, options: EventToCsvOptions): string {
   let endDate = '';
   let allDay = '"true"';
 
-  const timedEv = ev as TimedEvent;
-  const timed = Boolean(timedEv.eventTime);
+  const timed = isTimedEvent(ev);
   let subj = shouldRenderBrief(ev)
     ? ev.renderBrief(options.locale)
     : ev.render(options.locale);
   if (timed) {
-    const timeStr = reformatTimeStr(timedEv.eventTimeStr, ' PM', options);
+    const timeStr = reformatTimeStr(ev.eventTimeStr, ' PM', options);
     endTime = startTime = `"${timeStr}"`;
     endDate = date;
     allDay = '"false"';
@@ -75,7 +71,7 @@ export function eventToCsv(ev: Event, options: EventToCsvOptions): string {
 
   let loc = 'Jewish Holidays';
   if (timed && typeof options.location === 'object') {
-    const locationName = options.location.getShortName()!;
+    const locationName = options.location.getShortName();
     if (locationName) {
       loc = locationName;
     }
@@ -101,8 +97,10 @@ export function eventToCsv(ev: Event, options: EventToCsvOptions): string {
 
   let memo0 =
     options.memo || ev.memo || getHolidayDescription(ev, true, options.locale);
-  if (!memo0 && timedEv.linkedEvent !== undefined) {
-    memo0 = timedEv.linkedEvent.render(options.locale);
+  // TimedEvent and FastDayEvent (not a TimedEvent) both carry linkedEvent
+  const linkedEvent = (ev as Partial<TimedEvent>).linkedEvent;
+  if (!memo0 && linkedEvent !== undefined) {
+    memo0 = linkedEvent.render(options.locale);
   }
   const memo = memo0
     .replaceAll(',', ';')
@@ -122,9 +120,6 @@ export function eventToCsv(ev: Event, options: EventToCsvOptions): string {
  * @returns the full CSV document, using CRLF line endings
  */
 export function eventsToCsv(events: Event[], options: RestApiOptions): string {
-  return (
-    [CSV_HEADER]
-      .concat(events.map(ev => eventToCsv(ev, options)))
-      .join('\r\n') + '\r\n'
-  );
+  const lines = [CSV_HEADER, ...events.map(ev => eventToCsv(ev, options))];
+  return lines.join('\r\n') + '\r\n';
 }

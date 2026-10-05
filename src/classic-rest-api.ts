@@ -1,20 +1,25 @@
 import {HDate, gematriya, isoDateString} from '@hebcal/hdate';
 import {Zmanim} from '@hebcal/core/dist/esm/zmanim';
-import {Event} from '@hebcal/core/dist/esm/event';
+import type {Event} from '@hebcal/core/dist/esm/event';
 import {version} from '@hebcal/core/dist/esm/pkgVersion';
 import {Locale} from '@hebcal/core/dist/esm/locale';
-import {MoladEvent} from '@hebcal/core/dist/esm/molad';
-import {OmerEvent} from '@hebcal/core/dist/esm/omer';
-import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
+import type {MoladEvent} from '@hebcal/core/dist/esm/molad';
+import type {OmerEvent} from '@hebcal/core/dist/esm/omer';
+import type {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
 import {reformatTimeStr} from '@hebcal/core/dist/esm/reformatTimeStr';
-import {TachanunResult, tachanun} from '@hebcal/core/dist/esm/tachanun';
-import {AliyotMap, Leyning, StringMap} from '@hebcal/leyning/dist/esm/types';
+import {tachanun} from '@hebcal/core/dist/esm/tachanun';
+import type {TachanunResult} from '@hebcal/core/dist/esm/tachanun';
+import type {
+  AliyotMap,
+  Leyning,
+  StringMap,
+} from '@hebcal/leyning/dist/esm/types';
 import {formatAliyahWithBook} from '@hebcal/leyning/dist/esm/common';
 import {getLeyningForParshaHaShavua} from '@hebcal/leyning/dist/esm/leyning';
 import {makeSummaryFromParts} from '@hebcal/leyning/dist/esm/summary';
 import {getLeyningForHoliday} from '@hebcal/leyning/dist/esm/getLeyningForHoliday';
+import type {RestApiOptions} from './common.js';
 import {
-  RestApiOptions,
   getCalendarTitle,
   getEventCategories,
   shouldRenderBrief,
@@ -23,6 +28,7 @@ import {appendIsraelAndTracking} from './url.js';
 import {locationToPlainObj} from './location.js';
 import type {LocationPlainObj} from './location.js';
 import {getHolidayDescription} from './holiday.js';
+import {isTimedEvent} from './isTimedEvent.js';
 import {holidayDesc as hdesc} from '@hebcal/core/dist/esm/staticHolidays';
 
 /**
@@ -181,16 +187,13 @@ export function eventToClassicApiObject(
   options: RestApiOptions,
   leyning = true
 ): ClassicApiItem {
-  const timedEv = ev as TimedEvent;
-  const eventTime: Date = timedEv.eventTime;
-  const timed = Boolean(eventTime);
+  const timed = isTimedEvent(ev);
   const hd = ev.getDate();
-  const dt = hd.greg();
   const tzid =
     typeof options.location === 'object' ? options.location.getTzid() : 'UTC';
   const date = timed
-    ? Zmanim.formatISOWithTimeZone(tzid, eventTime)
-    : isoDateString(dt);
+    ? Zmanim.formatISOWithTimeZone(tzid, ev.eventTime)
+    : isoDateString(hd.greg());
   const categories = getEventCategories(ev);
   let title = shouldRenderBrief(ev)
     ? ev.renderBrief(options.locale)
@@ -198,17 +201,21 @@ export function eventToClassicApiObject(
   const desc = ev.getDesc();
   const candles = desc === hdesc.HAVDALAH || desc === hdesc.CANDLE_LIGHTING;
   if (candles) {
-    const time = reformatTimeStr(timedEv.eventTimeStr, 'pm', options);
+    // Candle-lighting and Havdalah events are always TimedEvents
+    const time = reformatTimeStr(
+      (ev as TimedEvent).eventTimeStr,
+      'pm',
+      options
+    );
     title += ': ' + time;
   }
-  const result: Partial<ClassicApiItem> = {
-    title: title,
-    date: date,
+  // key order here determines key order in the serialized JSON
+  const result: ClassicApiItem = {
+    title,
+    date,
+    ...(!timed && {hdate: hd.toString()}),
+    category: categories[0],
   };
-  if (!timed) {
-    result.hdate = hd.toString();
-  }
-  result.category = categories[0];
   if (categories.length > 1) {
     result.subcat = categories[1];
   }
@@ -218,9 +225,12 @@ export function eventToClassicApiObject(
   if (title !== desc) {
     result.title_orig = desc;
   }
-  const hebrew = ev.renderBrief('he-x-NoNikud');
-  if (hebrew) {
-    result.hebrew = hebrew;
+  const isMolad = ev.hasFlag('MOLAD');
+  if (!isMolad) {
+    const hebrew = ev.renderBrief('he-x-NoNikud');
+    if (hebrew) {
+      result.hebrew = hebrew;
+    }
   }
   if (!candles) {
     if (leyning) {
@@ -270,9 +280,8 @@ export function eventToClassicApiObject(
       lamnatzeachLetter: omerEv.getLamnatzeachLetter(),
     };
   }
-  if (ev.hasFlag('MOLAD')) {
-    const moladEv = ev as MoladEvent;
-    const m = moladEv.molad;
+  if (isMolad) {
+    const m = (ev as MoladEvent).molad;
     const hy = m.getYear();
     result.molad = {
       hy,
@@ -283,7 +292,6 @@ export function eventToClassicApiObject(
       chalakim: m.getChalakim(),
       instant: m.getInstant().toInstant().toJSON(),
     };
-    delete result.hebrew;
   }
   if ((options.heDateParts && !timed) || ev.hasFlag('HEBREW_DATE')) {
     const yy = hd.getFullYear();
@@ -298,13 +306,17 @@ export function eventToClassicApiObject(
   const memo = ev.memo || getHolidayDescription(ev, false, options.locale);
   if (typeof memo === 'string' && memo.length !== 0) {
     result.memo = memo.normalize();
-  } else if (timedEv.linkedEvent) {
-    result.memo = timedEv.linkedEvent.render(options.locale);
+  } else {
+    // TimedEvent and FastDayEvent (not a TimedEvent) both carry linkedEvent
+    const linkedEvent = (ev as Partial<TimedEvent>).linkedEvent;
+    if (linkedEvent) {
+      result.memo = linkedEvent.render(options.locale);
+    }
   }
   if (options.includeEvent) {
     result.ev = ev;
   }
-  return result as ClassicApiItem;
+  return result;
 }
 
 /**

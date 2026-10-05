@@ -1,4 +1,4 @@
-import {Location} from '@hebcal/core/dist/esm/location';
+import type {Location} from '@hebcal/core/dist/esm/location';
 import type {StringMap} from './common.js';
 import countryNames0 from './countryNames.json.js';
 
@@ -53,7 +53,28 @@ const LOC_FIELDS = [
   'state',
   'stateName',
   'geonameid',
-];
+] as const satisfies readonly (keyof LocationPlainObj)[];
+
+/**
+ * Metadata that GeoNames-backed lookups attach to a `Location`. Not all of
+ * these are declared on `Location` itself (and `elevation` is `protected`).
+ */
+type LocationExtras = Partial<
+  Pick<LocationPlainObj, (typeof LOC_FIELDS)[number]>
+>;
+
+function copyTruthyFields<T, K extends keyof T>(
+  dst: T,
+  src: Partial<T>,
+  keys: readonly K[]
+): void {
+  for (const k of keys) {
+    const val = src[k];
+    if (val) {
+      dst[k] = val;
+    }
+  }
+}
 
 /**
  * Converts a `@hebcal/core` `Location` to a plain, JSON-serializable object.
@@ -71,22 +92,17 @@ export function locationToPlainObj(
     location !== null &&
     typeof location.getLatitude === 'function'
   ) {
-    const cc: string = location.getCountryCode()!;
+    const cc = location.getCountryCode();
     const o: LocationPlainObj = {
       title: location.getName(),
       city: location.getShortName(),
       tzid: location.getTzid(),
       latitude: location.getLatitude(),
       longitude: location.getLongitude(),
-      cc: cc,
-      country: countryNames[cc],
+      cc,
+      country: cc === undefined ? undefined : countryNames[cc],
     };
-    for (const k of LOC_FIELDS) {
-      const val = (location as any)[k];
-      if (val) {
-        (o as any)[k] = val;
-      }
-    }
+    copyTruthyFields(o, location as unknown as LocationExtras, LOC_FIELDS);
     return o;
   } else {
     return {geo: 'none'};

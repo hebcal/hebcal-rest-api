@@ -1,9 +1,9 @@
-import {Event, flags} from '@hebcal/core/dist/esm/event';
-import {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
-import {TimedEvent} from '@hebcal/core/dist/esm/TimedEvent';
+import {flags} from '@hebcal/core/dist/esm/event';
+import type {Event} from '@hebcal/core/dist/esm/event';
+import type {CalOptions} from '@hebcal/core/dist/esm/CalOptions';
 import {HDate} from '@hebcal/hdate';
 import {makeAnchor} from './makeAnchor.js';
-import {Location} from '@hebcal/core/dist/esm/location';
+import {isTimedEvent} from './isTimedEvent.js';
 
 /**
  * A simple string-to-string dictionary
@@ -112,7 +112,7 @@ export function getDownloadFilename(options: RestApiOptions): string {
     }
   }
   if (typeof options.location === 'object') {
-    const loc = options.location as Location;
+    const loc = options.location;
     const name = loc.zip || loc.asciiname || loc.getShortName() || '';
     if (name) {
       fileName += '_' + makeAnchor(name).replaceAll(/[-]/g, '_');
@@ -136,7 +136,7 @@ export function getEventCategories(ev: Event): string[] {
 }
 
 function shortLocationName(options: RestApiOptions): string | null {
-  const loc = options.location as Location;
+  const loc = options.location;
   if (!loc) {
     return null;
   }
@@ -213,7 +213,7 @@ export const LEARNING_MASK =
  * @returns `true` if the brief rendering should be used
  */
 export function shouldRenderBrief(ev: Event): boolean {
-  if ((ev as TimedEvent).eventTime !== undefined) {
+  if (isTimedEvent(ev)) {
     return true;
   }
   if (ev.hasFlag('HEBREW_DATE')) {

@@ -17,12 +17,12 @@ test('eventToCsv', () => {
   };
   const events = HebrewCalendar.calendar(options).slice(0, 6);
   const csv = events.map((e) => eventToCsv(e, options));
-  expect(csv[0]).toBe(`"Candle lighting","4/6/1990","7:04 PM","4/6/1990","7:04 PM","false","","4","Chicago"`);
-  expect(csv[1]).toBe(`"Havdalah","4/7/1990","8:06 PM","4/7/1990","8:06 PM","false","","4","Chicago"`);
-  expect(csv[2]).toBe(`"Finish eating chametz","4/9/1990","10:41 AM","4/9/1990","10:41 AM","false","Latest time of day to eat chametz on the day before Pesach","4","Chicago"`);
+  expect(csv[0]).toBe(`"Candle lighting","4/6/1990","7:03 PM","4/6/1990","7:03 PM","false","","4","Chicago"`);
+  expect(csv[1]).toBe(`"Havdalah","4/7/1990","8:05 PM","4/7/1990","8:05 PM","false","","4","Chicago"`);
+  expect(csv[2]).toBe(`"Finish eating chametz","4/9/1990","10:42 AM","4/9/1990","10:42 AM","false","Latest time of day to eat chametz on the day before Pesach","4","Chicago"`);
   expect(csv[3]).toBe(`"Biur Chametz","4/9/1990","11:47 AM","4/9/1990","11:47 AM","false","Latest time of day to sell and burn chametz before Pesach","4","Chicago"`);
   expect(csv[4]).toBe(`"Erev Pesach","4/9/1990",,,,"true","Passover; the Feast of Unleavened Bread","3","Jewish Holidays"`);
-  expect(csv[5]).toBe(`"Candle lighting","4/9/1990","7:07 PM","4/9/1990","7:07 PM","false","Erev Pesach","4","Chicago"`);
+  expect(csv[5]).toBe(`"Candle lighting","4/9/1990","7:06 PM","4/9/1990","7:06 PM","false","Erev Pesach","4","Chicago"`);
 });
 
 test('eventsToCsv', () => {

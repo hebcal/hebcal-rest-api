@@ -151,6 +151,9 @@ function shortLocationName(options: RestApiOptions): string | null {
 
 /**
  * Generates a title like "Hebcal 2020 Israel" or "Hebcal May 1993 Providence"
+ *
+ * When `options.numYears` is greater than 1 (and no `month` is given), the
+ * title spans every year in the calendar, e.g. "Hebcal Diaspora 5787-5790".
  * @param events - the events in the calendar, used to determine the date
  *   range shown in the title
  * @param options - controls location name, `il`/Diaspora, and whether this
@@ -176,8 +179,13 @@ export function getCalendarTitle(
   if (sub === '1' || sub === 1 || sub === true) {
     return title;
   }
-  if (options.year && (options.isHebrewYear || events.length === 0)) {
-    title += ' ' + options.year;
+  const year = options.year;
+  const numYears = options.numYears;
+  if (year && numYears && numYears > 1 && !options.month) {
+    // a multi-year calendar, e.g. "5787-5790" or "2019-2025"
+    title += ' ' + year + '-' + (year + numYears - 1);
+  } else if (year && (options.isHebrewYear || events.length === 0)) {
+    title += ' ' + year;
   } else if (events.length) {
     const start = events[0].greg();
     const end = events[events.length - 1].greg();

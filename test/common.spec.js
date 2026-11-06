@@ -90,6 +90,31 @@ test('getCalendarTitle2', () => {
   expect(getCalendarTitle(evts3, opts3)).toBe('Hebcal Diaspora 5780');
 });
 
+test('getCalendarTitle multi-year', () => {
+  const opts1 = {year: 5787, isHebrewYear: true, numYears: 4};
+  const evts1 = HebrewCalendar.calendar(opts1);
+  expect(getCalendarTitle(evts1, opts1)).toBe('Hebcal Diaspora 5787-5790');
+
+  const opts2 = {year: 2019, numYears: 7, il: true};
+  const evts2 = HebrewCalendar.calendar(opts2);
+  expect(getCalendarTitle(evts2, opts2)).toBe('Hebcal Israel 2019-2025');
+  // with no events the year range still comes from numYears
+  expect(getCalendarTitle([], opts2)).toBe('Hebcal Israel 2019-2025');
+
+  // numYears of 1 is a single-year calendar
+  const opts3 = {year: 5787, isHebrewYear: true, numYears: 1};
+  const evts3 = HebrewCalendar.calendar(opts3);
+  expect(getCalendarTitle(evts3, opts3)).toBe('Hebcal Diaspora 5787');
+
+  // a subscription title never includes a year
+  expect(getCalendarTitle(evts1, {...opts1, subscribe: '1'})).toBe('Hebcal Diaspora');
+
+  const location = new Location(37.42411, -122.16608, false,
+      'America/Los_Angeles', 'Stanford, California, USA', 'US');
+  const opts4 = {year: 5787, isHebrewYear: true, numYears: 4, location};
+  expect(getCalendarTitle([], opts4)).toBe('Hebcal Stanford 5787-5790');
+});
+
 test('getCalendarTitle asciiname', () => {
   const loc = new Location(28.25375, -105.51922, false,
     'America/Chihuahua',

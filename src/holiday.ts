@@ -15,6 +15,7 @@ Locale.addTranslations('he', poHe);
  * Returns a description of the holiday. Uses the English description by
  * default, or the Hebrew description when `locale` is a Hebrew locale.
  * Returns an empty string if no description is available.
+ * Always returns an empty string for `ParshaEvent`s.
  * @param ev - the holiday event to describe
  * @param firstSentence - `true` to truncate the description at the first
  *   sentence (up to and excluding the first `.`)
@@ -27,6 +28,9 @@ export function getHolidayDescription(
   firstSentence = false,
   locale?: string
 ): string {
+  if (ev.hasFlag('PARSHA_HASHAVUA')) {
+    return '';
+  }
   const localeName = Locale.isHebrewLocale(locale) ? 'he' : 'en';
   const key = ev.hasFlag('SHABBAT_MEVARCHIM')
     ? 'Shabbat Mevarchim Chodesh'

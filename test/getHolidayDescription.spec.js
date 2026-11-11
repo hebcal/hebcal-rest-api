@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest';
-import {Event, flags, HDate, HolidayEvent} from '@hebcal/core';
+import {Event, flags, HDate, HolidayEvent, ParshaEvent} from '@hebcal/core';
 import {getHolidayDescription} from '../src/holiday';
 
 test('getHolidayDescription-firstSentence', () => {
@@ -41,4 +41,19 @@ test('getHolidayDescription-he', () => {
   expect(s).toBe('יום המשפחה, יום להוקרת התא המשפחתי');
   const s2 = getHolidayDescription(ev, false, 'en');
   expect(s2).toBe('Yom HaMishpacha, a day to honor the family unit');
+});
+
+test('getHolidayDescription returns empty string for ParshaEvent', () => {
+  const ev = new ParshaEvent({
+    hdate: new HDate(20, 'Cheshvan', 5787),
+    parsha: ['Vayera'],
+    num: 4,
+    chag: false,
+    il: false,
+  });
+  expect(ev.getDesc()).toBe('Parashat Vayera');
+  expect(ev.basename()).toBe('Vayera');
+  expect(getHolidayDescription(ev)).toBe('');
+  expect(getHolidayDescription(ev, true)).toBe('');
+  expect(getHolidayDescription(ev, false, 'he')).toBe('');
 });
